@@ -1,0 +1,116 @@
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://maven.apache.org/POM/4.0.0"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>de.freenet.cloud</groupId>
+    <artifactId>vijava</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+    <prerequisites>
+        <maven>3.0.5</maven>
+    </prerequisites>
+    <dependencies>
+        <!--<dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>-->
+        <dependency>
+            <groupId>dom4j</groupId>
+            <artifactId>dom4j</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.sblim.wbem</groupId>
+            <artifactId>sblimCIMClient</artifactId>
+            <version>1.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <scope>test</scope>
+            <version>6.9.10</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+    </dependencies>
+    <build>
+        <finalName>vijava</finalName>
+    </build>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
+    </properties>
+    <url>https://dev-vmware.freenet-rz.de/site/vijava</url>
+    <developers>
+        <developer>
+            <name>Stefan Dilk</name>
+            <email>stefan.dilk@freenet.ag</email>
+            <roles>
+                <role>Lead Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Stefan Botz</name>
+            <email>stefan.botz@freenet.ag</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+        <developer>
+            <name>Thomas Heilmann</name>
+            <email>thomas.heilmann@freenet.ag</email>
+            <roles>
+                <role>Developer</role>
+            </roles>
+        </developer>
+    </developers>
+    <mailingLists>
+        <mailingList>
+            <name>FDK Admins</name>
+            <post>admins@lists.freenet-ag.de</post>
+        </mailingList>
+        <mailingList>
+            <name>VMWare Admins</name>
+            <post>vmware@lists.freenet.ag</post>
+        </mailingList>
+    </mailingLists>
+    <organization>
+        <name>ServerBetriebssysteme</name>
+        <url>
+            https://kiwi.freenet-group.de/x/voqOH
+        </url>
+    </organization>
+    <issueManagement>
+        <system>Trac</system>
+        <url>https://git.freenet-rz.de/trac/vmware/</url>
+    </issueManagement>
+    <scm>
+        <url>https://dev-vmware.freenet-rz.de/gerrit/gitweb?p=vijava.git</url>
+        <connection>scm:git:https://dev-vmware.freenet-rz.de/gerrit/vijava</connection>
+        <developerConnection>scm:git:ssh://dev-vmware.freenet-rz.de:2222/vijava</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+    <name>VIJava</name>
+    <description>Rewritten version of the vijava library</description>
+    <ciManagement>
+        <system>jenkins</system>
+        <url>https://dev-vmware.freenet-rz.de/jenkins/</url>
+    </ciManagement>
+    <distributionManagement>
+        <site>
+            <id>localfile</id>
+            <url>file:///var/www/html/site/${project.artifactId}</url>
+        </site>
+    </distributionManagement>
+</project>
