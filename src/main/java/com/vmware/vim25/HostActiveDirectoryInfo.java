@@ -30,37 +30,48 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class HostActiveDirectoryInfo extends HostDirectoryStoreInfo {
-  public String joinedDomain;
-  public String[] trustedDomain;
-  public String domainMembershipStatus;
 
-  public String getJoinedDomain() {
-    return this.joinedDomain;
-  }
+    public String joinedDomain;
+    public String[] trustedDomain;
+    public String domainMembershipStatus;
+    public Boolean smartCardAuthenticationEnabled;
 
-  public String[] getTrustedDomain() {
-    return this.trustedDomain;
-  }
+    public String getJoinedDomain() {
+        return this.joinedDomain;
+    }
 
-  public String getDomainMembershipStatus() {
-    return this.domainMembershipStatus;
-  }
+    public String[] getTrustedDomain() {
+        return this.trustedDomain;
+    }
 
-  public void setJoinedDomain(String joinedDomain) {
-    this.joinedDomain=joinedDomain;
-  }
+    public String getDomainMembershipStatus() {
+        return this.domainMembershipStatus;
+    }
 
-  public void setTrustedDomain(String[] trustedDomain) {
-    this.trustedDomain=trustedDomain;
-  }
+    public void setJoinedDomain(String joinedDomain) {
+        this.joinedDomain = joinedDomain;
+    }
 
-  public void setDomainMembershipStatus(String domainMembershipStatus) {
-    this.domainMembershipStatus=domainMembershipStatus;
-  }
+    public void setTrustedDomain(String[] trustedDomain) {
+        this.trustedDomain = trustedDomain;
+    }
+
+    public void setDomainMembershipStatus(String domainMembershipStatus) {
+        this.domainMembershipStatus = domainMembershipStatus;
+    }
+
+    public Boolean isSmartCardAuthenticationEnabled() {
+        return smartCardAuthenticationEnabled;
+    }
+
+    public void setSmartCardAuthenticationEnabled(final Boolean smartCardAuthenticationEnabled) {
+        this.smartCardAuthenticationEnabled = smartCardAuthenticationEnabled;
+    }
 }

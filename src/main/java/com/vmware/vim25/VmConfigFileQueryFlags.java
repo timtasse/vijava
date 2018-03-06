@@ -30,19 +30,29 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VmConfigFileQueryFlags extends DynamicData {
-  public boolean configVersion;
 
-  public boolean isConfigVersion() {
-    return this.configVersion;
-  }
+    public boolean configVersion;
+    public Boolean encryption;
 
-  public void setConfigVersion(boolean configVersion) {
-    this.configVersion=configVersion;
-  }
+    public boolean isConfigVersion() {
+        return this.configVersion;
+    }
+
+    public void setConfigVersion(boolean configVersion) {
+        this.configVersion = configVersion;
+    }
+
+    public boolean isEncryption() {
+        return encryption;
+    }
+
+    public void setEncryption(final boolean encryption) {
+        this.encryption = encryption;
+    }
 }

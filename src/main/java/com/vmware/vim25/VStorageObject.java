@@ -1,0 +1,20 @@
+package com.vmware.vim25;
+
+/**
+ * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ *
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @since 6.5
+ */
+public class VStorageObject extends DynamicData {
+
+    public VStorageObjectConfigInfo config;
+
+    public VStorageObjectConfigInfo getConfig() {
+        return config;
+    }
+
+    public void setConfig(final VStorageObjectConfigInfo config) {
+        this.config = config;
+    }
+}

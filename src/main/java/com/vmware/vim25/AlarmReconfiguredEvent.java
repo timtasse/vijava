@@ -30,19 +30,30 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class AlarmReconfiguredEvent extends AlarmEvent {
-  public ManagedEntityEventArgument entity;
 
-  public ManagedEntityEventArgument getEntity() {
-    return this.entity;
-  }
+    public ChangesInfoEventArgument configChanges;
+    public ManagedEntityEventArgument entity;
 
-  public void setEntity(ManagedEntityEventArgument entity) {
-    this.entity=entity;
-  }
+    public ManagedEntityEventArgument getEntity() {
+        return this.entity;
+    }
+
+    public void setEntity(ManagedEntityEventArgument entity) {
+        this.entity = entity;
+    }
+
+    public ChangesInfoEventArgument getConfigChanges() {
+        return configChanges;
+    }
+
+    public void setConfigChanges(final ChangesInfoEventArgument configChanges) {
+        this.configChanges = configChanges;
+    }
 }

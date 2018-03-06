@@ -30,19 +30,26 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 public enum VirtualMachinePowerOffBehavior {
-  powerOff ("powerOff"),
-  revert ("revert"),
-  prompt ("prompt");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private VirtualMachinePowerOffBehavior(String val)
-  {
-    this.val = val;
-  }
+    powerOff("powerOff"),
+    prompt("prompt"),
+    revert("revert"),
+    take("take");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    VirtualMachinePowerOffBehavior(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

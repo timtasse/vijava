@@ -29,39 +29,65 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25.mo;
 
+import com.vmware.vim25.GuestAuthentication;
 import com.vmware.vim25.ManagedObjectReference;
 
 
 /**
- * provides access to three different APIs to managed guests: file, process, auth.
+ * provides access to three different APIs to managed guests: file, process, auth, alias and registry
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @since SDK5.0
  */
 
-public class GuestOperationsManager extends ManagedObject
-{
-  public GuestOperationsManager(ServerConnection sc, ManagedObjectReference mor) 
-  {
-    super(sc, mor);
-  }
-  
-  public GuestAuthManager getAuthManager(VirtualMachine vm)
-  {
-    ManagedObjectReference mor = (ManagedObjectReference) getCurrentProperty("authManager");
-    return new GuestAuthManager(getServerConnection(), mor, vm);
-  }
-  
+public class GuestOperationsManager extends ManagedObject {
+    public GuestOperationsManager(ServerConnection sc, ManagedObjectReference mor) {
+        super(sc, mor);
+    }
 
-  public GuestFileManager getFileManager(VirtualMachine vm)
-  {
-    ManagedObjectReference mor = (ManagedObjectReference) getCurrentProperty("fileManager");
-    return new GuestFileManager(getServerConnection(), mor, vm);
-  }
+    /**
+     *
+     * @param vm VirtualMachine
+     * @param auth GuestAuthentication
+     * @return the GuestAliasManager
+     * @since 6.0
+     */
+    public GuestAliasManager getAliasManager(final VirtualMachine vm, final GuestAuthentication auth) {
+        final ManagedObjectReference mor = (ManagedObjectReference) getCurrentProperty("aliasManager");
+        if (mor == null) {
+            return null;
+        }
+        return new GuestAliasManager(getServerConnection(), mor, vm, auth);
+    }
 
-  public GuestProcessManager getProcessManager(VirtualMachine vm)
-  {
-    ManagedObjectReference mor = (ManagedObjectReference) getCurrentProperty("processManager");
-    return new GuestProcessManager(getServerConnection(), mor, vm);
-  }
+    public GuestAuthManager getAuthManager(VirtualMachine vm) {
+        ManagedObjectReference mor = (ManagedObjectReference) getCurrentProperty("authManager");
+        return new GuestAuthManager(getServerConnection(), mor, vm);
+    }
+
+    public GuestFileManager getFileManager(VirtualMachine vm) {
+        ManagedObjectReference mor = (ManagedObjectReference) getCurrentProperty("fileManager");
+        return new GuestFileManager(getServerConnection(), mor, vm);
+    }
+
+    /**
+     *
+     * @param vm VirtualMachine
+     * @param auth GuestAuthentication
+     * @return GuestWindowsRegistryManager
+     * @since 6.0
+     */
+    public GuestWindowsRegistryManager getGuestWindowsRegistryManager(final VirtualMachine vm, final GuestAuthentication auth) {
+        final ManagedObjectReference mor = (ManagedObjectReference) getCurrentProperty("guestWindowsRegistryManager");
+        if (mor == null) {
+            return null;
+        }
+        return new GuestWindowsRegistryManager(getServerConnection(), mor, vm, auth);
+    }
+
+    public GuestProcessManager getProcessManager(VirtualMachine vm) {
+        ManagedObjectReference mor = (ManagedObjectReference) getCurrentProperty("processManager");
+        return new GuestProcessManager(getServerConnection(), mor, vm);
+    }
 
 }

@@ -30,28 +30,39 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VsanClusterConfigInfoHostDefaultInfo extends DynamicData {
-  public String uuid;
-  public Boolean autoClaimStorage;
 
-  public String getUuid() {
-    return this.uuid;
-  }
+    public String uuid;
+    public Boolean autoClaimStorage;
+    public Boolean checksumEnabled;
 
-  public Boolean getAutoClaimStorage() {
-    return this.autoClaimStorage;
-  }
+    public String getUuid() {
+        return this.uuid;
+    }
 
-  public void setUuid(String uuid) {
-    this.uuid=uuid;
-  }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-  public void setAutoClaimStorage(Boolean autoClaimStorage) {
-    this.autoClaimStorage=autoClaimStorage;
-  }
+    public Boolean isAutoClaimStorage() {
+        return autoClaimStorage;
+    }
+
+    public void setAutoClaimStorage(Boolean autoClaimStorage) {
+        this.autoClaimStorage = autoClaimStorage;
+    }
+
+    public Boolean isChecksumEnabled() {
+        return checksumEnabled;
+    }
+
+    public void setChecksumEnabled(final Boolean checksumEnabled) {
+        this.checksumEnabled = checksumEnabled;
+    }
 }

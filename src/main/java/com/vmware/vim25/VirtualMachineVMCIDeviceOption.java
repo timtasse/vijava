@@ -30,19 +30,39 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VirtualMachineVMCIDeviceOption extends VirtualDeviceOption {
-  public BoolOption allowUnrestrictedCommunication;
 
-  public BoolOption getAllowUnrestrictedCommunication() {
-    return this.allowUnrestrictedCommunication;
-  }
+    public BoolOption allowUnrestrictedCommunication;
+    public BoolOption filterSupported;
+    public VirtualMachineVMCIDeviceOptionFilterSpecOption filterSpecOption;
 
-  public void setAllowUnrestrictedCommunication(BoolOption allowUnrestrictedCommunication) {
-    this.allowUnrestrictedCommunication=allowUnrestrictedCommunication;
-  }
+    public BoolOption getAllowUnrestrictedCommunication() {
+        return this.allowUnrestrictedCommunication;
+    }
+
+    public void setAllowUnrestrictedCommunication(BoolOption allowUnrestrictedCommunication) {
+        this.allowUnrestrictedCommunication = allowUnrestrictedCommunication;
+    }
+
+    public BoolOption getFilterSupported() {
+        return filterSupported;
+    }
+
+    public void setFilterSupported(final BoolOption filterSupported) {
+        this.filterSupported = filterSupported;
+    }
+
+    public VirtualMachineVMCIDeviceOptionFilterSpecOption getFilterSpecOption() {
+        return filterSpecOption;
+    }
+
+    public void setFilterSpecOption(final VirtualMachineVMCIDeviceOptionFilterSpecOption filterSpecOption) {
+        this.filterSpecOption = filterSpecOption;
+    }
 }

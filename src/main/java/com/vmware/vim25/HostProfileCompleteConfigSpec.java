@@ -30,55 +30,74 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class HostProfileCompleteConfigSpec extends HostProfileConfigSpec {
-  public HostApplyProfile applyProfile;
-  public ComplianceProfile customComplyProfile;
-  public boolean disabledExpressionListChanged;
-  public String[] disabledExpressionList;
-  public ManagedObjectReference validatorHost;
 
-  public HostApplyProfile getApplyProfile() {
-    return this.applyProfile;
-  }
+    public HostApplyProfile applyProfile;
+    public ComplianceProfile customComplyProfile;
+    public boolean disabledExpressionListChanged;
+    public String[] disabledExpressionList;
+    public ManagedObjectReference validatorHost;
+    public Boolean validating;
+    public HostProfileConfigInfo hostConfig;
 
-  public ComplianceProfile getCustomComplyProfile() {
-    return this.customComplyProfile;
-  }
+    public HostApplyProfile getApplyProfile() {
+        return this.applyProfile;
+    }
 
-  public boolean isDisabledExpressionListChanged() {
-    return this.disabledExpressionListChanged;
-  }
+    public void setApplyProfile(HostApplyProfile applyProfile) {
+        this.applyProfile = applyProfile;
+    }
 
-  public String[] getDisabledExpressionList() {
-    return this.disabledExpressionList;
-  }
+    public ComplianceProfile getCustomComplyProfile() {
+        return this.customComplyProfile;
+    }
 
-  public ManagedObjectReference getValidatorHost() {
-    return this.validatorHost;
-  }
+    public void setCustomComplyProfile(ComplianceProfile customComplyProfile) {
+        this.customComplyProfile = customComplyProfile;
+    }
 
-  public void setApplyProfile(HostApplyProfile applyProfile) {
-    this.applyProfile=applyProfile;
-  }
+    public boolean isDisabledExpressionListChanged() {
+        return this.disabledExpressionListChanged;
+    }
 
-  public void setCustomComplyProfile(ComplianceProfile customComplyProfile) {
-    this.customComplyProfile=customComplyProfile;
-  }
+    public void setDisabledExpressionListChanged(boolean disabledExpressionListChanged) {
+        this.disabledExpressionListChanged = disabledExpressionListChanged;
+    }
 
-  public void setDisabledExpressionListChanged(boolean disabledExpressionListChanged) {
-    this.disabledExpressionListChanged=disabledExpressionListChanged;
-  }
+    public String[] getDisabledExpressionList() {
+        return this.disabledExpressionList;
+    }
 
-  public void setDisabledExpressionList(String[] disabledExpressionList) {
-    this.disabledExpressionList=disabledExpressionList;
-  }
+    public void setDisabledExpressionList(String[] disabledExpressionList) {
+        this.disabledExpressionList = disabledExpressionList;
+    }
 
-  public void setValidatorHost(ManagedObjectReference validatorHost) {
-    this.validatorHost=validatorHost;
-  }
+    public ManagedObjectReference getValidatorHost() {
+        return this.validatorHost;
+    }
+
+    public void setValidatorHost(ManagedObjectReference validatorHost) {
+        this.validatorHost = validatorHost;
+    }
+
+    public HostProfileConfigInfo getHostConfig() {
+        return hostConfig;
+    }
+
+    public void setHostConfig(final HostProfileConfigInfo hostConfig) {
+        this.hostConfig = hostConfig;
+    }
+
+    public boolean isValidating() {
+        return validating;
+    }
+
+    public void setValidating(final boolean validating) {
+        this.validating = validating;
+    }
 }

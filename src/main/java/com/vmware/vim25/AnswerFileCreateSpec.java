@@ -30,10 +30,21 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class AnswerFileCreateSpec extends DynamicData {
+
+    public Boolean validating;
+
+    public Boolean isValidating() {
+        return validating;
+    }
+
+    public void setValidating(final Boolean validating) {
+        this.validating = validating;
+    }
 }

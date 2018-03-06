@@ -30,37 +30,87 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class HostScsiDisk extends ScsiLun {
-  public HostDiskDimensionsLba capacity;
-  public String devicePath;
-  public Boolean ssd;
 
-  public HostDiskDimensionsLba getCapacity() {
-    return this.capacity;
-  }
+    public HostDiskDimensionsLba capacity;
+    public String devicePath;
+    public Boolean ssd;
+    public Boolean localDisk;
+    public String[] physicalLocation;
+    public Boolean emulatedDIXDIFEnabled;
+    public VsanHostVsanDiskInfo vsanDiskInfo;
+    public String scsiDiskType;
 
-  public String getDevicePath() {
-    return this.devicePath;
-  }
+    public HostDiskDimensionsLba getCapacity() {
+        return this.capacity;
+    }
 
-  public Boolean getSsd() {
-    return this.ssd;
-  }
+    public void setCapacity(HostDiskDimensionsLba capacity) {
+        this.capacity = capacity;
+    }
 
-  public void setCapacity(HostDiskDimensionsLba capacity) {
-    this.capacity=capacity;
-  }
+    public String getDevicePath() {
+        return this.devicePath;
+    }
 
-  public void setDevicePath(String devicePath) {
-    this.devicePath=devicePath;
-  }
+    public void setDevicePath(String devicePath) {
+        this.devicePath = devicePath;
+    }
 
-  public void setSsd(Boolean ssd) {
-    this.ssd=ssd;
-  }
+    public Boolean getSsd() {
+        return this.ssd;
+    }
+
+    public void setSsd(Boolean ssd) {
+        this.ssd = ssd;
+    }
+
+    public Boolean isEmulatedDIXDIFEnabled() {
+        return emulatedDIXDIFEnabled;
+    }
+
+    public void setEmulatedDIXDIFEnabled(final Boolean emulatedDIXDIFEnabled) {
+        this.emulatedDIXDIFEnabled = emulatedDIXDIFEnabled;
+    }
+
+    public Boolean isLocalDisk() {
+        return localDisk;
+    }
+
+    public void setLocalDisk(final Boolean localDisk) {
+        this.localDisk = localDisk;
+    }
+
+    public String[] getPhysicalLocation() {
+        return physicalLocation;
+    }
+
+    public void setPhysicalLocation(final String[] physicalLocation) {
+        this.physicalLocation = physicalLocation;
+    }
+
+    public String getScsiDiskType() {
+        return scsiDiskType;
+    }
+
+    public void setScsiDiskType(final String scsiDiskType) {
+        this.scsiDiskType = scsiDiskType;
+    }
+
+    public Boolean isSsd() {
+        return ssd;
+    }
+
+    public VsanHostVsanDiskInfo getVsanDiskInfo() {
+        return vsanDiskInfo;
+    }
+
+    public void setVsanDiskInfo(final VsanHostVsanDiskInfo vsanDiskInfo) {
+        this.vsanDiskInfo = vsanDiskInfo;
+    }
 }

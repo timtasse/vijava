@@ -30,28 +30,39 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class HostProfileManagerConfigTaskList extends DynamicData {
-  public HostConfigSpec configSpec;
-  public LocalizableMessage[] taskDescription;
 
-  public HostConfigSpec getConfigSpec() {
-    return this.configSpec;
-  }
+    public HostConfigSpec configSpec;
+    public LocalizableMessage[] taskDescription;
+    public String[] taskListRequirement;
 
-  public LocalizableMessage[] getTaskDescription() {
-    return this.taskDescription;
-  }
+    public HostConfigSpec getConfigSpec() {
+        return this.configSpec;
+    }
 
-  public void setConfigSpec(HostConfigSpec configSpec) {
-    this.configSpec=configSpec;
-  }
+    public void setConfigSpec(HostConfigSpec configSpec) {
+        this.configSpec = configSpec;
+    }
 
-  public void setTaskDescription(LocalizableMessage[] taskDescription) {
-    this.taskDescription=taskDescription;
-  }
+    public LocalizableMessage[] getTaskDescription() {
+        return this.taskDescription;
+    }
+
+    public void setTaskDescription(LocalizableMessage[] taskDescription) {
+        this.taskDescription = taskDescription;
+    }
+
+    public String[] getTaskListRequirement() {
+        return taskListRequirement;
+    }
+
+    public void setTaskListRequirement(final String[] taskListRequirement) {
+        this.taskListRequirement = taskListRequirement;
+    }
 }

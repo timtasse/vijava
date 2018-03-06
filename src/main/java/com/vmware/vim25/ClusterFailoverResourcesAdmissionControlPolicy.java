@@ -30,28 +30,48 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class ClusterFailoverResourcesAdmissionControlPolicy extends ClusterDasAdmissionControlPolicy {
-  public int cpuFailoverResourcesPercent;
-  public int memoryFailoverResourcesPercent;
 
-  public int getCpuFailoverResourcesPercent() {
-    return this.cpuFailoverResourcesPercent;
-  }
+    public Boolean autoComputePercentages;
+    public int cpuFailoverResourcesPercent;
+    public Integer failoverLevel;
+    public int memoryFailoverResourcesPercent;
 
-  public int getMemoryFailoverResourcesPercent() {
-    return this.memoryFailoverResourcesPercent;
-  }
+    public int getCpuFailoverResourcesPercent() {
+        return this.cpuFailoverResourcesPercent;
+    }
 
-  public void setCpuFailoverResourcesPercent(int cpuFailoverResourcesPercent) {
-    this.cpuFailoverResourcesPercent=cpuFailoverResourcesPercent;
-  }
+    public void setCpuFailoverResourcesPercent(int cpuFailoverResourcesPercent) {
+        this.cpuFailoverResourcesPercent = cpuFailoverResourcesPercent;
+    }
 
-  public void setMemoryFailoverResourcesPercent(int memoryFailoverResourcesPercent) {
-    this.memoryFailoverResourcesPercent=memoryFailoverResourcesPercent;
-  }
+    public int getMemoryFailoverResourcesPercent() {
+        return this.memoryFailoverResourcesPercent;
+    }
+
+    public void setMemoryFailoverResourcesPercent(int memoryFailoverResourcesPercent) {
+        this.memoryFailoverResourcesPercent = memoryFailoverResourcesPercent;
+    }
+
+    public Boolean isAutoComputePercentages() {
+        return autoComputePercentages;
+    }
+
+    public void setAutoComputePercentages(final Boolean autoComputePercentages) {
+        this.autoComputePercentages = autoComputePercentages;
+    }
+
+    public int getFailoverLevel() {
+        return failoverLevel;
+    }
+
+    public void setFailoverLevel(final int failoverLevel) {
+        this.failoverLevel = failoverLevel;
+    }
 }

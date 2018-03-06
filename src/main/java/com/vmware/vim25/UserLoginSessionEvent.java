@@ -30,46 +30,56 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
 @SuppressWarnings("all")
 public class UserLoginSessionEvent extends SessionEvent {
-  public String ipAddress;
-  public String userAgent;
-  public String locale;
-  public String sessionId;
+    public String ipAddress;
+    public String userAgent;
+    public String locale;
+    public String sessionId;
 
-  public String getIpAddress() {
-    return this.ipAddress;
-  }
+    @Override
+    public String toString() {
+        return "UserLoginSessionEvent{" +
+                "ipAddress='" + ipAddress + '\'' +
+                ", userAgent='" + userAgent + '\'' +
+                ", locale='" + locale + '\'' +
+                ", sessionId='" + sessionId + '\'' +
+                "} " + super.toString();
+    }
 
-  public String getUserAgent() {
-    return this.userAgent;
-  }
+    public String getIpAddress() {
+        return this.ipAddress;
+    }
 
-  public String getLocale() {
-    return this.locale;
-  }
+    public String getUserAgent() {
+        return this.userAgent;
+    }
 
-  public String getSessionId() {
-    return this.sessionId;
-  }
+    public String getLocale() {
+        return this.locale;
+    }
 
-  public void setIpAddress(String ipAddress) {
-    this.ipAddress=ipAddress;
-  }
+    public String getSessionId() {
+        return this.sessionId;
+    }
 
-  public void setUserAgent(String userAgent) {
-    this.userAgent=userAgent;
-  }
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
 
-  public void setLocale(String locale) {
-    this.locale=locale;
-  }
+    public void setUserAgent(String userAgent) {
+        this.userAgent = userAgent;
+    }
 
-  public void setSessionId(String sessionId) {
-    this.sessionId=sessionId;
-  }
+    public void setLocale(String locale) {
+        this.locale = locale;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
 }

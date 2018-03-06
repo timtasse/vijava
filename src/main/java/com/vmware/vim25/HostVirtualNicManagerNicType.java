@@ -30,21 +30,30 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 public enum HostVirtualNicManagerNicType {
-  vmotion ("vmotion"),
-  faultToleranceLogging ("faultToleranceLogging"),
-  vSphereReplication ("vSphereReplication"),
-  management ("management"),
-  vsan ("vsan");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private HostVirtualNicManagerNicType(String val)
-  {
-    this.val = val;
-  }
+    faultToleranceLogging("faultToleranceLogging"),
+    management("management"),
+    vmotion("vmotion"),
+    vsan("vsan"),
+    vsanWitness("vsanWitness"),
+    vSphereProvisioning("vSphereProvisioning"),
+    vSphereReplication("vSphereReplication"),
+    vSphereReplicationNFC("vSphereReplicationNFC");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    HostVirtualNicManagerNicType(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

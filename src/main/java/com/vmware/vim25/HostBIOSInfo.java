@@ -28,31 +28,79 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
 package com.vmware.vim25;
+
 import java.util.Calendar;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class HostBIOSInfo extends DynamicData {
-  public String biosVersion;
-  public Calendar releaseDate;
 
-  public String getBiosVersion() {
-    return this.biosVersion;
-  }
+    public String biosVersion;
+    public Integer firmwareMajorRelease;
+    public Integer firmwareMinorRelease;
+    public Integer majorRelease;
+    public Integer minorRelease;
+    public Calendar releaseDate;
+    public String vendor;
 
-  public Calendar getReleaseDate() {
-    return this.releaseDate;
-  }
+    public Integer getMajorRelease() {
+        return majorRelease;
+    }
 
-  public void setBiosVersion(String biosVersion) {
-    this.biosVersion=biosVersion;
-  }
+    public void setMajorRelease(final Integer majorRelease) {
+        this.majorRelease = majorRelease;
+    }
 
-  public void setReleaseDate(Calendar releaseDate) {
-    this.releaseDate=releaseDate;
-  }
+    public Integer getMinorRelease() {
+        return minorRelease;
+    }
+
+    public void setMinorRelease(final Integer minorRelease) {
+        this.minorRelease = minorRelease;
+    }
+
+    public Integer getFirmwareMajorRelease() {
+        return firmwareMajorRelease;
+    }
+
+    public void setFirmwareMajorRelease(final Integer firmwareMajorRelease) {
+        this.firmwareMajorRelease = firmwareMajorRelease;
+    }
+
+    public Integer getFirmwareMinorRelease() {
+        return firmwareMinorRelease;
+    }
+
+    public void setFirmwareMinorRelease(final Integer firmwareMinorRelease) {
+        this.firmwareMinorRelease = firmwareMinorRelease;
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(final String vendor) {
+        this.vendor = vendor;
+    }
+
+    public String getBiosVersion() {
+        return this.biosVersion;
+    }
+
+    public Calendar getReleaseDate() {
+        return this.releaseDate;
+    }
+
+    public void setBiosVersion(String biosVersion) {
+        this.biosVersion = biosVersion;
+    }
+
+    public void setReleaseDate(Calendar releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
 }

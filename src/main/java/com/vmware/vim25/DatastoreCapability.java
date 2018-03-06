@@ -30,73 +30,101 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class DatastoreCapability extends DynamicData {
-  public boolean directoryHierarchySupported;
-  public boolean rawDiskMappingsSupported;
-  public boolean perFileThinProvisioningSupported;
-  public Boolean storageIORMSupported;
-  public Boolean nativeSnapshotSupported;
-  public Boolean topLevelDirectoryCreateSupported;
-  public Boolean seSparseSupported;
 
-  public boolean isDirectoryHierarchySupported() {
-    return this.directoryHierarchySupported;
-  }
+    public boolean directoryHierarchySupported;
+    public boolean nativeSnapshotSupported;
+    public boolean perFileThinProvisioningSupported;
+    public boolean rawDiskMappingsSupported;
+    public Boolean seSparseSupported;
+    public boolean storageIORMSupported;
+    public Boolean topLevelDirectoryCreateSupported;
+    public Boolean upitSupported;
+    public Boolean vmfsSparseSupported;
+    public Boolean vsanSparseSupported;
 
-  public boolean isRawDiskMappingsSupported() {
-    return this.rawDiskMappingsSupported;
-  }
+    public boolean isDirectoryHierarchySupported() {
+        return this.directoryHierarchySupported;
+    }
 
-  public boolean isPerFileThinProvisioningSupported() {
-    return this.perFileThinProvisioningSupported;
-  }
+    public void setDirectoryHierarchySupported(boolean directoryHierarchySupported) {
+        this.directoryHierarchySupported = directoryHierarchySupported;
+    }
 
-  public Boolean getStorageIORMSupported() {
-    return this.storageIORMSupported;
-  }
+    public boolean isRawDiskMappingsSupported() {
+        return this.rawDiskMappingsSupported;
+    }
 
-  public Boolean getNativeSnapshotSupported() {
-    return this.nativeSnapshotSupported;
-  }
+    public void setRawDiskMappingsSupported(boolean rawDiskMappingsSupported) {
+        this.rawDiskMappingsSupported = rawDiskMappingsSupported;
+    }
 
-  public Boolean getTopLevelDirectoryCreateSupported() {
-    return this.topLevelDirectoryCreateSupported;
-  }
+    public boolean isPerFileThinProvisioningSupported() {
+        return this.perFileThinProvisioningSupported;
+    }
 
-  public Boolean getSeSparseSupported() {
-    return this.seSparseSupported;
-  }
+    public void setPerFileThinProvisioningSupported(boolean perFileThinProvisioningSupported) {
+        this.perFileThinProvisioningSupported = perFileThinProvisioningSupported;
+    }
 
-  public void setDirectoryHierarchySupported(boolean directoryHierarchySupported) {
-    this.directoryHierarchySupported=directoryHierarchySupported;
-  }
+    public boolean isNativeSnapshotSupported() {
+        return nativeSnapshotSupported;
+    }
 
-  public void setRawDiskMappingsSupported(boolean rawDiskMappingsSupported) {
-    this.rawDiskMappingsSupported=rawDiskMappingsSupported;
-  }
+    public void setNativeSnapshotSupported(boolean nativeSnapshotSupported) {
+        this.nativeSnapshotSupported = nativeSnapshotSupported;
+    }
 
-  public void setPerFileThinProvisioningSupported(boolean perFileThinProvisioningSupported) {
-    this.perFileThinProvisioningSupported=perFileThinProvisioningSupported;
-  }
+    public boolean isSeSparseSupported() {
+        return seSparseSupported;
+    }
 
-  public void setStorageIORMSupported(Boolean storageIORMSupported) {
-    this.storageIORMSupported=storageIORMSupported;
-  }
+    public void setSeSparseSupported(boolean seSparseSupported) {
+        this.seSparseSupported = seSparseSupported;
+    }
 
-  public void setNativeSnapshotSupported(Boolean nativeSnapshotSupported) {
-    this.nativeSnapshotSupported=nativeSnapshotSupported;
-  }
+    public boolean isStorageIORMSupported() {
+        return storageIORMSupported;
+    }
 
-  public void setTopLevelDirectoryCreateSupported(Boolean topLevelDirectoryCreateSupported) {
-    this.topLevelDirectoryCreateSupported=topLevelDirectoryCreateSupported;
-  }
+    public void setStorageIORMSupported(boolean storageIORMSupported) {
+        this.storageIORMSupported = storageIORMSupported;
+    }
 
-  public void setSeSparseSupported(Boolean seSparseSupported) {
-    this.seSparseSupported=seSparseSupported;
-  }
+    public boolean isTopLevelDirectoryCreateSupported() {
+        return topLevelDirectoryCreateSupported;
+    }
+
+    public void setTopLevelDirectoryCreateSupported(boolean topLevelDirectoryCreateSupported) {
+        this.topLevelDirectoryCreateSupported = topLevelDirectoryCreateSupported;
+    }
+
+    public boolean isUpitSupported() {
+        return upitSupported;
+    }
+
+    public void setUpitSupported(final boolean upitSupported) {
+        this.upitSupported = upitSupported;
+    }
+
+    public boolean isVmfsSparseSupported() {
+        return vmfsSparseSupported;
+    }
+
+    public void setVmfsSparseSupported(final boolean vmfsSparseSupported) {
+        this.vmfsSparseSupported = vmfsSparseSupported;
+    }
+
+    public boolean isVsanSparseSupported() {
+        return vsanSparseSupported;
+    }
+
+    public void setVsanSparseSupported(final boolean vsanSparseSupported) {
+        this.vsanSparseSupported = vsanSparseSupported;
+    }
 }

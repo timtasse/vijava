@@ -30,55 +30,66 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VsanHostConfigInfo extends DynamicData {
-  public Boolean enabled;
-  public ManagedObjectReference hostSystem;
-  public VsanHostConfigInfoClusterInfo clusterInfo;
-  public VsanHostConfigInfoStorageInfo storageInfo;
-  public VsanHostConfigInfoNetworkInfo networkInfo;
 
-  public Boolean getEnabled() {
-    return this.enabled;
-  }
+    public Boolean enabled;
+    public ManagedObjectReference hostSystem;
+    public VsanHostConfigInfoClusterInfo clusterInfo;
+    public VsanHostConfigInfoStorageInfo storageInfo;
+    public VsanHostConfigInfoNetworkInfo networkInfo;
+    public VsanHostFaultDomainInfo faultDomainInfo;
 
-  public ManagedObjectReference getHostSystem() {
-    return this.hostSystem;
-  }
+    public ManagedObjectReference getHostSystem() {
+        return this.hostSystem;
+    }
 
-  public VsanHostConfigInfoClusterInfo getClusterInfo() {
-    return this.clusterInfo;
-  }
+    public void setHostSystem(ManagedObjectReference hostSystem) {
+        this.hostSystem = hostSystem;
+    }
 
-  public VsanHostConfigInfoStorageInfo getStorageInfo() {
-    return this.storageInfo;
-  }
+    public VsanHostConfigInfoClusterInfo getClusterInfo() {
+        return this.clusterInfo;
+    }
 
-  public VsanHostConfigInfoNetworkInfo getNetworkInfo() {
-    return this.networkInfo;
-  }
+    public void setClusterInfo(VsanHostConfigInfoClusterInfo clusterInfo) {
+        this.clusterInfo = clusterInfo;
+    }
 
-  public void setEnabled(Boolean enabled) {
-    this.enabled=enabled;
-  }
+    public VsanHostConfigInfoStorageInfo getStorageInfo() {
+        return this.storageInfo;
+    }
 
-  public void setHostSystem(ManagedObjectReference hostSystem) {
-    this.hostSystem=hostSystem;
-  }
+    public void setStorageInfo(VsanHostConfigInfoStorageInfo storageInfo) {
+        this.storageInfo = storageInfo;
+    }
 
-  public void setClusterInfo(VsanHostConfigInfoClusterInfo clusterInfo) {
-    this.clusterInfo=clusterInfo;
-  }
+    public VsanHostConfigInfoNetworkInfo getNetworkInfo() {
+        return this.networkInfo;
+    }
 
-  public void setStorageInfo(VsanHostConfigInfoStorageInfo storageInfo) {
-    this.storageInfo=storageInfo;
-  }
+    public void setNetworkInfo(VsanHostConfigInfoNetworkInfo networkInfo) {
+        this.networkInfo = networkInfo;
+    }
 
-  public void setNetworkInfo(VsanHostConfigInfoNetworkInfo networkInfo) {
-    this.networkInfo=networkInfo;
-  }
+    public Boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public VsanHostFaultDomainInfo getFaultDomainInfo() {
+        return faultDomainInfo;
+    }
+
+    public void setFaultDomainInfo(final VsanHostFaultDomainInfo faultDomainInfo) {
+        this.faultDomainInfo = faultDomainInfo;
+    }
 }

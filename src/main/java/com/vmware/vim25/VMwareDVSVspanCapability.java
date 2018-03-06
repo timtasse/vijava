@@ -30,55 +30,65 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VMwareDVSVspanCapability extends DynamicData {
-  public boolean mixedDestSupported;
-  public boolean dvportSupported;
-  public boolean remoteSourceSupported;
-  public boolean remoteDestSupported;
-  public boolean encapRemoteSourceSupported;
 
-  public boolean isMixedDestSupported() {
-    return this.mixedDestSupported;
-  }
+    public boolean dvportSupported;
+    public boolean encapRemoteSourceSupported;
+    public Boolean erspanProtocolSupported;
+    public boolean mixedDestSupported;
+    public boolean remoteDestSupported;
+    public boolean remoteSourceSupported;
 
-  public boolean isDvportSupported() {
-    return this.dvportSupported;
-  }
+    public boolean isMixedDestSupported() {
+        return this.mixedDestSupported;
+    }
 
-  public boolean isRemoteSourceSupported() {
-    return this.remoteSourceSupported;
-  }
+    public void setMixedDestSupported(boolean mixedDestSupported) {
+        this.mixedDestSupported = mixedDestSupported;
+    }
 
-  public boolean isRemoteDestSupported() {
-    return this.remoteDestSupported;
-  }
+    public boolean isDvportSupported() {
+        return this.dvportSupported;
+    }
 
-  public boolean isEncapRemoteSourceSupported() {
-    return this.encapRemoteSourceSupported;
-  }
+    public void setDvportSupported(boolean dvportSupported) {
+        this.dvportSupported = dvportSupported;
+    }
 
-  public void setMixedDestSupported(boolean mixedDestSupported) {
-    this.mixedDestSupported=mixedDestSupported;
-  }
+    public boolean isRemoteSourceSupported() {
+        return this.remoteSourceSupported;
+    }
 
-  public void setDvportSupported(boolean dvportSupported) {
-    this.dvportSupported=dvportSupported;
-  }
+    public void setRemoteSourceSupported(boolean remoteSourceSupported) {
+        this.remoteSourceSupported = remoteSourceSupported;
+    }
 
-  public void setRemoteSourceSupported(boolean remoteSourceSupported) {
-    this.remoteSourceSupported=remoteSourceSupported;
-  }
+    public boolean isRemoteDestSupported() {
+        return this.remoteDestSupported;
+    }
 
-  public void setRemoteDestSupported(boolean remoteDestSupported) {
-    this.remoteDestSupported=remoteDestSupported;
-  }
+    public void setRemoteDestSupported(boolean remoteDestSupported) {
+        this.remoteDestSupported = remoteDestSupported;
+    }
 
-  public void setEncapRemoteSourceSupported(boolean encapRemoteSourceSupported) {
-    this.encapRemoteSourceSupported=encapRemoteSourceSupported;
-  }
+    public boolean isEncapRemoteSourceSupported() {
+        return this.encapRemoteSourceSupported;
+    }
+
+    public void setEncapRemoteSourceSupported(boolean encapRemoteSourceSupported) {
+        this.encapRemoteSourceSupported = encapRemoteSourceSupported;
+    }
+
+    public boolean isErspanProtocolSupported() {
+        return erspanProtocolSupported;
+    }
+
+    public void setErspanProtocolSupported(final boolean erspanProtocolSupported) {
+        this.erspanProtocolSupported = erspanProtocolSupported;
+    }
 }

@@ -30,28 +30,38 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VirtualMachineDefinedProfileSpec extends VirtualMachineProfileSpec {
-  public String profileId;
-  public VirtualMachineProfileRawData profileData;
 
-  public String getProfileId() {
-    return this.profileId;
-  }
+    public String profileId;
+    public ReplicationSpec replicationSpec;
+    public VirtualMachineProfileRawData profileData;
 
-  public VirtualMachineProfileRawData getProfileData() {
-    return this.profileData;
-  }
+    public String getProfileId() {
+        return this.profileId;
+    }
 
-  public void setProfileId(String profileId) {
-    this.profileId=profileId;
-  }
+    public void setProfileId(String profileId) {
+        this.profileId = profileId;
+    }
 
-  public void setProfileData(VirtualMachineProfileRawData profileData) {
-    this.profileData=profileData;
-  }
+    public VirtualMachineProfileRawData getProfileData() {
+        return this.profileData;
+    }
+
+    public void setProfileData(VirtualMachineProfileRawData profileData) {
+        this.profileData = profileData;
+    }
+
+    public ReplicationSpec getReplicationSpec() {
+        return replicationSpec;
+    }
+
+    public void setReplicationSpec(final ReplicationSpec replicationSpec) {
+        this.replicationSpec = replicationSpec;
+    }
 }

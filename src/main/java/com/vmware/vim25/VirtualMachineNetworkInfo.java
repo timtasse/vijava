@@ -30,19 +30,29 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VirtualMachineNetworkInfo extends VirtualMachineTargetInfo {
-  public NetworkSummary network;
 
-  public NetworkSummary getNetwork() {
-    return this.network;
-  }
+    public NetworkSummary network;
+    public String vswitch;
 
-  public void setNetwork(NetworkSummary network) {
-    this.network=network;
-  }
+    public NetworkSummary getNetwork() {
+        return this.network;
+    }
+
+    public void setNetwork(NetworkSummary network) {
+        this.network = network;
+    }
+
+    public String getVswitch() {
+        return vswitch;
+    }
+
+    public void setVswitch(final String vswitch) {
+        this.vswitch = vswitch;
+    }
 }

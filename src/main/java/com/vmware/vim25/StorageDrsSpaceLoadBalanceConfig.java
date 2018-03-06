@@ -30,28 +30,48 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class StorageDrsSpaceLoadBalanceConfig extends DynamicData {
-  public Integer spaceUtilizationThreshold;
-  public Integer minSpaceUtilizationDifference;
 
-  public Integer getSpaceUtilizationThreshold() {
-    return this.spaceUtilizationThreshold;
-  }
+    public Integer spaceUtilizationThreshold;
+    public Integer minSpaceUtilizationDifference;
+    public Integer freeSpaceThresholdGB;
+    public String spaceThresholdMode;
 
-  public Integer getMinSpaceUtilizationDifference() {
-    return this.minSpaceUtilizationDifference;
-  }
+    public Integer getSpaceUtilizationThreshold() {
+        return this.spaceUtilizationThreshold;
+    }
 
-  public void setSpaceUtilizationThreshold(Integer spaceUtilizationThreshold) {
-    this.spaceUtilizationThreshold=spaceUtilizationThreshold;
-  }
+    public void setSpaceUtilizationThreshold(Integer spaceUtilizationThreshold) {
+        this.spaceUtilizationThreshold = spaceUtilizationThreshold;
+    }
 
-  public void setMinSpaceUtilizationDifference(Integer minSpaceUtilizationDifference) {
-    this.minSpaceUtilizationDifference=minSpaceUtilizationDifference;
-  }
+    public Integer getMinSpaceUtilizationDifference() {
+        return this.minSpaceUtilizationDifference;
+    }
+
+    public void setMinSpaceUtilizationDifference(Integer minSpaceUtilizationDifference) {
+        this.minSpaceUtilizationDifference = minSpaceUtilizationDifference;
+    }
+
+    public Integer getFreeSpaceThresholdGB() {
+        return freeSpaceThresholdGB;
+    }
+
+    public void setFreeSpaceThresholdGB(final Integer freeSpaceThresholdGB) {
+        this.freeSpaceThresholdGB = freeSpaceThresholdGB;
+    }
+
+    public String getSpaceThresholdMode() {
+        return spaceThresholdMode;
+    }
+
+    public void setSpaceThresholdMode(final String spaceThresholdMode) {
+        this.spaceThresholdMode = spaceThresholdMode;
+    }
 }

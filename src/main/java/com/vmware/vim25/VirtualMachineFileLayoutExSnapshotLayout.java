@@ -30,37 +30,48 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VirtualMachineFileLayoutExSnapshotLayout extends DynamicData {
-  public ManagedObjectReference key;
-  public int dataKey;
-  public VirtualMachineFileLayoutExDiskLayout[] disk;
 
-  public ManagedObjectReference getKey() {
-    return this.key;
-  }
+    public ManagedObjectReference key;
+    public int dataKey;
+    public int memoryKey;
+    public VirtualMachineFileLayoutExDiskLayout[] disk;
 
-  public int getDataKey() {
-    return this.dataKey;
-  }
+    public ManagedObjectReference getKey() {
+        return this.key;
+    }
 
-  public VirtualMachineFileLayoutExDiskLayout[] getDisk() {
-    return this.disk;
-  }
+    public void setKey(ManagedObjectReference key) {
+        this.key = key;
+    }
 
-  public void setKey(ManagedObjectReference key) {
-    this.key=key;
-  }
+    public int getDataKey() {
+        return this.dataKey;
+    }
 
-  public void setDataKey(int dataKey) {
-    this.dataKey=dataKey;
-  }
+    public void setDataKey(int dataKey) {
+        this.dataKey = dataKey;
+    }
 
-  public void setDisk(VirtualMachineFileLayoutExDiskLayout[] disk) {
-    this.disk=disk;
-  }
+    public VirtualMachineFileLayoutExDiskLayout[] getDisk() {
+        return this.disk;
+    }
+
+    public void setDisk(VirtualMachineFileLayoutExDiskLayout[] disk) {
+        this.disk = disk;
+    }
+
+    public int getMemoryKey() {
+        return memoryKey;
+    }
+
+    public void setMemoryKey(final int memoryKey) {
+        this.memoryKey = memoryKey;
+    }
 }

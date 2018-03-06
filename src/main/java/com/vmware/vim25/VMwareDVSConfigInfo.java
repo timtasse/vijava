@@ -30,73 +30,84 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VMwareDVSConfigInfo extends DVSConfigInfo {
-  public VMwareVspanSession[] vspanSession;
-  public VMwareDVSPvlanMapEntry[] pvlanConfig;
-  public int maxMtu;
-  public LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig;
-  public VMwareIpfixConfig ipfixConfig;
-  public VMwareDvsLacpGroupConfig[] lacpGroupConfig;
-  public String lacpApiVersion;
 
-  public VMwareVspanSession[] getVspanSession() {
-    return this.vspanSession;
-  }
+    public VMwareVspanSession[] vspanSession;
+    public VMwareDVSPvlanMapEntry[] pvlanConfig;
+    public int maxMtu;
+    public LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig;
+    public VMwareIpfixConfig ipfixConfig;
+    public VMwareDvsLacpGroupConfig[] lacpGroupConfig;
+    public String lacpApiVersion;
+    public String multicastFilteringMode;
 
-  public VMwareDVSPvlanMapEntry[] getPvlanConfig() {
-    return this.pvlanConfig;
-  }
+    public VMwareVspanSession[] getVspanSession() {
+        return this.vspanSession;
+    }
 
-  public int getMaxMtu() {
-    return this.maxMtu;
-  }
+    public void setVspanSession(VMwareVspanSession[] vspanSession) {
+        this.vspanSession = vspanSession;
+    }
 
-  public LinkDiscoveryProtocolConfig getLinkDiscoveryProtocolConfig() {
-    return this.linkDiscoveryProtocolConfig;
-  }
+    public VMwareDVSPvlanMapEntry[] getPvlanConfig() {
+        return this.pvlanConfig;
+    }
 
-  public VMwareIpfixConfig getIpfixConfig() {
-    return this.ipfixConfig;
-  }
+    public void setPvlanConfig(VMwareDVSPvlanMapEntry[] pvlanConfig) {
+        this.pvlanConfig = pvlanConfig;
+    }
 
-  public VMwareDvsLacpGroupConfig[] getLacpGroupConfig() {
-    return this.lacpGroupConfig;
-  }
+    public int getMaxMtu() {
+        return this.maxMtu;
+    }
 
-  public String getLacpApiVersion() {
-    return this.lacpApiVersion;
-  }
+    public void setMaxMtu(int maxMtu) {
+        this.maxMtu = maxMtu;
+    }
 
-  public void setVspanSession(VMwareVspanSession[] vspanSession) {
-    this.vspanSession=vspanSession;
-  }
+    public LinkDiscoveryProtocolConfig getLinkDiscoveryProtocolConfig() {
+        return this.linkDiscoveryProtocolConfig;
+    }
 
-  public void setPvlanConfig(VMwareDVSPvlanMapEntry[] pvlanConfig) {
-    this.pvlanConfig=pvlanConfig;
-  }
+    public void setLinkDiscoveryProtocolConfig(LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig) {
+        this.linkDiscoveryProtocolConfig = linkDiscoveryProtocolConfig;
+    }
 
-  public void setMaxMtu(int maxMtu) {
-    this.maxMtu=maxMtu;
-  }
+    public VMwareIpfixConfig getIpfixConfig() {
+        return this.ipfixConfig;
+    }
 
-  public void setLinkDiscoveryProtocolConfig(LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig) {
-    this.linkDiscoveryProtocolConfig=linkDiscoveryProtocolConfig;
-  }
+    public void setIpfixConfig(VMwareIpfixConfig ipfixConfig) {
+        this.ipfixConfig = ipfixConfig;
+    }
 
-  public void setIpfixConfig(VMwareIpfixConfig ipfixConfig) {
-    this.ipfixConfig=ipfixConfig;
-  }
+    public VMwareDvsLacpGroupConfig[] getLacpGroupConfig() {
+        return this.lacpGroupConfig;
+    }
 
-  public void setLacpGroupConfig(VMwareDvsLacpGroupConfig[] lacpGroupConfig) {
-    this.lacpGroupConfig=lacpGroupConfig;
-  }
+    public void setLacpGroupConfig(VMwareDvsLacpGroupConfig[] lacpGroupConfig) {
+        this.lacpGroupConfig = lacpGroupConfig;
+    }
 
-  public void setLacpApiVersion(String lacpApiVersion) {
-    this.lacpApiVersion=lacpApiVersion;
-  }
+    public String getLacpApiVersion() {
+        return this.lacpApiVersion;
+    }
+
+    public void setLacpApiVersion(String lacpApiVersion) {
+        this.lacpApiVersion = lacpApiVersion;
+    }
+
+    public String getMulticastFilteringMode() {
+        return multicastFilteringMode;
+    }
+
+    public void setMulticastFilteringMode(final String multicastFilteringMode) {
+        this.multicastFilteringMode = multicastFilteringMode;
+    }
 }

@@ -30,30 +30,39 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.7
+ * @since 5.0
+ */
 public enum ReplicationVmConfigFaultReasonForFault {
-  incompatibleHwVersion ("incompatibleHwVersion"),
-  invalidVmReplicationId ("invalidVmReplicationId"),
-  invalidGenerationNumber ("invalidGenerationNumber"),
-  outOfBoundsRpoValue ("outOfBoundsRpoValue"),
-  invalidDestinationIpAddress ("invalidDestinationIpAddress"),
-  invalidDestinationPort ("invalidDestinationPort"),
-  invalidExtraVmOptions ("invalidExtraVmOptions"),
-  staleGenerationNumber ("staleGenerationNumber"),
-  reconfigureVmReplicationIdNotAllowed ("reconfigureVmReplicationIdNotAllowed"),
-  cannotRetrieveVmReplicationConfiguration ("cannotRetrieveVmReplicationConfiguration"),
-  replicationAlreadyEnabled ("replicationAlreadyEnabled"),
-  invalidPriorConfiguration ("invalidPriorConfiguration"),
-  replicationNotEnabled ("replicationNotEnabled"),
-  replicationConfigurationFailed ("replicationConfigurationFailed");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private ReplicationVmConfigFaultReasonForFault(String val)
-  {
-    this.val = val;
-  }
+    cannotRetrieveVmReplicationConfiguration("cannotRetrieveVmReplicationConfiguration"),
+    encryptedVm("encryptedVm"),
+    incompatibleDevice("incompatibleDevice"),
+    incompatibleHwVersion("incompatibleHwVersion"),
+    invalidDestinationIpAddress("invalidDestinationIpAddress"),
+    invalidDestinationPort("invalidDestinationPort"),
+    invalidExtraVmOptions("invalidExtraVmOptions"),
+    invalidGenerationNumber("invalidGenerationNumber"),
+    invalidPriorConfiguration("invalidPriorConfiguration"),
+    invalidThumbprint("invalidThumbprint"),
+    invalidVmReplicationId("invalidVmReplicationId"),
+    outOfBoundsRpoValue("outOfBoundsRpoValue"),
+    reconfigureVmReplicationIdNotAllowed("reconfigureVmReplicationIdNotAllowed"),
+    replicationAlreadyEnabled("replicationAlreadyEnabled"),
+    replicationConfigurationFailed("replicationConfigurationFailed"),
+    replicationNotEnabled("replicationNotEnabled"),
+    staleGenerationNumber("staleGenerationNumber");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    ReplicationVmConfigFaultReasonForFault(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

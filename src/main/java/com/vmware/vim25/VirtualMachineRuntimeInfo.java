@@ -28,238 +28,282 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
 package com.vmware.vim25;
+
 import java.util.Calendar;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VirtualMachineRuntimeInfo extends DynamicData {
-  public VirtualMachineDeviceRuntimeInfo[] device;
-  public ManagedObjectReference host;
-  public VirtualMachineConnectionState connectionState;
-  public VirtualMachinePowerState powerState;
-  public VirtualMachineFaultToleranceState faultToleranceState;
-  public VirtualMachineRuntimeInfoDasProtectionState dasVmProtection;
-  public boolean toolsInstallerMounted;
-  public Calendar suspendTime;
-  public Calendar bootTime;
-  public Long suspendInterval;
-  public VirtualMachineQuestionInfo question;
-  public Long memoryOverhead;
-  public Integer maxCpuUsage;
-  public Integer maxMemoryUsage;
-  public int numMksConnections;
-  public VirtualMachineRecordReplayState recordReplayState;
-  public Boolean cleanPowerOff;
-  public String needSecondaryReason;
-  public Boolean onlineStandby;
-  public String minRequiredEVCModeKey;
-  public Boolean consolidationNeeded;
-  public VirtualMachineFeatureRequirement[] offlineFeatureRequirement;
-  public VirtualMachineFeatureRequirement[] featureRequirement;
-  public HostFeatureMask[] featureMask;
-  public Long vFlashCacheAllocation;
 
-  public VirtualMachineDeviceRuntimeInfo[] getDevice() {
-    return this.device;
-  }
+    public VirtualMachineDeviceRuntimeInfo[] device;
+    public ManagedObjectReference host;
+    public VirtualMachineConnectionState connectionState;
+    public VirtualMachinePowerState powerState;
+    public VirtualMachineFaultToleranceState faultToleranceState;
+    public VirtualMachineRuntimeInfoDasProtectionState dasVmProtection;
+    public boolean toolsInstallerMounted;
+    public Calendar suspendTime;
+    public Calendar bootTime;
+    public Long suspendInterval;
+    public VirtualMachineQuestionInfo question;
+    @Deprecated
+    public Long memoryOverhead;
+    public Integer maxCpuUsage;
+    public Integer maxMemoryUsage;
+    public int numMksConnections;
+    @Deprecated
+    public VirtualMachineRecordReplayState recordReplayState;
+    public Boolean cleanPowerOff;
+    public Boolean paused;
+    public Boolean quiescedForkParent;
+    public String needSecondaryReason;
+    public boolean onlineStandby;
+    public String minRequiredEVCModeKey;
+    public boolean consolidationNeeded;
+    public VirtualMachineFeatureRequirement[] offlineFeatureRequirement;
+    public VirtualMachineFeatureRequirement[] featureRequirement;
+    public HostFeatureMask[] featureMask;
+    public Long vFlashCacheAllocation;
+    public Boolean snapshotInBackground;
 
-  public ManagedObjectReference getHost() {
-    return this.host;
-  }
+    public VirtualMachineDeviceRuntimeInfo[] getDevice() {
+        return this.device;
+    }
 
-  public VirtualMachineConnectionState getConnectionState() {
-    return this.connectionState;
-  }
+    public void setDevice(VirtualMachineDeviceRuntimeInfo[] device) {
+        this.device = device;
+    }
 
-  public VirtualMachinePowerState getPowerState() {
-    return this.powerState;
-  }
+    public ManagedObjectReference getHost() {
+        return this.host;
+    }
 
-  public VirtualMachineFaultToleranceState getFaultToleranceState() {
-    return this.faultToleranceState;
-  }
+    public void setHost(ManagedObjectReference host) {
+        this.host = host;
+    }
 
-  public VirtualMachineRuntimeInfoDasProtectionState getDasVmProtection() {
-    return this.dasVmProtection;
-  }
+    public VirtualMachineConnectionState getConnectionState() {
+        return this.connectionState;
+    }
 
-  public boolean isToolsInstallerMounted() {
-    return this.toolsInstallerMounted;
-  }
+    public void setConnectionState(VirtualMachineConnectionState connectionState) {
+        this.connectionState = connectionState;
+    }
 
-  public Calendar getSuspendTime() {
-    return this.suspendTime;
-  }
+    public VirtualMachinePowerState getPowerState() {
+        return this.powerState;
+    }
 
-  public Calendar getBootTime() {
-    return this.bootTime;
-  }
+    public void setPowerState(VirtualMachinePowerState powerState) {
+        this.powerState = powerState;
+    }
 
-  public Long getSuspendInterval() {
-    return this.suspendInterval;
-  }
+    public VirtualMachineFaultToleranceState getFaultToleranceState() {
+        return this.faultToleranceState;
+    }
 
-  public VirtualMachineQuestionInfo getQuestion() {
-    return this.question;
-  }
+    public void setFaultToleranceState(VirtualMachineFaultToleranceState faultToleranceState) {
+        this.faultToleranceState = faultToleranceState;
+    }
 
-  public Long getMemoryOverhead() {
-    return this.memoryOverhead;
-  }
+    public VirtualMachineRuntimeInfoDasProtectionState getDasVmProtection() {
+        return this.dasVmProtection;
+    }
 
-  public Integer getMaxCpuUsage() {
-    return this.maxCpuUsage;
-  }
+    public void setDasVmProtection(VirtualMachineRuntimeInfoDasProtectionState dasVmProtection) {
+        this.dasVmProtection = dasVmProtection;
+    }
 
-  public Integer getMaxMemoryUsage() {
-    return this.maxMemoryUsage;
-  }
+    public boolean isToolsInstallerMounted() {
+        return this.toolsInstallerMounted;
+    }
 
-  public int getNumMksConnections() {
-    return this.numMksConnections;
-  }
+    public void setToolsInstallerMounted(boolean toolsInstallerMounted) {
+        this.toolsInstallerMounted = toolsInstallerMounted;
+    }
 
-  public VirtualMachineRecordReplayState getRecordReplayState() {
-    return this.recordReplayState;
-  }
+    public Calendar getSuspendTime() {
+        return this.suspendTime;
+    }
 
-  public Boolean getCleanPowerOff() {
-    return this.cleanPowerOff;
-  }
+    public void setSuspendTime(Calendar suspendTime) {
+        this.suspendTime = suspendTime;
+    }
 
-  public String getNeedSecondaryReason() {
-    return this.needSecondaryReason;
-  }
+    public Calendar getBootTime() {
+        return this.bootTime;
+    }
 
-  public Boolean getOnlineStandby() {
-    return this.onlineStandby;
-  }
+    public void setBootTime(Calendar bootTime) {
+        this.bootTime = bootTime;
+    }
 
-  public String getMinRequiredEVCModeKey() {
-    return this.minRequiredEVCModeKey;
-  }
+    public long getSuspendInterval() {
+        return this.suspendInterval;
+    }
 
-  public Boolean getConsolidationNeeded() {
-    return this.consolidationNeeded;
-  }
+    public void setSuspendInterval(long suspendInterval) {
+        this.suspendInterval = suspendInterval;
+    }
 
-  public VirtualMachineFeatureRequirement[] getOfflineFeatureRequirement() {
-    return this.offlineFeatureRequirement;
-  }
+    public VirtualMachineQuestionInfo getQuestion() {
+        return this.question;
+    }
 
-  public VirtualMachineFeatureRequirement[] getFeatureRequirement() {
-    return this.featureRequirement;
-  }
+    public void setQuestion(VirtualMachineQuestionInfo question) {
+        this.question = question;
+    }
 
-  public HostFeatureMask[] getFeatureMask() {
-    return this.featureMask;
-  }
+    @Deprecated
+    public long getMemoryOverhead() {
+        return this.memoryOverhead;
+    }
 
-  public Long getVFlashCacheAllocation() {
-    return this.vFlashCacheAllocation;
-  }
+    @Deprecated
+    public void setMemoryOverhead(long memoryOverhead) {
+        this.memoryOverhead = memoryOverhead;
+    }
 
-  public void setDevice(VirtualMachineDeviceRuntimeInfo[] device) {
-    this.device=device;
-  }
+    public int getMaxCpuUsage() {
+        return this.maxCpuUsage;
+    }
 
-  public void setHost(ManagedObjectReference host) {
-    this.host=host;
-  }
+    public void setMaxCpuUsage(int maxCpuUsage) {
+        this.maxCpuUsage = maxCpuUsage;
+    }
 
-  public void setConnectionState(VirtualMachineConnectionState connectionState) {
-    this.connectionState=connectionState;
-  }
+    public int getMaxMemoryUsage() {
+        return this.maxMemoryUsage;
+    }
 
-  public void setPowerState(VirtualMachinePowerState powerState) {
-    this.powerState=powerState;
-  }
+    public void setMaxMemoryUsage(int maxMemoryUsage) {
+        this.maxMemoryUsage = maxMemoryUsage;
+    }
 
-  public void setFaultToleranceState(VirtualMachineFaultToleranceState faultToleranceState) {
-    this.faultToleranceState=faultToleranceState;
-  }
+    public int getNumMksConnections() {
+        return this.numMksConnections;
+    }
 
-  public void setDasVmProtection(VirtualMachineRuntimeInfoDasProtectionState dasVmProtection) {
-    this.dasVmProtection=dasVmProtection;
-  }
+    public void setNumMksConnections(int numMksConnections) {
+        this.numMksConnections = numMksConnections;
+    }
 
-  public void setToolsInstallerMounted(boolean toolsInstallerMounted) {
-    this.toolsInstallerMounted=toolsInstallerMounted;
-  }
+    @Deprecated
+    public VirtualMachineRecordReplayState getRecordReplayState() {
+        return this.recordReplayState;
+    }
 
-  public void setSuspendTime(Calendar suspendTime) {
-    this.suspendTime=suspendTime;
-  }
+    @Deprecated
+    public void setRecordReplayState(VirtualMachineRecordReplayState recordReplayState) {
+        this.recordReplayState = recordReplayState;
+    }
 
-  public void setBootTime(Calendar bootTime) {
-    this.bootTime=bootTime;
-  }
+    public String getNeedSecondaryReason() {
+        return this.needSecondaryReason;
+    }
 
-  public void setSuspendInterval(Long suspendInterval) {
-    this.suspendInterval=suspendInterval;
-  }
+    public void setNeedSecondaryReason(String needSecondaryReason) {
+        this.needSecondaryReason = needSecondaryReason;
+    }
 
-  public void setQuestion(VirtualMachineQuestionInfo question) {
-    this.question=question;
-  }
+    public String getMinRequiredEVCModeKey() {
+        return this.minRequiredEVCModeKey;
+    }
 
-  public void setMemoryOverhead(Long memoryOverhead) {
-    this.memoryOverhead=memoryOverhead;
-  }
+    public void setMinRequiredEVCModeKey(String minRequiredEVCModeKey) {
+        this.minRequiredEVCModeKey = minRequiredEVCModeKey;
+    }
 
-  public void setMaxCpuUsage(Integer maxCpuUsage) {
-    this.maxCpuUsage=maxCpuUsage;
-  }
+    public VirtualMachineFeatureRequirement[] getOfflineFeatureRequirement() {
+        return this.offlineFeatureRequirement;
+    }
 
-  public void setMaxMemoryUsage(Integer maxMemoryUsage) {
-    this.maxMemoryUsage=maxMemoryUsage;
-  }
+    public void setOfflineFeatureRequirement(VirtualMachineFeatureRequirement[] offlineFeatureRequirement) {
+        this.offlineFeatureRequirement = offlineFeatureRequirement;
+    }
 
-  public void setNumMksConnections(int numMksConnections) {
-    this.numMksConnections=numMksConnections;
-  }
+    public VirtualMachineFeatureRequirement[] getFeatureRequirement() {
+        return this.featureRequirement;
+    }
 
-  public void setRecordReplayState(VirtualMachineRecordReplayState recordReplayState) {
-    this.recordReplayState=recordReplayState;
-  }
+    public void setFeatureRequirement(VirtualMachineFeatureRequirement[] featureRequirement) {
+        this.featureRequirement = featureRequirement;
+    }
 
-  public void setCleanPowerOff(Boolean cleanPowerOff) {
-    this.cleanPowerOff=cleanPowerOff;
-  }
+    public HostFeatureMask[] getFeatureMask() {
+        return this.featureMask;
+    }
 
-  public void setNeedSecondaryReason(String needSecondaryReason) {
-    this.needSecondaryReason=needSecondaryReason;
-  }
+    public void setFeatureMask(HostFeatureMask[] featureMask) {
+        this.featureMask = featureMask;
+    }
 
-  public void setOnlineStandby(Boolean onlineStandby) {
-    this.onlineStandby=onlineStandby;
-  }
+    public long getVFlashCacheAllocation() {
+        return this.vFlashCacheAllocation;
+    }
 
-  public void setMinRequiredEVCModeKey(String minRequiredEVCModeKey) {
-    this.minRequiredEVCModeKey=minRequiredEVCModeKey;
-  }
+    public void setVFlashCacheAllocation(long vFlashCacheAllocation) {
+        this.vFlashCacheAllocation = vFlashCacheAllocation;
+    }
 
-  public void setConsolidationNeeded(Boolean consolidationNeeded) {
-    this.consolidationNeeded=consolidationNeeded;
-  }
+    public Boolean isCleanPowerOff() {
+        return cleanPowerOff;
+    }
 
-  public void setOfflineFeatureRequirement(VirtualMachineFeatureRequirement[] offlineFeatureRequirement) {
-    this.offlineFeatureRequirement=offlineFeatureRequirement;
-  }
+    public void setCleanPowerOff(Boolean cleanPowerOff) {
+        this.cleanPowerOff = cleanPowerOff;
+    }
 
-  public void setFeatureRequirement(VirtualMachineFeatureRequirement[] featureRequirement) {
-    this.featureRequirement=featureRequirement;
-  }
+    public boolean isOnlineStandby() {
+        return onlineStandby;
+    }
 
-  public void setFeatureMask(HostFeatureMask[] featureMask) {
-    this.featureMask=featureMask;
-  }
+    public void setOnlineStandby(boolean onlineStandby) {
+        this.onlineStandby = onlineStandby;
+    }
 
-  public void setVFlashCacheAllocation(Long vFlashCacheAllocation) {
-    this.vFlashCacheAllocation=vFlashCacheAllocation;
-  }
+    public boolean isConsolidationNeeded() {
+        return consolidationNeeded;
+    }
+
+    public void setConsolidationNeeded(boolean consolidationNeeded) {
+        this.consolidationNeeded = consolidationNeeded;
+    }
+
+    public long getvFlashCacheAllocation() {
+        return vFlashCacheAllocation;
+    }
+
+    public void setvFlashCacheAllocation(final long vFlashCacheAllocation) {
+        this.vFlashCacheAllocation = vFlashCacheAllocation;
+    }
+
+    public boolean isSnapshotInBackground() {
+        return snapshotInBackground;
+    }
+
+    public void setSnapshotInBackground(final boolean snapshotInBackground) {
+        this.snapshotInBackground = snapshotInBackground;
+    }
+
+    public Boolean getPaused() {
+        return paused;
+    }
+
+    public void setPaused(final Boolean paused) {
+        this.paused = paused;
+    }
+
+    public Boolean getQuiescedForkParent() {
+        return quiescedForkParent;
+    }
+
+    public void setQuiescedForkParent(final Boolean quiescedForkParent) {
+        this.quiescedForkParent = quiescedForkParent;
+    }
 }

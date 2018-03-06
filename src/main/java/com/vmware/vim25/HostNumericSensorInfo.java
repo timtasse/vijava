@@ -30,73 +30,92 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class HostNumericSensorInfo extends DynamicData {
-  public String name;
-  public ElementDescription healthState;
-  public long currentReading;
-  public int unitModifier;
-  public String baseUnits;
-  public String rateUnits;
-  public String sensorType;
 
-  public String getName() {
-    return this.name;
-  }
+    public String baseUnits;
+    public long currentReading;
+    public ElementDescription healthState;
+    public String id;
+    public String name;
+    public String rateUnits;
+    public String sensorType;
+    public String timeStamp;
+    public int unitModifier;
 
-  public ElementDescription getHealthState() {
-    return this.healthState;
-  }
+    public String getName() {
+        return this.name;
+    }
 
-  public long getCurrentReading() {
-    return this.currentReading;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public int getUnitModifier() {
-    return this.unitModifier;
-  }
+    public ElementDescription getHealthState() {
+        return this.healthState;
+    }
 
-  public String getBaseUnits() {
-    return this.baseUnits;
-  }
+    public void setHealthState(ElementDescription healthState) {
+        this.healthState = healthState;
+    }
 
-  public String getRateUnits() {
-    return this.rateUnits;
-  }
+    public long getCurrentReading() {
+        return this.currentReading;
+    }
 
-  public String getSensorType() {
-    return this.sensorType;
-  }
+    public void setCurrentReading(long currentReading) {
+        this.currentReading = currentReading;
+    }
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public int getUnitModifier() {
+        return this.unitModifier;
+    }
 
-  public void setHealthState(ElementDescription healthState) {
-    this.healthState=healthState;
-  }
+    public void setUnitModifier(int unitModifier) {
+        this.unitModifier = unitModifier;
+    }
 
-  public void setCurrentReading(long currentReading) {
-    this.currentReading=currentReading;
-  }
+    public String getBaseUnits() {
+        return this.baseUnits;
+    }
 
-  public void setUnitModifier(int unitModifier) {
-    this.unitModifier=unitModifier;
-  }
+    public void setBaseUnits(String baseUnits) {
+        this.baseUnits = baseUnits;
+    }
 
-  public void setBaseUnits(String baseUnits) {
-    this.baseUnits=baseUnits;
-  }
+    public String getRateUnits() {
+        return this.rateUnits;
+    }
 
-  public void setRateUnits(String rateUnits) {
-    this.rateUnits=rateUnits;
-  }
+    public void setRateUnits(String rateUnits) {
+        this.rateUnits = rateUnits;
+    }
 
-  public void setSensorType(String sensorType) {
-    this.sensorType=sensorType;
-  }
+    public String getSensorType() {
+        return this.sensorType;
+    }
+
+    public void setSensorType(String sensorType) {
+        this.sensorType = sensorType;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(final String id) {
+        this.id = id;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(final String timeStamp) {
+        this.timeStamp = timeStamp;
+    }
 }

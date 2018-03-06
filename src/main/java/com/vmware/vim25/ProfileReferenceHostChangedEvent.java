@@ -30,19 +30,38 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class ProfileReferenceHostChangedEvent extends ProfileEvent {
-  public ManagedObjectReference referenceHost;
 
-  public ManagedObjectReference getReferenceHost() {
-    return this.referenceHost;
-  }
+    public String prevReferenceHostName;
+    public ManagedObjectReference referenceHost;
+    public String referenceHostName;
 
-  public void setReferenceHost(ManagedObjectReference referenceHost) {
-    this.referenceHost=referenceHost;
-  }
+    public ManagedObjectReference getReferenceHost() {
+        return this.referenceHost;
+    }
+
+    public void setReferenceHost(ManagedObjectReference referenceHost) {
+        this.referenceHost = referenceHost;
+    }
+
+    public String getPrevReferenceHostName() {
+        return prevReferenceHostName;
+    }
+
+    public void setPrevReferenceHostName(final String prevReferenceHostName) {
+        this.prevReferenceHostName = prevReferenceHostName;
+    }
+
+    public String getReferenceHostName() {
+        return referenceHostName;
+    }
+
+    public void setReferenceHostName(final String referenceHostName) {
+        this.referenceHostName = referenceHostName;
+    }
 }

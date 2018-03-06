@@ -30,28 +30,47 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class PermissionUpdatedEvent extends PermissionEvent {
-  public RoleEventArgument role;
-  public boolean propagate;
 
-  public RoleEventArgument getRole() {
-    return this.role;
-  }
+    public Boolean prevPropagate;
+    public RoleEventArgument prevRole;
+    public boolean propagate;
+    public RoleEventArgument role;
 
-  public boolean isPropagate() {
-    return this.propagate;
-  }
+    public RoleEventArgument getRole() {
+        return this.role;
+    }
 
-  public void setRole(RoleEventArgument role) {
-    this.role=role;
-  }
+    public void setRole(RoleEventArgument role) {
+        this.role = role;
+    }
 
-  public void setPropagate(boolean propagate) {
-    this.propagate=propagate;
-  }
+    public boolean isPropagate() {
+        return this.propagate;
+    }
+
+    public void setPropagate(boolean propagate) {
+        this.propagate = propagate;
+    }
+
+    public boolean isPrevPropagate() {
+        return prevPropagate;
+    }
+
+    public void setPrevPropagate(final boolean prevPropagate) {
+        this.prevPropagate = prevPropagate;
+    }
+
+    public RoleEventArgument getPrevRole() {
+        return prevRole;
+    }
+
+    public void setPrevRole(final RoleEventArgument prevRole) {
+        this.prevRole = prevRole;
+    }
 }

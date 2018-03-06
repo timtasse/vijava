@@ -30,190 +30,198 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class GuestInfo extends DynamicData {
-  public VirtualMachineToolsStatus toolsStatus;
-  public String toolsVersionStatus;
-  public String toolsVersionStatus2;
-  public String toolsRunningStatus;
-  public String toolsVersion;
-  public String guestId;
-  public String guestFamily;
-  public String guestFullName;
-  public String hostName;
-  public String ipAddress;
-  public GuestNicInfo[] net;
-  public GuestStackInfo[] ipStack;
-  public GuestDiskInfo[] disk;
-  public GuestScreenInfo screen;
-  public String guestState;
-  public String appHeartbeatStatus;
-  public String appState;
-  public Boolean guestOperationsReady;
-  public Boolean interactiveGuestOperationsReady;
-  public GuestInfoNamespaceGenerationInfo[] generationInfo;
 
-  public VirtualMachineToolsStatus getToolsStatus() {
-    return this.toolsStatus;
-  }
+    public VirtualMachineToolsStatus toolsStatus;
+    public String toolsVersionStatus;
+    public String toolsVersionStatus2;
+    public String toolsRunningStatus;
+    public String toolsVersion;
+    public String guestId;
+    public String guestFamily;
+    public String guestFullName;
+    public String hostName;
+    public String ipAddress;
+    public GuestNicInfo[] net;
+    public GuestStackInfo[] ipStack;
+    public GuestDiskInfo[] disk;
+    public GuestScreenInfo screen;
+    public String guestState;
+    public String appHeartbeatStatus;
+    public String appState;
+    public Boolean guestOperationsReady;
+    public Boolean interactiveGuestOperationsReady;
+    public GuestInfoNamespaceGenerationInfo[] generationInfo;
+    public Boolean guestKernelCrashed;
+    public Boolean guestStateChangeSupported;
+    public String toolsInstallType;
 
-  public String getToolsVersionStatus() {
-    return this.toolsVersionStatus;
-  }
+    @Deprecated
+    public VirtualMachineToolsStatus getToolsStatus() {
+        return this.toolsStatus;
+    }
 
-  public String getToolsVersionStatus2() {
-    return this.toolsVersionStatus2;
-  }
+    @Deprecated
+    public String getToolsVersionStatus() {
+        return this.toolsVersionStatus;
+    }
 
-  public String getToolsRunningStatus() {
-    return this.toolsRunningStatus;
-  }
+    public String getToolsVersionStatus2() {
+        return this.toolsVersionStatus2;
+    }
 
-  public String getToolsVersion() {
-    return this.toolsVersion;
-  }
+    public String getToolsRunningStatus() {
+        return this.toolsRunningStatus;
+    }
 
-  public String getGuestId() {
-    return this.guestId;
-  }
+    public String getToolsVersion() {
+        return this.toolsVersion;
+    }
 
-  public String getGuestFamily() {
-    return this.guestFamily;
-  }
+    public String getGuestId() {
+        return this.guestId;
+    }
 
-  public String getGuestFullName() {
-    return this.guestFullName;
-  }
+    public String getGuestFamily() {
+        return this.guestFamily;
+    }
 
-  public String getHostName() {
-    return this.hostName;
-  }
+    public String getGuestFullName() {
+        return this.guestFullName;
+    }
 
-  public String getIpAddress() {
-    return this.ipAddress;
-  }
+    public String getHostName() {
+        return this.hostName;
+    }
 
-  public GuestNicInfo[] getNet() {
-    return this.net;
-  }
+    public String getIpAddress() {
+        return this.ipAddress;
+    }
 
-  public GuestStackInfo[] getIpStack() {
-    return this.ipStack;
-  }
+    public GuestNicInfo[] getNet() {
+        return this.net;
+    }
 
-  public GuestDiskInfo[] getDisk() {
-    return this.disk;
-  }
+    public GuestStackInfo[] getIpStack() {
+        return this.ipStack;
+    }
 
-  public GuestScreenInfo getScreen() {
-    return this.screen;
-  }
+    public GuestDiskInfo[] getDisk() {
+        return this.disk;
+    }
 
-  public String getGuestState() {
-    return this.guestState;
-  }
+    public GuestScreenInfo getScreen() {
+        return this.screen;
+    }
 
-  public String getAppHeartbeatStatus() {
-    return this.appHeartbeatStatus;
-  }
+    public String getGuestState() {
+        return this.guestState;
+    }
 
-  public String getAppState() {
-    return this.appState;
-  }
+    public String getAppHeartbeatStatus() {
+        return this.appHeartbeatStatus;
+    }
 
-  public Boolean getGuestOperationsReady() {
-    return this.guestOperationsReady;
-  }
+    public String getAppState() {
+        return this.appState;
+    }
 
-  public Boolean getInteractiveGuestOperationsReady() {
-    return this.interactiveGuestOperationsReady;
-  }
+    public Boolean getGuestOperationsReady() {
+        return this.guestOperationsReady;
+    }
 
-  public GuestInfoNamespaceGenerationInfo[] getGenerationInfo() {
-    return this.generationInfo;
-  }
+    public Boolean getInteractiveGuestOperationsReady() {
+        return this.interactiveGuestOperationsReady;
+    }
 
-  public void setToolsStatus(VirtualMachineToolsStatus toolsStatus) {
-    this.toolsStatus=toolsStatus;
-  }
+    public GuestInfoNamespaceGenerationInfo[] getGenerationInfo() {
+        return this.generationInfo;
+    }
 
-  public void setToolsVersionStatus(String toolsVersionStatus) {
-    this.toolsVersionStatus=toolsVersionStatus;
-  }
+    @Deprecated
+    public void setToolsStatus(VirtualMachineToolsStatus toolsStatus) {
+        this.toolsStatus = toolsStatus;
+    }
 
-  public void setToolsVersionStatus2(String toolsVersionStatus2) {
-    this.toolsVersionStatus2=toolsVersionStatus2;
-  }
+    @Deprecated
+    public void setToolsVersionStatus(String toolsVersionStatus) {
+        this.toolsVersionStatus = toolsVersionStatus;
+    }
 
-  public void setToolsRunningStatus(String toolsRunningStatus) {
-    this.toolsRunningStatus=toolsRunningStatus;
-  }
+    public void setToolsVersionStatus2(String toolsVersionStatus2) {
+        this.toolsVersionStatus2 = toolsVersionStatus2;
+    }
 
-  public void setToolsVersion(String toolsVersion) {
-    this.toolsVersion=toolsVersion;
-  }
+    public void setToolsRunningStatus(String toolsRunningStatus) {
+        this.toolsRunningStatus = toolsRunningStatus;
+    }
 
-  public void setGuestId(String guestId) {
-    this.guestId=guestId;
-  }
+    public void setToolsVersion(String toolsVersion) {
+        this.toolsVersion = toolsVersion;
+    }
 
-  public void setGuestFamily(String guestFamily) {
-    this.guestFamily=guestFamily;
-  }
+    public void setGuestId(String guestId) {
+        this.guestId = guestId;
+    }
 
-  public void setGuestFullName(String guestFullName) {
-    this.guestFullName=guestFullName;
-  }
+    public void setGuestFamily(String guestFamily) {
+        this.guestFamily = guestFamily;
+    }
 
-  public void setHostName(String hostName) {
-    this.hostName=hostName;
-  }
+    public void setGuestFullName(String guestFullName) {
+        this.guestFullName = guestFullName;
+    }
 
-  public void setIpAddress(String ipAddress) {
-    this.ipAddress=ipAddress;
-  }
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
+    }
 
-  public void setNet(GuestNicInfo[] net) {
-    this.net=net;
-  }
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
 
-  public void setIpStack(GuestStackInfo[] ipStack) {
-    this.ipStack=ipStack;
-  }
+    public void setNet(GuestNicInfo[] net) {
+        this.net = net;
+    }
 
-  public void setDisk(GuestDiskInfo[] disk) {
-    this.disk=disk;
-  }
+    public void setIpStack(GuestStackInfo[] ipStack) {
+        this.ipStack = ipStack;
+    }
 
-  public void setScreen(GuestScreenInfo screen) {
-    this.screen=screen;
-  }
+    public void setDisk(GuestDiskInfo[] disk) {
+        this.disk = disk;
+    }
 
-  public void setGuestState(String guestState) {
-    this.guestState=guestState;
-  }
+    public void setScreen(GuestScreenInfo screen) {
+        this.screen = screen;
+    }
 
-  public void setAppHeartbeatStatus(String appHeartbeatStatus) {
-    this.appHeartbeatStatus=appHeartbeatStatus;
-  }
+    public void setGuestState(String guestState) {
+        this.guestState = guestState;
+    }
 
-  public void setAppState(String appState) {
-    this.appState=appState;
-  }
+    public void setAppHeartbeatStatus(String appHeartbeatStatus) {
+        this.appHeartbeatStatus = appHeartbeatStatus;
+    }
 
-  public void setGuestOperationsReady(Boolean guestOperationsReady) {
-    this.guestOperationsReady=guestOperationsReady;
-  }
+    public void setAppState(String appState) {
+        this.appState = appState;
+    }
 
-  public void setInteractiveGuestOperationsReady(Boolean interactiveGuestOperationsReady) {
-    this.interactiveGuestOperationsReady=interactiveGuestOperationsReady;
-  }
+    public void setGuestOperationsReady(Boolean guestOperationsReady) {
+        this.guestOperationsReady = guestOperationsReady;
+    }
 
-  public void setGenerationInfo(GuestInfoNamespaceGenerationInfo[] generationInfo) {
-    this.generationInfo=generationInfo;
-  }
+    public void setInteractiveGuestOperationsReady(Boolean interactiveGuestOperationsReady) {
+        this.interactiveGuestOperationsReady = interactiveGuestOperationsReady;
+    }
+
+    public void setGenerationInfo(GuestInfoNamespaceGenerationInfo[] generationInfo) {
+        this.generationInfo = generationInfo;
+    }
 }

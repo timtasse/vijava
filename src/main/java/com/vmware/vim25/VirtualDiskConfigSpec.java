@@ -30,19 +30,30 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VirtualDiskConfigSpec extends VirtualDeviceConfigSpec {
-  public Boolean migrateCache;
 
-  public Boolean getMigrateCache() {
-    return this.migrateCache;
-  }
+    public String diskMoveType;
+    public Boolean migrateCache;
 
-  public void setMigrateCache(Boolean migrateCache) {
-    this.migrateCache=migrateCache;
-  }
+    public Boolean isMigrateCache() {
+        return migrateCache;
+    }
+
+    public void setMigrateCache(Boolean migrateCache) {
+        this.migrateCache = migrateCache;
+    }
+
+    public String getDiskMoveType() {
+        return diskMoveType;
+    }
+
+    public void setDiskMoveType(final String diskMoveType) {
+        this.diskMoveType = diskMoveType;
+    }
 }

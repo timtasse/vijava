@@ -30,64 +30,74 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VmDiskFileInfo extends FileInfo {
-  public String diskType;
-  public Long capacityKb;
-  public Integer hardwareVersion;
-  public String controllerType;
-  public String[] diskExtents;
-  public Boolean thin;
 
-  public String getDiskType() {
-    return this.diskType;
-  }
+    public Long capacityKb;
+    public String controllerType;
+    public String[] diskExtents;
+    public String diskType;
+    public VmDiskFileEncryptionInfo encryption;
+    public Integer hardwareVersion;
+    public Boolean thin;
 
-  public Long getCapacityKb() {
-    return this.capacityKb;
-  }
+    public String getDiskType() {
+        return this.diskType;
+    }
 
-  public Integer getHardwareVersion() {
-    return this.hardwareVersion;
-  }
+    public void setDiskType(String diskType) {
+        this.diskType = diskType;
+    }
 
-  public String getControllerType() {
-    return this.controllerType;
-  }
+    public Long getCapacityKb() {
+        return this.capacityKb;
+    }
 
-  public String[] getDiskExtents() {
-    return this.diskExtents;
-  }
+    public void setCapacityKb(Long capacityKb) {
+        this.capacityKb = capacityKb;
+    }
 
-  public Boolean getThin() {
-    return this.thin;
-  }
+    public Integer getHardwareVersion() {
+        return this.hardwareVersion;
+    }
 
-  public void setDiskType(String diskType) {
-    this.diskType=diskType;
-  }
+    public void setHardwareVersion(Integer hardwareVersion) {
+        this.hardwareVersion = hardwareVersion;
+    }
 
-  public void setCapacityKb(Long capacityKb) {
-    this.capacityKb=capacityKb;
-  }
+    public String getControllerType() {
+        return this.controllerType;
+    }
 
-  public void setHardwareVersion(Integer hardwareVersion) {
-    this.hardwareVersion=hardwareVersion;
-  }
+    public void setControllerType(String controllerType) {
+        this.controllerType = controllerType;
+    }
 
-  public void setControllerType(String controllerType) {
-    this.controllerType=controllerType;
-  }
+    public String[] getDiskExtents() {
+        return this.diskExtents;
+    }
 
-  public void setDiskExtents(String[] diskExtents) {
-    this.diskExtents=diskExtents;
-  }
+    public void setDiskExtents(String[] diskExtents) {
+        this.diskExtents = diskExtents;
+    }
 
-  public void setThin(Boolean thin) {
-    this.thin=thin;
-  }
+    public VmDiskFileEncryptionInfo getEncryption() {
+        return encryption;
+    }
+
+    public void setEncryption(final VmDiskFileEncryptionInfo encryption) {
+        this.encryption = encryption;
+    }
+
+    public Boolean isThin() {
+        return thin;
+    }
+
+    public void setThin(Boolean thin) {
+        this.thin = thin;
+    }
 }

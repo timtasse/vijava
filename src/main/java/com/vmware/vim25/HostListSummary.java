@@ -30,109 +30,120 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class HostListSummary extends DynamicData {
-  public ManagedObjectReference host;
-  public HostHardwareSummary hardware;
-  public HostRuntimeInfo runtime;
-  public HostConfigSummary config;
-  public HostListSummaryQuickStats quickStats;
-  public ManagedEntityStatus overallStatus;
-  public boolean rebootRequired;
-  public CustomFieldValue[] customValue;
-  public String managementServerIp;
-  public String maxEVCModeKey;
-  public String currentEVCModeKey;
 
-  public ManagedObjectReference getHost() {
-    return this.host;
-  }
+    public ManagedObjectReference host;
+    public HostHardwareSummary hardware;
+    public HostRuntimeInfo runtime;
+    public HostConfigSummary config;
+    public HostListSummaryQuickStats quickStats;
+    public ManagedEntityStatus overallStatus;
+    public boolean rebootRequired;
+    public CustomFieldValue[] customValue;
+    public String managementServerIp;
+    public String maxEVCModeKey;
+    public String currentEVCModeKey;
+    public HostListSummaryGatewaySummary gateway;
 
-  public HostHardwareSummary getHardware() {
-    return this.hardware;
-  }
+    public ManagedObjectReference getHost() {
+        return this.host;
+    }
 
-  public HostRuntimeInfo getRuntime() {
-    return this.runtime;
-  }
+    public void setHost(ManagedObjectReference host) {
+        this.host = host;
+    }
 
-  public HostConfigSummary getConfig() {
-    return this.config;
-  }
+    public HostHardwareSummary getHardware() {
+        return this.hardware;
+    }
 
-  public HostListSummaryQuickStats getQuickStats() {
-    return this.quickStats;
-  }
+    public void setHardware(HostHardwareSummary hardware) {
+        this.hardware = hardware;
+    }
 
-  public ManagedEntityStatus getOverallStatus() {
-    return this.overallStatus;
-  }
+    public HostRuntimeInfo getRuntime() {
+        return this.runtime;
+    }
 
-  public boolean isRebootRequired() {
-    return this.rebootRequired;
-  }
+    public void setRuntime(HostRuntimeInfo runtime) {
+        this.runtime = runtime;
+    }
 
-  public CustomFieldValue[] getCustomValue() {
-    return this.customValue;
-  }
+    public HostConfigSummary getConfig() {
+        return this.config;
+    }
 
-  public String getManagementServerIp() {
-    return this.managementServerIp;
-  }
+    public void setConfig(HostConfigSummary config) {
+        this.config = config;
+    }
 
-  public String getMaxEVCModeKey() {
-    return this.maxEVCModeKey;
-  }
+    public HostListSummaryQuickStats getQuickStats() {
+        return this.quickStats;
+    }
 
-  public String getCurrentEVCModeKey() {
-    return this.currentEVCModeKey;
-  }
+    public void setQuickStats(HostListSummaryQuickStats quickStats) {
+        this.quickStats = quickStats;
+    }
 
-  public void setHost(ManagedObjectReference host) {
-    this.host=host;
-  }
+    public ManagedEntityStatus getOverallStatus() {
+        return this.overallStatus;
+    }
 
-  public void setHardware(HostHardwareSummary hardware) {
-    this.hardware=hardware;
-  }
+    public void setOverallStatus(ManagedEntityStatus overallStatus) {
+        this.overallStatus = overallStatus;
+    }
 
-  public void setRuntime(HostRuntimeInfo runtime) {
-    this.runtime=runtime;
-  }
+    public boolean isRebootRequired() {
+        return this.rebootRequired;
+    }
 
-  public void setConfig(HostConfigSummary config) {
-    this.config=config;
-  }
+    public void setRebootRequired(boolean rebootRequired) {
+        this.rebootRequired = rebootRequired;
+    }
 
-  public void setQuickStats(HostListSummaryQuickStats quickStats) {
-    this.quickStats=quickStats;
-  }
+    public CustomFieldValue[] getCustomValue() {
+        return this.customValue;
+    }
 
-  public void setOverallStatus(ManagedEntityStatus overallStatus) {
-    this.overallStatus=overallStatus;
-  }
+    public void setCustomValue(CustomFieldValue[] customValue) {
+        this.customValue = customValue;
+    }
 
-  public void setRebootRequired(boolean rebootRequired) {
-    this.rebootRequired=rebootRequired;
-  }
+    public String getManagementServerIp() {
+        return this.managementServerIp;
+    }
 
-  public void setCustomValue(CustomFieldValue[] customValue) {
-    this.customValue=customValue;
-  }
+    public void setManagementServerIp(String managementServerIp) {
+        this.managementServerIp = managementServerIp;
+    }
 
-  public void setManagementServerIp(String managementServerIp) {
-    this.managementServerIp=managementServerIp;
-  }
+    public String getMaxEVCModeKey() {
+        return this.maxEVCModeKey;
+    }
 
-  public void setMaxEVCModeKey(String maxEVCModeKey) {
-    this.maxEVCModeKey=maxEVCModeKey;
-  }
+    public void setMaxEVCModeKey(String maxEVCModeKey) {
+        this.maxEVCModeKey = maxEVCModeKey;
+    }
 
-  public void setCurrentEVCModeKey(String currentEVCModeKey) {
-    this.currentEVCModeKey=currentEVCModeKey;
-  }
+    public String getCurrentEVCModeKey() {
+        return this.currentEVCModeKey;
+    }
+
+    public void setCurrentEVCModeKey(String currentEVCModeKey) {
+        this.currentEVCModeKey = currentEVCModeKey;
+    }
+
+    public HostListSummaryGatewaySummary getGateway() {
+        return gateway;
+    }
+
+    public void setGateway(final HostListSummaryGatewaySummary gateway) {
+        this.gateway = gateway;
+    }
 }

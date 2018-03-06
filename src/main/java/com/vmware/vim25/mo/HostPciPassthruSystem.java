@@ -34,28 +34,31 @@ import java.rmi.RemoteException;
 
 /**
  * The managed object class corresponding to the one defined in VI SDK API reference.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk
  * @since 4.0
+ * @version 6.5
  */
-public class HostPciPassthruSystem extends ExtensibleManagedObject  
-{
-	public HostPciPassthruSystem(ServerConnection sc, ManagedObjectReference mor) 
-	{
-		super(sc, mor);
-	}
-	
-	public HostPciPassthruInfo[] getPciPassthruInfo()
-	{
-		return (HostPciPassthruInfo[])getCurrentProperty("pciPassthruInfo");
-	}
-	
-	public void refresh() throws RuntimeFault, RemoteException
-	{
-		getVimService().refresh(getMOR());
-	}
-	
-	public void updatePassthruConfig(HostPciPassthruConfig[] config) throws HostConfigFault, RuntimeFault, RemoteException
-	{
-		getVimService().updatePassthruConfig(getMOR(), config);
-	}
+public class HostPciPassthruSystem extends ExtensibleManagedObject {
+
+    public HostPciPassthruSystem(ServerConnection sc, ManagedObjectReference mor) {
+        super(sc, mor);
+    }
+
+    public HostPciPassthruInfo[] getPciPassthruInfo() {
+        return (HostPciPassthruInfo[]) getCurrentProperty("pciPassthruInfo");
+    }
+
+    public HostSriovDevicePoolInfo[] getSriovDevicePoolInfo() {
+        return (HostSriovDevicePoolInfo[]) getCurrentProperty("sriovDevicePoolInfo");
+    }
+
+    public void refresh() throws RuntimeFault, RemoteException {
+        getVimService().refresh(getMOR());
+    }
+
+    public void updatePassthruConfig(HostPciPassthruConfig[] config) throws HostConfigFault, RuntimeFault, RemoteException {
+        getVimService().updatePassthruConfig(getMOR(), config);
+    }
 }

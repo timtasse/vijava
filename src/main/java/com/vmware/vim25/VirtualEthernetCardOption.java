@@ -30,46 +30,57 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VirtualEthernetCardOption extends VirtualDeviceOption {
-  public ChoiceOption supportedOUI;
-  public ChoiceOption macType;
-  public BoolOption wakeOnLanEnabled;
-  public Boolean vmDirectPathGen2Supported;
 
-  public ChoiceOption getSupportedOUI() {
-    return this.supportedOUI;
-  }
+    public ChoiceOption supportedOUI;
+    public ChoiceOption macType;
+    public BoolOption wakeOnLanEnabled;
+    public BoolOption uptCompatibilityEnabled;
+    public boolean vmDirectPathGen2Supported;
 
-  public ChoiceOption getMacType() {
-    return this.macType;
-  }
+    public ChoiceOption getSupportedOUI() {
+        return this.supportedOUI;
+    }
 
-  public BoolOption getWakeOnLanEnabled() {
-    return this.wakeOnLanEnabled;
-  }
+    public void setSupportedOUI(ChoiceOption supportedOUI) {
+        this.supportedOUI = supportedOUI;
+    }
 
-  public Boolean getVmDirectPathGen2Supported() {
-    return this.vmDirectPathGen2Supported;
-  }
+    public ChoiceOption getMacType() {
+        return this.macType;
+    }
 
-  public void setSupportedOUI(ChoiceOption supportedOUI) {
-    this.supportedOUI=supportedOUI;
-  }
+    public void setMacType(ChoiceOption macType) {
+        this.macType = macType;
+    }
 
-  public void setMacType(ChoiceOption macType) {
-    this.macType=macType;
-  }
+    public BoolOption getWakeOnLanEnabled() {
+        return this.wakeOnLanEnabled;
+    }
 
-  public void setWakeOnLanEnabled(BoolOption wakeOnLanEnabled) {
-    this.wakeOnLanEnabled=wakeOnLanEnabled;
-  }
+    public void setWakeOnLanEnabled(BoolOption wakeOnLanEnabled) {
+        this.wakeOnLanEnabled = wakeOnLanEnabled;
+    }
 
-  public void setVmDirectPathGen2Supported(Boolean vmDirectPathGen2Supported) {
-    this.vmDirectPathGen2Supported=vmDirectPathGen2Supported;
-  }
+    public BoolOption getUptCompatibilityEnabled() {
+        return uptCompatibilityEnabled;
+    }
+
+    public void setUptCompatibilityEnabled(final BoolOption uptCompatibilityEnabled) {
+        this.uptCompatibilityEnabled = uptCompatibilityEnabled;
+    }
+
+    public boolean isVmDirectPathGen2Supported() {
+        return vmDirectPathGen2Supported;
+    }
+
+    public void setVmDirectPathGen2Supported(boolean vmDirectPathGen2Supported) {
+        this.vmDirectPathGen2Supported = vmDirectPathGen2Supported;
+    }
 }

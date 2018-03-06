@@ -30,46 +30,57 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VirtualMachineFileInfo extends DynamicData {
-  public String vmPathName;
-  public String snapshotDirectory;
-  public String suspendDirectory;
-  public String logDirectory;
 
-  public String getVmPathName() {
-    return this.vmPathName;
-  }
+    public String vmPathName;
+    public String snapshotDirectory;
+    public String suspendDirectory;
+    public String logDirectory;
+    public String ftMetadataDirectory;
 
-  public String getSnapshotDirectory() {
-    return this.snapshotDirectory;
-  }
+    public String getVmPathName() {
+        return this.vmPathName;
+    }
 
-  public String getSuspendDirectory() {
-    return this.suspendDirectory;
-  }
+    public void setVmPathName(String vmPathName) {
+        this.vmPathName = vmPathName;
+    }
 
-  public String getLogDirectory() {
-    return this.logDirectory;
-  }
+    public String getSnapshotDirectory() {
+        return this.snapshotDirectory;
+    }
 
-  public void setVmPathName(String vmPathName) {
-    this.vmPathName=vmPathName;
-  }
+    public void setSnapshotDirectory(String snapshotDirectory) {
+        this.snapshotDirectory = snapshotDirectory;
+    }
 
-  public void setSnapshotDirectory(String snapshotDirectory) {
-    this.snapshotDirectory=snapshotDirectory;
-  }
+    public String getSuspendDirectory() {
+        return this.suspendDirectory;
+    }
 
-  public void setSuspendDirectory(String suspendDirectory) {
-    this.suspendDirectory=suspendDirectory;
-  }
+    public void setSuspendDirectory(String suspendDirectory) {
+        this.suspendDirectory = suspendDirectory;
+    }
 
-  public void setLogDirectory(String logDirectory) {
-    this.logDirectory=logDirectory;
-  }
+    public String getLogDirectory() {
+        return this.logDirectory;
+    }
+
+    public void setLogDirectory(String logDirectory) {
+        this.logDirectory = logDirectory;
+    }
+
+    public String getFtMetadataDirectory() {
+        return ftMetadataDirectory;
+    }
+
+    public void setFtMetadataDirectory(final String ftMetadataDirectory) {
+        this.ftMetadataDirectory = ftMetadataDirectory;
+    }
 }

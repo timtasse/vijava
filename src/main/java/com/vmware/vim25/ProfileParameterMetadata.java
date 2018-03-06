@@ -30,46 +30,74 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class ProfileParameterMetadata extends DynamicData {
-  public ExtendedElementDescription id;
-  public String type;
-  public boolean optional;
-  public Object defaultValue;
 
-  public ExtendedElementDescription getId() {
-    return this.id;
-  }
+    public Object defaultValue;
+    public Boolean hidden;
+    public ExtendedElementDescription id;
+    public boolean optional;
+    public Boolean readOnly;
+    public Boolean securitySensitive;
+    public String type;
 
-  public String getType() {
-    return this.type;
-  }
+    public ExtendedElementDescription getId() {
+        return this.id;
+    }
 
-  public boolean isOptional() {
-    return this.optional;
-  }
+    public void setId(ExtendedElementDescription id) {
+        this.id = id;
+    }
 
-  public Object getDefaultValue() {
-    return this.defaultValue;
-  }
+    public String getType() {
+        return this.type;
+    }
 
-  public void setId(ExtendedElementDescription id) {
-    this.id=id;
-  }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-  public void setType(String type) {
-    this.type=type;
-  }
+    public boolean isOptional() {
+        return this.optional;
+    }
 
-  public void setOptional(boolean optional) {
-    this.optional=optional;
-  }
+    public void setOptional(boolean optional) {
+        this.optional = optional;
+    }
 
-  public void setDefaultValue(Object defaultValue) {
-    this.defaultValue=defaultValue;
-  }
+    public Object getDefaultValue() {
+        return this.defaultValue;
+    }
+
+    public void setDefaultValue(Object defaultValue) {
+        this.defaultValue = defaultValue;
+    }
+
+    public boolean isHidden() {
+        return hidden;
+    }
+
+    public void setHidden(final boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public boolean isReadOnly() {
+        return readOnly;
+    }
+
+    public void setReadOnly(final boolean readOnly) {
+        this.readOnly = readOnly;
+    }
+
+    public boolean isSecuritySensitive() {
+        return securitySensitive;
+    }
+
+    public void setSecuritySensitive(final boolean securitySensitive) {
+        this.securitySensitive = securitySensitive;
+    }
 }

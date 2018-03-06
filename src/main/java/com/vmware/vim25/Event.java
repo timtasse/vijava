@@ -28,130 +28,150 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
 package com.vmware.vim25;
+
 import java.util.Calendar;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
 @SuppressWarnings("all")
 public class Event extends DynamicData {
-  public int key;
-  public int chainId;
-  public Calendar createdTime;
-  public String userName;
-  public DatacenterEventArgument datacenter;
-  public ComputeResourceEventArgument computeResource;
-  public HostEventArgument host;
-  public VmEventArgument vm;
-  public DatastoreEventArgument ds;
-  public NetworkEventArgument net;
-  public DvsEventArgument dvs;
-  public String fullFormattedMessage;
-  public String changeTag;
+    public int key;
+    public int chainId;
+    public Calendar createdTime;
+    public String userName;
+    public DatacenterEventArgument datacenter;
+    public ComputeResourceEventArgument computeResource;
+    public HostEventArgument host;
+    public VmEventArgument vm;
+    public DatastoreEventArgument ds;
+    public NetworkEventArgument net;
+    public DvsEventArgument dvs;
+    public String fullFormattedMessage;
+    public String changeTag;
 
-  public int getKey() {
-    return this.key;
-  }
+    @Override
+    public String toString() {
+        return "Event{" +
+                "key=" + key +
+                ", chainId=" + chainId +
+                ", createdTime=" + createdTime.getTime() +
+                ", userName='" + userName + '\'' +
+                ", datacenter=" + datacenter +
+                ", computeResource=" + computeResource +
+                ", host=" + host +
+                ", vm=" + vm +
+                ", ds=" + ds +
+                ", net=" + net +
+                ", dvs=" + dvs +
+                ", fullFormattedMessage='" + fullFormattedMessage + '\'' +
+                ", changeTag='" + changeTag + '\'' +
+                "} " + super.toString();
+    }
 
-  public int getChainId() {
-    return this.chainId;
-  }
+    public int getKey() {
+        return this.key;
+    }
 
-  public Calendar getCreatedTime() {
-    return this.createdTime;
-  }
+    public int getChainId() {
+        return this.chainId;
+    }
 
-  public String getUserName() {
-    return this.userName;
-  }
+    public Calendar getCreatedTime() {
+        return this.createdTime;
+    }
 
-  public DatacenterEventArgument getDatacenter() {
-    return this.datacenter;
-  }
+    public String getUserName() {
+        return this.userName;
+    }
 
-  public ComputeResourceEventArgument getComputeResource() {
-    return this.computeResource;
-  }
+    public DatacenterEventArgument getDatacenter() {
+        return this.datacenter;
+    }
 
-  public HostEventArgument getHost() {
-    return this.host;
-  }
+    public ComputeResourceEventArgument getComputeResource() {
+        return this.computeResource;
+    }
 
-  public VmEventArgument getVm() {
-    return this.vm;
-  }
+    public HostEventArgument getHost() {
+        return this.host;
+    }
 
-  public DatastoreEventArgument getDs() {
-    return this.ds;
-  }
+    public VmEventArgument getVm() {
+        return this.vm;
+    }
 
-  public NetworkEventArgument getNet() {
-    return this.net;
-  }
+    public DatastoreEventArgument getDs() {
+        return this.ds;
+    }
 
-  public DvsEventArgument getDvs() {
-    return this.dvs;
-  }
+    public NetworkEventArgument getNet() {
+        return this.net;
+    }
 
-  public String getFullFormattedMessage() {
-    return this.fullFormattedMessage;
-  }
+    public DvsEventArgument getDvs() {
+        return this.dvs;
+    }
 
-  public String getChangeTag() {
-    return this.changeTag;
-  }
+    public String getFullFormattedMessage() {
+        return this.fullFormattedMessage;
+    }
 
-  public void setKey(int key) {
-    this.key=key;
-  }
+    public String getChangeTag() {
+        return this.changeTag;
+    }
 
-  public void setChainId(int chainId) {
-    this.chainId=chainId;
-  }
+    public void setKey(int key) {
+        this.key = key;
+    }
 
-  public void setCreatedTime(Calendar createdTime) {
-    this.createdTime=createdTime;
-  }
+    public void setChainId(int chainId) {
+        this.chainId = chainId;
+    }
 
-  public void setUserName(String userName) {
-    this.userName=userName;
-  }
+    public void setCreatedTime(Calendar createdTime) {
+        this.createdTime = createdTime;
+    }
 
-  public void setDatacenter(DatacenterEventArgument datacenter) {
-    this.datacenter=datacenter;
-  }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-  public void setComputeResource(ComputeResourceEventArgument computeResource) {
-    this.computeResource=computeResource;
-  }
+    public void setDatacenter(DatacenterEventArgument datacenter) {
+        this.datacenter = datacenter;
+    }
 
-  public void setHost(HostEventArgument host) {
-    this.host=host;
-  }
+    public void setComputeResource(ComputeResourceEventArgument computeResource) {
+        this.computeResource = computeResource;
+    }
 
-  public void setVm(VmEventArgument vm) {
-    this.vm=vm;
-  }
+    public void setHost(HostEventArgument host) {
+        this.host = host;
+    }
 
-  public void setDs(DatastoreEventArgument ds) {
-    this.ds=ds;
-  }
+    public void setVm(VmEventArgument vm) {
+        this.vm = vm;
+    }
 
-  public void setNet(NetworkEventArgument net) {
-    this.net=net;
-  }
+    public void setDs(DatastoreEventArgument ds) {
+        this.ds = ds;
+    }
 
-  public void setDvs(DvsEventArgument dvs) {
-    this.dvs=dvs;
-  }
+    public void setNet(NetworkEventArgument net) {
+        this.net = net;
+    }
 
-  public void setFullFormattedMessage(String fullFormattedMessage) {
-    this.fullFormattedMessage=fullFormattedMessage;
-  }
+    public void setDvs(DvsEventArgument dvs) {
+        this.dvs = dvs;
+    }
 
-  public void setChangeTag(String changeTag) {
-    this.changeTag=changeTag;
-  }
+    public void setFullFormattedMessage(String fullFormattedMessage) {
+        this.fullFormattedMessage = fullFormattedMessage;
+    }
+
+    public void setChangeTag(String changeTag) {
+        this.changeTag = changeTag;
+    }
 }

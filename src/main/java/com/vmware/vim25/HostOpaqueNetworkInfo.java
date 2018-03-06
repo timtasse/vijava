@@ -30,37 +30,65 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class HostOpaqueNetworkInfo extends DynamicData {
-  public String opaqueNetworkId;
-  public String opaqueNetworkName;
-  public String opaqueNetworkType;
 
-  public String getOpaqueNetworkId() {
-    return this.opaqueNetworkId;
-  }
+    public String opaqueNetworkId;
+    public String opaqueNetworkName;
+    public String opaqueNetworkType;
+    public OpaqueNetworkCapability capability;
+    public OptionValue[] extraConfig;
+    public String[] pnicZone;
 
-  public String getOpaqueNetworkName() {
-    return this.opaqueNetworkName;
-  }
+    public String getOpaqueNetworkId() {
+        return this.opaqueNetworkId;
+    }
 
-  public String getOpaqueNetworkType() {
-    return this.opaqueNetworkType;
-  }
+    public void setOpaqueNetworkId(String opaqueNetworkId) {
+        this.opaqueNetworkId = opaqueNetworkId;
+    }
 
-  public void setOpaqueNetworkId(String opaqueNetworkId) {
-    this.opaqueNetworkId=opaqueNetworkId;
-  }
+    public String getOpaqueNetworkName() {
+        return this.opaqueNetworkName;
+    }
 
-  public void setOpaqueNetworkName(String opaqueNetworkName) {
-    this.opaqueNetworkName=opaqueNetworkName;
-  }
+    public void setOpaqueNetworkName(String opaqueNetworkName) {
+        this.opaqueNetworkName = opaqueNetworkName;
+    }
 
-  public void setOpaqueNetworkType(String opaqueNetworkType) {
-    this.opaqueNetworkType=opaqueNetworkType;
-  }
+    public String getOpaqueNetworkType() {
+        return this.opaqueNetworkType;
+    }
+
+    public void setOpaqueNetworkType(String opaqueNetworkType) {
+        this.opaqueNetworkType = opaqueNetworkType;
+    }
+
+    public OpaqueNetworkCapability getCapability() {
+        return capability;
+    }
+
+    public void setCapability(final OpaqueNetworkCapability capability) {
+        this.capability = capability;
+    }
+
+    public OptionValue[] getExtraConfig() {
+        return extraConfig;
+    }
+
+    public void setExtraConfig(final OptionValue[] extraConfig) {
+        this.extraConfig = extraConfig;
+    }
+
+    public String[] getPnicZone() {
+        return pnicZone;
+    }
+
+    public void setPnicZone(final String[] pnicZone) {
+        this.pnicZone = pnicZone;
+    }
 }

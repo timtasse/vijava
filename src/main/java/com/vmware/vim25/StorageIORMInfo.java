@@ -30,64 +30,87 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class StorageIORMInfo extends DynamicData {
-  public boolean enabled;
-  public String congestionThresholdMode;
-  public int congestionThreshold;
-  public Integer percentOfPeakThroughput;
-  public Boolean statsCollectionEnabled;
-  public Boolean statsAggregationDisabled;
 
-  public boolean isEnabled() {
-    return this.enabled;
-  }
+    public boolean enabled;
+    public String congestionThresholdMode;
+    public Integer congestionThreshold;
+    public Integer percentOfPeakThroughput;
+    public Integer reservableIopsThreshold;
+    public boolean reservationEnabled;
+    @Deprecated
+    public boolean statsCollectionEnabled;
+    public Boolean statsAggregationDisabled;
 
-  public String getCongestionThresholdMode() {
-    return this.congestionThresholdMode;
-  }
+    public boolean isEnabled() {
+        return this.enabled;
+    }
 
-  public int getCongestionThreshold() {
-    return this.congestionThreshold;
-  }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-  public Integer getPercentOfPeakThroughput() {
-    return this.percentOfPeakThroughput;
-  }
+    public String getCongestionThresholdMode() {
+        return this.congestionThresholdMode;
+    }
 
-  public Boolean getStatsCollectionEnabled() {
-    return this.statsCollectionEnabled;
-  }
+    public void setCongestionThresholdMode(String congestionThresholdMode) {
+        this.congestionThresholdMode = congestionThresholdMode;
+    }
 
-  public Boolean getStatsAggregationDisabled() {
-    return this.statsAggregationDisabled;
-  }
+    public Integer getCongestionThreshold() {
+        return this.congestionThreshold;
+    }
 
-  public void setEnabled(boolean enabled) {
-    this.enabled=enabled;
-  }
+    public void setCongestionThreshold(Integer congestionThreshold) {
+        this.congestionThreshold = congestionThreshold;
+    }
 
-  public void setCongestionThresholdMode(String congestionThresholdMode) {
-    this.congestionThresholdMode=congestionThresholdMode;
-  }
+    public Integer getPercentOfPeakThroughput() {
+        return this.percentOfPeakThroughput;
+    }
 
-  public void setCongestionThreshold(int congestionThreshold) {
-    this.congestionThreshold=congestionThreshold;
-  }
+    public void setPercentOfPeakThroughput(Integer percentOfPeakThroughput) {
+        this.percentOfPeakThroughput = percentOfPeakThroughput;
+    }
 
-  public void setPercentOfPeakThroughput(Integer percentOfPeakThroughput) {
-    this.percentOfPeakThroughput=percentOfPeakThroughput;
-  }
+    public Integer getReservableIopsThreshold() {
+        return reservableIopsThreshold;
+    }
 
-  public void setStatsCollectionEnabled(Boolean statsCollectionEnabled) {
-    this.statsCollectionEnabled=statsCollectionEnabled;
-  }
+    public void setReservableIopsThreshold(final Integer reservableIopsThreshold) {
+        this.reservableIopsThreshold = reservableIopsThreshold;
+    }
 
-  public void setStatsAggregationDisabled(Boolean statsAggregationDisabled) {
-    this.statsAggregationDisabled=statsAggregationDisabled;
-  }
+    public boolean isReservationEnabled() {
+        return reservationEnabled;
+    }
+
+    public void setReservationEnabled(final boolean reservationEnabled) {
+        this.reservationEnabled = reservationEnabled;
+    }
+
+    @Deprecated
+    public boolean isStatsCollectionEnabled() {
+        return statsCollectionEnabled;
+    }
+
+    @Deprecated
+    public void setStatsCollectionEnabled(boolean statsCollectionEnabled) {
+        this.statsCollectionEnabled = statsCollectionEnabled;
+    }
+
+    public boolean isStatsAggregationDisabled() {
+        return statsAggregationDisabled;
+    }
+
+    public void setStatsAggregationDisabled(boolean statsAggregationDisabled) {
+        this.statsAggregationDisabled = statsAggregationDisabled;
+    }
 }

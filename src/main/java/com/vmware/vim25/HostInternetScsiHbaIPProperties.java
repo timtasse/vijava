@@ -30,127 +30,156 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class HostInternetScsiHbaIPProperties extends DynamicData {
-  public String mac;
-  public String address;
-  public boolean dhcpConfigurationEnabled;
-  public String subnetMask;
-  public String defaultGateway;
-  public String primaryDnsServerAddress;
-  public String alternateDnsServerAddress;
-  public String ipv6Address;
-  public String ipv6SubnetMask;
-  public String ipv6DefaultGateway;
-  public Boolean arpRedirectEnabled;
-  public Integer mtu;
-  public Boolean jumboFramesEnabled;
 
-  public String getMac() {
-    return this.mac;
-  }
+    public String mac;
+    public String address;
+    public Boolean dhcpConfigurationEnabled;
+    public String subnetMask;
+    public String defaultGateway;
+    public String primaryDnsServerAddress;
+    public String alternateDnsServerAddress;
+    public String ipv6Address;
+    public String ipv6SubnetMask;
+    public String ipv6DefaultGateway;
+    public Boolean arpRedirectEnabled;
+    public Integer mtu;
+    public Boolean jumboFramesEnabled;
+    public Boolean ipv4Enabled;
+    public Boolean ipv6Enabled;
+    public HostInternetScsiHbaIPv6Properties ipv6properties;
 
-  public String getAddress() {
-    return this.address;
-  }
+    public String getMac() {
+        return this.mac;
+    }
 
-  public boolean isDhcpConfigurationEnabled() {
-    return this.dhcpConfigurationEnabled;
-  }
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
 
-  public String getSubnetMask() {
-    return this.subnetMask;
-  }
+    public String getAddress() {
+        return this.address;
+    }
 
-  public String getDefaultGateway() {
-    return this.defaultGateway;
-  }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-  public String getPrimaryDnsServerAddress() {
-    return this.primaryDnsServerAddress;
-  }
+    public Boolean isDhcpConfigurationEnabled() {
+        return this.dhcpConfigurationEnabled;
+    }
 
-  public String getAlternateDnsServerAddress() {
-    return this.alternateDnsServerAddress;
-  }
+    public void setDhcpConfigurationEnabled(Boolean dhcpConfigurationEnabled) {
+        this.dhcpConfigurationEnabled = dhcpConfigurationEnabled;
+    }
 
-  public String getIpv6Address() {
-    return this.ipv6Address;
-  }
+    public String getSubnetMask() {
+        return this.subnetMask;
+    }
 
-  public String getIpv6SubnetMask() {
-    return this.ipv6SubnetMask;
-  }
+    public void setSubnetMask(String subnetMask) {
+        this.subnetMask = subnetMask;
+    }
 
-  public String getIpv6DefaultGateway() {
-    return this.ipv6DefaultGateway;
-  }
+    public String getDefaultGateway() {
+        return this.defaultGateway;
+    }
 
-  public Boolean getArpRedirectEnabled() {
-    return this.arpRedirectEnabled;
-  }
+    public void setDefaultGateway(String defaultGateway) {
+        this.defaultGateway = defaultGateway;
+    }
 
-  public Integer getMtu() {
-    return this.mtu;
-  }
+    public String getPrimaryDnsServerAddress() {
+        return this.primaryDnsServerAddress;
+    }
 
-  public Boolean getJumboFramesEnabled() {
-    return this.jumboFramesEnabled;
-  }
+    public void setPrimaryDnsServerAddress(String primaryDnsServerAddress) {
+        this.primaryDnsServerAddress = primaryDnsServerAddress;
+    }
 
-  public void setMac(String mac) {
-    this.mac=mac;
-  }
+    public String getAlternateDnsServerAddress() {
+        return this.alternateDnsServerAddress;
+    }
 
-  public void setAddress(String address) {
-    this.address=address;
-  }
+    public void setAlternateDnsServerAddress(String alternateDnsServerAddress) {
+        this.alternateDnsServerAddress = alternateDnsServerAddress;
+    }
 
-  public void setDhcpConfigurationEnabled(boolean dhcpConfigurationEnabled) {
-    this.dhcpConfigurationEnabled=dhcpConfigurationEnabled;
-  }
+    public String getIpv6Address() {
+        return this.ipv6Address;
+    }
 
-  public void setSubnetMask(String subnetMask) {
-    this.subnetMask=subnetMask;
-  }
+    public void setIpv6Address(String ipv6Address) {
+        this.ipv6Address = ipv6Address;
+    }
 
-  public void setDefaultGateway(String defaultGateway) {
-    this.defaultGateway=defaultGateway;
-  }
+    public String getIpv6SubnetMask() {
+        return this.ipv6SubnetMask;
+    }
 
-  public void setPrimaryDnsServerAddress(String primaryDnsServerAddress) {
-    this.primaryDnsServerAddress=primaryDnsServerAddress;
-  }
+    public void setIpv6SubnetMask(String ipv6SubnetMask) {
+        this.ipv6SubnetMask = ipv6SubnetMask;
+    }
 
-  public void setAlternateDnsServerAddress(String alternateDnsServerAddress) {
-    this.alternateDnsServerAddress=alternateDnsServerAddress;
-  }
+    public String getIpv6DefaultGateway() {
+        return this.ipv6DefaultGateway;
+    }
 
-  public void setIpv6Address(String ipv6Address) {
-    this.ipv6Address=ipv6Address;
-  }
+    public void setIpv6DefaultGateway(String ipv6DefaultGateway) {
+        this.ipv6DefaultGateway = ipv6DefaultGateway;
+    }
 
-  public void setIpv6SubnetMask(String ipv6SubnetMask) {
-    this.ipv6SubnetMask=ipv6SubnetMask;
-  }
+    public Integer getMtu() {
+        return this.mtu;
+    }
 
-  public void setIpv6DefaultGateway(String ipv6DefaultGateway) {
-    this.ipv6DefaultGateway=ipv6DefaultGateway;
-  }
+    public void setMtu(Integer mtu) {
+        this.mtu = mtu;
+    }
 
-  public void setArpRedirectEnabled(Boolean arpRedirectEnabled) {
-    this.arpRedirectEnabled=arpRedirectEnabled;
-  }
+    public Boolean isIpv4Enabled() {
+        return ipv4Enabled;
+    }
 
-  public void setMtu(Integer mtu) {
-    this.mtu=mtu;
-  }
+    public void setIpv4Enabled(final Boolean ipv4Enabled) {
+        this.ipv4Enabled = ipv4Enabled;
+    }
 
-  public void setJumboFramesEnabled(Boolean jumboFramesEnabled) {
-    this.jumboFramesEnabled=jumboFramesEnabled;
-  }
+    public Boolean isIpv6Enabled() {
+        return ipv6Enabled;
+    }
+
+    public void setIpv6Enabled(final Boolean ipv6Enabled) {
+        this.ipv6Enabled = ipv6Enabled;
+    }
+
+    public HostInternetScsiHbaIPv6Properties getIpv6properties() {
+        return ipv6properties;
+    }
+
+    public void setIpv6properties(final HostInternetScsiHbaIPv6Properties ipv6properties) {
+        this.ipv6properties = ipv6properties;
+    }
+
+    public Boolean isArpRedirectEnabled() {
+        return arpRedirectEnabled;
+    }
+
+    public void setArpRedirectEnabled(final Boolean arpRedirectEnabled) {
+        this.arpRedirectEnabled = arpRedirectEnabled;
+    }
+
+    public Boolean isJumboFramesEnabled() {
+        return jumboFramesEnabled;
+    }
+
+    public void setJumboFramesEnabled(Boolean jumboFramesEnabled) {
+        this.jumboFramesEnabled = jumboFramesEnabled;
+    }
 }

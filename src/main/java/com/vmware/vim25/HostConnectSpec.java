@@ -30,100 +30,120 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class HostConnectSpec extends DynamicData {
-  public String hostName;
-  public Integer port;
-  public String sslThumbprint;
-  public String userName;
-  public String password;
-  public ManagedObjectReference vmFolder;
-  public boolean force;
-  public String vimAccountName;
-  public String vimAccountPassword;
-  public String managementIp;
 
-  public String getHostName() {
-    return this.hostName;
-  }
+    public String hostName;
+    public Integer port;
+    public String sslThumbprint;
+    public String userName;
+    public String password;
+    public ManagedObjectReference vmFolder;
+    public boolean force;
+    public String vimAccountName;
+    public String vimAccountPassword;
+    public String managementIp;
+    public HostLockdownMode lockdownMode;
+    public HostGatewaySpec hostGateway;
 
-  public Integer getPort() {
-    return this.port;
-  }
+    public String getHostName() {
+        return this.hostName;
+    }
 
-  public String getSslThumbprint() {
-    return this.sslThumbprint;
-  }
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
+    }
 
-  public String getUserName() {
-    return this.userName;
-  }
+    public Integer getPort() {
+        return this.port;
+    }
 
-  public String getPassword() {
-    return this.password;
-  }
+    public void setPort(Integer port) {
+        this.port = port;
+    }
 
-  public ManagedObjectReference getVmFolder() {
-    return this.vmFolder;
-  }
+    public String getSslThumbprint() {
+        return this.sslThumbprint;
+    }
 
-  public boolean isForce() {
-    return this.force;
-  }
+    public void setSslThumbprint(String sslThumbprint) {
+        this.sslThumbprint = sslThumbprint;
+    }
 
-  public String getVimAccountName() {
-    return this.vimAccountName;
-  }
+    public String getUserName() {
+        return this.userName;
+    }
 
-  public String getVimAccountPassword() {
-    return this.vimAccountPassword;
-  }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-  public String getManagementIp() {
-    return this.managementIp;
-  }
+    public String getPassword() {
+        return this.password;
+    }
 
-  public void setHostName(String hostName) {
-    this.hostName=hostName;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-  public void setPort(Integer port) {
-    this.port=port;
-  }
+    public ManagedObjectReference getVmFolder() {
+        return this.vmFolder;
+    }
 
-  public void setSslThumbprint(String sslThumbprint) {
-    this.sslThumbprint=sslThumbprint;
-  }
+    public void setVmFolder(ManagedObjectReference vmFolder) {
+        this.vmFolder = vmFolder;
+    }
 
-  public void setUserName(String userName) {
-    this.userName=userName;
-  }
+    public boolean isForce() {
+        return this.force;
+    }
 
-  public void setPassword(String password) {
-    this.password=password;
-  }
+    public void setForce(boolean force) {
+        this.force = force;
+    }
 
-  public void setVmFolder(ManagedObjectReference vmFolder) {
-    this.vmFolder=vmFolder;
-  }
+    public String getVimAccountName() {
+        return this.vimAccountName;
+    }
 
-  public void setForce(boolean force) {
-    this.force=force;
-  }
+    public void setVimAccountName(String vimAccountName) {
+        this.vimAccountName = vimAccountName;
+    }
 
-  public void setVimAccountName(String vimAccountName) {
-    this.vimAccountName=vimAccountName;
-  }
+    public String getVimAccountPassword() {
+        return this.vimAccountPassword;
+    }
 
-  public void setVimAccountPassword(String vimAccountPassword) {
-    this.vimAccountPassword=vimAccountPassword;
-  }
+    public void setVimAccountPassword(String vimAccountPassword) {
+        this.vimAccountPassword = vimAccountPassword;
+    }
 
-  public void setManagementIp(String managementIp) {
-    this.managementIp=managementIp;
-  }
+    public String getManagementIp() {
+        return this.managementIp;
+    }
+
+    public void setManagementIp(String managementIp) {
+        this.managementIp = managementIp;
+    }
+
+    public HostGatewaySpec getHostGateway() {
+        return hostGateway;
+    }
+
+    public void setHostGateway(final HostGatewaySpec hostGateway) {
+        this.hostGateway = hostGateway;
+    }
+
+    public HostLockdownMode getLockdownMode() {
+        return lockdownMode;
+    }
+
+    public void setLockdownMode(final HostLockdownMode lockdownMode) {
+        this.lockdownMode = lockdownMode;
+    }
 }

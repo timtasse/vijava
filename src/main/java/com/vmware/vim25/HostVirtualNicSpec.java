@@ -30,73 +30,111 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class HostVirtualNicSpec extends DynamicData {
-  public HostIpConfig ip;
-  public String mac;
-  public DistributedVirtualSwitchPortConnection distributedVirtualPort;
-  public String portgroup;
-  public Integer mtu;
-  public Boolean tsoEnabled;
-  public String netStackInstanceKey;
 
-  public HostIpConfig getIp() {
-    return this.ip;
-  }
+    public HostIpConfig ip;
+    public String mac;
+    public DistributedVirtualSwitchPortConnection distributedVirtualPort;
+    public String portgroup;
+    public Integer mtu;
+    public Boolean tsoEnabled;
+    public String netStackInstanceKey;
+    public HostVirtualNicOpaqueNetworkSpec opaqueNetwork;
+    public String externalId;
+    public String pinnedPnic;
+    public HostVirtualNicIpRouteSpec ipRouteSpec;
 
-  public String getMac() {
-    return this.mac;
-  }
+    public HostIpConfig getIp() {
+        return this.ip;
+    }
 
-  public DistributedVirtualSwitchPortConnection getDistributedVirtualPort() {
-    return this.distributedVirtualPort;
-  }
+    public void setIp(HostIpConfig ip) {
+        this.ip = ip;
+    }
 
-  public String getPortgroup() {
-    return this.portgroup;
-  }
+    public String getMac() {
+        return this.mac;
+    }
 
-  public Integer getMtu() {
-    return this.mtu;
-  }
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
 
-  public Boolean getTsoEnabled() {
-    return this.tsoEnabled;
-  }
+    public DistributedVirtualSwitchPortConnection getDistributedVirtualPort() {
+        return this.distributedVirtualPort;
+    }
 
-  public String getNetStackInstanceKey() {
-    return this.netStackInstanceKey;
-  }
+    public void setDistributedVirtualPort(DistributedVirtualSwitchPortConnection distributedVirtualPort) {
+        this.distributedVirtualPort = distributedVirtualPort;
+    }
 
-  public void setIp(HostIpConfig ip) {
-    this.ip=ip;
-  }
+    public String getPortgroup() {
+        return this.portgroup;
+    }
 
-  public void setMac(String mac) {
-    this.mac=mac;
-  }
+    public void setPortgroup(String portgroup) {
+        this.portgroup = portgroup;
+    }
 
-  public void setDistributedVirtualPort(DistributedVirtualSwitchPortConnection distributedVirtualPort) {
-    this.distributedVirtualPort=distributedVirtualPort;
-  }
+    public Integer getMtu() {
+        return this.mtu;
+    }
 
-  public void setPortgroup(String portgroup) {
-    this.portgroup=portgroup;
-  }
+    public void setMtu(Integer mtu) {
+        this.mtu = mtu;
+    }
 
-  public void setMtu(Integer mtu) {
-    this.mtu=mtu;
-  }
+    public String getNetStackInstanceKey() {
+        return this.netStackInstanceKey;
+    }
 
-  public void setTsoEnabled(Boolean tsoEnabled) {
-    this.tsoEnabled=tsoEnabled;
-  }
+    public void setNetStackInstanceKey(String netStackInstanceKey) {
+        this.netStackInstanceKey = netStackInstanceKey;
+    }
 
-  public void setNetStackInstanceKey(String netStackInstanceKey) {
-    this.netStackInstanceKey=netStackInstanceKey;
-  }
+    public Boolean isTsoEnabled() {
+        return tsoEnabled;
+    }
+
+    public void setTsoEnabled(Boolean tsoEnabled) {
+        this.tsoEnabled = tsoEnabled;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(final String externalId) {
+        this.externalId = externalId;
+    }
+
+    public HostVirtualNicIpRouteSpec getIpRouteSpec() {
+        return ipRouteSpec;
+    }
+
+    public void setIpRouteSpec(final HostVirtualNicIpRouteSpec ipRouteSpec) {
+        this.ipRouteSpec = ipRouteSpec;
+    }
+
+    public HostVirtualNicOpaqueNetworkSpec getOpaqueNetwork() {
+        return opaqueNetwork;
+    }
+
+    public void setOpaqueNetwork(final HostVirtualNicOpaqueNetworkSpec opaqueNetwork) {
+        this.opaqueNetwork = opaqueNetwork;
+    }
+
+    public String getPinnedPnic() {
+        return pinnedPnic;
+    }
+
+    public void setPinnedPnic(final String pinnedPnic) {
+        this.pinnedPnic = pinnedPnic;
+    }
 }

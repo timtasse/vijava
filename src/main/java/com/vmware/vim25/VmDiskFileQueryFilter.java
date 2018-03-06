@@ -30,46 +30,59 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VmDiskFileQueryFilter extends DynamicData {
-  public String[] diskType;
-  public int[] matchHardwareVersion;
-  public String[] controllerType;
-  public Boolean thin;
 
-  public String[] getDiskType() {
-    return this.diskType;
-  }
+    @Deprecated
+    public String[] controllerType;
+    public String[] diskType;
+    public Boolean encrypted;
+    public int[] matchHardwareVersion;
+    public Boolean thin;
 
-  public int[] getMatchHardwareVersion() {
-    return this.matchHardwareVersion;
-  }
+    public String[] getDiskType() {
+        return this.diskType;
+    }
 
-  public String[] getControllerType() {
-    return this.controllerType;
-  }
+    public void setDiskType(String[] diskType) {
+        this.diskType = diskType;
+    }
 
-  public Boolean getThin() {
-    return this.thin;
-  }
+    public int[] getMatchHardwareVersion() {
+        return this.matchHardwareVersion;
+    }
 
-  public void setDiskType(String[] diskType) {
-    this.diskType=diskType;
-  }
+    public void setMatchHardwareVersion(int[] matchHardwareVersion) {
+        this.matchHardwareVersion = matchHardwareVersion;
+    }
 
-  public void setMatchHardwareVersion(int[] matchHardwareVersion) {
-    this.matchHardwareVersion=matchHardwareVersion;
-  }
+    @Deprecated
+    public String[] getControllerType() {
+        return this.controllerType;
+    }
 
-  public void setControllerType(String[] controllerType) {
-    this.controllerType=controllerType;
-  }
+    @Deprecated
+    public void setControllerType(String[] controllerType) {
+        this.controllerType = controllerType;
+    }
 
-  public void setThin(Boolean thin) {
-    this.thin=thin;
-  }
+    public Boolean isEncrypted() {
+        return encrypted;
+    }
+
+    public void setEncrypted(final Boolean encrypted) {
+        this.encrypted = encrypted;
+    }
+
+    public Boolean isThin() {
+        return thin;
+    }
+
+    public void setThin(Boolean thin) {
+        this.thin = thin;
+    }
 }

@@ -30,145 +30,167 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class DVSConfigSpec extends DynamicData {
-  public String configVersion;
-  public String name;
-  public Integer numStandalonePorts;
-  public Integer maxPorts;
-  public DVSUplinkPortPolicy uplinkPortPolicy;
-  public ManagedObjectReference[] uplinkPortgroup;
-  public DVPortSetting defaultPortConfig;
-  public DistributedVirtualSwitchHostMemberConfigSpec[] host;
-  public String extensionKey;
-  public String description;
-  public DVSPolicy policy;
-  public DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
-  public DVSContactInfo contact;
-  public String switchIpAddress;
-  public Integer defaultProxySwitchMaxNumPorts;
 
-  public String getConfigVersion() {
-    return this.configVersion;
-  }
+    public String configVersion;
+    public String name;
+    public Integer numStandalonePorts;
+    public Integer maxPorts;
+    public DVSUplinkPortPolicy uplinkPortPolicy;
+    public ManagedObjectReference[] uplinkPortgroup;
+    public DVPortSetting defaultPortConfig;
+    public DistributedVirtualSwitchHostMemberConfigSpec[] host;
+    public String extensionKey;
+    public String description;
+    public DVSPolicy policy;
+    public DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
+    public DVSContactInfo contact;
+    public String switchIpAddress;
+    public Integer defaultProxySwitchMaxNumPorts;
+    public DvsHostInfrastructureTrafficResource[] infrastructureTrafficResourceConfig;
+    public String networkResourceControlVersion;
 
-  public String getName() {
-    return this.name;
-  }
+    public String getConfigVersion() {
+        return this.configVersion;
+    }
 
-  public Integer getNumStandalonePorts() {
-    return this.numStandalonePorts;
-  }
+    public String getName() {
+        return this.name;
+    }
 
-  public Integer getMaxPorts() {
-    return this.maxPorts;
-  }
+    public Integer getNumStandalonePorts() {
+        return this.numStandalonePorts;
+    }
 
-  public DVSUplinkPortPolicy getUplinkPortPolicy() {
-    return this.uplinkPortPolicy;
-  }
+    @Deprecated
+    public Integer getMaxPorts() {
+        return this.maxPorts;
+    }
 
-  public ManagedObjectReference[] getUplinkPortgroup() {
-    return this.uplinkPortgroup;
-  }
+    public DVSUplinkPortPolicy getUplinkPortPolicy() {
+        return this.uplinkPortPolicy;
+    }
 
-  public DVPortSetting getDefaultPortConfig() {
-    return this.defaultPortConfig;
-  }
+    public ManagedObjectReference[] getUplinkPortgroup() {
+        return this.uplinkPortgroup;
+    }
 
-  public DistributedVirtualSwitchHostMemberConfigSpec[] getHost() {
-    return this.host;
-  }
+    public DVPortSetting getDefaultPortConfig() {
+        return this.defaultPortConfig;
+    }
 
-  public String getExtensionKey() {
-    return this.extensionKey;
-  }
+    public DistributedVirtualSwitchHostMemberConfigSpec[] getHost() {
+        return this.host;
+    }
 
-  public String getDescription() {
-    return this.description;
-  }
+    public String getExtensionKey() {
+        return this.extensionKey;
+    }
 
-  public DVSPolicy getPolicy() {
-    return this.policy;
-  }
+    public String getDescription() {
+        return this.description;
+    }
 
-  public DistributedVirtualSwitchKeyedOpaqueBlob[] getVendorSpecificConfig() {
-    return this.vendorSpecificConfig;
-  }
+    public DVSPolicy getPolicy() {
+        return this.policy;
+    }
 
-  public DVSContactInfo getContact() {
-    return this.contact;
-  }
+    public DistributedVirtualSwitchKeyedOpaqueBlob[] getVendorSpecificConfig() {
+        return this.vendorSpecificConfig;
+    }
 
-  public String getSwitchIpAddress() {
-    return this.switchIpAddress;
-  }
+    public DVSContactInfo getContact() {
+        return this.contact;
+    }
 
-  public Integer getDefaultProxySwitchMaxNumPorts() {
-    return this.defaultProxySwitchMaxNumPorts;
-  }
+    public String getSwitchIpAddress() {
+        return this.switchIpAddress;
+    }
 
-  public void setConfigVersion(String configVersion) {
-    this.configVersion=configVersion;
-  }
+    public Integer getDefaultProxySwitchMaxNumPorts() {
+        return this.defaultProxySwitchMaxNumPorts;
+    }
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public void setConfigVersion(String configVersion) {
+        this.configVersion = configVersion;
+    }
 
-  public void setNumStandalonePorts(Integer numStandalonePorts) {
-    this.numStandalonePorts=numStandalonePorts;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setMaxPorts(Integer maxPorts) {
-    this.maxPorts=maxPorts;
-  }
+    public void setNumStandalonePorts(Integer numStandalonePorts) {
+        this.numStandalonePorts = numStandalonePorts;
+    }
 
-  public void setUplinkPortPolicy(DVSUplinkPortPolicy uplinkPortPolicy) {
-    this.uplinkPortPolicy=uplinkPortPolicy;
-  }
+    @Deprecated
+    public void setMaxPorts(Integer maxPorts) {
+        this.maxPorts = maxPorts;
+    }
 
-  public void setUplinkPortgroup(ManagedObjectReference[] uplinkPortgroup) {
-    this.uplinkPortgroup=uplinkPortgroup;
-  }
+    public void setUplinkPortPolicy(DVSUplinkPortPolicy uplinkPortPolicy) {
+        this.uplinkPortPolicy = uplinkPortPolicy;
+    }
 
-  public void setDefaultPortConfig(DVPortSetting defaultPortConfig) {
-    this.defaultPortConfig=defaultPortConfig;
-  }
+    public void setUplinkPortgroup(ManagedObjectReference[] uplinkPortgroup) {
+        this.uplinkPortgroup = uplinkPortgroup;
+    }
 
-  public void setHost(DistributedVirtualSwitchHostMemberConfigSpec[] host) {
-    this.host=host;
-  }
+    public void setDefaultPortConfig(DVPortSetting defaultPortConfig) {
+        this.defaultPortConfig = defaultPortConfig;
+    }
 
-  public void setExtensionKey(String extensionKey) {
-    this.extensionKey=extensionKey;
-  }
+    public void setHost(DistributedVirtualSwitchHostMemberConfigSpec[] host) {
+        this.host = host;
+    }
 
-  public void setDescription(String description) {
-    this.description=description;
-  }
+    public void setExtensionKey(String extensionKey) {
+        this.extensionKey = extensionKey;
+    }
 
-  public void setPolicy(DVSPolicy policy) {
-    this.policy=policy;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public void setVendorSpecificConfig(DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig) {
-    this.vendorSpecificConfig=vendorSpecificConfig;
-  }
+    public void setPolicy(DVSPolicy policy) {
+        this.policy = policy;
+    }
 
-  public void setContact(DVSContactInfo contact) {
-    this.contact=contact;
-  }
+    public void setVendorSpecificConfig(DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig) {
+        this.vendorSpecificConfig = vendorSpecificConfig;
+    }
 
-  public void setSwitchIpAddress(String switchIpAddress) {
-    this.switchIpAddress=switchIpAddress;
-  }
+    public void setContact(DVSContactInfo contact) {
+        this.contact = contact;
+    }
 
-  public void setDefaultProxySwitchMaxNumPorts(Integer defaultProxySwitchMaxNumPorts) {
-    this.defaultProxySwitchMaxNumPorts=defaultProxySwitchMaxNumPorts;
-  }
+    public void setSwitchIpAddress(String switchIpAddress) {
+        this.switchIpAddress = switchIpAddress;
+    }
+
+    public void setDefaultProxySwitchMaxNumPorts(Integer defaultProxySwitchMaxNumPorts) {
+        this.defaultProxySwitchMaxNumPorts = defaultProxySwitchMaxNumPorts;
+    }
+
+    public DvsHostInfrastructureTrafficResource[] getInfrastructureTrafficResourceConfig() {
+        return infrastructureTrafficResourceConfig;
+    }
+
+    public void setInfrastructureTrafficResourceConfig(final DvsHostInfrastructureTrafficResource[] infrastructureTrafficResourceConfig) {
+        this.infrastructureTrafficResourceConfig = infrastructureTrafficResourceConfig;
+    }
+
+    public String getNetworkResourceControlVersion() {
+        return networkResourceControlVersion;
+    }
+
+    public void setNetworkResourceControlVersion(final String networkResourceControlVersion) {
+        this.networkResourceControlVersion = networkResourceControlVersion;
+    }
 }

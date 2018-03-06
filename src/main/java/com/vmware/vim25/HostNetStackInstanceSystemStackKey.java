@@ -30,17 +30,25 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 public enum HostNetStackInstanceSystemStackKey {
-  defaultTcpipStack ("defaultTcpipStack");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private HostNetStackInstanceSystemStackKey(String val)
-  {
-    this.val = val;
-  }
+    defaultTcpipStack("defaultTcpipStack"),
+    vmotion("vmotion"),
+    vSphereProvisioning("vSphereProvisioning");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    HostNetStackInstanceSystemStackKey(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

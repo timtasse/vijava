@@ -30,28 +30,39 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class ClusterDasAdvancedRuntimeInfo extends DynamicData {
-  public ClusterDasHostInfo dasHostInfo;
-  public DasHeartbeatDatastoreInfo[] heartbeatDatastoreInfo;
 
-  public ClusterDasHostInfo getDasHostInfo() {
-    return this.dasHostInfo;
-  }
+    public ClusterDasHostInfo dasHostInfo;
+    public DasHeartbeatDatastoreInfo[] heartbeatDatastoreInfo;
+    public ClusterDasAdvancedRuntimeInfoVmcpCapabilityInfo vmcpSupported;
 
-  public DasHeartbeatDatastoreInfo[] getHeartbeatDatastoreInfo() {
-    return this.heartbeatDatastoreInfo;
-  }
+    public ClusterDasHostInfo getDasHostInfo() {
+        return this.dasHostInfo;
+    }
 
-  public void setDasHostInfo(ClusterDasHostInfo dasHostInfo) {
-    this.dasHostInfo=dasHostInfo;
-  }
+    public DasHeartbeatDatastoreInfo[] getHeartbeatDatastoreInfo() {
+        return this.heartbeatDatastoreInfo;
+    }
 
-  public void setHeartbeatDatastoreInfo(DasHeartbeatDatastoreInfo[] heartbeatDatastoreInfo) {
-    this.heartbeatDatastoreInfo=heartbeatDatastoreInfo;
-  }
+    public void setDasHostInfo(ClusterDasHostInfo dasHostInfo) {
+        this.dasHostInfo = dasHostInfo;
+    }
+
+    public void setHeartbeatDatastoreInfo(DasHeartbeatDatastoreInfo[] heartbeatDatastoreInfo) {
+        this.heartbeatDatastoreInfo = heartbeatDatastoreInfo;
+    }
+
+    public ClusterDasAdvancedRuntimeInfoVmcpCapabilityInfo getVmcpSupported() {
+        return vmcpSupported;
+    }
+
+    public void setVmcpSupported(final ClusterDasAdvancedRuntimeInfoVmcpCapabilityInfo vmcpSupported) {
+        this.vmcpSupported = vmcpSupported;
+    }
 }

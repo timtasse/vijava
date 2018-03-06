@@ -30,19 +30,30 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class HostProfileSerializedHostProfileSpec extends ProfileSerializedCreateSpec {
-  public ManagedObjectReference validatorHost;
 
-  public ManagedObjectReference getValidatorHost() {
-    return this.validatorHost;
-  }
+    public ManagedObjectReference validatorHost;
+    public Boolean validating;
 
-  public void setValidatorHost(ManagedObjectReference validatorHost) {
-    this.validatorHost=validatorHost;
-  }
+    public ManagedObjectReference getValidatorHost() {
+        return this.validatorHost;
+    }
+
+    public void setValidatorHost(ManagedObjectReference validatorHost) {
+        this.validatorHost = validatorHost;
+    }
+
+    public Boolean isValidating() {
+        return validating;
+    }
+
+    public void setValidating(final Boolean validating) {
+        this.validating = validating;
+    }
 }

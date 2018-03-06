@@ -30,127 +30,149 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class DVPortgroupConfigInfo extends DynamicData {
-  public String key;
-  public String name;
-  public int numPorts;
-  public ManagedObjectReference distributedVirtualSwitch;
-  public DVPortSetting defaultPortConfig;
-  public String description;
-  public String type;
-  public DVPortgroupPolicy policy;
-  public String portNameFormat;
-  public ManagedObjectReference[] scope;
-  public DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
-  public String configVersion;
-  public Boolean autoExpand;
 
-  public String getKey() {
-    return this.key;
-  }
+    public String key;
+    public String name;
+    public int numPorts;
+    public ManagedObjectReference distributedVirtualSwitch;
+    public DVPortSetting defaultPortConfig;
+    public String description;
+    public String type;
+    public DVPortgroupPolicy policy;
+    public String portNameFormat;
+    public ManagedObjectReference[] scope;
+    public DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
+    public String configVersion;
+    public Boolean autoExpand;
+    public Boolean uplink;
+    public String vmVnicNetworkResourcePoolKey;
 
-  public String getName() {
-    return this.name;
-  }
+    public String getKey() {
+        return this.key;
+    }
 
-  public int getNumPorts() {
-    return this.numPorts;
-  }
+    public String getName() {
+        return this.name;
+    }
 
-  public ManagedObjectReference getDistributedVirtualSwitch() {
-    return this.distributedVirtualSwitch;
-  }
+    public int getNumPorts() {
+        return this.numPorts;
+    }
 
-  public DVPortSetting getDefaultPortConfig() {
-    return this.defaultPortConfig;
-  }
+    public ManagedObjectReference getDistributedVirtualSwitch() {
+        return this.distributedVirtualSwitch;
+    }
 
-  public String getDescription() {
-    return this.description;
-  }
+    public DVPortSetting getDefaultPortConfig() {
+        return this.defaultPortConfig;
+    }
 
-  public String getType() {
-    return this.type;
-  }
+    public String getDescription() {
+        return this.description;
+    }
 
-  public DVPortgroupPolicy getPolicy() {
-    return this.policy;
-  }
+    public String getType() {
+        return this.type;
+    }
 
-  public String getPortNameFormat() {
-    return this.portNameFormat;
-  }
+    public DVPortgroupPolicy getPolicy() {
+        return this.policy;
+    }
 
-  public ManagedObjectReference[] getScope() {
-    return this.scope;
-  }
+    public String getPortNameFormat() {
+        return this.portNameFormat;
+    }
 
-  public DistributedVirtualSwitchKeyedOpaqueBlob[] getVendorSpecificConfig() {
-    return this.vendorSpecificConfig;
-  }
+    @Deprecated
+    public ManagedObjectReference[] getScope() {
+        return this.scope;
+    }
 
-  public String getConfigVersion() {
-    return this.configVersion;
-  }
+    public DistributedVirtualSwitchKeyedOpaqueBlob[] getVendorSpecificConfig() {
+        return this.vendorSpecificConfig;
+    }
 
-  public Boolean getAutoExpand() {
-    return this.autoExpand;
-  }
+    public String getConfigVersion() {
+        return this.configVersion;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public Boolean getAutoExpand() {
+        return this.autoExpand;
+    }
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-  public void setNumPorts(int numPorts) {
-    this.numPorts=numPorts;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setDistributedVirtualSwitch(ManagedObjectReference distributedVirtualSwitch) {
-    this.distributedVirtualSwitch=distributedVirtualSwitch;
-  }
+    public void setNumPorts(int numPorts) {
+        this.numPorts = numPorts;
+    }
 
-  public void setDefaultPortConfig(DVPortSetting defaultPortConfig) {
-    this.defaultPortConfig=defaultPortConfig;
-  }
+    public void setDistributedVirtualSwitch(ManagedObjectReference distributedVirtualSwitch) {
+        this.distributedVirtualSwitch = distributedVirtualSwitch;
+    }
 
-  public void setDescription(String description) {
-    this.description=description;
-  }
+    public void setDefaultPortConfig(DVPortSetting defaultPortConfig) {
+        this.defaultPortConfig = defaultPortConfig;
+    }
 
-  public void setType(String type) {
-    this.type=type;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public void setPolicy(DVPortgroupPolicy policy) {
-    this.policy=policy;
-  }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-  public void setPortNameFormat(String portNameFormat) {
-    this.portNameFormat=portNameFormat;
-  }
+    public void setPolicy(DVPortgroupPolicy policy) {
+        this.policy = policy;
+    }
 
-  public void setScope(ManagedObjectReference[] scope) {
-    this.scope=scope;
-  }
+    public void setPortNameFormat(String portNameFormat) {
+        this.portNameFormat = portNameFormat;
+    }
 
-  public void setVendorSpecificConfig(DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig) {
-    this.vendorSpecificConfig=vendorSpecificConfig;
-  }
+    @Deprecated
+    public void setScope(ManagedObjectReference[] scope) {
+        this.scope = scope;
+    }
 
-  public void setConfigVersion(String configVersion) {
-    this.configVersion=configVersion;
-  }
+    public void setVendorSpecificConfig(DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig) {
+        this.vendorSpecificConfig = vendorSpecificConfig;
+    }
 
-  public void setAutoExpand(Boolean autoExpand) {
-    this.autoExpand=autoExpand;
-  }
+    public void setConfigVersion(String configVersion) {
+        this.configVersion = configVersion;
+    }
+
+    public void setAutoExpand(Boolean autoExpand) {
+        this.autoExpand = autoExpand;
+    }
+
+    public Boolean isUplink() {
+        return uplink;
+    }
+
+    public void setUplink(final Boolean uplink) {
+        this.uplink = uplink;
+    }
+
+    public String getVmVnicNetworkResourcePoolKey() {
+        return vmVnicNetworkResourcePoolKey;
+    }
+
+    public void setVmVnicNetworkResourcePoolKey(final String vmVnicNetworkResourcePoolKey) {
+        this.vmVnicNetworkResourcePoolKey = vmVnicNetworkResourcePoolKey;
+    }
 }

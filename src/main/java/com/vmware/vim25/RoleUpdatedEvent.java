@@ -30,19 +30,47 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class RoleUpdatedEvent extends RoleEvent {
-  public String[] privilegeList;
 
-  public String[] getPrivilegeList() {
-    return this.privilegeList;
-  }
+    public String prevRoleName;
+    public String[] privilegeList;
+    public String[] privilegesAdded;
+    public String[] privilegesRemoved;
 
-  public void setPrivilegeList(String[] privilegeList) {
-    this.privilegeList=privilegeList;
-  }
+    public String[] getPrivilegeList() {
+        return this.privilegeList;
+    }
+
+    public void setPrivilegeList(String[] privilegeList) {
+        this.privilegeList = privilegeList;
+    }
+
+    public String getPrevRoleName() {
+        return prevRoleName;
+    }
+
+    public void setPrevRoleName(final String prevRoleName) {
+        this.prevRoleName = prevRoleName;
+    }
+
+    public String[] getPrivilegesAdded() {
+        return privilegesAdded;
+    }
+
+    public void setPrivilegesAdded(final String[] privilegesAdded) {
+        this.privilegesAdded = privilegesAdded;
+    }
+
+    public String[] getPrivilegesRemoved() {
+        return privilegesRemoved;
+    }
+
+    public void setPrivilegesRemoved(final String[] privilegesRemoved) {
+        this.privilegesRemoved = privilegesRemoved;
+    }
 }

@@ -28,76 +28,88 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
 package com.vmware.vim25;
+
 import java.util.Calendar;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class DatastoreInfo extends DynamicData {
-  public String name;
-  public String url;
-  public long freeSpace;
-  public long maxFileSize;
-  public Long maxVirtualDiskCapacity;
-  public Calendar timestamp;
-  public String containerId;
 
-  public String getName() {
-    return this.name;
-  }
+    public String name;
+    public String url;
+    public long freeSpace;
+    public long maxFileSize;
+    public Long maxVirtualDiskCapacity;
+    public Calendar timestamp;
+    public String containerId;
+    public long maxMemoryFileSize;
 
-  public String getUrl() {
-    return this.url;
-  }
+    public String getName() {
+        return this.name;
+    }
 
-  public long getFreeSpace() {
-    return this.freeSpace;
-  }
+    public String getUrl() {
+        return this.url;
+    }
 
-  public long getMaxFileSize() {
-    return this.maxFileSize;
-  }
+    public long getFreeSpace() {
+        return this.freeSpace;
+    }
 
-  public Long getMaxVirtualDiskCapacity() {
-    return this.maxVirtualDiskCapacity;
-  }
+    public long getMaxFileSize() {
+        return this.maxFileSize;
+    }
 
-  public Calendar getTimestamp() {
-    return this.timestamp;
-  }
+    public Long getMaxVirtualDiskCapacity() {
+        return this.maxVirtualDiskCapacity;
+    }
 
-  public String getContainerId() {
-    return this.containerId;
-  }
+    public Calendar getTimestamp() {
+        return this.timestamp;
+    }
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public String getContainerId() {
+        return this.containerId;
+    }
 
-  public void setUrl(String url) {
-    this.url=url;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setFreeSpace(long freeSpace) {
-    this.freeSpace=freeSpace;
-  }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-  public void setMaxFileSize(long maxFileSize) {
-    this.maxFileSize=maxFileSize;
-  }
+    public void setFreeSpace(long freeSpace) {
+        this.freeSpace = freeSpace;
+    }
 
-  public void setMaxVirtualDiskCapacity(Long maxVirtualDiskCapacity) {
-    this.maxVirtualDiskCapacity=maxVirtualDiskCapacity;
-  }
+    public void setMaxFileSize(long maxFileSize) {
+        this.maxFileSize = maxFileSize;
+    }
 
-  public void setTimestamp(Calendar timestamp) {
-    this.timestamp=timestamp;
-  }
+    public void setMaxVirtualDiskCapacity(Long maxVirtualDiskCapacity) {
+        this.maxVirtualDiskCapacity = maxVirtualDiskCapacity;
+    }
 
-  public void setContainerId(String containerId) {
-    this.containerId=containerId;
-  }
+    public void setTimestamp(Calendar timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public void setContainerId(String containerId) {
+        this.containerId = containerId;
+    }
+
+    public long getMaxMemoryFileSize() {
+        return maxMemoryFileSize;
+    }
+
+    public void setMaxMemoryFileSize(final long maxMemoryFileSize) {
+        this.maxMemoryFileSize = maxMemoryFileSize;
+    }
 }

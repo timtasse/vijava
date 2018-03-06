@@ -28,94 +28,115 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
 package com.vmware.vim25;
+
 import java.util.Calendar;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class ClusterRecommendation extends DynamicData {
-  public String key;
-  public String type;
-  public Calendar time;
-  public int rating;
-  public String reason;
-  public String reasonText;
-  public String[] prerequisite;
-  public ClusterAction[] action;
-  public ManagedObjectReference target;
 
-  public String getKey() {
-    return this.key;
-  }
+    public String key;
+    public String type;
+    public Calendar time;
+    public int rating;
+    public String reason;
+    public String reasonText;
+    public String[] prerequisite;
+    public ClusterAction[] action;
+    public ManagedObjectReference target;
+    public LocalizableMessage warningDetails;
+    public String warningText;
 
-  public String getType() {
-    return this.type;
-  }
+    public String getKey() {
+        return this.key;
+    }
 
-  public Calendar getTime() {
-    return this.time;
-  }
+    public String getType() {
+        return this.type;
+    }
 
-  public int getRating() {
-    return this.rating;
-  }
+    public Calendar getTime() {
+        return this.time;
+    }
 
-  public String getReason() {
-    return this.reason;
-  }
+    public int getRating() {
+        return this.rating;
+    }
 
-  public String getReasonText() {
-    return this.reasonText;
-  }
+    public String getReason() {
+        return this.reason;
+    }
 
-  public String[] getPrerequisite() {
-    return this.prerequisite;
-  }
+    public String getReasonText() {
+        return this.reasonText;
+    }
 
-  public ClusterAction[] getAction() {
-    return this.action;
-  }
+    public String[] getPrerequisite() {
+        return this.prerequisite;
+    }
 
-  public ManagedObjectReference getTarget() {
-    return this.target;
-  }
+    public ClusterAction[] getAction() {
+        return this.action;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public ManagedObjectReference getTarget() {
+        return this.target;
+    }
 
-  public void setType(String type) {
-    this.type=type;
-  }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-  public void setTime(Calendar time) {
-    this.time=time;
-  }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-  public void setRating(int rating) {
-    this.rating=rating;
-  }
+    public void setTime(Calendar time) {
+        this.time = time;
+    }
 
-  public void setReason(String reason) {
-    this.reason=reason;
-  }
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
-  public void setReasonText(String reasonText) {
-    this.reasonText=reasonText;
-  }
+    public void setReason(String reason) {
+        this.reason = reason;
+    }
 
-  public void setPrerequisite(String[] prerequisite) {
-    this.prerequisite=prerequisite;
-  }
+    public void setReasonText(String reasonText) {
+        this.reasonText = reasonText;
+    }
 
-  public void setAction(ClusterAction[] action) {
-    this.action=action;
-  }
+    public void setPrerequisite(String[] prerequisite) {
+        this.prerequisite = prerequisite;
+    }
 
-  public void setTarget(ManagedObjectReference target) {
-    this.target=target;
-  }
+    public void setAction(ClusterAction[] action) {
+        this.action = action;
+    }
+
+    public void setTarget(ManagedObjectReference target) {
+        this.target = target;
+    }
+
+    public LocalizableMessage getWarningDetails() {
+        return warningDetails;
+    }
+
+    public void setWarningDetails(final LocalizableMessage warningDetails) {
+        this.warningDetails = warningDetails;
+    }
+
+    public String getWarningText() {
+        return warningText;
+    }
+
+    public void setWarningText(final String warningText) {
+        this.warningText = warningText;
+    }
 }

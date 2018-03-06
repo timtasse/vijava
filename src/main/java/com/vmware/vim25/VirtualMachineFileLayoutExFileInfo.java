@@ -30,55 +30,75 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VirtualMachineFileLayoutExFileInfo extends DynamicData {
-  public int key;
-  public String name;
-  public String type;
-  public long size;
-  public Long uniqueSize;
 
-  public int getKey() {
-    return this.key;
-  }
+    public int key;
+    public String name;
+    public String type;
+    public long size;
+    public Long uniqueSize;
+    public Boolean accessible;
+    public String backingObjectId;
 
-  public String getName() {
-    return this.name;
-  }
+    public int getKey() {
+        return this.key;
+    }
 
-  public String getType() {
-    return this.type;
-  }
+    public void setKey(int key) {
+        this.key = key;
+    }
 
-  public long getSize() {
-    return this.size;
-  }
+    public String getName() {
+        return this.name;
+    }
 
-  public Long getUniqueSize() {
-    return this.uniqueSize;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setKey(int key) {
-    this.key=key;
-  }
+    public String getType() {
+        return this.type;
+    }
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public void setType(String type) {
+        this.type = type;
+    }
 
-  public void setType(String type) {
-    this.type=type;
-  }
+    public long getSize() {
+        return this.size;
+    }
 
-  public void setSize(long size) {
-    this.size=size;
-  }
+    public void setSize(long size) {
+        this.size = size;
+    }
 
-  public void setUniqueSize(Long uniqueSize) {
-    this.uniqueSize=uniqueSize;
-  }
+    public long getUniqueSize() {
+        return this.uniqueSize;
+    }
+
+    public void setUniqueSize(long uniqueSize) {
+        this.uniqueSize = uniqueSize;
+    }
+
+    public boolean isAccessible() {
+        return accessible;
+    }
+
+    public void setAccessible(final boolean accessible) {
+        this.accessible = accessible;
+    }
+
+    public String getBackingObjectId() {
+        return backingObjectId;
+    }
+
+    public void setBackingObjectId(final String backingObjectId) {
+        this.backingObjectId = backingObjectId;
+    }
 }

@@ -30,64 +30,75 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VMwareDVSConfigSpec extends DVSConfigSpec {
-  public VMwareDVSPvlanConfigSpec[] pvlanConfigSpec;
-  public VMwareDVSVspanConfigSpec[] vspanConfigSpec;
-  public Integer maxMtu;
-  public LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig;
-  public VMwareIpfixConfig ipfixConfig;
-  public String lacpApiVersion;
 
-  public VMwareDVSPvlanConfigSpec[] getPvlanConfigSpec() {
-    return this.pvlanConfigSpec;
-  }
+    public VMwareDVSPvlanConfigSpec[] pvlanConfigSpec;
+    public VMwareDVSVspanConfigSpec[] vspanConfigSpec;
+    public Integer maxMtu;
+    public LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig;
+    public VMwareIpfixConfig ipfixConfig;
+    public String lacpApiVersion;
+    public String multicastFilteringMode;
 
-  public VMwareDVSVspanConfigSpec[] getVspanConfigSpec() {
-    return this.vspanConfigSpec;
-  }
+    public VMwareDVSPvlanConfigSpec[] getPvlanConfigSpec() {
+        return this.pvlanConfigSpec;
+    }
 
-  public Integer getMaxMtu() {
-    return this.maxMtu;
-  }
+    public void setPvlanConfigSpec(VMwareDVSPvlanConfigSpec[] pvlanConfigSpec) {
+        this.pvlanConfigSpec = pvlanConfigSpec;
+    }
 
-  public LinkDiscoveryProtocolConfig getLinkDiscoveryProtocolConfig() {
-    return this.linkDiscoveryProtocolConfig;
-  }
+    public VMwareDVSVspanConfigSpec[] getVspanConfigSpec() {
+        return this.vspanConfigSpec;
+    }
 
-  public VMwareIpfixConfig getIpfixConfig() {
-    return this.ipfixConfig;
-  }
+    public void setVspanConfigSpec(VMwareDVSVspanConfigSpec[] vspanConfigSpec) {
+        this.vspanConfigSpec = vspanConfigSpec;
+    }
 
-  public String getLacpApiVersion() {
-    return this.lacpApiVersion;
-  }
+    public Integer getMaxMtu() {
+        return this.maxMtu;
+    }
 
-  public void setPvlanConfigSpec(VMwareDVSPvlanConfigSpec[] pvlanConfigSpec) {
-    this.pvlanConfigSpec=pvlanConfigSpec;
-  }
+    public void setMaxMtu(Integer maxMtu) {
+        this.maxMtu = maxMtu;
+    }
 
-  public void setVspanConfigSpec(VMwareDVSVspanConfigSpec[] vspanConfigSpec) {
-    this.vspanConfigSpec=vspanConfigSpec;
-  }
+    public LinkDiscoveryProtocolConfig getLinkDiscoveryProtocolConfig() {
+        return this.linkDiscoveryProtocolConfig;
+    }
 
-  public void setMaxMtu(Integer maxMtu) {
-    this.maxMtu=maxMtu;
-  }
+    public void setLinkDiscoveryProtocolConfig(LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig) {
+        this.linkDiscoveryProtocolConfig = linkDiscoveryProtocolConfig;
+    }
 
-  public void setLinkDiscoveryProtocolConfig(LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig) {
-    this.linkDiscoveryProtocolConfig=linkDiscoveryProtocolConfig;
-  }
+    public VMwareIpfixConfig getIpfixConfig() {
+        return this.ipfixConfig;
+    }
 
-  public void setIpfixConfig(VMwareIpfixConfig ipfixConfig) {
-    this.ipfixConfig=ipfixConfig;
-  }
+    public void setIpfixConfig(VMwareIpfixConfig ipfixConfig) {
+        this.ipfixConfig = ipfixConfig;
+    }
 
-  public void setLacpApiVersion(String lacpApiVersion) {
-    this.lacpApiVersion=lacpApiVersion;
-  }
+    public String getLacpApiVersion() {
+        return this.lacpApiVersion;
+    }
+
+    public void setLacpApiVersion(String lacpApiVersion) {
+        this.lacpApiVersion = lacpApiVersion;
+    }
+
+    public String getMulticastFilteringMode() {
+        return multicastFilteringMode;
+    }
+
+    public void setMulticastFilteringMode(final String multicastFilteringMode) {
+        this.multicastFilteringMode = multicastFilteringMode;
+    }
 }

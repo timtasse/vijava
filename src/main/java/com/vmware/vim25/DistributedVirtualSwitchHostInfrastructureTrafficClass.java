@@ -30,24 +30,31 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 public enum DistributedVirtualSwitchHostInfrastructureTrafficClass {
-  management ("management"),
-  faultTolerance ("faultTolerance"),
-  vmotion ("vmotion"),
-  virtualMachine ("virtualMachine"),
-  iSCSI ("iSCSI"),
-  nfs ("nfs"),
-  hbr ("hbr"),
-  vsan ("vsan");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private DistributedVirtualSwitchHostInfrastructureTrafficClass(String val)
-  {
-    this.val = val;
-  }
+    faultTolerance("faultTolerance"),
+    hbr("hbr"),
+    iSCSI("iSCSI"),
+    management("management"),
+    nfs("nfs"),
+    vdp("vdp"),
+    virtualMachine("virtualMachine"),
+    vmotion("vmotion"),
+    vsan("vsan");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    DistributedVirtualSwitchHostInfrastructureTrafficClass(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

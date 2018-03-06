@@ -30,35 +30,45 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 public enum VirtualMachineFileLayoutExFileType {
-  config ("config"),
-  extendedConfig ("extendedConfig"),
-  diskDescriptor ("diskDescriptor"),
-  diskExtent ("diskExtent"),
-  digestDescriptor ("digestDescriptor"),
-  digestExtent ("digestExtent"),
-  diskReplicationState ("diskReplicationState"),
-  log ("log"),
-  stat ("stat"),
-  namespaceData ("namespaceData"),
-  nvram ("nvram"),
-  snapshotData ("snapshotData"),
-  snapshotList ("snapshotList"),
-  snapshotManifestList ("snapshotManifestList"),
-  suspend ("suspend"),
-  swap ("swap"),
-  uwswap ("uwswap"),
-  core ("core"),
-  screenshot ("screenshot");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private VirtualMachineFileLayoutExFileType(String val)
-  {
-    this.val = val;
-  }
+    config("config"),
+    core("core"),
+    digestDescriptor("digestDescriptor"),
+    digestExtent("digestExtent"),
+    diskDescriptor("diskDescriptor"),
+    diskExtent("diskExtent"),
+    diskReplicationState("diskReplicationState"),
+    extendedConfig("extendedConfig"),
+    ftMetadata("ftMetadata"),
+    guestCustomization("guestCustomization"),
+    log("log"),
+    namespaceData("namespaceData"),
+    nvram("nvram"),
+    screenshot("screenshot"),
+    snapshotData("snapshotData"),
+    snapshotList("snapshotList"),
+    snapshotManifestList("snapshotManifestList"),
+    snapshotMemory("snapshotMemory"),
+    stat("stat"),
+    suspend("suspend"),
+    suspendMemory("suspendMemory"),
+    swap("swap"),
+    uwswap("uwswap");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    VirtualMachineFileLayoutExFileType(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

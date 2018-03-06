@@ -30,172 +30,183 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class ScsiLun extends HostDevice {
-  public String key;
-  public String uuid;
-  public ScsiLunDescriptor[] descriptor;
-  public String canonicalName;
-  public String displayName;
-  public String lunType;
-  public String vendor;
-  public String model;
-  public String revision;
-  public Integer scsiLevel;
-  public String serialNumber;
-  public ScsiLunDurableName durableName;
-  public ScsiLunDurableName[] alternateName;
-  public byte[] standardInquiry;
-  public Integer queueDepth;
-  public String[] operationalState;
-  public ScsiLunCapabilities capabilities;
-  public String vStorageSupport;
 
-  public String getKey() {
-    return this.key;
-  }
+    public String key;
+    public String uuid;
+    public ScsiLunDescriptor[] descriptor;
+    public String canonicalName;
+    public String displayName;
+    public String lunType;
+    public String vendor;
+    public String model;
+    public String revision;
+    public Integer scsiLevel;
+    public String serialNumber;
+    public ScsiLunDurableName durableName;
+    public ScsiLunDurableName[] alternateName;
+    public byte[] standardInquiry;
+    public Integer queueDepth;
+    public String[] operationalState;
+    public ScsiLunCapabilities capabilities;
+    public String vStorageSupport;
+    public Boolean protocolEndpoint;
 
-  public String getUuid() {
-    return this.uuid;
-  }
+    public String getKey() {
+        return this.key;
+    }
 
-  public ScsiLunDescriptor[] getDescriptor() {
-    return this.descriptor;
-  }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-  public String getCanonicalName() {
-    return this.canonicalName;
-  }
+    public String getUuid() {
+        return this.uuid;
+    }
 
-  public String getDisplayName() {
-    return this.displayName;
-  }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-  public String getLunType() {
-    return this.lunType;
-  }
+    public ScsiLunDescriptor[] getDescriptor() {
+        return this.descriptor;
+    }
 
-  public String getVendor() {
-    return this.vendor;
-  }
+    public void setDescriptor(ScsiLunDescriptor[] descriptor) {
+        this.descriptor = descriptor;
+    }
 
-  public String getModel() {
-    return this.model;
-  }
+    public String getCanonicalName() {
+        return this.canonicalName;
+    }
 
-  public String getRevision() {
-    return this.revision;
-  }
+    public void setCanonicalName(String canonicalName) {
+        this.canonicalName = canonicalName;
+    }
 
-  public Integer getScsiLevel() {
-    return this.scsiLevel;
-  }
+    public String getDisplayName() {
+        return this.displayName;
+    }
 
-  public String getSerialNumber() {
-    return this.serialNumber;
-  }
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
-  public ScsiLunDurableName getDurableName() {
-    return this.durableName;
-  }
+    public String getLunType() {
+        return this.lunType;
+    }
 
-  public ScsiLunDurableName[] getAlternateName() {
-    return this.alternateName;
-  }
+    public void setLunType(String lunType) {
+        this.lunType = lunType;
+    }
 
-  public byte[] getStandardInquiry() {
-    return this.standardInquiry;
-  }
+    public String getVendor() {
+        return this.vendor;
+    }
 
-  public Integer getQueueDepth() {
-    return this.queueDepth;
-  }
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
 
-  public String[] getOperationalState() {
-    return this.operationalState;
-  }
+    public String getModel() {
+        return this.model;
+    }
 
-  public ScsiLunCapabilities getCapabilities() {
-    return this.capabilities;
-  }
+    public void setModel(String model) {
+        this.model = model;
+    }
 
-  public String getVStorageSupport() {
-    return this.vStorageSupport;
-  }
+    public String getRevision() {
+        return this.revision;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public void setRevision(String revision) {
+        this.revision = revision;
+    }
 
-  public void setUuid(String uuid) {
-    this.uuid=uuid;
-  }
+    public Integer getScsiLevel() {
+        return this.scsiLevel;
+    }
 
-  public void setDescriptor(ScsiLunDescriptor[] descriptor) {
-    this.descriptor=descriptor;
-  }
+    public void setScsiLevel(Integer scsiLevel) {
+        this.scsiLevel = scsiLevel;
+    }
 
-  public void setCanonicalName(String canonicalName) {
-    this.canonicalName=canonicalName;
-  }
+    public String getSerialNumber() {
+        return this.serialNumber;
+    }
 
-  public void setDisplayName(String displayName) {
-    this.displayName=displayName;
-  }
+    public void setSerialNumber(String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
 
-  public void setLunType(String lunType) {
-    this.lunType=lunType;
-  }
+    public ScsiLunDurableName getDurableName() {
+        return this.durableName;
+    }
 
-  public void setVendor(String vendor) {
-    this.vendor=vendor;
-  }
+    public void setDurableName(ScsiLunDurableName durableName) {
+        this.durableName = durableName;
+    }
 
-  public void setModel(String model) {
-    this.model=model;
-  }
+    public ScsiLunDurableName[] getAlternateName() {
+        return this.alternateName;
+    }
 
-  public void setRevision(String revision) {
-    this.revision=revision;
-  }
+    public void setAlternateName(ScsiLunDurableName[] alternateName) {
+        this.alternateName = alternateName;
+    }
 
-  public void setScsiLevel(Integer scsiLevel) {
-    this.scsiLevel=scsiLevel;
-  }
+    public byte[] getStandardInquiry() {
+        return this.standardInquiry;
+    }
 
-  public void setSerialNumber(String serialNumber) {
-    this.serialNumber=serialNumber;
-  }
+    public void setStandardInquiry(byte[] standardInquiry) {
+        this.standardInquiry = standardInquiry;
+    }
 
-  public void setDurableName(ScsiLunDurableName durableName) {
-    this.durableName=durableName;
-  }
+    public Integer getQueueDepth() {
+        return this.queueDepth;
+    }
 
-  public void setAlternateName(ScsiLunDurableName[] alternateName) {
-    this.alternateName=alternateName;
-  }
+    public void setQueueDepth(Integer queueDepth) {
+        this.queueDepth = queueDepth;
+    }
 
-  public void setStandardInquiry(byte[] standardInquiry) {
-    this.standardInquiry=standardInquiry;
-  }
+    public String[] getOperationalState() {
+        return this.operationalState;
+    }
 
-  public void setQueueDepth(Integer queueDepth) {
-    this.queueDepth=queueDepth;
-  }
+    public void setOperationalState(String[] operationalState) {
+        this.operationalState = operationalState;
+    }
 
-  public void setOperationalState(String[] operationalState) {
-    this.operationalState=operationalState;
-  }
+    public ScsiLunCapabilities getCapabilities() {
+        return this.capabilities;
+    }
 
-  public void setCapabilities(ScsiLunCapabilities capabilities) {
-    this.capabilities=capabilities;
-  }
+    public void setCapabilities(ScsiLunCapabilities capabilities) {
+        this.capabilities = capabilities;
+    }
 
-  public void setVStorageSupport(String vStorageSupport) {
-    this.vStorageSupport=vStorageSupport;
-  }
+    public String getVStorageSupport() {
+        return this.vStorageSupport;
+    }
+
+    public void setVStorageSupport(String vStorageSupport) {
+        this.vStorageSupport = vStorageSupport;
+    }
+
+    public Boolean isProtocolEndpoint() {
+        return protocolEndpoint;
+    }
+
+    public void setProtocolEndpoint(final Boolean protocolEndpoint) {
+        this.protocolEndpoint = protocolEndpoint;
+    }
 }

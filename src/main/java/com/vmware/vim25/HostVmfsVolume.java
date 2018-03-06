@@ -30,100 +30,140 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class HostVmfsVolume extends HostFileSystemVolume {
-  public int blockSizeMb;
-  public int maxBlocks;
-  public int majorVersion;
-  public String version;
-  public String uuid;
-  public HostScsiDiskPartition[] extent;
-  public boolean vmfsUpgradable;
-  public HostForceMountedInfo forceMountedInfo;
-  public Boolean ssd;
-  public Boolean local;
 
-  public int getBlockSizeMb() {
-    return this.blockSizeMb;
-  }
+    public Integer blockSize;
+    @Deprecated
+    public int blockSizeMb;
+    public HostScsiDiskPartition[] extent;
+    public HostForceMountedInfo forceMountedInfo;
+    public Boolean local;
+    public int majorVersion;
+    public int maxBlocks;
+    public String scsiDiskType;
+    public Boolean ssd;
+    public Integer unmapGranularity;
+    public String unmapPriority;
+    public String uuid;
+    public String version;
+    public boolean vmfsUpgradable;
 
-  public int getMaxBlocks() {
-    return this.maxBlocks;
-  }
+    @Deprecated
+    public int getBlockSizeMb() {
+        return this.blockSizeMb;
+    }
 
-  public int getMajorVersion() {
-    return this.majorVersion;
-  }
+    @Deprecated
+    public void setBlockSizeMb(int blockSizeMb) {
+        this.blockSizeMb = blockSizeMb;
+    }
 
-  public String getVersion() {
-    return this.version;
-  }
+    public int getMaxBlocks() {
+        return this.maxBlocks;
+    }
 
-  public String getUuid() {
-    return this.uuid;
-  }
+    public void setMaxBlocks(int maxBlocks) {
+        this.maxBlocks = maxBlocks;
+    }
 
-  public HostScsiDiskPartition[] getExtent() {
-    return this.extent;
-  }
+    public int getMajorVersion() {
+        return this.majorVersion;
+    }
 
-  public boolean isVmfsUpgradable() {
-    return this.vmfsUpgradable;
-  }
+    public void setMajorVersion(int majorVersion) {
+        this.majorVersion = majorVersion;
+    }
 
-  public HostForceMountedInfo getForceMountedInfo() {
-    return this.forceMountedInfo;
-  }
+    public String getVersion() {
+        return this.version;
+    }
 
-  public Boolean getSsd() {
-    return this.ssd;
-  }
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-  public Boolean getLocal() {
-    return this.local;
-  }
+    public String getUuid() {
+        return this.uuid;
+    }
 
-  public void setBlockSizeMb(int blockSizeMb) {
-    this.blockSizeMb=blockSizeMb;
-  }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-  public void setMaxBlocks(int maxBlocks) {
-    this.maxBlocks=maxBlocks;
-  }
+    public HostScsiDiskPartition[] getExtent() {
+        return this.extent;
+    }
 
-  public void setMajorVersion(int majorVersion) {
-    this.majorVersion=majorVersion;
-  }
+    public void setExtent(HostScsiDiskPartition[] extent) {
+        this.extent = extent;
+    }
 
-  public void setVersion(String version) {
-    this.version=version;
-  }
+    public boolean isVmfsUpgradable() {
+        return this.vmfsUpgradable;
+    }
 
-  public void setUuid(String uuid) {
-    this.uuid=uuid;
-  }
+    public void setVmfsUpgradable(boolean vmfsUpgradable) {
+        this.vmfsUpgradable = vmfsUpgradable;
+    }
 
-  public void setExtent(HostScsiDiskPartition[] extent) {
-    this.extent=extent;
-  }
+    public HostForceMountedInfo getForceMountedInfo() {
+        return this.forceMountedInfo;
+    }
 
-  public void setVmfsUpgradable(boolean vmfsUpgradable) {
-    this.vmfsUpgradable=vmfsUpgradable;
-  }
+    public void setForceMountedInfo(HostForceMountedInfo forceMountedInfo) {
+        this.forceMountedInfo = forceMountedInfo;
+    }
 
-  public void setForceMountedInfo(HostForceMountedInfo forceMountedInfo) {
-    this.forceMountedInfo=forceMountedInfo;
-  }
+    public int getBlockSize() {
+        return blockSize;
+    }
 
-  public void setSsd(Boolean ssd) {
-    this.ssd=ssd;
-  }
+    public void setBlockSize(final int blockSize) {
+        this.blockSize = blockSize;
+    }
 
-  public void setLocal(Boolean local) {
-    this.local=local;
-  }
+    public boolean isLocal() {
+        return local;
+    }
+
+    public void setLocal(boolean local) {
+        this.local = local;
+    }
+
+    public String getScsiDiskType() {
+        return scsiDiskType;
+    }
+
+    public void setScsiDiskType(final String scsiDiskType) {
+        this.scsiDiskType = scsiDiskType;
+    }
+
+    public boolean isSsd() {
+        return ssd;
+    }
+
+    public void setSsd(boolean ssd) {
+        this.ssd = ssd;
+    }
+
+    public int getUnmapGranularity() {
+        return unmapGranularity;
+    }
+
+    public void setUnmapGranularity(final int unmapGranularity) {
+        this.unmapGranularity = unmapGranularity;
+    }
+
+    public String getUnmapPriority() {
+        return unmapPriority;
+    }
+
+    public void setUnmapPriority(final String unmapPriority) {
+        this.unmapPriority = unmapPriority;
+    }
 }

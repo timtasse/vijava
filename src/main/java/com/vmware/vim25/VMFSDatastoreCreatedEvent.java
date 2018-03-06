@@ -30,19 +30,29 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VMFSDatastoreCreatedEvent extends HostEvent {
-  public DatastoreEventArgument datastore;
 
-  public DatastoreEventArgument getDatastore() {
-    return this.datastore;
-  }
+    public DatastoreEventArgument datastore;
+    public String datastoreUrl;
 
-  public void setDatastore(DatastoreEventArgument datastore) {
-    this.datastore=datastore;
-  }
+    public DatastoreEventArgument getDatastore() {
+        return this.datastore;
+    }
+
+    public void setDatastore(DatastoreEventArgument datastore) {
+        this.datastore = datastore;
+    }
+
+    public String getDatastoreUrl() {
+        return datastoreUrl;
+    }
+
+    public void setDatastoreUrl(final String datastoreUrl) {
+        this.datastoreUrl = datastoreUrl;
+    }
 }

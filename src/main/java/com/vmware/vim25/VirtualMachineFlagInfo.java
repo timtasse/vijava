@@ -30,127 +30,155 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VirtualMachineFlagInfo extends DynamicData {
-  public Boolean disableAcceleration;
-  public Boolean enableLogging;
-  public Boolean useToe;
-  public Boolean runWithDebugInfo;
-  public String monitorType;
-  public String htSharing;
-  public Boolean snapshotDisabled;
-  public Boolean snapshotLocked;
-  public Boolean diskUuidEnabled;
-  public String virtualMmuUsage;
-  public String virtualExecUsage;
-  public String snapshotPowerOffBehavior;
-  public Boolean recordReplayEnabled;
 
-  public Boolean getDisableAcceleration() {
-    return this.disableAcceleration;
-  }
+    public Boolean disableAcceleration;
+    public Boolean enableLogging;
+    public Boolean useToe;
+    @Deprecated
+    public Boolean runWithDebugInfo;
+    public String monitorType;
+    public String htSharing;
+    @Deprecated
+    public Boolean snapshotDisabled;
+    public Boolean snapshotLocked;
+    public Boolean diskUuidEnabled;
+    public String virtualMmuUsage;
+    public String virtualExecUsage;
+    public String snapshotPowerOffBehavior;
+    @Deprecated
+    public Boolean recordReplayEnabled;
+    public Boolean cbrcCacheEnabled;
+    public String faultToleranceType;
 
-  public Boolean getEnableLogging() {
-    return this.enableLogging;
-  }
+    public String getMonitorType() {
+        return this.monitorType;
+    }
 
-  public Boolean getUseToe() {
-    return this.useToe;
-  }
+    public void setMonitorType(String monitorType) {
+        this.monitorType = monitorType;
+    }
 
-  public Boolean getRunWithDebugInfo() {
-    return this.runWithDebugInfo;
-  }
+    public String getHtSharing() {
+        return this.htSharing;
+    }
 
-  public String getMonitorType() {
-    return this.monitorType;
-  }
+    public void setHtSharing(String htSharing) {
+        this.htSharing = htSharing;
+    }
 
-  public String getHtSharing() {
-    return this.htSharing;
-  }
+    public String getVirtualMmuUsage() {
+        return this.virtualMmuUsage;
+    }
 
-  public Boolean getSnapshotDisabled() {
-    return this.snapshotDisabled;
-  }
+    public void setVirtualMmuUsage(String virtualMmuUsage) {
+        this.virtualMmuUsage = virtualMmuUsage;
+    }
 
-  public Boolean getSnapshotLocked() {
-    return this.snapshotLocked;
-  }
+    public String getVirtualExecUsage() {
+        return this.virtualExecUsage;
+    }
 
-  public Boolean getDiskUuidEnabled() {
-    return this.diskUuidEnabled;
-  }
+    public void setVirtualExecUsage(String virtualExecUsage) {
+        this.virtualExecUsage = virtualExecUsage;
+    }
 
-  public String getVirtualMmuUsage() {
-    return this.virtualMmuUsage;
-  }
+    public String getSnapshotPowerOffBehavior() {
+        return this.snapshotPowerOffBehavior;
+    }
 
-  public String getVirtualExecUsage() {
-    return this.virtualExecUsage;
-  }
+    public void setSnapshotPowerOffBehavior(String snapshotPowerOffBehavior) {
+        this.snapshotPowerOffBehavior = snapshotPowerOffBehavior;
+    }
 
-  public String getSnapshotPowerOffBehavior() {
-    return this.snapshotPowerOffBehavior;
-  }
+    public Boolean isDisableAcceleration() {
+        return disableAcceleration;
+    }
 
-  public Boolean getRecordReplayEnabled() {
-    return this.recordReplayEnabled;
-  }
+    public void setDisableAcceleration(Boolean disableAcceleration) {
+        this.disableAcceleration = disableAcceleration;
+    }
 
-  public void setDisableAcceleration(Boolean disableAcceleration) {
-    this.disableAcceleration=disableAcceleration;
-  }
+    public Boolean isEnableLogging() {
+        return enableLogging;
+    }
 
-  public void setEnableLogging(Boolean enableLogging) {
-    this.enableLogging=enableLogging;
-  }
+    public void setEnableLogging(Boolean enableLogging) {
+        this.enableLogging = enableLogging;
+    }
 
-  public void setUseToe(Boolean useToe) {
-    this.useToe=useToe;
-  }
+    public Boolean isUseToe() {
+        return useToe;
+    }
 
-  public void setRunWithDebugInfo(Boolean runWithDebugInfo) {
-    this.runWithDebugInfo=runWithDebugInfo;
-  }
+    public void setUseToe(Boolean useToe) {
+        this.useToe = useToe;
+    }
 
-  public void setMonitorType(String monitorType) {
-    this.monitorType=monitorType;
-  }
+    @Deprecated
+    public Boolean isRunWithDebugInfo() {
+        return runWithDebugInfo;
+    }
 
-  public void setHtSharing(String htSharing) {
-    this.htSharing=htSharing;
-  }
+    @Deprecated
+    public void setRunWithDebugInfo(Boolean runWithDebugInfo) {
+        this.runWithDebugInfo = runWithDebugInfo;
+    }
 
-  public void setSnapshotDisabled(Boolean snapshotDisabled) {
-    this.snapshotDisabled=snapshotDisabled;
-  }
+    @Deprecated
+    public Boolean isSnapshotDisabled() {
+        return snapshotDisabled;
+    }
 
-  public void setSnapshotLocked(Boolean snapshotLocked) {
-    this.snapshotLocked=snapshotLocked;
-  }
+    @Deprecated
+    public void setSnapshotDisabled(Boolean snapshotDisabled) {
+        this.snapshotDisabled = snapshotDisabled;
+    }
 
-  public void setDiskUuidEnabled(Boolean diskUuidEnabled) {
-    this.diskUuidEnabled=diskUuidEnabled;
-  }
+    public Boolean isSnapshotLocked() {
+        return snapshotLocked;
+    }
 
-  public void setVirtualMmuUsage(String virtualMmuUsage) {
-    this.virtualMmuUsage=virtualMmuUsage;
-  }
+    public void setSnapshotLocked(Boolean snapshotLocked) {
+        this.snapshotLocked = snapshotLocked;
+    }
 
-  public void setVirtualExecUsage(String virtualExecUsage) {
-    this.virtualExecUsage=virtualExecUsage;
-  }
+    public Boolean isDiskUuidEnabled() {
+        return diskUuidEnabled;
+    }
 
-  public void setSnapshotPowerOffBehavior(String snapshotPowerOffBehavior) {
-    this.snapshotPowerOffBehavior=snapshotPowerOffBehavior;
-  }
+    public void setDiskUuidEnabled(Boolean diskUuidEnabled) {
+        this.diskUuidEnabled = diskUuidEnabled;
+    }
 
-  public void setRecordReplayEnabled(Boolean recordReplayEnabled) {
-    this.recordReplayEnabled=recordReplayEnabled;
-  }
+    @Deprecated
+    public Boolean isRecordReplayEnabled() {
+        return recordReplayEnabled;
+    }
+
+    @Deprecated
+    public void setRecordReplayEnabled(Boolean recordReplayEnabled) {
+        this.recordReplayEnabled = recordReplayEnabled;
+    }
+
+    public Boolean isCbrcCacheEnabled() {
+        return cbrcCacheEnabled;
+    }
+
+    public void setCbrcCacheEnabled(final Boolean cbrcCacheEnabled) {
+        this.cbrcCacheEnabled = cbrcCacheEnabled;
+    }
+
+    public String getFaultToleranceType() {
+        return faultToleranceType;
+    }
+
+    public void setFaultToleranceType(final String faultToleranceType) {
+        this.faultToleranceType = faultToleranceType;
+    }
 }

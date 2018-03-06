@@ -30,10 +30,21 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class ClusterDasAdmissionControlPolicy extends DynamicData {
+
+    public Integer resourceReductionToToleratePercent;
+
+    public Integer getResourceReductionToToleratePercent() {
+        return resourceReductionToToleratePercent;
+    }
+
+    public void setResourceReductionToToleratePercent(final Integer resourceReductionToToleratePercent) {
+        this.resourceReductionToToleratePercent = resourceReductionToToleratePercent;
+    }
 }

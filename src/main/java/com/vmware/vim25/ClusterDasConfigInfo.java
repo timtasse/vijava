@@ -30,100 +30,113 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class ClusterDasConfigInfo extends DynamicData {
-  public Boolean enabled;
-  public String vmMonitoring;
-  public String hostMonitoring;
-  public Integer failoverLevel;
-  public ClusterDasAdmissionControlPolicy admissionControlPolicy;
-  public Boolean admissionControlEnabled;
-  public ClusterDasVmSettings defaultVmSettings;
-  public OptionValue[] option;
-  public ManagedObjectReference[] heartbeatDatastore;
-  public String hBDatastoreCandidatePolicy;
 
-  public Boolean getEnabled() {
-    return this.enabled;
-  }
+    public Boolean enabled;
+    public String vmMonitoring;
+    public String hostMonitoring;
+    public Integer failoverLevel;
+    public ClusterDasAdmissionControlPolicy admissionControlPolicy;
+    public Boolean admissionControlEnabled;
+    public ClusterDasVmSettings defaultVmSettings;
+    public OptionValue[] option;
+    public ManagedObjectReference[] heartbeatDatastore;
+    public String hBDatastoreCandidatePolicy;
+    public String vmComponentProtecting;
 
-  public String getVmMonitoring() {
-    return this.vmMonitoring;
-  }
+    public Boolean getEnabled() {
+        return this.enabled;
+    }
 
-  public String getHostMonitoring() {
-    return this.hostMonitoring;
-  }
+    public String getVmMonitoring() {
+        return this.vmMonitoring;
+    }
 
-  public Integer getFailoverLevel() {
-    return this.failoverLevel;
-  }
+    public String getHostMonitoring() {
+        return this.hostMonitoring;
+    }
 
-  public ClusterDasAdmissionControlPolicy getAdmissionControlPolicy() {
-    return this.admissionControlPolicy;
-  }
+    @Deprecated
+    public Integer getFailoverLevel() {
+        return this.failoverLevel;
+    }
 
-  public Boolean getAdmissionControlEnabled() {
-    return this.admissionControlEnabled;
-  }
+    public ClusterDasAdmissionControlPolicy getAdmissionControlPolicy() {
+        return this.admissionControlPolicy;
+    }
 
-  public ClusterDasVmSettings getDefaultVmSettings() {
-    return this.defaultVmSettings;
-  }
+    public Boolean getAdmissionControlEnabled() {
+        return this.admissionControlEnabled;
+    }
 
-  public OptionValue[] getOption() {
-    return this.option;
-  }
+    public ClusterDasVmSettings getDefaultVmSettings() {
+        return this.defaultVmSettings;
+    }
 
-  public ManagedObjectReference[] getHeartbeatDatastore() {
-    return this.heartbeatDatastore;
-  }
+    public OptionValue[] getOption() {
+        return this.option;
+    }
 
-  public String getHBDatastoreCandidatePolicy() {
-    return this.hBDatastoreCandidatePolicy;
-  }
+    public ManagedObjectReference[] getHeartbeatDatastore() {
+        return this.heartbeatDatastore;
+    }
 
-  public void setEnabled(Boolean enabled) {
-    this.enabled=enabled;
-  }
+    public String getHBDatastoreCandidatePolicy() {
+        return this.hBDatastoreCandidatePolicy;
+    }
 
-  public void setVmMonitoring(String vmMonitoring) {
-    this.vmMonitoring=vmMonitoring;
-  }
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
-  public void setHostMonitoring(String hostMonitoring) {
-    this.hostMonitoring=hostMonitoring;
-  }
+    public void setVmMonitoring(String vmMonitoring) {
+        this.vmMonitoring = vmMonitoring;
+    }
 
-  public void setFailoverLevel(Integer failoverLevel) {
-    this.failoverLevel=failoverLevel;
-  }
+    public void setHostMonitoring(String hostMonitoring) {
+        this.hostMonitoring = hostMonitoring;
+    }
 
-  public void setAdmissionControlPolicy(ClusterDasAdmissionControlPolicy admissionControlPolicy) {
-    this.admissionControlPolicy=admissionControlPolicy;
-  }
+    @Deprecated
+    public void setFailoverLevel(Integer failoverLevel) {
+        this.failoverLevel = failoverLevel;
+    }
 
-  public void setAdmissionControlEnabled(Boolean admissionControlEnabled) {
-    this.admissionControlEnabled=admissionControlEnabled;
-  }
+    public void setAdmissionControlPolicy(ClusterDasAdmissionControlPolicy admissionControlPolicy) {
+        this.admissionControlPolicy = admissionControlPolicy;
+    }
 
-  public void setDefaultVmSettings(ClusterDasVmSettings defaultVmSettings) {
-    this.defaultVmSettings=defaultVmSettings;
-  }
+    public void setAdmissionControlEnabled(Boolean admissionControlEnabled) {
+        this.admissionControlEnabled = admissionControlEnabled;
+    }
 
-  public void setOption(OptionValue[] option) {
-    this.option=option;
-  }
+    public void setDefaultVmSettings(ClusterDasVmSettings defaultVmSettings) {
+        this.defaultVmSettings = defaultVmSettings;
+    }
 
-  public void setHeartbeatDatastore(ManagedObjectReference[] heartbeatDatastore) {
-    this.heartbeatDatastore=heartbeatDatastore;
-  }
+    public void setOption(OptionValue[] option) {
+        this.option = option;
+    }
 
-  public void setHBDatastoreCandidatePolicy(String hBDatastoreCandidatePolicy) {
-    this.hBDatastoreCandidatePolicy=hBDatastoreCandidatePolicy;
-  }
+    public void setHeartbeatDatastore(ManagedObjectReference[] heartbeatDatastore) {
+        this.heartbeatDatastore = heartbeatDatastore;
+    }
+
+    public void setHBDatastoreCandidatePolicy(String hBDatastoreCandidatePolicy) {
+        this.hBDatastoreCandidatePolicy = hBDatastoreCandidatePolicy;
+    }
+
+    public String getVmComponentProtecting() {
+        return vmComponentProtecting;
+    }
+
+    public void setVmComponentProtecting(final String vmComponentProtecting) {
+        this.vmComponentProtecting = vmComponentProtecting;
+    }
 }

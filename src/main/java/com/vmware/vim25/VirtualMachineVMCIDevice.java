@@ -30,28 +30,51 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VirtualMachineVMCIDevice extends VirtualDevice {
-  public Long id;
-  public Boolean allowUnrestrictedCommunication;
 
-  public Long getId() {
-    return this.id;
-  }
+    public Long id;
+    @Deprecated
+    public Boolean allowUnrestrictedCommunication;
+    public Boolean filterEnable;
+    public VirtualMachineVMCIDeviceFilterInfo filterInfo;
 
-  public Boolean getAllowUnrestrictedCommunication() {
-    return this.allowUnrestrictedCommunication;
-  }
+    public Long getId() {
+        return this.id;
+    }
 
-  public void setId(Long id) {
-    this.id=id;
-  }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-  public void setAllowUnrestrictedCommunication(Boolean allowUnrestrictedCommunication) {
-    this.allowUnrestrictedCommunication=allowUnrestrictedCommunication;
-  }
+    public Boolean isFilterEnable() {
+        return filterEnable;
+    }
+
+    public void setFilterEnable(final Boolean filterEnable) {
+        this.filterEnable = filterEnable;
+    }
+
+    public VirtualMachineVMCIDeviceFilterInfo getFilterInfo() {
+        return filterInfo;
+    }
+
+    public void setFilterInfo(final VirtualMachineVMCIDeviceFilterInfo filterInfo) {
+        this.filterInfo = filterInfo;
+    }
+
+    @Deprecated
+    public Boolean isAllowUnrestrictedCommunication() {
+        return allowUnrestrictedCommunication;
+    }
+
+    @Deprecated
+    public void setAllowUnrestrictedCommunication(Boolean allowUnrestrictedCommunication) {
+        this.allowUnrestrictedCommunication = allowUnrestrictedCommunication;
+    }
 }

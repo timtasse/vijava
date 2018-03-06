@@ -37,35 +37,54 @@ import java.rmi.RemoteException;
 
 /**
  * The managed object class corresponding to the one defined in VI SDK API reference.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk
  */
+public class HostAutoStartManager extends ManagedObject {
 
-public class HostAutoStartManager extends ManagedObject 
-{
+    public HostAutoStartManager(ServerConnection serverConnection, ManagedObjectReference mor) {
+        super(serverConnection, mor);
+    }
 
-	public HostAutoStartManager(ServerConnection serverConnection, ManagedObjectReference mor) 
-	{
-		super(serverConnection, mor);
-	}
-	
-	public HostAutoStartManagerConfig getConfig()
-	{
-		return (HostAutoStartManagerConfig) getCurrentProperty("config");
-	}
-	
-	public void autoStartPowerOff() throws RuntimeFault, RemoteException 
-	{
-		getVimService().autoStartPowerOff(getMOR());
-	}
-	
-	public void autoStartPowerOn() throws RuntimeFault, RemoteException 
-	{
-		getVimService().autoStartPowerOn(getMOR());
-	}
-	
-	public void reconfigureAutostart(HostAutoStartManagerConfig spec) throws RuntimeFault, RemoteException 
-	{
-		getVimService().reconfigureAutostart(getMOR(), spec);
-	}
+    public HostAutoStartManagerConfig getConfig() {
+        return (HostAutoStartManagerConfig) getCurrentProperty("config");
+    }
+
+    public void autoStartPowerOff() throws RuntimeFault {
+        try {
+            getVimService().autoStartPowerOff(getMOR());
+        } catch (RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException("Exception not known", e);
+        }
+    }
+
+    public void autoStartPowerOn() throws RuntimeFault {
+        try {
+            getVimService().autoStartPowerOn(getMOR());
+        } catch (RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException("Exception not known", e);
+        }
+    }
+
+    public void reconfigureAutostart(HostAutoStartManagerConfig spec) throws RuntimeFault {
+        try {
+            getVimService().reconfigureAutostart(getMOR(), spec);
+        } catch (RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException("Exception not known", e);
+        }
+    }
 
 }

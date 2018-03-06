@@ -30,19 +30,22 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 4.0
+ */
 public enum ComplianceResultStatus {
-  compliant ("compliant"),
-  nonCompliant ("nonCompliant"),
-  unknown ("unknown");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private ComplianceResultStatus(String val)
-  {
-    this.val = val;
-  }
+    compliant("compliant"),
+    nonCompliant("nonCompliant"),
+    unknown("unknown"),
+    running("running");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    ComplianceResultStatus(String val) {
+        this.val = val;
+    }
 }

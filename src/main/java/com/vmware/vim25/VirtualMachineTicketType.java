@@ -30,19 +30,27 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.7
+ * @since 6.0
+ */
 public enum VirtualMachineTicketType {
-  mks ("mks"),
-  device ("device"),
-  guestControl ("guestControl");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private VirtualMachineTicketType(String val)
-  {
-    this.val = val;
-  }
+    device("device"),
+    guestControl("guestControl"),
+    guestIntegrity("guestIntegrity"),
+    mks("mks"),
+    webmks("webmks");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    VirtualMachineTicketType(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

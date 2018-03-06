@@ -30,37 +30,48 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class FaultToleranceConfigInfo extends DynamicData {
-  public int role;
-  public String[] instanceUuids;
-  public String[] configPaths;
 
-  public int getRole() {
-    return this.role;
-  }
+    public int role;
+    public String[] instanceUuids;
+    public String[] configPaths;
+    public Boolean orphaned;
 
-  public String[] getInstanceUuids() {
-    return this.instanceUuids;
-  }
+    public int getRole() {
+        return this.role;
+    }
 
-  public String[] getConfigPaths() {
-    return this.configPaths;
-  }
+    public String[] getInstanceUuids() {
+        return this.instanceUuids;
+    }
 
-  public void setRole(int role) {
-    this.role=role;
-  }
+    public String[] getConfigPaths() {
+        return this.configPaths;
+    }
 
-  public void setInstanceUuids(String[] instanceUuids) {
-    this.instanceUuids=instanceUuids;
-  }
+    public void setRole(int role) {
+        this.role = role;
+    }
 
-  public void setConfigPaths(String[] configPaths) {
-    this.configPaths=configPaths;
-  }
+    public void setInstanceUuids(String[] instanceUuids) {
+        this.instanceUuids = instanceUuids;
+    }
+
+    public void setConfigPaths(String[] configPaths) {
+        this.configPaths = configPaths;
+    }
+
+    public Boolean isOrphaned() {
+        return orphaned;
+    }
+
+    public void setOrphaned(final Boolean orphaned) {
+        this.orphaned = orphaned;
+    }
 }

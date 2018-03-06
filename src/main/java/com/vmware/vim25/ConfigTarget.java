@@ -30,235 +30,246 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class ConfigTarget extends DynamicData {
-  public int numCpus;
-  public int numCpuCores;
-  public int numNumaNodes;
-  public Boolean smcPresent;
-  public VirtualMachineDatastoreInfo[] datastore;
-  public VirtualMachineNetworkInfo[] network;
-  public OpaqueNetworkTargetInfo[] opaqueNetwork;
-  public DistributedVirtualPortgroupInfo[] distributedVirtualPortgroup;
-  public DistributedVirtualSwitchInfo[] distributedVirtualSwitch;
-  public VirtualMachineCdromInfo[] cdRom;
-  public VirtualMachineSerialInfo[] serial;
-  public VirtualMachineParallelInfo[] parallel;
-  public VirtualMachineSoundInfo[] sound;
-  public VirtualMachineUsbInfo[] usb;
-  public VirtualMachineFloppyInfo[] floppy;
-  public VirtualMachineLegacyNetworkSwitchInfo[] legacyNetworkInfo;
-  public VirtualMachineScsiPassthroughInfo[] scsiPassthrough;
-  public VirtualMachineScsiDiskDeviceInfo[] scsiDisk;
-  public VirtualMachineIdeDiskDeviceInfo[] ideDisk;
-  public int maxMemMBOptimalPerf;
-  public ResourcePoolRuntimeInfo resourcePool;
-  public Boolean autoVmotion;
-  public VirtualMachinePciPassthroughInfo[] pciPassthrough;
-  public VirtualMachineSriovInfo[] sriov;
-  public VirtualMachineVFlashModuleInfo[] vFlashModule;
 
-  public int getNumCpus() {
-    return this.numCpus;
-  }
+    public int numCpus;
+    public int numCpuCores;
+    public int numNumaNodes;
+    public Boolean smcPresent;
+    public VirtualMachineDatastoreInfo[] datastore;
+    public VirtualMachineNetworkInfo[] network;
+    public OpaqueNetworkTargetInfo[] opaqueNetwork;
+    public DistributedVirtualPortgroupInfo[] distributedVirtualPortgroup;
+    public DistributedVirtualSwitchInfo[] distributedVirtualSwitch;
+    public VirtualMachineCdromInfo[] cdRom;
+    public VirtualMachineSerialInfo[] serial;
+    public VirtualMachineParallelInfo[] parallel;
+    public VirtualMachineSoundInfo[] sound;
+    public VirtualMachineUsbInfo[] usb;
+    public VirtualMachineFloppyInfo[] floppy;
+    public VirtualMachineLegacyNetworkSwitchInfo[] legacyNetworkInfo;
+    public VirtualMachineScsiPassthroughInfo[] scsiPassthrough;
+    public VirtualMachineScsiDiskDeviceInfo[] scsiDisk;
+    public VirtualMachineIdeDiskDeviceInfo[] ideDisk;
+    public int maxMemMBOptimalPerf;
+    public ResourcePoolRuntimeInfo resourcePool;
+    public Boolean autoVmotion;
+    public VirtualMachinePciPassthroughInfo[] pciPassthrough;
+    public VirtualMachineSriovInfo[] sriov;
+    public VirtualMachineVFlashModuleInfo[] vFlashModule;
+    public VirtualMachinePciSharedGpuPassthroughInfo[] sharedGpuPassthroughTypes;
 
-  public int getNumCpuCores() {
-    return this.numCpuCores;
-  }
+    public int getNumCpus() {
+        return this.numCpus;
+    }
 
-  public int getNumNumaNodes() {
-    return this.numNumaNodes;
-  }
+    public int getNumCpuCores() {
+        return this.numCpuCores;
+    }
 
-  public Boolean getSmcPresent() {
-    return this.smcPresent;
-  }
+    public int getNumNumaNodes() {
+        return this.numNumaNodes;
+    }
 
-  public VirtualMachineDatastoreInfo[] getDatastore() {
-    return this.datastore;
-  }
+    public Boolean getSmcPresent() {
+        return this.smcPresent;
+    }
 
-  public VirtualMachineNetworkInfo[] getNetwork() {
-    return this.network;
-  }
+    public VirtualMachineDatastoreInfo[] getDatastore() {
+        return this.datastore;
+    }
 
-  public OpaqueNetworkTargetInfo[] getOpaqueNetwork() {
-    return this.opaqueNetwork;
-  }
+    public VirtualMachineNetworkInfo[] getNetwork() {
+        return this.network;
+    }
 
-  public DistributedVirtualPortgroupInfo[] getDistributedVirtualPortgroup() {
-    return this.distributedVirtualPortgroup;
-  }
+    public OpaqueNetworkTargetInfo[] getOpaqueNetwork() {
+        return this.opaqueNetwork;
+    }
 
-  public DistributedVirtualSwitchInfo[] getDistributedVirtualSwitch() {
-    return this.distributedVirtualSwitch;
-  }
+    public DistributedVirtualPortgroupInfo[] getDistributedVirtualPortgroup() {
+        return this.distributedVirtualPortgroup;
+    }
 
-  public VirtualMachineCdromInfo[] getCdRom() {
-    return this.cdRom;
-  }
+    public DistributedVirtualSwitchInfo[] getDistributedVirtualSwitch() {
+        return this.distributedVirtualSwitch;
+    }
 
-  public VirtualMachineSerialInfo[] getSerial() {
-    return this.serial;
-  }
+    public VirtualMachineCdromInfo[] getCdRom() {
+        return this.cdRom;
+    }
 
-  public VirtualMachineParallelInfo[] getParallel() {
-    return this.parallel;
-  }
+    public VirtualMachineSerialInfo[] getSerial() {
+        return this.serial;
+    }
 
-  public VirtualMachineSoundInfo[] getSound() {
-    return this.sound;
-  }
+    public VirtualMachineParallelInfo[] getParallel() {
+        return this.parallel;
+    }
 
-  public VirtualMachineUsbInfo[] getUsb() {
-    return this.usb;
-  }
+    public VirtualMachineSoundInfo[] getSound() {
+        return this.sound;
+    }
 
-  public VirtualMachineFloppyInfo[] getFloppy() {
-    return this.floppy;
-  }
+    public VirtualMachineUsbInfo[] getUsb() {
+        return this.usb;
+    }
 
-  public VirtualMachineLegacyNetworkSwitchInfo[] getLegacyNetworkInfo() {
-    return this.legacyNetworkInfo;
-  }
+    public VirtualMachineFloppyInfo[] getFloppy() {
+        return this.floppy;
+    }
 
-  public VirtualMachineScsiPassthroughInfo[] getScsiPassthrough() {
-    return this.scsiPassthrough;
-  }
+    public VirtualMachineLegacyNetworkSwitchInfo[] getLegacyNetworkInfo() {
+        return this.legacyNetworkInfo;
+    }
 
-  public VirtualMachineScsiDiskDeviceInfo[] getScsiDisk() {
-    return this.scsiDisk;
-  }
+    public VirtualMachineScsiPassthroughInfo[] getScsiPassthrough() {
+        return this.scsiPassthrough;
+    }
 
-  public VirtualMachineIdeDiskDeviceInfo[] getIdeDisk() {
-    return this.ideDisk;
-  }
+    public VirtualMachineScsiDiskDeviceInfo[] getScsiDisk() {
+        return this.scsiDisk;
+    }
 
-  public int getMaxMemMBOptimalPerf() {
-    return this.maxMemMBOptimalPerf;
-  }
+    public VirtualMachineIdeDiskDeviceInfo[] getIdeDisk() {
+        return this.ideDisk;
+    }
 
-  public ResourcePoolRuntimeInfo getResourcePool() {
-    return this.resourcePool;
-  }
+    public int getMaxMemMBOptimalPerf() {
+        return this.maxMemMBOptimalPerf;
+    }
 
-  public Boolean getAutoVmotion() {
-    return this.autoVmotion;
-  }
+    public ResourcePoolRuntimeInfo getResourcePool() {
+        return this.resourcePool;
+    }
 
-  public VirtualMachinePciPassthroughInfo[] getPciPassthrough() {
-    return this.pciPassthrough;
-  }
+    public Boolean getAutoVmotion() {
+        return this.autoVmotion;
+    }
 
-  public VirtualMachineSriovInfo[] getSriov() {
-    return this.sriov;
-  }
+    public VirtualMachinePciPassthroughInfo[] getPciPassthrough() {
+        return this.pciPassthrough;
+    }
 
-  public VirtualMachineVFlashModuleInfo[] getVFlashModule() {
-    return this.vFlashModule;
-  }
+    public VirtualMachineSriovInfo[] getSriov() {
+        return this.sriov;
+    }
 
-  public void setNumCpus(int numCpus) {
-    this.numCpus=numCpus;
-  }
+    public VirtualMachineVFlashModuleInfo[] getVFlashModule() {
+        return this.vFlashModule;
+    }
 
-  public void setNumCpuCores(int numCpuCores) {
-    this.numCpuCores=numCpuCores;
-  }
+    public void setNumCpus(int numCpus) {
+        this.numCpus = numCpus;
+    }
 
-  public void setNumNumaNodes(int numNumaNodes) {
-    this.numNumaNodes=numNumaNodes;
-  }
+    public void setNumCpuCores(int numCpuCores) {
+        this.numCpuCores = numCpuCores;
+    }
 
-  public void setSmcPresent(Boolean smcPresent) {
-    this.smcPresent=smcPresent;
-  }
+    public void setNumNumaNodes(int numNumaNodes) {
+        this.numNumaNodes = numNumaNodes;
+    }
 
-  public void setDatastore(VirtualMachineDatastoreInfo[] datastore) {
-    this.datastore=datastore;
-  }
+    public void setSmcPresent(Boolean smcPresent) {
+        this.smcPresent = smcPresent;
+    }
 
-  public void setNetwork(VirtualMachineNetworkInfo[] network) {
-    this.network=network;
-  }
+    public void setDatastore(VirtualMachineDatastoreInfo[] datastore) {
+        this.datastore = datastore;
+    }
 
-  public void setOpaqueNetwork(OpaqueNetworkTargetInfo[] opaqueNetwork) {
-    this.opaqueNetwork=opaqueNetwork;
-  }
+    public void setNetwork(VirtualMachineNetworkInfo[] network) {
+        this.network = network;
+    }
 
-  public void setDistributedVirtualPortgroup(DistributedVirtualPortgroupInfo[] distributedVirtualPortgroup) {
-    this.distributedVirtualPortgroup=distributedVirtualPortgroup;
-  }
+    public void setOpaqueNetwork(OpaqueNetworkTargetInfo[] opaqueNetwork) {
+        this.opaqueNetwork = opaqueNetwork;
+    }
 
-  public void setDistributedVirtualSwitch(DistributedVirtualSwitchInfo[] distributedVirtualSwitch) {
-    this.distributedVirtualSwitch=distributedVirtualSwitch;
-  }
+    public void setDistributedVirtualPortgroup(DistributedVirtualPortgroupInfo[] distributedVirtualPortgroup) {
+        this.distributedVirtualPortgroup = distributedVirtualPortgroup;
+    }
 
-  public void setCdRom(VirtualMachineCdromInfo[] cdRom) {
-    this.cdRom=cdRom;
-  }
+    public void setDistributedVirtualSwitch(DistributedVirtualSwitchInfo[] distributedVirtualSwitch) {
+        this.distributedVirtualSwitch = distributedVirtualSwitch;
+    }
 
-  public void setSerial(VirtualMachineSerialInfo[] serial) {
-    this.serial=serial;
-  }
+    public void setCdRom(VirtualMachineCdromInfo[] cdRom) {
+        this.cdRom = cdRom;
+    }
 
-  public void setParallel(VirtualMachineParallelInfo[] parallel) {
-    this.parallel=parallel;
-  }
+    public void setSerial(VirtualMachineSerialInfo[] serial) {
+        this.serial = serial;
+    }
 
-  public void setSound(VirtualMachineSoundInfo[] sound) {
-    this.sound=sound;
-  }
+    public void setParallel(VirtualMachineParallelInfo[] parallel) {
+        this.parallel = parallel;
+    }
 
-  public void setUsb(VirtualMachineUsbInfo[] usb) {
-    this.usb=usb;
-  }
+    public void setSound(VirtualMachineSoundInfo[] sound) {
+        this.sound = sound;
+    }
 
-  public void setFloppy(VirtualMachineFloppyInfo[] floppy) {
-    this.floppy=floppy;
-  }
+    public void setUsb(VirtualMachineUsbInfo[] usb) {
+        this.usb = usb;
+    }
 
-  public void setLegacyNetworkInfo(VirtualMachineLegacyNetworkSwitchInfo[] legacyNetworkInfo) {
-    this.legacyNetworkInfo=legacyNetworkInfo;
-  }
+    public void setFloppy(VirtualMachineFloppyInfo[] floppy) {
+        this.floppy = floppy;
+    }
 
-  public void setScsiPassthrough(VirtualMachineScsiPassthroughInfo[] scsiPassthrough) {
-    this.scsiPassthrough=scsiPassthrough;
-  }
+    public void setLegacyNetworkInfo(VirtualMachineLegacyNetworkSwitchInfo[] legacyNetworkInfo) {
+        this.legacyNetworkInfo = legacyNetworkInfo;
+    }
 
-  public void setScsiDisk(VirtualMachineScsiDiskDeviceInfo[] scsiDisk) {
-    this.scsiDisk=scsiDisk;
-  }
+    public void setScsiPassthrough(VirtualMachineScsiPassthroughInfo[] scsiPassthrough) {
+        this.scsiPassthrough = scsiPassthrough;
+    }
 
-  public void setIdeDisk(VirtualMachineIdeDiskDeviceInfo[] ideDisk) {
-    this.ideDisk=ideDisk;
-  }
+    public void setScsiDisk(VirtualMachineScsiDiskDeviceInfo[] scsiDisk) {
+        this.scsiDisk = scsiDisk;
+    }
 
-  public void setMaxMemMBOptimalPerf(int maxMemMBOptimalPerf) {
-    this.maxMemMBOptimalPerf=maxMemMBOptimalPerf;
-  }
+    public void setIdeDisk(VirtualMachineIdeDiskDeviceInfo[] ideDisk) {
+        this.ideDisk = ideDisk;
+    }
 
-  public void setResourcePool(ResourcePoolRuntimeInfo resourcePool) {
-    this.resourcePool=resourcePool;
-  }
+    public void setMaxMemMBOptimalPerf(int maxMemMBOptimalPerf) {
+        this.maxMemMBOptimalPerf = maxMemMBOptimalPerf;
+    }
 
-  public void setAutoVmotion(Boolean autoVmotion) {
-    this.autoVmotion=autoVmotion;
-  }
+    public void setResourcePool(ResourcePoolRuntimeInfo resourcePool) {
+        this.resourcePool = resourcePool;
+    }
 
-  public void setPciPassthrough(VirtualMachinePciPassthroughInfo[] pciPassthrough) {
-    this.pciPassthrough=pciPassthrough;
-  }
+    public void setAutoVmotion(Boolean autoVmotion) {
+        this.autoVmotion = autoVmotion;
+    }
 
-  public void setSriov(VirtualMachineSriovInfo[] sriov) {
-    this.sriov=sriov;
-  }
+    public void setPciPassthrough(VirtualMachinePciPassthroughInfo[] pciPassthrough) {
+        this.pciPassthrough = pciPassthrough;
+    }
 
-  public void setVFlashModule(VirtualMachineVFlashModuleInfo[] vFlashModule) {
-    this.vFlashModule=vFlashModule;
-  }
+    public void setSriov(VirtualMachineSriovInfo[] sriov) {
+        this.sriov = sriov;
+    }
+
+    public void setVFlashModule(VirtualMachineVFlashModuleInfo[] vFlashModule) {
+        this.vFlashModule = vFlashModule;
+    }
+
+    public VirtualMachinePciSharedGpuPassthroughInfo[] getSharedGpuPassthroughTypes() {
+        return sharedGpuPassthroughTypes;
+    }
+
+    public void setSharedGpuPassthroughTypes(final VirtualMachinePciSharedGpuPassthroughInfo[] sharedGpuPassthroughTypes) {
+        this.sharedGpuPassthroughTypes = sharedGpuPassthroughTypes;
+    }
 }

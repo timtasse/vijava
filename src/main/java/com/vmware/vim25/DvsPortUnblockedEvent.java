@@ -30,28 +30,38 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class DvsPortUnblockedEvent extends DvsEvent {
-  public String portKey;
-  public DVPortStatus runtimeInfo;
 
-  public String getPortKey() {
-    return this.portKey;
-  }
+    public String portKey;
+    public String prevBlockState;
+    public DVPortStatus runtimeInfo;
 
-  public DVPortStatus getRuntimeInfo() {
-    return this.runtimeInfo;
-  }
+    public String getPortKey() {
+        return this.portKey;
+    }
 
-  public void setPortKey(String portKey) {
-    this.portKey=portKey;
-  }
+    public void setPortKey(String portKey) {
+        this.portKey = portKey;
+    }
 
-  public void setRuntimeInfo(DVPortStatus runtimeInfo) {
-    this.runtimeInfo=runtimeInfo;
-  }
+    public DVPortStatus getRuntimeInfo() {
+        return this.runtimeInfo;
+    }
+
+    public void setRuntimeInfo(DVPortStatus runtimeInfo) {
+        this.runtimeInfo = runtimeInfo;
+    }
+
+    public String getPrevBlockState() {
+        return prevBlockState;
+    }
+
+    public void setPrevBlockState(final String prevBlockState) {
+        this.prevBlockState = prevBlockState;
+    }
 }

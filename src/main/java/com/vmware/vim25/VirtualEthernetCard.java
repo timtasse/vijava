@@ -30,37 +30,66 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VirtualEthernetCard extends VirtualDevice {
-  public String addressType;
-  public String macAddress;
-  public Boolean wakeOnLanEnabled;
 
-  public String getAddressType() {
-    return this.addressType;
-  }
+    public String addressType;
+    public String macAddress;
+    public Boolean wakeOnLanEnabled;
+    public VirtualEthernetCardResourceAllocation resourceAllocation;
+    public String externalId;
+    public Boolean uptCompatibilityEnabled;
 
-  public String getMacAddress() {
-    return this.macAddress;
-  }
+    public String getAddressType() {
+        return this.addressType;
+    }
 
-  public Boolean getWakeOnLanEnabled() {
-    return this.wakeOnLanEnabled;
-  }
+    public void setAddressType(String addressType) {
+        this.addressType = addressType;
+    }
 
-  public void setAddressType(String addressType) {
-    this.addressType=addressType;
-  }
+    public String getMacAddress() {
+        return this.macAddress;
+    }
 
-  public void setMacAddress(String macAddress) {
-    this.macAddress=macAddress;
-  }
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
+    }
 
-  public void setWakeOnLanEnabled(Boolean wakeOnLanEnabled) {
-    this.wakeOnLanEnabled=wakeOnLanEnabled;
-  }
+    public boolean isWakeOnLanEnabled() {
+        return wakeOnLanEnabled;
+    }
+
+    public void setWakeOnLanEnabled(boolean wakeOnLanEnabled) {
+        this.wakeOnLanEnabled = wakeOnLanEnabled;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(final String externalId) {
+        this.externalId = externalId;
+    }
+
+    public boolean isUptCompatibilityEnabled() {
+        return uptCompatibilityEnabled;
+    }
+
+    public void setUptCompatibilityEnabled(final boolean uptCompatibilityEnabled) {
+        this.uptCompatibilityEnabled = uptCompatibilityEnabled;
+    }
+
+    public VirtualEthernetCardResourceAllocation getResourceAllocation() {
+        return resourceAllocation;
+    }
+
+    public void setResourceAllocation(final VirtualEthernetCardResourceAllocation resourceAllocation) {
+        this.resourceAllocation = resourceAllocation;
+    }
 }

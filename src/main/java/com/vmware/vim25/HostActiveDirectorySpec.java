@@ -30,55 +30,75 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class HostActiveDirectorySpec extends DynamicData {
-  public String domainName;
-  public String userName;
-  public String password;
-  public String camServer;
-  public String thumbprint;
 
-  public String getDomainName() {
-    return this.domainName;
-  }
+    public String domainName;
+    public String userName;
+    public String password;
+    public String camServer;
+    public String thumbprint;
+    public Boolean smartCardAuthenticationEnabled;
+    public String[] smartCardTrustAnchors;
 
-  public String getUserName() {
-    return this.userName;
-  }
+    public String getDomainName() {
+        return this.domainName;
+    }
 
-  public String getPassword() {
-    return this.password;
-  }
+    public String getUserName() {
+        return this.userName;
+    }
 
-  public String getCamServer() {
-    return this.camServer;
-  }
+    public String getPassword() {
+        return this.password;
+    }
 
-  public String getThumbprint() {
-    return this.thumbprint;
-  }
+    public String getCamServer() {
+        return this.camServer;
+    }
 
-  public void setDomainName(String domainName) {
-    this.domainName=domainName;
-  }
+    public String getThumbprint() {
+        return this.thumbprint;
+    }
 
-  public void setUserName(String userName) {
-    this.userName=userName;
-  }
+    public void setDomainName(String domainName) {
+        this.domainName = domainName;
+    }
 
-  public void setPassword(String password) {
-    this.password=password;
-  }
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-  public void setCamServer(String camServer) {
-    this.camServer=camServer;
-  }
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-  public void setThumbprint(String thumbprint) {
-    this.thumbprint=thumbprint;
-  }
+    public void setCamServer(String camServer) {
+        this.camServer = camServer;
+    }
+
+    public void setThumbprint(String thumbprint) {
+        this.thumbprint = thumbprint;
+    }
+
+    public Boolean isSmartCardAuthenticationEnabled() {
+        return smartCardAuthenticationEnabled;
+    }
+
+    public void setSmartCardAuthenticationEnabled(final Boolean smartCardAuthenticationEnabled) {
+        this.smartCardAuthenticationEnabled = smartCardAuthenticationEnabled;
+    }
+
+    public String[] getSmartCardTrustAnchors() {
+        return smartCardTrustAnchors;
+    }
+
+    public void setSmartCardTrustAnchors(final String[] smartCardTrustAnchors) {
+        this.smartCardTrustAnchors = smartCardTrustAnchors;
+    }
 }

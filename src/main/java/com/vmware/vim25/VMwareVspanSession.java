@@ -30,127 +30,164 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VMwareVspanSession extends DynamicData {
-  public String key;
-  public String name;
-  public String description;
-  public boolean enabled;
-  public VMwareVspanPort sourcePortTransmitted;
-  public VMwareVspanPort sourcePortReceived;
-  public VMwareVspanPort destinationPort;
-  public Integer encapsulationVlanId;
-  public boolean stripOriginalVlan;
-  public Integer mirroredPacketLength;
-  public boolean normalTrafficAllowed;
-  public String sessionType;
-  public Integer samplingRate;
 
-  public String getKey() {
-    return this.key;
-  }
+    public String description;
+    public VMwareVspanPort destinationPort;
+    public boolean enabled;
+    public Integer encapsulationVlanId;
+    public String encapType;
+    public Integer erspanCOS;
+    public Boolean erspanGraNanosec;
+    public Integer erspanId;
+    public String key;
+    public Integer mirroredPacketLength;
+    public String name;
+    public boolean normalTrafficAllowed;
+    public Integer samplingRate;
+    public String sessionType;
+    public VMwareVspanPort sourcePortReceived;
+    public VMwareVspanPort sourcePortTransmitted;
+    public boolean stripOriginalVlan;
 
-  public String getName() {
-    return this.name;
-  }
+    public String getKey() {
+        return this.key;
+    }
 
-  public String getDescription() {
-    return this.description;
-  }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-  public boolean isEnabled() {
-    return this.enabled;
-  }
+    public String getName() {
+        return this.name;
+    }
 
-  public VMwareVspanPort getSourcePortTransmitted() {
-    return this.sourcePortTransmitted;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public VMwareVspanPort getSourcePortReceived() {
-    return this.sourcePortReceived;
-  }
+    public String getDescription() {
+        return this.description;
+    }
 
-  public VMwareVspanPort getDestinationPort() {
-    return this.destinationPort;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public Integer getEncapsulationVlanId() {
-    return this.encapsulationVlanId;
-  }
+    public boolean isEnabled() {
+        return this.enabled;
+    }
 
-  public boolean isStripOriginalVlan() {
-    return this.stripOriginalVlan;
-  }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-  public Integer getMirroredPacketLength() {
-    return this.mirroredPacketLength;
-  }
+    public VMwareVspanPort getSourcePortTransmitted() {
+        return this.sourcePortTransmitted;
+    }
 
-  public boolean isNormalTrafficAllowed() {
-    return this.normalTrafficAllowed;
-  }
+    public void setSourcePortTransmitted(VMwareVspanPort sourcePortTransmitted) {
+        this.sourcePortTransmitted = sourcePortTransmitted;
+    }
 
-  public String getSessionType() {
-    return this.sessionType;
-  }
+    public VMwareVspanPort getSourcePortReceived() {
+        return this.sourcePortReceived;
+    }
 
-  public Integer getSamplingRate() {
-    return this.samplingRate;
-  }
+    public void setSourcePortReceived(VMwareVspanPort sourcePortReceived) {
+        this.sourcePortReceived = sourcePortReceived;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public VMwareVspanPort getDestinationPort() {
+        return this.destinationPort;
+    }
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public void setDestinationPort(VMwareVspanPort destinationPort) {
+        this.destinationPort = destinationPort;
+    }
 
-  public void setDescription(String description) {
-    this.description=description;
-  }
+    public int getEncapsulationVlanId() {
+        return this.encapsulationVlanId;
+    }
 
-  public void setEnabled(boolean enabled) {
-    this.enabled=enabled;
-  }
+    public void setEncapsulationVlanId(int encapsulationVlanId) {
+        this.encapsulationVlanId = encapsulationVlanId;
+    }
 
-  public void setSourcePortTransmitted(VMwareVspanPort sourcePortTransmitted) {
-    this.sourcePortTransmitted=sourcePortTransmitted;
-  }
+    public boolean isStripOriginalVlan() {
+        return this.stripOriginalVlan;
+    }
 
-  public void setSourcePortReceived(VMwareVspanPort sourcePortReceived) {
-    this.sourcePortReceived=sourcePortReceived;
-  }
+    public void setStripOriginalVlan(boolean stripOriginalVlan) {
+        this.stripOriginalVlan = stripOriginalVlan;
+    }
 
-  public void setDestinationPort(VMwareVspanPort destinationPort) {
-    this.destinationPort=destinationPort;
-  }
+    public int getMirroredPacketLength() {
+        return this.mirroredPacketLength;
+    }
 
-  public void setEncapsulationVlanId(Integer encapsulationVlanId) {
-    this.encapsulationVlanId=encapsulationVlanId;
-  }
+    public void setMirroredPacketLength(int mirroredPacketLength) {
+        this.mirroredPacketLength = mirroredPacketLength;
+    }
 
-  public void setStripOriginalVlan(boolean stripOriginalVlan) {
-    this.stripOriginalVlan=stripOriginalVlan;
-  }
+    public boolean isNormalTrafficAllowed() {
+        return this.normalTrafficAllowed;
+    }
 
-  public void setMirroredPacketLength(Integer mirroredPacketLength) {
-    this.mirroredPacketLength=mirroredPacketLength;
-  }
+    public void setNormalTrafficAllowed(boolean normalTrafficAllowed) {
+        this.normalTrafficAllowed = normalTrafficAllowed;
+    }
 
-  public void setNormalTrafficAllowed(boolean normalTrafficAllowed) {
-    this.normalTrafficAllowed=normalTrafficAllowed;
-  }
+    public String getSessionType() {
+        return this.sessionType;
+    }
 
-  public void setSessionType(String sessionType) {
-    this.sessionType=sessionType;
-  }
+    public void setSessionType(String sessionType) {
+        this.sessionType = sessionType;
+    }
 
-  public void setSamplingRate(Integer samplingRate) {
-    this.samplingRate=samplingRate;
-  }
+    public int getSamplingRate() {
+        return this.samplingRate;
+    }
+
+    public void setSamplingRate(int samplingRate) {
+        this.samplingRate = samplingRate;
+    }
+
+    public String getEncapType() {
+        return encapType;
+    }
+
+    public void setEncapType(final String encapType) {
+        this.encapType = encapType;
+    }
+
+    public int getErspanCOS() {
+        return erspanCOS;
+    }
+
+    public void setErspanCOS(final int erspanCOS) {
+        this.erspanCOS = erspanCOS;
+    }
+
+    public boolean isErspanGraNanosec() {
+        return erspanGraNanosec;
+    }
+
+    public void setErspanGraNanosec(final boolean erspanGraNanosec) {
+        this.erspanGraNanosec = erspanGraNanosec;
+    }
+
+    public int getErspanId() {
+        return erspanId;
+    }
+
+    public void setErspanId(final int erspanId) {
+        this.erspanId = erspanId;
+    }
 }

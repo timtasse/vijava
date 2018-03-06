@@ -30,28 +30,54 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VsanHostConfigInfoStorageInfo extends DynamicData {
-  public Boolean autoClaimStorage;
-  public VsanHostDiskMapping[] diskMapping;
 
-  public Boolean getAutoClaimStorage() {
-    return this.autoClaimStorage;
-  }
+    public Boolean autoClaimStorage;
+    @Deprecated
+    public Boolean checksumEnabled;
+    @Deprecated
+    public VsanHostDiskMapping[] diskMapping;
+    public VsanHostDiskMapInfo[] diskMapInfo;
 
-  public VsanHostDiskMapping[] getDiskMapping() {
-    return this.diskMapping;
-  }
+    @Deprecated
+    public VsanHostDiskMapping[] getDiskMapping() {
+        return this.diskMapping;
+    }
 
-  public void setAutoClaimStorage(Boolean autoClaimStorage) {
-    this.autoClaimStorage=autoClaimStorage;
-  }
+    @Deprecated
+    public void setDiskMapping(VsanHostDiskMapping[] diskMapping) {
+        this.diskMapping = diskMapping;
+    }
 
-  public void setDiskMapping(VsanHostDiskMapping[] diskMapping) {
-    this.diskMapping=diskMapping;
-  }
+    public Boolean isAutoClaimStorage() {
+        return autoClaimStorage;
+    }
+
+    public void setAutoClaimStorage(Boolean autoClaimStorage) {
+        this.autoClaimStorage = autoClaimStorage;
+    }
+
+    public VsanHostDiskMapInfo[] getDiskMapInfo() {
+        return diskMapInfo;
+    }
+
+    public void setDiskMapInfo(final VsanHostDiskMapInfo[] diskMapInfo) {
+        this.diskMapInfo = diskMapInfo;
+    }
+
+    @Deprecated
+    public Boolean isChecksumEnabled() {
+        return checksumEnabled;
+    }
+
+    @Deprecated
+    public void setChecksumEnabled(final Boolean checksumEnabled) {
+        this.checksumEnabled = checksumEnabled;
+    }
 }

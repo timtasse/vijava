@@ -30,19 +30,30 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class DVPortgroupReconfiguredEvent extends DVPortgroupEvent {
-  public DVPortgroupConfigSpec configSpec;
 
-  public DVPortgroupConfigSpec getConfigSpec() {
-    return this.configSpec;
-  }
+    public ChangesInfoEventArgument configChanges;
+    public DVPortgroupConfigSpec configSpec;
 
-  public void setConfigSpec(DVPortgroupConfigSpec configSpec) {
-    this.configSpec=configSpec;
-  }
+    public ChangesInfoEventArgument getConfigChanges() {
+        return configChanges;
+    }
+
+    public void setConfigChanges(final ChangesInfoEventArgument configChanges) {
+        this.configChanges = configChanges;
+    }
+
+    public DVPortgroupConfigSpec getConfigSpec() {
+        return this.configSpec;
+    }
+
+    public void setConfigSpec(DVPortgroupConfigSpec configSpec) {
+        this.configSpec = configSpec;
+    }
 }

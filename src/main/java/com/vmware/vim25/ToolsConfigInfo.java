@@ -30,100 +30,119 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class ToolsConfigInfo extends DynamicData {
-  public Integer toolsVersion;
-  public Boolean afterPowerOn;
-  public Boolean afterResume;
-  public Boolean beforeGuestStandby;
-  public Boolean beforeGuestShutdown;
-  public Boolean beforeGuestReboot;
-  public String toolsUpgradePolicy;
-  public String pendingCustomization;
-  public Boolean syncTimeWithHost;
-  public ToolsConfigInfoToolsLastInstallInfo lastInstallInfo;
 
-  public Integer getToolsVersion() {
-    return this.toolsVersion;
-  }
+    public Boolean afterPowerOn;
+    public Boolean afterResume;
+    public Boolean beforeGuestReboot;
+    public Boolean beforeGuestShutdown;
+    public Boolean beforeGuestStandby;
+    public CryptoKeyId customizationKeyId;
+    public ToolsConfigInfoToolsLastInstallInfo lastInstallInfo;
+    public String pendingCustomization;
+    public Boolean syncTimeWithHost;
+    public String toolsInstallType;
+    public String toolsUpgradePolicy;
+    public Integer toolsVersion;
 
-  public Boolean getAfterPowerOn() {
-    return this.afterPowerOn;
-  }
+    public Integer getToolsVersion() {
+        return this.toolsVersion;
+    }
 
-  public Boolean getAfterResume() {
-    return this.afterResume;
-  }
+    public void setToolsVersion(Integer toolsVersion) {
+        this.toolsVersion = toolsVersion;
+    }
 
-  public Boolean getBeforeGuestStandby() {
-    return this.beforeGuestStandby;
-  }
+    public String getToolsUpgradePolicy() {
+        return this.toolsUpgradePolicy;
+    }
 
-  public Boolean getBeforeGuestShutdown() {
-    return this.beforeGuestShutdown;
-  }
+    public void setToolsUpgradePolicy(String toolsUpgradePolicy) {
+        this.toolsUpgradePolicy = toolsUpgradePolicy;
+    }
 
-  public Boolean getBeforeGuestReboot() {
-    return this.beforeGuestReboot;
-  }
+    public String getPendingCustomization() {
+        return this.pendingCustomization;
+    }
 
-  public String getToolsUpgradePolicy() {
-    return this.toolsUpgradePolicy;
-  }
+    public void setPendingCustomization(String pendingCustomization) {
+        this.pendingCustomization = pendingCustomization;
+    }
 
-  public String getPendingCustomization() {
-    return this.pendingCustomization;
-  }
+    public ToolsConfigInfoToolsLastInstallInfo getLastInstallInfo() {
+        return this.lastInstallInfo;
+    }
 
-  public Boolean getSyncTimeWithHost() {
-    return this.syncTimeWithHost;
-  }
+    public void setLastInstallInfo(ToolsConfigInfoToolsLastInstallInfo lastInstallInfo) {
+        this.lastInstallInfo = lastInstallInfo;
+    }
 
-  public ToolsConfigInfoToolsLastInstallInfo getLastInstallInfo() {
-    return this.lastInstallInfo;
-  }
+    public Boolean isAfterPowerOn() {
+        return afterPowerOn;
+    }
 
-  public void setToolsVersion(Integer toolsVersion) {
-    this.toolsVersion=toolsVersion;
-  }
+    public void setAfterPowerOn(Boolean afterPowerOn) {
+        this.afterPowerOn = afterPowerOn;
+    }
 
-  public void setAfterPowerOn(Boolean afterPowerOn) {
-    this.afterPowerOn=afterPowerOn;
-  }
+    public Boolean isAfterResume() {
+        return afterResume;
+    }
 
-  public void setAfterResume(Boolean afterResume) {
-    this.afterResume=afterResume;
-  }
+    public void setAfterResume(Boolean afterResume) {
+        this.afterResume = afterResume;
+    }
 
-  public void setBeforeGuestStandby(Boolean beforeGuestStandby) {
-    this.beforeGuestStandby=beforeGuestStandby;
-  }
+    public Boolean isBeforeGuestReboot() {
+        return beforeGuestReboot;
+    }
 
-  public void setBeforeGuestShutdown(Boolean beforeGuestShutdown) {
-    this.beforeGuestShutdown=beforeGuestShutdown;
-  }
+    public void setBeforeGuestReboot(Boolean beforeGuestReboot) {
+        this.beforeGuestReboot = beforeGuestReboot;
+    }
 
-  public void setBeforeGuestReboot(Boolean beforeGuestReboot) {
-    this.beforeGuestReboot=beforeGuestReboot;
-  }
+    public Boolean isBeforeGuestShutdown() {
+        return beforeGuestShutdown;
+    }
 
-  public void setToolsUpgradePolicy(String toolsUpgradePolicy) {
-    this.toolsUpgradePolicy=toolsUpgradePolicy;
-  }
+    public void setBeforeGuestShutdown(Boolean beforeGuestShutdown) {
+        this.beforeGuestShutdown = beforeGuestShutdown;
+    }
 
-  public void setPendingCustomization(String pendingCustomization) {
-    this.pendingCustomization=pendingCustomization;
-  }
+    public Boolean isBeforeGuestStandby() {
+        return beforeGuestStandby;
+    }
 
-  public void setSyncTimeWithHost(Boolean syncTimeWithHost) {
-    this.syncTimeWithHost=syncTimeWithHost;
-  }
+    public void setBeforeGuestStandby(Boolean beforeGuestStandby) {
+        this.beforeGuestStandby = beforeGuestStandby;
+    }
 
-  public void setLastInstallInfo(ToolsConfigInfoToolsLastInstallInfo lastInstallInfo) {
-    this.lastInstallInfo=lastInstallInfo;
-  }
+    public CryptoKeyId getCustomizationKeyId() {
+        return customizationKeyId;
+    }
+
+    public void setCustomizationKeyId(final CryptoKeyId customizationKeyId) {
+        this.customizationKeyId = customizationKeyId;
+    }
+
+    public Boolean isSyncTimeWithHost() {
+        return syncTimeWithHost;
+    }
+
+    public void setSyncTimeWithHost(Boolean syncTimeWithHost) {
+        this.syncTimeWithHost = syncTimeWithHost;
+    }
+
+    public String getToolsInstallType() {
+        return toolsInstallType;
+    }
+
+    public void setToolsInstallType(final String toolsInstallType) {
+        this.toolsInstallType = toolsInstallType;
+    }
 }

@@ -30,82 +30,92 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VirtualDiskSparseVer2BackingInfo extends VirtualDeviceFileBackingInfo {
-  public String diskMode;
-  public Boolean split;
-  public Boolean writeThrough;
-  public Long spaceUsedInKB;
-  public String uuid;
-  public String contentId;
-  public String changeId;
-  public VirtualDiskSparseVer2BackingInfo parent;
 
-  public String getDiskMode() {
-    return this.diskMode;
-  }
+    public String changeId;
+    public String contentId;
+    public String diskMode;
+    public CryptoKeyId keyId;
+    public VirtualDiskSparseVer2BackingInfo parent;
+    public Long spaceUsedInKB;
+    public Boolean split;
+    public String uuid;
+    public Boolean writeThrough;
 
-  public Boolean getSplit() {
-    return this.split;
-  }
+    public String getDiskMode() {
+        return this.diskMode;
+    }
 
-  public Boolean getWriteThrough() {
-    return this.writeThrough;
-  }
+    public void setDiskMode(String diskMode) {
+        this.diskMode = diskMode;
+    }
 
-  public Long getSpaceUsedInKB() {
-    return this.spaceUsedInKB;
-  }
+    public Long getSpaceUsedInKB() {
+        return this.spaceUsedInKB;
+    }
 
-  public String getUuid() {
-    return this.uuid;
-  }
+    public void setSpaceUsedInKB(Long spaceUsedInKB) {
+        this.spaceUsedInKB = spaceUsedInKB;
+    }
 
-  public String getContentId() {
-    return this.contentId;
-  }
+    public String getUuid() {
+        return this.uuid;
+    }
 
-  public String getChangeId() {
-    return this.changeId;
-  }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-  public VirtualDiskSparseVer2BackingInfo getParent() {
-    return this.parent;
-  }
+    public String getContentId() {
+        return this.contentId;
+    }
 
-  public void setDiskMode(String diskMode) {
-    this.diskMode=diskMode;
-  }
+    public void setContentId(String contentId) {
+        this.contentId = contentId;
+    }
 
-  public void setSplit(Boolean split) {
-    this.split=split;
-  }
+    public String getChangeId() {
+        return this.changeId;
+    }
 
-  public void setWriteThrough(Boolean writeThrough) {
-    this.writeThrough=writeThrough;
-  }
+    public void setChangeId(String changeId) {
+        this.changeId = changeId;
+    }
 
-  public void setSpaceUsedInKB(Long spaceUsedInKB) {
-    this.spaceUsedInKB=spaceUsedInKB;
-  }
+    public VirtualDiskSparseVer2BackingInfo getParent() {
+        return this.parent;
+    }
 
-  public void setUuid(String uuid) {
-    this.uuid=uuid;
-  }
+    public void setParent(VirtualDiskSparseVer2BackingInfo parent) {
+        this.parent = parent;
+    }
 
-  public void setContentId(String contentId) {
-    this.contentId=contentId;
-  }
+    public CryptoKeyId getKeyId() {
+        return keyId;
+    }
 
-  public void setChangeId(String changeId) {
-    this.changeId=changeId;
-  }
+    public void setKeyId(final CryptoKeyId keyId) {
+        this.keyId = keyId;
+    }
 
-  public void setParent(VirtualDiskSparseVer2BackingInfo parent) {
-    this.parent=parent;
-  }
+    public Boolean isSplit() {
+        return split;
+    }
+
+    public void setSplit(Boolean split) {
+        this.split = split;
+    }
+
+    public Boolean isWriteThrough() {
+        return writeThrough;
+    }
+
+    public void setWriteThrough(Boolean writeThrough) {
+        this.writeThrough = writeThrough;
+    }
 }

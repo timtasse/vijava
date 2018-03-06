@@ -30,37 +30,57 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class ClusterDasVmSettings extends DynamicData {
-  public String restartPriority;
-  public String isolationResponse;
-  public ClusterVmToolsMonitoringSettings vmToolsMonitoringSettings;
 
-  public String getRestartPriority() {
-    return this.restartPriority;
-  }
+    public String restartPriority;
+    public String isolationResponse;
+    public Integer restartPriorityTimeout;
+    public ClusterVmComponentProtectionSettings vmComponentProtectionSettings;
+    public ClusterVmToolsMonitoringSettings vmToolsMonitoringSettings;
 
-  public String getIsolationResponse() {
-    return this.isolationResponse;
-  }
+    public String getRestartPriority() {
+        return this.restartPriority;
+    }
 
-  public ClusterVmToolsMonitoringSettings getVmToolsMonitoringSettings() {
-    return this.vmToolsMonitoringSettings;
-  }
+    public String getIsolationResponse() {
+        return this.isolationResponse;
+    }
 
-  public void setRestartPriority(String restartPriority) {
-    this.restartPriority=restartPriority;
-  }
+    public ClusterVmToolsMonitoringSettings getVmToolsMonitoringSettings() {
+        return this.vmToolsMonitoringSettings;
+    }
 
-  public void setIsolationResponse(String isolationResponse) {
-    this.isolationResponse=isolationResponse;
-  }
+    public void setRestartPriority(String restartPriority) {
+        this.restartPriority = restartPriority;
+    }
 
-  public void setVmToolsMonitoringSettings(ClusterVmToolsMonitoringSettings vmToolsMonitoringSettings) {
-    this.vmToolsMonitoringSettings=vmToolsMonitoringSettings;
-  }
+    public void setIsolationResponse(String isolationResponse) {
+        this.isolationResponse = isolationResponse;
+    }
+
+    public void setVmToolsMonitoringSettings(ClusterVmToolsMonitoringSettings vmToolsMonitoringSettings) {
+        this.vmToolsMonitoringSettings = vmToolsMonitoringSettings;
+    }
+
+    public Integer getRestartPriorityTimeout() {
+        return restartPriorityTimeout;
+    }
+
+    public void setRestartPriorityTimeout(final Integer restartPriorityTimeout) {
+        this.restartPriorityTimeout = restartPriorityTimeout;
+    }
+
+    public ClusterVmComponentProtectionSettings getVmComponentProtectionSettings() {
+        return vmComponentProtectionSettings;
+    }
+
+    public void setVmComponentProtectionSettings(final ClusterVmComponentProtectionSettings vmComponentProtectionSettings) {
+        this.vmComponentProtectionSettings = vmComponentProtectionSettings;
+    }
 }

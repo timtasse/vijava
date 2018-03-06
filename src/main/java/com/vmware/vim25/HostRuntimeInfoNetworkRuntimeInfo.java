@@ -30,19 +30,30 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class HostRuntimeInfoNetworkRuntimeInfo extends DynamicData {
-  public HostRuntimeInfoNetStackInstanceRuntimeInfo[] netStackInstanceRuntimeInfo;
 
-  public HostRuntimeInfoNetStackInstanceRuntimeInfo[] getNetStackInstanceRuntimeInfo() {
-    return this.netStackInstanceRuntimeInfo;
-  }
+    public HostRuntimeInfoNetStackInstanceRuntimeInfo[] netStackInstanceRuntimeInfo;
+    public HostNetworkResourceRuntime networkResourceRuntime;
 
-  public void setNetStackInstanceRuntimeInfo(HostRuntimeInfoNetStackInstanceRuntimeInfo[] netStackInstanceRuntimeInfo) {
-    this.netStackInstanceRuntimeInfo=netStackInstanceRuntimeInfo;
-  }
+    public HostRuntimeInfoNetStackInstanceRuntimeInfo[] getNetStackInstanceRuntimeInfo() {
+        return this.netStackInstanceRuntimeInfo;
+    }
+
+    public void setNetStackInstanceRuntimeInfo(HostRuntimeInfoNetStackInstanceRuntimeInfo[] netStackInstanceRuntimeInfo) {
+        this.netStackInstanceRuntimeInfo = netStackInstanceRuntimeInfo;
+    }
+
+    public HostNetworkResourceRuntime getNetworkResourceRuntime() {
+        return networkResourceRuntime;
+    }
+
+    public void setNetworkResourceRuntime(final HostNetworkResourceRuntime networkResourceRuntime) {
+        this.networkResourceRuntime = networkResourceRuntime;
+    }
 }

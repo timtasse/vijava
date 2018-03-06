@@ -30,37 +30,48 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VirtualDiskRawDiskVer2BackingInfo extends VirtualDeviceDeviceBackingInfo {
-  public String descriptorFileName;
-  public String uuid;
-  public String changeId;
 
-  public String getDescriptorFileName() {
-    return this.descriptorFileName;
-  }
+    public String descriptorFileName;
+    public String uuid;
+    public String changeId;
+    public String sharing;
 
-  public String getUuid() {
-    return this.uuid;
-  }
+    public String getDescriptorFileName() {
+        return this.descriptorFileName;
+    }
 
-  public String getChangeId() {
-    return this.changeId;
-  }
+    public void setDescriptorFileName(String descriptorFileName) {
+        this.descriptorFileName = descriptorFileName;
+    }
 
-  public void setDescriptorFileName(String descriptorFileName) {
-    this.descriptorFileName=descriptorFileName;
-  }
+    public String getUuid() {
+        return this.uuid;
+    }
 
-  public void setUuid(String uuid) {
-    this.uuid=uuid;
-  }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-  public void setChangeId(String changeId) {
-    this.changeId=changeId;
-  }
+    public String getChangeId() {
+        return this.changeId;
+    }
+
+    public void setChangeId(String changeId) {
+        this.changeId = changeId;
+    }
+
+    public String getSharing() {
+        return sharing;
+    }
+
+    public void setSharing(final String sharing) {
+        this.sharing = sharing;
+    }
 }

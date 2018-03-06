@@ -30,19 +30,29 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VmConfigFileInfo extends FileInfo {
-  public Integer configVersion;
 
-  public Integer getConfigVersion() {
-    return this.configVersion;
-  }
+    public Integer configVersion;
+    public VmConfigFileEncryptionInfo encryption;
 
-  public void setConfigVersion(Integer configVersion) {
-    this.configVersion=configVersion;
-  }
+    public Integer getConfigVersion() {
+        return this.configVersion;
+    }
+
+    public void setConfigVersion(Integer configVersion) {
+        this.configVersion = configVersion;
+    }
+
+    public VmConfigFileEncryptionInfo getEncryption() {
+        return encryption;
+    }
+
+    public void setEncryption(final VmConfigFileEncryptionInfo encryption) {
+        this.encryption = encryption;
+    }
 }

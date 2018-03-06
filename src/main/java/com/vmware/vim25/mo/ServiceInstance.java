@@ -53,7 +53,7 @@ public class ServiceInstance extends ManagedObject
 	static 
 	{
 		SERVICE_INSTANCE_MOR = new ManagedObjectReference();
-		SERVICE_INSTANCE_MOR.set_value("ServiceInstance");
+		SERVICE_INSTANCE_MOR.setVal("ServiceInstance");
 		SERVICE_INSTANCE_MOR.setType("ServiceInstance");
 	}
 

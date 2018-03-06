@@ -30,37 +30,48 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class DistributedVirtualSwitchInfo extends DynamicData {
-  public String switchName;
-  public String switchUuid;
-  public ManagedObjectReference distributedVirtualSwitch;
 
-  public String getSwitchName() {
-    return this.switchName;
-  }
+    public String switchName;
+    public String switchUuid;
+    public ManagedObjectReference distributedVirtualSwitch;
+    public Boolean networkReservationSupported;
 
-  public String getSwitchUuid() {
-    return this.switchUuid;
-  }
+    public String getSwitchName() {
+        return this.switchName;
+    }
 
-  public ManagedObjectReference getDistributedVirtualSwitch() {
-    return this.distributedVirtualSwitch;
-  }
+    public String getSwitchUuid() {
+        return this.switchUuid;
+    }
 
-  public void setSwitchName(String switchName) {
-    this.switchName=switchName;
-  }
+    public ManagedObjectReference getDistributedVirtualSwitch() {
+        return this.distributedVirtualSwitch;
+    }
 
-  public void setSwitchUuid(String switchUuid) {
-    this.switchUuid=switchUuid;
-  }
+    public void setSwitchName(String switchName) {
+        this.switchName = switchName;
+    }
 
-  public void setDistributedVirtualSwitch(ManagedObjectReference distributedVirtualSwitch) {
-    this.distributedVirtualSwitch=distributedVirtualSwitch;
-  }
+    public void setSwitchUuid(String switchUuid) {
+        this.switchUuid = switchUuid;
+    }
+
+    public void setDistributedVirtualSwitch(ManagedObjectReference distributedVirtualSwitch) {
+        this.distributedVirtualSwitch = distributedVirtualSwitch;
+    }
+
+    public Boolean isNetworkReservationSupported() {
+        return networkReservationSupported;
+    }
+
+    public void setNetworkReservationSupported(final Boolean networkReservationSupported) {
+        this.networkReservationSupported = networkReservationSupported;
+    }
 }

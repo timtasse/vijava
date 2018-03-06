@@ -30,55 +30,102 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class ApplyProfile extends DynamicData {
-  public boolean enabled;
-  public ProfilePolicy[] policy;
-  public String profileTypeName;
-  public String profileVersion;
-  public ProfileApplyProfileProperty[] property;
 
-  public boolean isEnabled() {
-    return this.enabled;
-  }
+    public Boolean copyEnableStatus;
+    public boolean enabled;
+    public Boolean favorite;
+    public ProfilePolicy[] policy;
+    public String profileTypeName;
+    public String profileVersion;
+    public ProfileApplyProfileProperty[] property;
+    public Boolean toBeDeleted;
+    public Boolean toBeMerged;
+    public Boolean toReplaceWith;
 
-  public ProfilePolicy[] getPolicy() {
-    return this.policy;
-  }
+    public boolean isEnabled() {
+        return this.enabled;
+    }
 
-  public String getProfileTypeName() {
-    return this.profileTypeName;
-  }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
 
-  public String getProfileVersion() {
-    return this.profileVersion;
-  }
+    public ProfilePolicy[] getPolicy() {
+        return this.policy;
+    }
 
-  public ProfileApplyProfileProperty[] getProperty() {
-    return this.property;
-  }
+    public void setPolicy(ProfilePolicy[] policy) {
+        this.policy = policy;
+    }
 
-  public void setEnabled(boolean enabled) {
-    this.enabled=enabled;
-  }
+    public String getProfileTypeName() {
+        return this.profileTypeName;
+    }
 
-  public void setPolicy(ProfilePolicy[] policy) {
-    this.policy=policy;
-  }
+    public void setProfileTypeName(String profileTypeName) {
+        this.profileTypeName = profileTypeName;
+    }
 
-  public void setProfileTypeName(String profileTypeName) {
-    this.profileTypeName=profileTypeName;
-  }
+    public String getProfileVersion() {
+        return this.profileVersion;
+    }
 
-  public void setProfileVersion(String profileVersion) {
-    this.profileVersion=profileVersion;
-  }
+    public void setProfileVersion(String profileVersion) {
+        this.profileVersion = profileVersion;
+    }
 
-  public void setProperty(ProfileApplyProfileProperty[] property) {
-    this.property=property;
-  }
+    public ProfileApplyProfileProperty[] getProperty() {
+        return this.property;
+    }
+
+    public void setProperty(ProfileApplyProfileProperty[] property) {
+        this.property = property;
+    }
+
+    public boolean isCopyEnableStatus() {
+        return copyEnableStatus;
+    }
+
+    public void setCopyEnableStatus(final boolean copyEnableStatus) {
+        this.copyEnableStatus = copyEnableStatus;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(final boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public boolean isToBeDeleted() {
+        return toBeDeleted;
+    }
+
+    public void setToBeDeleted(final boolean toBeDeleted) {
+        this.toBeDeleted = toBeDeleted;
+    }
+
+    public boolean isToBeMerged() {
+        return toBeMerged;
+    }
+
+    public void setToBeMerged(final boolean toBeMerged) {
+        this.toBeMerged = toBeMerged;
+    }
+
+    public boolean isToReplaceWith() {
+        return toReplaceWith;
+    }
+
+    public void setToReplaceWith(final boolean toReplaceWith) {
+        this.toReplaceWith = toReplaceWith;
+    }
 }

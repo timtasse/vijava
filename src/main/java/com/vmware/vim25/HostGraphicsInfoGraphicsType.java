@@ -30,19 +30,26 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 public enum HostGraphicsInfoGraphicsType {
-  basic ("basic"),
-  shared ("shared"),
-  direct ("direct");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private HostGraphicsInfoGraphicsType(String val)
-  {
-    this.val = val;
-  }
+    basic("basic"),
+    direct("direct"),
+    shared("shared"),
+    sharedDirect("sharedDirect");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    HostGraphicsInfoGraphicsType(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

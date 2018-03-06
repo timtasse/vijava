@@ -30,28 +30,38 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class FileBackedVirtualDiskSpec extends VirtualDiskSpec {
-  public long capacityKb;
-  public VirtualMachineProfileSpec[] profile;
 
-  public long getCapacityKb() {
-    return this.capacityKb;
-  }
+    public long capacityKb;
+    public VirtualMachineProfileSpec[] profile;
+    public CryptoSpec crypto;
 
-  public VirtualMachineProfileSpec[] getProfile() {
-    return this.profile;
-  }
+    public long getCapacityKb() {
+        return this.capacityKb;
+    }
 
-  public void setCapacityKb(long capacityKb) {
-    this.capacityKb=capacityKb;
-  }
+    public void setCapacityKb(long capacityKb) {
+        this.capacityKb = capacityKb;
+    }
 
-  public void setProfile(VirtualMachineProfileSpec[] profile) {
-    this.profile=profile;
-  }
+    public VirtualMachineProfileSpec[] getProfile() {
+        return this.profile;
+    }
+
+    public void setProfile(VirtualMachineProfileSpec[] profile) {
+        this.profile = profile;
+    }
+
+    public CryptoSpec getCrypto() {
+        return crypto;
+    }
+
+    public void setCrypto(final CryptoSpec crypto) {
+        this.crypto = crypto;
+    }
 }

@@ -30,37 +30,47 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class ComplianceFailure extends DynamicData {
-  public String failureType;
-  public LocalizableMessage message;
-  public String expressionName;
 
-  public String getFailureType() {
-    return this.failureType;
-  }
+    public String expressionName;
+    public String failureType;
+    public ComplianceFailureComplianceFailureValues[] failureValues;
+    public LocalizableMessage message;
 
-  public LocalizableMessage getMessage() {
-    return this.message;
-  }
+    public String getFailureType() {
+        return this.failureType;
+    }
 
-  public String getExpressionName() {
-    return this.expressionName;
-  }
+    public void setFailureType(String failureType) {
+        this.failureType = failureType;
+    }
 
-  public void setFailureType(String failureType) {
-    this.failureType=failureType;
-  }
+    public LocalizableMessage getMessage() {
+        return this.message;
+    }
 
-  public void setMessage(LocalizableMessage message) {
-    this.message=message;
-  }
+    public void setMessage(LocalizableMessage message) {
+        this.message = message;
+    }
 
-  public void setExpressionName(String expressionName) {
-    this.expressionName=expressionName;
-  }
+    public String getExpressionName() {
+        return this.expressionName;
+    }
+
+    public void setExpressionName(String expressionName) {
+        this.expressionName = expressionName;
+    }
+
+    public ComplianceFailureComplianceFailureValues[] getFailureValues() {
+        return failureValues;
+    }
+
+    public void setFailureValues(final ComplianceFailureComplianceFailureValues[] failureValues) {
+        this.failureValues = failureValues;
+    }
 }

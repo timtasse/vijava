@@ -30,46 +30,77 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class HostVmfsSpec extends DynamicData {
-  public HostScsiDiskPartition extent;
-  public Integer blockSizeMb;
-  public int majorVersion;
-  public String volumeName;
 
-  public HostScsiDiskPartition getExtent() {
-    return this.extent;
-  }
+    public HostScsiDiskPartition extent;
+    @Deprecated
+    public Integer blockSizeMb;
+    public int majorVersion;
+    public String volumeName;
+    public Integer blockSize;
+    public Integer unmapGranularity;
+    public String unmapPriority;
 
-  public Integer getBlockSizeMb() {
-    return this.blockSizeMb;
-  }
+    public HostScsiDiskPartition getExtent() {
+        return this.extent;
+    }
 
-  public int getMajorVersion() {
-    return this.majorVersion;
-  }
+    public void setExtent(HostScsiDiskPartition extent) {
+        this.extent = extent;
+    }
 
-  public String getVolumeName() {
-    return this.volumeName;
-  }
+    @Deprecated
+    public Integer getBlockSizeMb() {
+        return this.blockSizeMb;
+    }
 
-  public void setExtent(HostScsiDiskPartition extent) {
-    this.extent=extent;
-  }
+    @Deprecated
+    public void setBlockSizeMb(Integer blockSizeMb) {
+        this.blockSizeMb = blockSizeMb;
+    }
 
-  public void setBlockSizeMb(Integer blockSizeMb) {
-    this.blockSizeMb=blockSizeMb;
-  }
+    public Integer getMajorVersion() {
+        return this.majorVersion;
+    }
 
-  public void setMajorVersion(int majorVersion) {
-    this.majorVersion=majorVersion;
-  }
+    public void setMajorVersion(Integer majorVersion) {
+        this.majorVersion = majorVersion;
+    }
 
-  public void setVolumeName(String volumeName) {
-    this.volumeName=volumeName;
-  }
+    public String getVolumeName() {
+        return this.volumeName;
+    }
+
+    public void setVolumeName(String volumeName) {
+        this.volumeName = volumeName;
+    }
+
+    public Integer getBlockSize() {
+        return blockSize;
+    }
+
+    public void setBlockSize(final Integer blockSize) {
+        this.blockSize = blockSize;
+    }
+
+    public Integer getUnmapGranularity() {
+        return unmapGranularity;
+    }
+
+    public void setUnmapGranularity(final Integer unmapGranularity) {
+        this.unmapGranularity = unmapGranularity;
+    }
+
+    public String getUnmapPriority() {
+        return unmapPriority;
+    }
+
+    public void setUnmapPriority(final String unmapPriority) {
+        this.unmapPriority = unmapPriority;
+    }
 }

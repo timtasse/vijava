@@ -28,121 +28,150 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
 package com.vmware.vim25;
+
 import java.util.Calendar;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class HostRuntimeInfo extends DynamicData {
-  public HostSystemConnectionState connectionState;
-  public HostSystemPowerState powerState;
-  public String standbyMode;
-  public boolean inMaintenanceMode;
-  public Calendar bootTime;
-  public HealthSystemRuntime healthSystemRuntime;
-  public ClusterDasFdmHostState dasHostState;
-  public HostTpmDigestInfo[] tpmPcrValues;
-  public VsanHostRuntimeInfo vsanRuntimeInfo;
-  public HostRuntimeInfoNetworkRuntimeInfo networkRuntimeInfo;
-  public HostVFlashManagerVFlashResourceRunTimeInfo vFlashResourceRuntimeInfo;
-  public Long hostMaxVirtualDiskCapacity;
 
-  public HostSystemConnectionState getConnectionState() {
-    return this.connectionState;
-  }
+    public Calendar bootTime;
+    public HostSystemConnectionState connectionState;
+    public CryptoKeyId cryptoKeyId;
+    public String cryptoState;
+    public ClusterDasFdmHostState dasHostState;
+    public HealthSystemRuntime healthSystemRuntime;
+    public Long hostMaxVirtualDiskCapacity;
+    public boolean inMaintenanceMode;
+    public Boolean inQuarantineMode;
+    public HostRuntimeInfoNetworkRuntimeInfo networkRuntimeInfo;
+    public HostSystemPowerState powerState;
+    public String standbyMode;
+    public HostTpmDigestInfo[] tpmPcrValues;
+    public HostVFlashManagerVFlashResourceRunTimeInfo vFlashResourceRuntimeInfo;
+    public VsanHostRuntimeInfo vsanRuntimeInfo;
 
-  public HostSystemPowerState getPowerState() {
-    return this.powerState;
-  }
+    public HostSystemConnectionState getConnectionState() {
+        return this.connectionState;
+    }
 
-  public String getStandbyMode() {
-    return this.standbyMode;
-  }
+    public void setConnectionState(HostSystemConnectionState connectionState) {
+        this.connectionState = connectionState;
+    }
 
-  public boolean isInMaintenanceMode() {
-    return this.inMaintenanceMode;
-  }
+    public HostSystemPowerState getPowerState() {
+        return this.powerState;
+    }
 
-  public Calendar getBootTime() {
-    return this.bootTime;
-  }
+    public void setPowerState(HostSystemPowerState powerState) {
+        this.powerState = powerState;
+    }
 
-  public HealthSystemRuntime getHealthSystemRuntime() {
-    return this.healthSystemRuntime;
-  }
+    public String getStandbyMode() {
+        return this.standbyMode;
+    }
 
-  public ClusterDasFdmHostState getDasHostState() {
-    return this.dasHostState;
-  }
+    public void setStandbyMode(String standbyMode) {
+        this.standbyMode = standbyMode;
+    }
 
-  public HostTpmDigestInfo[] getTpmPcrValues() {
-    return this.tpmPcrValues;
-  }
+    public boolean isInMaintenanceMode() {
+        return this.inMaintenanceMode;
+    }
 
-  public VsanHostRuntimeInfo getVsanRuntimeInfo() {
-    return this.vsanRuntimeInfo;
-  }
+    public void setInMaintenanceMode(boolean inMaintenanceMode) {
+        this.inMaintenanceMode = inMaintenanceMode;
+    }
 
-  public HostRuntimeInfoNetworkRuntimeInfo getNetworkRuntimeInfo() {
-    return this.networkRuntimeInfo;
-  }
+    public Calendar getBootTime() {
+        return this.bootTime;
+    }
 
-  public HostVFlashManagerVFlashResourceRunTimeInfo getVFlashResourceRuntimeInfo() {
-    return this.vFlashResourceRuntimeInfo;
-  }
+    public void setBootTime(Calendar bootTime) {
+        this.bootTime = bootTime;
+    }
 
-  public Long getHostMaxVirtualDiskCapacity() {
-    return this.hostMaxVirtualDiskCapacity;
-  }
+    public HealthSystemRuntime getHealthSystemRuntime() {
+        return this.healthSystemRuntime;
+    }
 
-  public void setConnectionState(HostSystemConnectionState connectionState) {
-    this.connectionState=connectionState;
-  }
+    public void setHealthSystemRuntime(HealthSystemRuntime healthSystemRuntime) {
+        this.healthSystemRuntime = healthSystemRuntime;
+    }
 
-  public void setPowerState(HostSystemPowerState powerState) {
-    this.powerState=powerState;
-  }
+    public ClusterDasFdmHostState getDasHostState() {
+        return this.dasHostState;
+    }
 
-  public void setStandbyMode(String standbyMode) {
-    this.standbyMode=standbyMode;
-  }
+    public void setDasHostState(ClusterDasFdmHostState dasHostState) {
+        this.dasHostState = dasHostState;
+    }
 
-  public void setInMaintenanceMode(boolean inMaintenanceMode) {
-    this.inMaintenanceMode=inMaintenanceMode;
-  }
+    public HostTpmDigestInfo[] getTpmPcrValues() {
+        return this.tpmPcrValues;
+    }
 
-  public void setBootTime(Calendar bootTime) {
-    this.bootTime=bootTime;
-  }
+    public void setTpmPcrValues(HostTpmDigestInfo[] tpmPcrValues) {
+        this.tpmPcrValues = tpmPcrValues;
+    }
 
-  public void setHealthSystemRuntime(HealthSystemRuntime healthSystemRuntime) {
-    this.healthSystemRuntime=healthSystemRuntime;
-  }
+    public VsanHostRuntimeInfo getVsanRuntimeInfo() {
+        return this.vsanRuntimeInfo;
+    }
 
-  public void setDasHostState(ClusterDasFdmHostState dasHostState) {
-    this.dasHostState=dasHostState;
-  }
+    public void setVsanRuntimeInfo(VsanHostRuntimeInfo vsanRuntimeInfo) {
+        this.vsanRuntimeInfo = vsanRuntimeInfo;
+    }
 
-  public void setTpmPcrValues(HostTpmDigestInfo[] tpmPcrValues) {
-    this.tpmPcrValues=tpmPcrValues;
-  }
+    public HostRuntimeInfoNetworkRuntimeInfo getNetworkRuntimeInfo() {
+        return this.networkRuntimeInfo;
+    }
 
-  public void setVsanRuntimeInfo(VsanHostRuntimeInfo vsanRuntimeInfo) {
-    this.vsanRuntimeInfo=vsanRuntimeInfo;
-  }
+    public void setNetworkRuntimeInfo(HostRuntimeInfoNetworkRuntimeInfo networkRuntimeInfo) {
+        this.networkRuntimeInfo = networkRuntimeInfo;
+    }
 
-  public void setNetworkRuntimeInfo(HostRuntimeInfoNetworkRuntimeInfo networkRuntimeInfo) {
-    this.networkRuntimeInfo=networkRuntimeInfo;
-  }
+    public Long getHostMaxVirtualDiskCapacity() {
+        return this.hostMaxVirtualDiskCapacity;
+    }
 
-  public void setVFlashResourceRuntimeInfo(HostVFlashManagerVFlashResourceRunTimeInfo vFlashResourceRuntimeInfo) {
-    this.vFlashResourceRuntimeInfo=vFlashResourceRuntimeInfo;
-  }
+    public void setHostMaxVirtualDiskCapacity(Long hostMaxVirtualDiskCapacity) {
+        this.hostMaxVirtualDiskCapacity = hostMaxVirtualDiskCapacity;
+    }
 
-  public void setHostMaxVirtualDiskCapacity(Long hostMaxVirtualDiskCapacity) {
-    this.hostMaxVirtualDiskCapacity=hostMaxVirtualDiskCapacity;
-  }
+    public CryptoKeyId getCryptoKeyId() {
+        return cryptoKeyId;
+    }
+
+    public void setCryptoKeyId(final CryptoKeyId cryptoKeyId) {
+        this.cryptoKeyId = cryptoKeyId;
+    }
+
+    public String getCryptoState() {
+        return cryptoState;
+    }
+
+    public void setCryptoState(final String cryptoState) {
+        this.cryptoState = cryptoState;
+    }
+
+    public boolean isInQuarantineMode() {
+        return inQuarantineMode;
+    }
+
+    public void setInQuarantineMode(final boolean inQuarantineMode) {
+        this.inQuarantineMode = inQuarantineMode;
+    }
+
+    public HostVFlashManagerVFlashResourceRunTimeInfo getvFlashResourceRuntimeInfo() {
+        return vFlashResourceRuntimeInfo;
+    }
+
+    public void setvFlashResourceRuntimeInfo(final HostVFlashManagerVFlashResourceRunTimeInfo vFlashResourceRuntimeInfo) {
+        this.vFlashResourceRuntimeInfo = vFlashResourceRuntimeInfo;
+    }
 }

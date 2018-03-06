@@ -30,91 +30,101 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VirtualDiskSeSparseBackingInfo extends VirtualDeviceFileBackingInfo {
-  public String diskMode;
-  public Boolean writeThrough;
-  public String uuid;
-  public String contentId;
-  public String changeId;
-  public VirtualDiskSeSparseBackingInfo parent;
-  public String deltaDiskFormat;
-  public Boolean digestEnabled;
-  public Integer grainSize;
 
-  public String getDiskMode() {
-    return this.diskMode;
-  }
+    public String changeId;
+    public String contentId;
+    public String deltaDiskFormat;
+    public Boolean digestEnabled;
+    public String diskMode;
+    public Integer grainSize;
+    public CryptoKeyId keyId;
+    public VirtualDiskSeSparseBackingInfo parent;
+    public String uuid;
+    public Boolean writeThrough;
 
-  public Boolean getWriteThrough() {
-    return this.writeThrough;
-  }
+    public String getDiskMode() {
+        return this.diskMode;
+    }
 
-  public String getUuid() {
-    return this.uuid;
-  }
+    public void setDiskMode(String diskMode) {
+        this.diskMode = diskMode;
+    }
 
-  public String getContentId() {
-    return this.contentId;
-  }
+    public String getUuid() {
+        return this.uuid;
+    }
 
-  public String getChangeId() {
-    return this.changeId;
-  }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-  public VirtualDiskSeSparseBackingInfo getParent() {
-    return this.parent;
-  }
+    public String getContentId() {
+        return this.contentId;
+    }
 
-  public String getDeltaDiskFormat() {
-    return this.deltaDiskFormat;
-  }
+    public void setContentId(String contentId) {
+        this.contentId = contentId;
+    }
 
-  public Boolean getDigestEnabled() {
-    return this.digestEnabled;
-  }
+    public String getChangeId() {
+        return this.changeId;
+    }
 
-  public Integer getGrainSize() {
-    return this.grainSize;
-  }
+    public void setChangeId(String changeId) {
+        this.changeId = changeId;
+    }
 
-  public void setDiskMode(String diskMode) {
-    this.diskMode=diskMode;
-  }
+    public VirtualDiskSeSparseBackingInfo getParent() {
+        return this.parent;
+    }
 
-  public void setWriteThrough(Boolean writeThrough) {
-    this.writeThrough=writeThrough;
-  }
+    public void setParent(VirtualDiskSeSparseBackingInfo parent) {
+        this.parent = parent;
+    }
 
-  public void setUuid(String uuid) {
-    this.uuid=uuid;
-  }
+    public String getDeltaDiskFormat() {
+        return this.deltaDiskFormat;
+    }
 
-  public void setContentId(String contentId) {
-    this.contentId=contentId;
-  }
+    public void setDeltaDiskFormat(String deltaDiskFormat) {
+        this.deltaDiskFormat = deltaDiskFormat;
+    }
 
-  public void setChangeId(String changeId) {
-    this.changeId=changeId;
-  }
+    public Integer getGrainSize() {
+        return this.grainSize;
+    }
 
-  public void setParent(VirtualDiskSeSparseBackingInfo parent) {
-    this.parent=parent;
-  }
+    public void setGrainSize(Integer grainSize) {
+        this.grainSize = grainSize;
+    }
 
-  public void setDeltaDiskFormat(String deltaDiskFormat) {
-    this.deltaDiskFormat=deltaDiskFormat;
-  }
+    public Boolean isDigestEnabled() {
+        return digestEnabled;
+    }
 
-  public void setDigestEnabled(Boolean digestEnabled) {
-    this.digestEnabled=digestEnabled;
-  }
+    public void setDigestEnabled(Boolean digestEnabled) {
+        this.digestEnabled = digestEnabled;
+    }
 
-  public void setGrainSize(Integer grainSize) {
-    this.grainSize=grainSize;
-  }
+    public CryptoKeyId getKeyId() {
+        return keyId;
+    }
+
+    public void setKeyId(final CryptoKeyId keyId) {
+        this.keyId = keyId;
+    }
+
+    public Boolean isWriteThrough() {
+        return writeThrough;
+    }
+
+    public void setWriteThrough(Boolean writeThrough) {
+        this.writeThrough = writeThrough;
+    }
 }

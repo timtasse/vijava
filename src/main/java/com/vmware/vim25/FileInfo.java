@@ -28,49 +28,60 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
 package com.vmware.vim25;
+
 import java.util.Calendar;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class FileInfo extends DynamicData {
-  public String path;
-  public Long fileSize;
-  public Calendar modification;
-  public String owner;
 
-  public String getPath() {
-    return this.path;
-  }
+    public Long fileSize;
+    public String friendlyName;
+    public Calendar modification;
+    public String owner;
+    public String path;
 
-  public Long getFileSize() {
-    return this.fileSize;
-  }
+    public String getPath() {
+        return this.path;
+    }
 
-  public Calendar getModification() {
-    return this.modification;
-  }
+    public void setPath(String path) {
+        this.path = path;
+    }
 
-  public String getOwner() {
-    return this.owner;
-  }
+    public Long getFileSize() {
+        return this.fileSize;
+    }
 
-  public void setPath(String path) {
-    this.path=path;
-  }
+    public void setFileSize(Long fileSize) {
+        this.fileSize = fileSize;
+    }
 
-  public void setFileSize(Long fileSize) {
-    this.fileSize=fileSize;
-  }
+    public Calendar getModification() {
+        return this.modification;
+    }
 
-  public void setModification(Calendar modification) {
-    this.modification=modification;
-  }
+    public void setModification(Calendar modification) {
+        this.modification = modification;
+    }
 
-  public void setOwner(String owner) {
-    this.owner=owner;
-  }
+    public String getOwner() {
+        return this.owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getFriendlyName() {
+        return friendlyName;
+    }
+
+    public void setFriendlyName(final String friendlyName) {
+        this.friendlyName = friendlyName;
+    }
 }

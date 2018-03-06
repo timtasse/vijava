@@ -30,21 +30,31 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 public enum HostCapabilityFtUnsupportedReason {
-  vMotionNotLicensed ("vMotionNotLicensed"),
-  missingVMotionNic ("missingVMotionNic"),
-  missingFTLoggingNic ("missingFTLoggingNic"),
-  ftNotLicensed ("ftNotLicensed"),
-  haAgentIssue ("haAgentIssue");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private HostCapabilityFtUnsupportedReason(String val)
-  {
-    this.val = val;
-  }
+    cpuHvDisabled("cpuHvDisabled"),
+    cpuHvUnsupported("cpuHvUnsupported"),
+    cpuHwmmuUnsupported("cpuHwmmuUnsupported"),
+    ftNotLicensed("ftNotLicensed"),
+    haAgentIssue("haAgentIssue"),
+    missingFTLoggingNic("missingFTLoggingNic"),
+    missingVMotionNic("missingVMotionNic"),
+    unsupportedProduct("unsupportedProduct"),
+    vMotionNotLicensed("vMotionNotLicensed");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    HostCapabilityFtUnsupportedReason(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

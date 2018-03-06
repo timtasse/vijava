@@ -30,46 +30,57 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VsanHostDiskResult extends DynamicData {
-  public HostScsiDisk disk;
-  public String state;
-  public String vsanUuid;
-  public LocalizedMethodFault error;
 
-  public HostScsiDisk getDisk() {
-    return this.disk;
-  }
+    public HostScsiDisk disk;
+    public String state;
+    public String vsanUuid;
+    public Boolean degraded;
+    public LocalizedMethodFault error;
 
-  public String getState() {
-    return this.state;
-  }
+    public HostScsiDisk getDisk() {
+        return this.disk;
+    }
 
-  public String getVsanUuid() {
-    return this.vsanUuid;
-  }
+    public void setDisk(HostScsiDisk disk) {
+        this.disk = disk;
+    }
 
-  public LocalizedMethodFault getError() {
-    return this.error;
-  }
+    public String getState() {
+        return this.state;
+    }
 
-  public void setDisk(HostScsiDisk disk) {
-    this.disk=disk;
-  }
+    public void setState(String state) {
+        this.state = state;
+    }
 
-  public void setState(String state) {
-    this.state=state;
-  }
+    public String getVsanUuid() {
+        return this.vsanUuid;
+    }
 
-  public void setVsanUuid(String vsanUuid) {
-    this.vsanUuid=vsanUuid;
-  }
+    public void setVsanUuid(String vsanUuid) {
+        this.vsanUuid = vsanUuid;
+    }
 
-  public void setError(LocalizedMethodFault error) {
-    this.error=error;
-  }
+    public LocalizedMethodFault getError() {
+        return this.error;
+    }
+
+    public void setError(LocalizedMethodFault error) {
+        this.error = error;
+    }
+
+    public Boolean isDegraded() {
+        return degraded;
+    }
+
+    public void setDegraded(final Boolean degraded) {
+        this.degraded = degraded;
+    }
 }

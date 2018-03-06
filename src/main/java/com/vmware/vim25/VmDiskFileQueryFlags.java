@@ -30,64 +30,74 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VmDiskFileQueryFlags extends DynamicData {
-  public boolean diskType;
-  public boolean capacityKb;
-  public boolean hardwareVersion;
-  public Boolean controllerType;
-  public Boolean diskExtents;
-  public Boolean thin;
 
-  public boolean isDiskType() {
-    return this.diskType;
-  }
+    public boolean capacityKb;
+    public Boolean controllerType;
+    public Boolean diskExtents;
+    public boolean diskType;
+    public Boolean encryption;
+    public boolean hardwareVersion;
+    public Boolean thin;
 
-  public boolean isCapacityKb() {
-    return this.capacityKb;
-  }
+    public boolean isDiskType() {
+        return this.diskType;
+    }
 
-  public boolean isHardwareVersion() {
-    return this.hardwareVersion;
-  }
+    public void setDiskType(boolean diskType) {
+        this.diskType = diskType;
+    }
 
-  public Boolean getControllerType() {
-    return this.controllerType;
-  }
+    public boolean isCapacityKb() {
+        return this.capacityKb;
+    }
 
-  public Boolean getDiskExtents() {
-    return this.diskExtents;
-  }
+    public void setCapacityKb(boolean capacityKb) {
+        this.capacityKb = capacityKb;
+    }
 
-  public Boolean getThin() {
-    return this.thin;
-  }
+    public boolean isHardwareVersion() {
+        return this.hardwareVersion;
+    }
 
-  public void setDiskType(boolean diskType) {
-    this.diskType=diskType;
-  }
+    public void setHardwareVersion(boolean hardwareVersion) {
+        this.hardwareVersion = hardwareVersion;
+    }
 
-  public void setCapacityKb(boolean capacityKb) {
-    this.capacityKb=capacityKb;
-  }
+    public boolean isControllerType() {
+        return controllerType;
+    }
 
-  public void setHardwareVersion(boolean hardwareVersion) {
-    this.hardwareVersion=hardwareVersion;
-  }
+    public void setControllerType(boolean controllerType) {
+        this.controllerType = controllerType;
+    }
 
-  public void setControllerType(Boolean controllerType) {
-    this.controllerType=controllerType;
-  }
+    public boolean isDiskExtents() {
+        return diskExtents;
+    }
 
-  public void setDiskExtents(Boolean diskExtents) {
-    this.diskExtents=diskExtents;
-  }
+    public void setDiskExtents(boolean diskExtents) {
+        this.diskExtents = diskExtents;
+    }
 
-  public void setThin(Boolean thin) {
-    this.thin=thin;
-  }
+    public boolean isEncryption() {
+        return encryption;
+    }
+
+    public void setEncryption(final boolean encryption) {
+        this.encryption = encryption;
+    }
+
+    public boolean isThin() {
+        return thin;
+    }
+
+    public void setThin(boolean thin) {
+        this.thin = thin;
+    }
 }

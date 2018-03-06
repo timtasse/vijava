@@ -30,21 +30,29 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 public enum ClusterDasVmSettingsRestartPriority {
-  disabled ("disabled"),
-  low ("low"),
-  medium ("medium"),
-  high ("high"),
-  clusterRestartPriority ("clusterRestartPriority");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private ClusterDasVmSettingsRestartPriority(String val)
-  {
-    this.val = val;
-  }
+    clusterRestartPriority("clusterRestartPriority"),
+    disabled("disabled"),
+    high("high"),
+    highest("highest"),
+    low("low"),
+    lowest("lowest"),
+    medium("medium");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    ClusterDasVmSettingsRestartPriority(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

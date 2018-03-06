@@ -30,37 +30,65 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class HostNasVolume extends HostFileSystemVolume {
-  public String remoteHost;
-  public String remotePath;
-  public String userName;
 
-  public String getRemoteHost() {
-    return this.remoteHost;
-  }
+    public String remoteHost;
+    public String remotePath;
+    public String userName;
+    public Boolean protocolEndpoint;
+    public String[] remoteHostNames;
+    public String securityType;
 
-  public String getRemotePath() {
-    return this.remotePath;
-  }
+    public String getRemoteHost() {
+        return this.remoteHost;
+    }
 
-  public String getUserName() {
-    return this.userName;
-  }
+    public void setRemoteHost(String remoteHost) {
+        this.remoteHost = remoteHost;
+    }
 
-  public void setRemoteHost(String remoteHost) {
-    this.remoteHost=remoteHost;
-  }
+    public String getRemotePath() {
+        return this.remotePath;
+    }
 
-  public void setRemotePath(String remotePath) {
-    this.remotePath=remotePath;
-  }
+    public void setRemotePath(String remotePath) {
+        this.remotePath = remotePath;
+    }
 
-  public void setUserName(String userName) {
-    this.userName=userName;
-  }
+    public String getUserName() {
+        return this.userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Boolean isProtocolEndpoint() {
+        return protocolEndpoint;
+    }
+
+    public void setProtocolEndpoint(final Boolean protocolEndpoint) {
+        this.protocolEndpoint = protocolEndpoint;
+    }
+
+    public String[] getRemoteHostNames() {
+        return remoteHostNames;
+    }
+
+    public void setRemoteHostNames(final String[] remoteHostNames) {
+        this.remoteHostNames = remoteHostNames;
+    }
+
+    public String getSecurityType() {
+        return securityType;
+    }
+
+    public void setSecurityType(final String securityType) {
+        this.securityType = securityType;
+    }
 }

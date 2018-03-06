@@ -29,43 +29,56 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25.mo;
 
-import com.vmware.vim25.HostVsanInternalSystemCmmdsQuery;
-import com.vmware.vim25.ManagedObjectReference;
-import com.vmware.vim25.RuntimeFault;
+import com.vmware.vim25.*;
 
 import java.rmi.RemoteException;
 
 /**
  * The managed object class corresponding to the one defined in VI SDK API reference.
- * @author Steve JIN (http://www.doublecloud.org)
+ *
+ * @author Steve JIN (http://www.doublecloud.orgo)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since SDK5.5
+ * @version 6.5
  */
 
-public class HostVsanInternalSystem extends ManagedObject 
-{
-	public HostVsanInternalSystem(ServerConnection serverConnection, ManagedObjectReference mor) 
-	{
-		super(serverConnection, mor);
-	}
-	
-	public String QueryCmmds(HostVsanInternalSystemCmmdsQuery[] queries) throws RuntimeFault, RemoteException
-	{
-	  return getVimService().queryCmmds(this.getMOR(), queries);
-	}
+public class HostVsanInternalSystem extends ManagedObject {
+    public HostVsanInternalSystem(ServerConnection serverConnection, ManagedObjectReference mor) {
+        super(serverConnection, mor);
+    }
 
-	public String queryObjectsOnPhysicalVsanDisk(String[] disks) throws RuntimeFault, RemoteException
-	{
-	  return getVimService().queryObjectsOnPhysicalVsanDisk(this.getMOR(), disks);
-	}
-	
-	public String queryPhysicalVsanDisks(String[] props) throws RuntimeFault, RemoteException
-	{
-	  return getVimService().queryPhysicalVsanDisks(this.getMOR(), props);
-	}
-	
-	public String queryVsanObjects(String[] uuids) throws RuntimeFault, RemoteException
-	{
-	  return getVimService().queryVsanObjects(this.getMOR(), uuids);
-	}
-	
+    public String QueryCmmds(HostVsanInternalSystemCmmdsQuery[] queries) throws RuntimeFault, RemoteException {
+        return getVimService().queryCmmds(this.getMOR(), queries);
+    }
+
+    public String queryObjectsOnPhysicalVsanDisk(String[] disks) throws RuntimeFault, RemoteException {
+        return getVimService().queryObjectsOnPhysicalVsanDisk(this.getMOR(), disks);
+    }
+
+    public String queryPhysicalVsanDisks(String[] props) throws RuntimeFault, RemoteException {
+        return getVimService().queryPhysicalVsanDisks(this.getMOR(), props);
+    }
+
+    public String queryVsanObjects(String[] uuids) throws RuntimeFault, RemoteException {
+        return getVimService().queryVsanObjects(this.getMOR(), uuids);
+    }
+
+    public String[] abdicateDomOwnership(final String[] uuids) throws RuntimeFault {
+        // TODO: to implement
+        throw new NotImplemented();
+    }
+
+    public VsanPolicySatisfiability[] canProvisionObjects(final VsanNewPolicyBatch[] npbs, final boolean ignoreSatisfiability)
+        throws RuntimeFault, VimFault {
+        // TODO: to implement
+        throw new NotImplemented();
+    }
+
+    public HostVsanInternalSystemDeleteVsanObjectsResult[] deleteVsanObjects(final String[] uuids, final boolean force)
+        throws RuntimeFault, VimFault {
+        // TODO: to implement
+        throw new NotImplemented();
+    }
+
+    //TODO: to implement the other methods
 }

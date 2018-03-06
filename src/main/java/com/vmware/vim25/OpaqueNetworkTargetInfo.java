@@ -30,19 +30,30 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class OpaqueNetworkTargetInfo extends VirtualMachineTargetInfo {
-  public OpaqueNetworkSummary network;
 
-  public OpaqueNetworkSummary getNetwork() {
-    return this.network;
-  }
+    public OpaqueNetworkSummary network;
+    public Boolean networkReservationSupported;
 
-  public void setNetwork(OpaqueNetworkSummary network) {
-    this.network=network;
-  }
+    public OpaqueNetworkSummary getNetwork() {
+        return this.network;
+    }
+
+    public void setNetwork(OpaqueNetworkSummary network) {
+        this.network = network;
+    }
+
+    public Boolean isNetworkReservationSupported() {
+        return networkReservationSupported;
+    }
+
+    public void setNetworkReservationSupported(final Boolean networkReservationSupported) {
+        this.networkReservationSupported = networkReservationSupported;
+    }
 }

@@ -30,46 +30,57 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class DVSNetworkResourceManagementCapability extends DynamicData {
-  public boolean networkResourceManagementSupported;
-  public int networkResourcePoolHighShareValue;
-  public boolean qosSupported;
-  public boolean userDefinedNetworkResourcePoolsSupported;
 
-  public boolean isNetworkResourceManagementSupported() {
-    return this.networkResourceManagementSupported;
-  }
+    public boolean networkResourceManagementSupported;
+    public int networkResourcePoolHighShareValue;
+    public boolean qosSupported;
+    public boolean userDefinedNetworkResourcePoolsSupported;
+    public Boolean networkResourceControlVersion3Supported;
 
-  public int getNetworkResourcePoolHighShareValue() {
-    return this.networkResourcePoolHighShareValue;
-  }
+    public boolean isNetworkResourceManagementSupported() {
+        return this.networkResourceManagementSupported;
+    }
 
-  public boolean isQosSupported() {
-    return this.qosSupported;
-  }
+    public int getNetworkResourcePoolHighShareValue() {
+        return this.networkResourcePoolHighShareValue;
+    }
 
-  public boolean isUserDefinedNetworkResourcePoolsSupported() {
-    return this.userDefinedNetworkResourcePoolsSupported;
-  }
+    public boolean isQosSupported() {
+        return this.qosSupported;
+    }
 
-  public void setNetworkResourceManagementSupported(boolean networkResourceManagementSupported) {
-    this.networkResourceManagementSupported=networkResourceManagementSupported;
-  }
+    public boolean isUserDefinedNetworkResourcePoolsSupported() {
+        return this.userDefinedNetworkResourcePoolsSupported;
+    }
 
-  public void setNetworkResourcePoolHighShareValue(int networkResourcePoolHighShareValue) {
-    this.networkResourcePoolHighShareValue=networkResourcePoolHighShareValue;
-  }
+    public void setNetworkResourceManagementSupported(boolean networkResourceManagementSupported) {
+        this.networkResourceManagementSupported = networkResourceManagementSupported;
+    }
 
-  public void setQosSupported(boolean qosSupported) {
-    this.qosSupported=qosSupported;
-  }
+    public void setNetworkResourcePoolHighShareValue(int networkResourcePoolHighShareValue) {
+        this.networkResourcePoolHighShareValue = networkResourcePoolHighShareValue;
+    }
 
-  public void setUserDefinedNetworkResourcePoolsSupported(boolean userDefinedNetworkResourcePoolsSupported) {
-    this.userDefinedNetworkResourcePoolsSupported=userDefinedNetworkResourcePoolsSupported;
-  }
+    public void setQosSupported(boolean qosSupported) {
+        this.qosSupported = qosSupported;
+    }
+
+    public void setUserDefinedNetworkResourcePoolsSupported(boolean userDefinedNetworkResourcePoolsSupported) {
+        this.userDefinedNetworkResourcePoolsSupported = userDefinedNetworkResourcePoolsSupported;
+    }
+
+    public boolean isNetworkResourceControlVersion3Supported() {
+        return networkResourceControlVersion3Supported;
+    }
+
+    public void setNetworkResourceControlVersion3Supported(final boolean networkResourceControlVersion3Supported) {
+        this.networkResourceControlVersion3Supported = networkResourceControlVersion3Supported;
+    }
 }

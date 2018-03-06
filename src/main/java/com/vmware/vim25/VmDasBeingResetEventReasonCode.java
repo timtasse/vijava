@@ -30,19 +30,26 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 public enum VmDasBeingResetEventReasonCode {
-  vmtoolsHeartbeatFailure ("vmtoolsHeartbeatFailure"),
-  appHeartbeatFailure ("appHeartbeatFailure"),
-  appImmediateResetRequest ("appImmediateResetRequest");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private VmDasBeingResetEventReasonCode(String val)
-  {
-    this.val = val;
-  }
+    appHeartbeatFailure("appHeartbeatFailure"),
+    appImmediateResetRequest("appImmediateResetRequest"),
+    vmcpResetApdCleared("vmcpResetApdCleared"),
+    vmtoolsHeartbeatFailure("vmtoolsHeartbeatFailure");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    VmDasBeingResetEventReasonCode(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

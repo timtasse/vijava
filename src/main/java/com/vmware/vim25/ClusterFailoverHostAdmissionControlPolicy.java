@@ -30,19 +30,30 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class ClusterFailoverHostAdmissionControlPolicy extends ClusterDasAdmissionControlPolicy {
-  public ManagedObjectReference[] failoverHosts;
 
-  public ManagedObjectReference[] getFailoverHosts() {
-    return this.failoverHosts;
-  }
+    public ManagedObjectReference[] failoverHosts;
+    public Integer failoverLevel;
 
-  public void setFailoverHosts(ManagedObjectReference[] failoverHosts) {
-    this.failoverHosts=failoverHosts;
-  }
+    public ManagedObjectReference[] getFailoverHosts() {
+        return this.failoverHosts;
+    }
+
+    public void setFailoverHosts(ManagedObjectReference[] failoverHosts) {
+        this.failoverHosts = failoverHosts;
+    }
+
+    public Integer getFailoverLevel() {
+        return failoverLevel;
+    }
+
+    public void setFailoverLevel(final Integer failoverLevel) {
+        this.failoverLevel = failoverLevel;
+    }
 }

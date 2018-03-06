@@ -30,55 +30,66 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class VirtualMachineVideoCard extends VirtualDevice {
-  public Long videoRamSizeInKB;
-  public Integer numDisplays;
-  public Boolean useAutoDetect;
-  public Boolean enable3DSupport;
-  public String use3dRenderer;
 
-  public Long getVideoRamSizeInKB() {
-    return this.videoRamSizeInKB;
-  }
+    public Long videoRamSizeInKB;
+    public Integer numDisplays;
+    public Boolean useAutoDetect;
+    public Boolean enable3DSupport;
+    public String use3dRenderer;
+    public Long graphicsMemorySizeInKB;
 
-  public Integer getNumDisplays() {
-    return this.numDisplays;
-  }
+    public Long getVideoRamSizeInKB() {
+        return this.videoRamSizeInKB;
+    }
 
-  public Boolean getUseAutoDetect() {
-    return this.useAutoDetect;
-  }
+    public void setVideoRamSizeInKB(Long videoRamSizeInKB) {
+        this.videoRamSizeInKB = videoRamSizeInKB;
+    }
 
-  public Boolean getEnable3DSupport() {
-    return this.enable3DSupport;
-  }
+    public Integer getNumDisplays() {
+        return this.numDisplays;
+    }
 
-  public String getUse3dRenderer() {
-    return this.use3dRenderer;
-  }
+    public void setNumDisplays(Integer numDisplays) {
+        this.numDisplays = numDisplays;
+    }
 
-  public void setVideoRamSizeInKB(Long videoRamSizeInKB) {
-    this.videoRamSizeInKB=videoRamSizeInKB;
-  }
+    public String getUse3dRenderer() {
+        return this.use3dRenderer;
+    }
 
-  public void setNumDisplays(Integer numDisplays) {
-    this.numDisplays=numDisplays;
-  }
+    public void setUse3dRenderer(String use3dRenderer) {
+        this.use3dRenderer = use3dRenderer;
+    }
 
-  public void setUseAutoDetect(Boolean useAutoDetect) {
-    this.useAutoDetect=useAutoDetect;
-  }
+    public Boolean isUseAutoDetect() {
+        return useAutoDetect;
+    }
 
-  public void setEnable3DSupport(Boolean enable3DSupport) {
-    this.enable3DSupport=enable3DSupport;
-  }
+    public void setUseAutoDetect(Boolean useAutoDetect) {
+        this.useAutoDetect = useAutoDetect;
+    }
 
-  public void setUse3dRenderer(String use3dRenderer) {
-    this.use3dRenderer=use3dRenderer;
-  }
+    public Boolean isEnable3DSupport() {
+        return enable3DSupport;
+    }
+
+    public void setEnable3DSupport(Boolean enable3DSupport) {
+        this.enable3DSupport = enable3DSupport;
+    }
+
+    public Long getGraphicsMemorySizeInKB() {
+        return graphicsMemorySizeInKB;
+    }
+
+    public void setGraphicsMemorySizeInKB(final Long graphicsMemorySizeInKB) {
+        this.graphicsMemorySizeInKB = graphicsMemorySizeInKB;
+    }
 }

@@ -30,28 +30,57 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class StorageDrsIoLoadBalanceConfig extends DynamicData {
-  public Integer ioLatencyThreshold;
-  public Integer ioLoadImbalanceThreshold;
 
-  public Integer getIoLatencyThreshold() {
-    return this.ioLatencyThreshold;
-  }
+    public Integer ioLatencyThreshold;
+    public Integer ioLoadImbalanceThreshold;
+    public Integer reservableIopsThreshold;
+    public Integer reservablePercentThreshold;
+    public String reservableThresholdMode;
 
-  public Integer getIoLoadImbalanceThreshold() {
-    return this.ioLoadImbalanceThreshold;
-  }
+    public Integer getIoLatencyThreshold() {
+        return this.ioLatencyThreshold;
+    }
 
-  public void setIoLatencyThreshold(Integer ioLatencyThreshold) {
-    this.ioLatencyThreshold=ioLatencyThreshold;
-  }
+    public void setIoLatencyThreshold(Integer ioLatencyThreshold) {
+        this.ioLatencyThreshold = ioLatencyThreshold;
+    }
 
-  public void setIoLoadImbalanceThreshold(Integer ioLoadImbalanceThreshold) {
-    this.ioLoadImbalanceThreshold=ioLoadImbalanceThreshold;
-  }
+    public Integer getIoLoadImbalanceThreshold() {
+        return this.ioLoadImbalanceThreshold;
+    }
+
+    public void setIoLoadImbalanceThreshold(Integer ioLoadImbalanceThreshold) {
+        this.ioLoadImbalanceThreshold = ioLoadImbalanceThreshold;
+    }
+
+    public Integer getReservableIopsThreshold() {
+        return reservableIopsThreshold;
+    }
+
+    public void setReservableIopsThreshold(final Integer reservableIopsThreshold) {
+        this.reservableIopsThreshold = reservableIopsThreshold;
+    }
+
+    public Integer getReservablePercentThreshold() {
+        return reservablePercentThreshold;
+    }
+
+    public void setReservablePercentThreshold(final Integer reservablePercentThreshold) {
+        this.reservablePercentThreshold = reservablePercentThreshold;
+    }
+
+    public String getReservableThresholdMode() {
+        return reservableThresholdMode;
+    }
+
+    public void setReservableThresholdMode(final String reservableThresholdMode) {
+        this.reservableThresholdMode = reservableThresholdMode;
+    }
 }

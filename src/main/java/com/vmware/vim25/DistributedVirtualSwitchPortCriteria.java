@@ -30,73 +30,86 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class DistributedVirtualSwitchPortCriteria extends DynamicData {
-  public Boolean connected;
-  public Boolean active;
-  public Boolean uplinkPort;
-  public ManagedObjectReference scope;
-  public String[] portgroupKey;
-  public Boolean inside;
-  public String[] portKey;
 
-  public Boolean getConnected() {
-    return this.connected;
-  }
+    public Boolean active;
+    public Boolean connected;
+    public ManagedObjectReference host;
+    public Boolean inside;
+    public String[] portgroupKey;
+    public String[] portKey;
+    @Deprecated
+    public ManagedObjectReference scope;
+    public Boolean uplinkPort;
 
-  public Boolean getActive() {
-    return this.active;
-  }
+    @Deprecated
+    public ManagedObjectReference getScope() {
+        return this.scope;
+    }
 
-  public Boolean getUplinkPort() {
-    return this.uplinkPort;
-  }
+    @Deprecated
+    public void setScope(ManagedObjectReference scope) {
+        this.scope = scope;
+    }
 
-  public ManagedObjectReference getScope() {
-    return this.scope;
-  }
+    public String[] getPortgroupKey() {
+        return this.portgroupKey;
+    }
 
-  public String[] getPortgroupKey() {
-    return this.portgroupKey;
-  }
+    public void setPortgroupKey(String[] portgroupKey) {
+        this.portgroupKey = portgroupKey;
+    }
 
-  public Boolean getInside() {
-    return this.inside;
-  }
+    public String[] getPortKey() {
+        return this.portKey;
+    }
 
-  public String[] getPortKey() {
-    return this.portKey;
-  }
+    public void setPortKey(String[] portKey) {
+        this.portKey = portKey;
+    }
 
-  public void setConnected(Boolean connected) {
-    this.connected=connected;
-  }
+    public Boolean isActive() {
+        return active;
+    }
 
-  public void setActive(Boolean active) {
-    this.active=active;
-  }
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 
-  public void setUplinkPort(Boolean uplinkPort) {
-    this.uplinkPort=uplinkPort;
-  }
+    public Boolean isConnected() {
+        return connected;
+    }
 
-  public void setScope(ManagedObjectReference scope) {
-    this.scope=scope;
-  }
+    public void setConnected(Boolean connected) {
+        this.connected = connected;
+    }
 
-  public void setPortgroupKey(String[] portgroupKey) {
-    this.portgroupKey=portgroupKey;
-  }
+    public ManagedObjectReference getHost() {
+        return host;
+    }
 
-  public void setInside(Boolean inside) {
-    this.inside=inside;
-  }
+    public void setHost(final ManagedObjectReference host) {
+        this.host = host;
+    }
 
-  public void setPortKey(String[] portKey) {
-    this.portKey=portKey;
-  }
+    public Boolean isInside() {
+        return inside;
+    }
+
+    public void setInside(Boolean inside) {
+        this.inside = inside;
+    }
+
+    public Boolean isUplinkPort() {
+        return uplinkPort;
+    }
+
+    public void setUplinkPort(Boolean uplinkPort) {
+        this.uplinkPort = uplinkPort;
+    }
 }

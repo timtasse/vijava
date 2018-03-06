@@ -30,22 +30,29 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 public enum VirtualMachineNeedSecondaryReason {
-  initializing ("initializing"),
-  divergence ("divergence"),
-  lostConnection ("lostConnection"),
-  partialHardwareFailure ("partialHardwareFailure"),
-  userAction ("userAction"),
-  other ("other");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private VirtualMachineNeedSecondaryReason(String val)
-  {
-    this.val = val;
-  }
+    checkpointError("checkpointError"),
+    divergence("divergence"),
+    initializing("initializing"),
+    lostConnection("lostConnection"),
+    other("other"),
+    partialHardwareFailure("partialHardwareFailure"),
+    userAction("userAction");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    VirtualMachineNeedSecondaryReason(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

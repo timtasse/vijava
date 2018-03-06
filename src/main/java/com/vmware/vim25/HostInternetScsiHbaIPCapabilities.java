@@ -30,109 +30,192 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class HostInternetScsiHbaIPCapabilities extends DynamicData {
-  public boolean addressSettable;
-  public boolean ipConfigurationMethodSettable;
-  public boolean subnetMaskSettable;
-  public boolean defaultGatewaySettable;
-  public boolean primaryDnsServerAddressSettable;
-  public boolean alternateDnsServerAddressSettable;
-  public Boolean ipv6Supported;
-  public Boolean arpRedirectSettable;
-  public Boolean mtuSettable;
-  public Boolean hostNameAsTargetAddress;
-  public Boolean nameAliasSettable;
 
-  public boolean isAddressSettable() {
-    return this.addressSettable;
-  }
+    public Boolean addressSettable;
+    public Boolean alternateDnsServerAddressSettable;
+    public Boolean arpRedirectSettable;
+    public Boolean defaultGatewaySettable;
+    public Boolean hostNameAsTargetAddress;
+    public Boolean ipConfigurationMethodSettable;
+    public Boolean ipv4EnableSettable;
+    public Boolean ipv6DefaultGatewaySettable;
+    public Boolean ipv6DhcpConfigurationSettable;
+    public Boolean ipv6EnableSettable;
+    public Boolean ipv6LinkLocalAutoConfigurationSettable;
+    public Integer ipv6MaxStaticAddressesSupported;
+    public Integer ipv6PrefixLength;
+    public Boolean ipv6PrefixLengthSettable;
+    public Boolean ipv6RouterAdvertisementConfigurationSettable;
+    public Boolean ipv6Supported;
+    public Boolean mtuSettable;
+    public Boolean nameAliasSettable;
+    public Boolean primaryDnsServerAddressSettable;
+    public Boolean subnetMaskSettable;
 
-  public boolean isIpConfigurationMethodSettable() {
-    return this.ipConfigurationMethodSettable;
-  }
+    public Boolean isAddressSettable() {
+        return this.addressSettable;
+    }
 
-  public boolean isSubnetMaskSettable() {
-    return this.subnetMaskSettable;
-  }
+    public void setAddressSettable(Boolean addressSettable) {
+        this.addressSettable = addressSettable;
+    }
 
-  public boolean isDefaultGatewaySettable() {
-    return this.defaultGatewaySettable;
-  }
+    public Boolean isIpConfigurationMethodSettable() {
+        return this.ipConfigurationMethodSettable;
+    }
 
-  public boolean isPrimaryDnsServerAddressSettable() {
-    return this.primaryDnsServerAddressSettable;
-  }
+    public void setIpConfigurationMethodSettable(Boolean ipConfigurationMethodSettable) {
+        this.ipConfigurationMethodSettable = ipConfigurationMethodSettable;
+    }
 
-  public boolean isAlternateDnsServerAddressSettable() {
-    return this.alternateDnsServerAddressSettable;
-  }
+    public Boolean isSubnetMaskSettable() {
+        return this.subnetMaskSettable;
+    }
 
-  public Boolean getIpv6Supported() {
-    return this.ipv6Supported;
-  }
+    public void setSubnetMaskSettable(Boolean subnetMaskSettable) {
+        this.subnetMaskSettable = subnetMaskSettable;
+    }
 
-  public Boolean getArpRedirectSettable() {
-    return this.arpRedirectSettable;
-  }
+    public Boolean isDefaultGatewaySettable() {
+        return this.defaultGatewaySettable;
+    }
 
-  public Boolean getMtuSettable() {
-    return this.mtuSettable;
-  }
+    public void setDefaultGatewaySettable(Boolean defaultGatewaySettable) {
+        this.defaultGatewaySettable = defaultGatewaySettable;
+    }
 
-  public Boolean getHostNameAsTargetAddress() {
-    return this.hostNameAsTargetAddress;
-  }
+    public Boolean isPrimaryDnsServerAddressSettable() {
+        return this.primaryDnsServerAddressSettable;
+    }
 
-  public Boolean getNameAliasSettable() {
-    return this.nameAliasSettable;
-  }
+    public void setPrimaryDnsServerAddressSettable(Boolean primaryDnsServerAddressSettable) {
+        this.primaryDnsServerAddressSettable = primaryDnsServerAddressSettable;
+    }
 
-  public void setAddressSettable(boolean addressSettable) {
-    this.addressSettable=addressSettable;
-  }
+    public Boolean isAlternateDnsServerAddressSettable() {
+        return this.alternateDnsServerAddressSettable;
+    }
 
-  public void setIpConfigurationMethodSettable(boolean ipConfigurationMethodSettable) {
-    this.ipConfigurationMethodSettable=ipConfigurationMethodSettable;
-  }
+    public void setAlternateDnsServerAddressSettable(Boolean alternateDnsServerAddressSettable) {
+        this.alternateDnsServerAddressSettable = alternateDnsServerAddressSettable;
+    }
 
-  public void setSubnetMaskSettable(boolean subnetMaskSettable) {
-    this.subnetMaskSettable=subnetMaskSettable;
-  }
+    public Boolean isArpRedirectSettable() {
+        return arpRedirectSettable;
+    }
 
-  public void setDefaultGatewaySettable(boolean defaultGatewaySettable) {
-    this.defaultGatewaySettable=defaultGatewaySettable;
-  }
+    public void setArpRedirectSettable(final Boolean arpRedirectSettable) {
+        this.arpRedirectSettable = arpRedirectSettable;
+    }
 
-  public void setPrimaryDnsServerAddressSettable(boolean primaryDnsServerAddressSettable) {
-    this.primaryDnsServerAddressSettable=primaryDnsServerAddressSettable;
-  }
+    public Boolean isHostNameAsTargetAddress() {
+        return hostNameAsTargetAddress;
+    }
 
-  public void setAlternateDnsServerAddressSettable(boolean alternateDnsServerAddressSettable) {
-    this.alternateDnsServerAddressSettable=alternateDnsServerAddressSettable;
-  }
+    public void setHostNameAsTargetAddress(final Boolean hostNameAsTargetAddress) {
+        this.hostNameAsTargetAddress = hostNameAsTargetAddress;
+    }
 
-  public void setIpv6Supported(Boolean ipv6Supported) {
-    this.ipv6Supported=ipv6Supported;
-  }
+    public Boolean isIpv4EnableSettable() {
+        return ipv4EnableSettable;
+    }
 
-  public void setArpRedirectSettable(Boolean arpRedirectSettable) {
-    this.arpRedirectSettable=arpRedirectSettable;
-  }
+    public void setIpv4EnableSettable(final Boolean ipv4EnableSettable) {
+        this.ipv4EnableSettable = ipv4EnableSettable;
+    }
 
-  public void setMtuSettable(Boolean mtuSettable) {
-    this.mtuSettable=mtuSettable;
-  }
+    public Boolean isIpv6DefaultGatewaySettable() {
+        return ipv6DefaultGatewaySettable;
+    }
 
-  public void setHostNameAsTargetAddress(Boolean hostNameAsTargetAddress) {
-    this.hostNameAsTargetAddress=hostNameAsTargetAddress;
-  }
+    public void setIpv6DefaultGatewaySettable(final Boolean ipv6DefaultGatewaySettable) {
+        this.ipv6DefaultGatewaySettable = ipv6DefaultGatewaySettable;
+    }
 
-  public void setNameAliasSettable(Boolean nameAliasSettable) {
-    this.nameAliasSettable=nameAliasSettable;
-  }
+    public Boolean isIpv6DhcpConfigurationSettable() {
+        return ipv6DhcpConfigurationSettable;
+    }
+
+    public void setIpv6DhcpConfigurationSettable(final Boolean ipv6DhcpConfigurationSettable) {
+        this.ipv6DhcpConfigurationSettable = ipv6DhcpConfigurationSettable;
+    }
+
+    public Boolean isIpv6EnableSettable() {
+        return ipv6EnableSettable;
+    }
+
+    public void setIpv6EnableSettable(final Boolean ipv6EnableSettable) {
+        this.ipv6EnableSettable = ipv6EnableSettable;
+    }
+
+    public Boolean isIpv6LinkLocalAutoConfigurationSettable() {
+        return ipv6LinkLocalAutoConfigurationSettable;
+    }
+
+    public void setIpv6LinkLocalAutoConfigurationSettable(final Boolean ipv6LinkLocalAutoConfigurationSettable) {
+        this.ipv6LinkLocalAutoConfigurationSettable = ipv6LinkLocalAutoConfigurationSettable;
+    }
+
+    public Integer getIpv6MaxStaticAddressesSupported() {
+        return ipv6MaxStaticAddressesSupported;
+    }
+
+    public void setIpv6MaxStaticAddressesSupported(final Integer ipv6MaxStaticAddressesSupported) {
+        this.ipv6MaxStaticAddressesSupported = ipv6MaxStaticAddressesSupported;
+    }
+
+    public Integer getIpv6PrefixLength() {
+        return ipv6PrefixLength;
+    }
+
+    public void setIpv6PrefixLength(final Integer ipv6PrefixLength) {
+        this.ipv6PrefixLength = ipv6PrefixLength;
+    }
+
+    public Boolean isIpv6PrefixLengthSettable() {
+        return ipv6PrefixLengthSettable;
+    }
+
+    public void setIpv6PrefixLengthSettable(final Boolean ipv6PrefixLengthSettable) {
+        this.ipv6PrefixLengthSettable = ipv6PrefixLengthSettable;
+    }
+
+    public Boolean isIpv6RouterAdvertisementConfigurationSettable() {
+        return ipv6RouterAdvertisementConfigurationSettable;
+    }
+
+    public void setIpv6RouterAdvertisementConfigurationSettable(final Boolean ipv6RouterAdvertisementConfigurationSettable) {
+        this.ipv6RouterAdvertisementConfigurationSettable = ipv6RouterAdvertisementConfigurationSettable;
+    }
+
+    public Boolean isIpv6Supported() {
+        return ipv6Supported;
+    }
+
+    public void setIpv6Supported(final Boolean ipv6Supported) {
+        this.ipv6Supported = ipv6Supported;
+    }
+
+    public Boolean isMtuSettable() {
+        return mtuSettable;
+    }
+
+    public void setMtuSettable(final Boolean mtuSettable) {
+        this.mtuSettable = mtuSettable;
+    }
+
+    public Boolean isNameAliasSettable() {
+        return nameAliasSettable;
+    }
+
+    public void setNameAliasSettable(final Boolean nameAliasSettable) {
+        this.nameAliasSettable = nameAliasSettable;
+    }
 }

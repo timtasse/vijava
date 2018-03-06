@@ -30,100 +30,111 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class TaskFilterSpec extends DynamicData {
-  public TaskFilterSpecByEntity entity;
-  public TaskFilterSpecByTime time;
-  public TaskFilterSpecByUsername userName;
-  public TaskInfoState[] state;
-  public ManagedObjectReference alarm;
-  public ManagedObjectReference scheduledTask;
-  public int[] eventChainId;
-  public String[] tag;
-  public String[] parentTaskKey;
-  public String[] rootTaskKey;
 
-  public TaskFilterSpecByEntity getEntity() {
-    return this.entity;
-  }
+    public TaskFilterSpecByEntity entity;
+    public TaskFilterSpecByTime time;
+    public TaskFilterSpecByUsername userName;
+    public TaskInfoState[] state;
+    public ManagedObjectReference alarm;
+    public ManagedObjectReference scheduledTask;
+    public int[] eventChainId;
+    public String[] tag;
+    public String[] parentTaskKey;
+    public String[] rootTaskKey;
+    public String[] activationId;
 
-  public TaskFilterSpecByTime getTime() {
-    return this.time;
-  }
+    public TaskFilterSpecByEntity getEntity() {
+        return this.entity;
+    }
 
-  public TaskFilterSpecByUsername getUserName() {
-    return this.userName;
-  }
+    public void setEntity(TaskFilterSpecByEntity entity) {
+        this.entity = entity;
+    }
 
-  public TaskInfoState[] getState() {
-    return this.state;
-  }
+    public TaskFilterSpecByTime getTime() {
+        return this.time;
+    }
 
-  public ManagedObjectReference getAlarm() {
-    return this.alarm;
-  }
+    public void setTime(TaskFilterSpecByTime time) {
+        this.time = time;
+    }
 
-  public ManagedObjectReference getScheduledTask() {
-    return this.scheduledTask;
-  }
+    public TaskFilterSpecByUsername getUserName() {
+        return this.userName;
+    }
 
-  public int[] getEventChainId() {
-    return this.eventChainId;
-  }
+    public void setUserName(TaskFilterSpecByUsername userName) {
+        this.userName = userName;
+    }
 
-  public String[] getTag() {
-    return this.tag;
-  }
+    public TaskInfoState[] getState() {
+        return this.state;
+    }
 
-  public String[] getParentTaskKey() {
-    return this.parentTaskKey;
-  }
+    public void setState(TaskInfoState[] state) {
+        this.state = state;
+    }
 
-  public String[] getRootTaskKey() {
-    return this.rootTaskKey;
-  }
+    public ManagedObjectReference getAlarm() {
+        return this.alarm;
+    }
 
-  public void setEntity(TaskFilterSpecByEntity entity) {
-    this.entity=entity;
-  }
+    public void setAlarm(ManagedObjectReference alarm) {
+        this.alarm = alarm;
+    }
 
-  public void setTime(TaskFilterSpecByTime time) {
-    this.time=time;
-  }
+    public ManagedObjectReference getScheduledTask() {
+        return this.scheduledTask;
+    }
 
-  public void setUserName(TaskFilterSpecByUsername userName) {
-    this.userName=userName;
-  }
+    public void setScheduledTask(ManagedObjectReference scheduledTask) {
+        this.scheduledTask = scheduledTask;
+    }
 
-  public void setState(TaskInfoState[] state) {
-    this.state=state;
-  }
+    public int[] getEventChainId() {
+        return this.eventChainId;
+    }
 
-  public void setAlarm(ManagedObjectReference alarm) {
-    this.alarm=alarm;
-  }
+    public void setEventChainId(int[] eventChainId) {
+        this.eventChainId = eventChainId;
+    }
 
-  public void setScheduledTask(ManagedObjectReference scheduledTask) {
-    this.scheduledTask=scheduledTask;
-  }
+    public String[] getTag() {
+        return this.tag;
+    }
 
-  public void setEventChainId(int[] eventChainId) {
-    this.eventChainId=eventChainId;
-  }
+    public void setTag(String[] tag) {
+        this.tag = tag;
+    }
 
-  public void setTag(String[] tag) {
-    this.tag=tag;
-  }
+    public String[] getParentTaskKey() {
+        return this.parentTaskKey;
+    }
 
-  public void setParentTaskKey(String[] parentTaskKey) {
-    this.parentTaskKey=parentTaskKey;
-  }
+    public void setParentTaskKey(String[] parentTaskKey) {
+        this.parentTaskKey = parentTaskKey;
+    }
 
-  public void setRootTaskKey(String[] rootTaskKey) {
-    this.rootTaskKey=rootTaskKey;
-  }
+    public String[] getRootTaskKey() {
+        return this.rootTaskKey;
+    }
+
+    public void setRootTaskKey(String[] rootTaskKey) {
+        this.rootTaskKey = rootTaskKey;
+    }
+
+    public String[] getActivationId() {
+        return activationId;
+    }
+
+    public void setActivationId(final String[] activationId) {
+        this.activationId = activationId;
+    }
 }

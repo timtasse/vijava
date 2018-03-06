@@ -30,38 +30,52 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.7
+ * @since 4.0
+ */
 public enum VmFaultToleranceConfigIssueReasonForIssue {
-  haNotEnabled ("haNotEnabled"),
-  moreThanOneSecondary ("moreThanOneSecondary"),
-  recordReplayNotSupported ("recordReplayNotSupported"),
-  replayNotSupported ("replayNotSupported"),
-  templateVm ("templateVm"),
-  multipleVCPU ("multipleVCPU"),
-  hostInactive ("hostInactive"),
-  ftUnsupportedHardware ("ftUnsupportedHardware"),
-  ftUnsupportedProduct ("ftUnsupportedProduct"),
-  missingVMotionNic ("missingVMotionNic"),
-  missingFTLoggingNic ("missingFTLoggingNic"),
-  thinDisk ("thinDisk"),
-  verifySSLCertificateFlagNotSet ("verifySSLCertificateFlagNotSet"),
-  hasSnapshots ("hasSnapshots"),
-  noConfig ("noConfig"),
-  ftSecondaryVm ("ftSecondaryVm"),
-  hasLocalDisk ("hasLocalDisk"),
-  esxAgentVm ("esxAgentVm"),
-  video3dEnabled ("video3dEnabled"),
-  hasUnsupportedDisk ("hasUnsupportedDisk"),
-  hasNestedHVConfiguration ("hasNestedHVConfiguration"),
-  hasVFlashConfiguration ("hasVFlashConfiguration");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private VmFaultToleranceConfigIssueReasonForIssue(String val)
-  {
-    this.val = val;
-  }
+    cpuHvDisabled("cpuHvDisabled"),
+    cpuHvUnsupported("cpuHvUnsupported"),
+    cpuHwmmuUnsupported("cpuHwmmuUnsupported"),
+    esxAgentVm("esxAgentVm"),
+    ftSecondaryVm("ftSecondaryVm"),
+    ftUnsupportedHardware("ftUnsupportedHardware"),
+    ftUnsupportedProduct("ftUnsupportedProduct"),
+    haNotEnabled("haNotEnabled"),
+    hasEFIFirmware("hasEFIFirmware"),
+    hasLocalDisk("hasLocalDisk"),
+    hasNestedHVConfiguration("hasNestedHVConfiguration"),
+    hasSnapshots("hasSnapshots"),
+    hasUnsupportedDisk("hasUnsupportedDisk"),
+    hasVFlashConfiguration("hasVFlashConfiguration"),
+    hostInactive("hostInactive"),
+    insufficientBandwidth("insufficientBandwidth"),
+    missingFTLoggingNic("missingFTLoggingNic"),
+    missingVMotionNic("missingVMotionNic"),
+    moreThanOneSecondary("moreThanOneSecondary"),
+    multipleVCPU("multipleVCPU"),
+    noConfig("noConfig"),
+    recordReplayNotSupported("recordReplayNotSupported"),
+    replayNotSupported("replayNotSupported"),
+    templateVm("templateVm"),
+    thinDisk("thinDisk"),
+    tooManyVCPUs("tooManyVCPUs"),
+    tooMuchMemory("tooMuchMemory"),
+    unsupportedProduct("unsupportedProduct"),
+    verifySSLCertificateFlagNotSet("verifySSLCertificateFlagNotSet"),
+    video3dEnabled("video3dEnabled");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    VmFaultToleranceConfigIssueReasonForIssue(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

@@ -30,18 +30,24 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 4.0
+ */
 public enum HostDigestInfoDigestMethodType {
-  SHA1 ("SHA1"),
-  MD5 ("MD5");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private HostDigestInfoDigestMethodType(String val)
-  {
-    this.val = val;
-  }
+    SHA1("SHA1"),
+    MD5("MD5"),
+    SHA256("SHA256"),
+    SHA384("SAH384"),
+    SHA512("SHA512"),
+    SM3_256("SM3_256");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    HostDigestInfoDigestMethodType(String val) {
+        this.val = val;
+    }
 }

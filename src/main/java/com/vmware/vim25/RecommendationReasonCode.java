@@ -30,39 +30,52 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 public enum RecommendationReasonCode {
-  fairnessCpuAvg ("fairnessCpuAvg"),
-  fairnessMemAvg ("fairnessMemAvg"),
-  jointAffin ("jointAffin"),
-  antiAffin ("antiAffin"),
-  hostMaint ("hostMaint"),
-  enterStandby ("enterStandby"),
-  reservationCpu ("reservationCpu"),
-  reservationMem ("reservationMem"),
-  powerOnVm ("powerOnVm"),
-  powerSaving ("powerSaving"),
-  increaseCapacity ("increaseCapacity"),
-  checkResource ("checkResource"),
-  unreservedCapacity ("unreservedCapacity"),
-  vmHostHardAffinity ("vmHostHardAffinity"),
-  vmHostSoftAffinity ("vmHostSoftAffinity"),
-  balanceDatastoreSpaceUsage ("balanceDatastoreSpaceUsage"),
-  balanceDatastoreIOLoad ("balanceDatastoreIOLoad"),
-  datastoreMaint ("datastoreMaint"),
-  virtualDiskJointAffin ("virtualDiskJointAffin"),
-  virtualDiskAntiAffin ("virtualDiskAntiAffin"),
-  datastoreSpaceOutage ("datastoreSpaceOutage"),
-  storagePlacement ("storagePlacement"),
-  iolbDisabledInternal ("iolbDisabledInternal");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private RecommendationReasonCode(String val)
-  {
-    this.val = val;
-  }
+    antiAffin("antiAffin"),
+    balanceDatastoreIOLoad("balanceDatastoreIOLoad"),
+    balanceDatastoreIOPSReservation("balanceDatastoreIOPSReservation"),
+    balanceDatastoreSpaceUsage("balanceDatastoreSpaceUsage"),
+    checkResource("checkResource"),
+    datastoreMaint("datastoreMaint"),
+    datastoreSpaceOutage("datastoreSpaceOutage"),
+    enterStandby("enterStandby"),
+    fairnessCpuAvg("fairnessCpuAvg"),
+    fairnessMemAvg("fairnessMemAvg"),
+    ftConstraints("ftConstraints"),
+    hostExitDegradation("hostExitDegradation"),
+    hostInDegradation("hostInDegradation"),
+    hostMaint("hostMaint"),
+    increaseCapacity("increaseCapacity"),
+    iolbDisabledInternal("iolbDisabledInternal"),
+    jointAffin("jointAffin"),
+    maxVmsConstraint("maxVmsConstraint"),
+    networkBandwidthReservation("networkBandwidthReservation"),
+    powerOnVm("powerOnVm"),
+    powerSaving("powerSaving"),
+    reservationCpu("reservationCpu"),
+    reservationMem("reservationMem"),
+    storagePlacement("storagePlacement"),
+    unreservedCapacity("unreservedCapacity"),
+    virtualDiskAntiAffin("virtualDiskAntiAffin"),
+    virtualDiskJointAffin("virtualDiskJointAffin"),
+    vmHostHardAffinity("vmHostHardAffinity"),
+    vmHostSoftAffinity("vmHostSoftAffinity"),
+    xvmotionPlacement("xvmotionPlacement");
+
+    @SuppressWarnings("unused")
+    private final String val;
+
+    RecommendationReasonCode(String val) {
+        this.val = val;
+    }
+
+    public String getVal() {
+        return val;
+    }
 }

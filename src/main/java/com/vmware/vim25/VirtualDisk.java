@@ -30,64 +30,100 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class VirtualDisk extends VirtualDevice {
-  public long capacityInKB;
-  public Long capacityInBytes;
-  public SharesInfo shares;
-  public StorageIOAllocationInfo storageIOAllocation;
-  public String diskObjectId;
-  public VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo;
 
-  public long getCapacityInKB() {
-    return this.capacityInKB;
-  }
+    @Deprecated
+    public long capacityInKB;
+    public Long capacityInBytes;
+    @Deprecated
+    public SharesInfo shares;
+    public StorageIOAllocationInfo storageIOAllocation;
+    @Deprecated
+    public String diskObjectId;
+    public VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo;
+    public String[] iofilter;
+    public ID vDiskId;
 
-  public Long getCapacityInBytes() {
-    return this.capacityInBytes;
-  }
+    @Deprecated
+    public long getCapacityInKB() {
+        return this.capacityInKB;
+    }
 
-  public SharesInfo getShares() {
-    return this.shares;
-  }
+    @Deprecated
+    public void setCapacityInKB(long capacityInKB) {
+        this.capacityInKB = capacityInKB;
+    }
 
-  public StorageIOAllocationInfo getStorageIOAllocation() {
-    return this.storageIOAllocation;
-  }
+    public Long getCapacityInBytes() {
+        return this.capacityInBytes;
+    }
 
-  public String getDiskObjectId() {
-    return this.diskObjectId;
-  }
+    public void setCapacityInBytes(Long capacityInBytes) {
+        this.capacityInBytes = capacityInBytes;
+    }
 
-  public VirtualDiskVFlashCacheConfigInfo getVFlashCacheConfigInfo() {
-    return this.vFlashCacheConfigInfo;
-  }
+    @Deprecated
+    public SharesInfo getShares() {
+        return this.shares;
+    }
 
-  public void setCapacityInKB(long capacityInKB) {
-    this.capacityInKB=capacityInKB;
-  }
+    @Deprecated
+    public void setShares(SharesInfo shares) {
+        this.shares = shares;
+    }
 
-  public void setCapacityInBytes(Long capacityInBytes) {
-    this.capacityInBytes=capacityInBytes;
-  }
+    public StorageIOAllocationInfo getStorageIOAllocation() {
+        return this.storageIOAllocation;
+    }
 
-  public void setShares(SharesInfo shares) {
-    this.shares=shares;
-  }
+    public void setStorageIOAllocation(StorageIOAllocationInfo storageIOAllocation) {
+        this.storageIOAllocation = storageIOAllocation;
+    }
 
-  public void setStorageIOAllocation(StorageIOAllocationInfo storageIOAllocation) {
-    this.storageIOAllocation=storageIOAllocation;
-  }
+    @Deprecated
+    public String getDiskObjectId() {
+        return this.diskObjectId;
+    }
 
-  public void setDiskObjectId(String diskObjectId) {
-    this.diskObjectId=diskObjectId;
-  }
+    @Deprecated
+    public void setDiskObjectId(String diskObjectId) {
+        this.diskObjectId = diskObjectId;
+    }
 
-  public void setVFlashCacheConfigInfo(VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo) {
-    this.vFlashCacheConfigInfo=vFlashCacheConfigInfo;
-  }
+    public VirtualDiskVFlashCacheConfigInfo getVFlashCacheConfigInfo() {
+        return this.vFlashCacheConfigInfo;
+    }
+
+    public void setVFlashCacheConfigInfo(VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo) {
+        this.vFlashCacheConfigInfo = vFlashCacheConfigInfo;
+    }
+
+    public VirtualDiskVFlashCacheConfigInfo getvFlashCacheConfigInfo() {
+        return vFlashCacheConfigInfo;
+    }
+
+    public void setvFlashCacheConfigInfo(final VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo) {
+        this.vFlashCacheConfigInfo = vFlashCacheConfigInfo;
+    }
+
+    public ID getvDiskId() {
+        return vDiskId;
+    }
+
+    public void setvDiskId(final ID vDiskId) {
+        this.vDiskId = vDiskId;
+    }
+
+    public String[] getIofilter() {
+        return iofilter;
+    }
+
+    public void setIofilter(final String[] iofilter) {
+        this.iofilter = iofilter;
+    }
 }

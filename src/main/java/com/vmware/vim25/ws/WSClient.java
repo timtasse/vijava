@@ -30,7 +30,13 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25.ws;
 
-import javax.net.ssl.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
@@ -41,272 +47,240 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.List;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
-/** 
+/**
  * The Web Service Engine
+ *
  * @author Steve Jin (sjin@vmware.com)
-*/
+ * @author Stefan Dilk
+ */
 
-final public class WSClient
-{
-  private final static String SOAP_ACTION_HEADER = "SOAPAction";
-  private final static String SOAP_ACTION_V40 = "urn:vim25/4.0";
-  private final static String SOAP_ACTION_V41 = "urn:vim25/4.1";
-  private final static String SOAP_ACTION_V50 = "urn:vim25/5.0";
-  private final static String SOAP_ACTION_V51 = "urn:vim25/5.1";
-  private final static String SOAP_ACTION_V55 = "urn:vim25/5.5";
-  
-  private URL baseUrl = null;
-  private String cookie = null;
-  private String vimNameSpace = null;
-  private String soapAction = null;
-  private int connectTimeout = 0;
-  private int readTimeout = 0;
-  
-  XmlGen xmlGen = new XmlGenDom();
-  
-  public WSClient(String serverUrl) throws MalformedURLException 
-  {
-    this(serverUrl, true);
-  }
-  
-  public WSClient(String serverUrl, boolean ignoreCert) throws MalformedURLException 
-  {
-    if(serverUrl.endsWith("/"))
-    {
-      serverUrl = serverUrl.substring(0, serverUrl.length()-1);
-    } 
-    this.baseUrl = new URL(serverUrl);
-    if(ignoreCert)
-    {
-      try
-      {
-        trustAllHttpsCertificates();
-        HttpsURLConnection.setDefaultHostnameVerifier
-        (
-          new HostnameVerifier() 
-          {
-            public boolean verify(String urlHostName, SSLSession session)
-            {
-              return true;
+public final class WSClient {
+
+    public static final ConcurrentLinkedQueue<Long> COUNT_OLD = new ConcurrentLinkedQueue<>();
+    public static final ConcurrentLinkedQueue<Long> COUNT_NEW = new ConcurrentLinkedQueue<>();
+    private static final Logger LOGGER = LoggerFactory.getLogger(WSClient.class);
+    private static final String SOAP_ACTION_HEADER = "SOAPAction";
+    private static final String SOAP_ACTION_V40 = "urn:vim25/4.0";
+    private static final String SOAP_ACTION_V41 = "urn:vim25/4.1";
+    private static final String SOAP_ACTION_V50 = "urn:vim25/5.0";
+    private static final String SOAP_ACTION_V51 = "urn:vim25/5.1";
+    private static final String SOAP_ACTION_V55 = "urn:vim25/5.5";
+    private static final String SOAP_ACTION_V60 = "urn:vim25/6.0";
+    private static final String SOAP_ACTION_V65 = "urn:vim25/6.5";
+
+    private final URL baseUrl;
+    private final XmlGen xmlGen = new XmlGenDom();
+    private String cookie;
+    private String vimNameSpace;
+    private String soapAction;
+    private int connectTimeout;
+    private int readTimeout;
+
+    public WSClient(final String serverUrl) throws MalformedURLException {
+        this(serverUrl, true);
+    }
+
+    public WSClient(final String serverUrl, final boolean ignoreCert) throws MalformedURLException {
+        if (serverUrl.endsWith("/")) {
+            this.baseUrl = new URL(serverUrl.substring(0, serverUrl.length() - 1));
+        } else {
+            this.baseUrl = new URL(serverUrl);
+        }
+        if (ignoreCert) {
+            trustAllHttpsCertificates();
+            HttpsURLConnection.setDefaultHostnameVerifier((urlHostName, session) -> true);
+        }
+    }
+
+    private static void trustAllHttpsCertificates() {
+        try {
+            final TrustManager[] trustAllCerts = new TrustManager[1];
+            trustAllCerts[0] = new TrustAllManager();
+            final SSLContext sc = SSLContext.getInstance("SSL");
+            sc.init(null, trustAllCerts, null);
+            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+        } catch (NoSuchAlgorithmException | KeyManagementException e) {
+            LOGGER.error("Error in setting other SSLContext", e);
+        }
+    }
+
+    public Object invoke(final String methodName, final Argument[] paras, final String returnType) throws RemoteException {
+        final long start = System.nanoTime();
+        final String soapMsg = XmlGen.toXML(methodName, paras, this.vimNameSpace);
+        COUNT_OLD.add(System.nanoTime() - start);
+
+        try (final InputStream is = this.post(soapMsg)) {
+            return xmlGen.fromXML(returnType, is);
+        } catch (Exception e) {
+            throw new RemoteException("VI SDK invoke exception:" + e, e);
+        }
+    }
+
+    public Object invoke(final String methodName, final List<Argument> paras, final String returnType) throws RemoteException {
+        final long start = System.nanoTime();
+        final String soapMsg = XmlGen.generateSoapMethod(methodName, paras, this.vimNameSpace);
+        COUNT_NEW.add(System.nanoTime() - start);
+
+        try (final InputStream is = this.post(soapMsg)) {
+            return xmlGen.fromXML(returnType, is);
+        } catch (Exception e) {
+            throw new RemoteException("VI SDK invoke exception:" + e, e);
+        }
+    }
+
+    public StringBuffer invokeAsString(String methodName, Argument[] paras) throws RemoteException {
+        final String soapMsg = XmlGen.toXML(methodName, paras, this.vimNameSpace);
+
+        try (final InputStream is = post(soapMsg)) {
+            return readStream(is);
+        } catch (Exception e) {
+            throw new RemoteException("VI SDK invoke exception:" + e, e);
+        }
+    }
+
+    public InputStream post(String soapMsg) throws IOException {
+        final HttpURLConnection postCon = (HttpURLConnection) baseUrl.openConnection();
+
+        if (connectTimeout > 0) {
+            postCon.setConnectTimeout(connectTimeout);
+        }
+        if (readTimeout > 0) {
+            postCon.setReadTimeout(readTimeout);
+        }
+        try {
+            postCon.setRequestMethod("POST");
+        } catch (ProtocolException e) {
+            LOGGER.error("Error during setRequestMethod in SOAPConnection", e);
+        }
+        postCon.setDoOutput(true);
+        postCon.setDoInput(true);
+        postCon.setRequestProperty(SOAP_ACTION_HEADER, soapAction);
+        postCon.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
+
+        if (cookie != null) {
+            postCon.setRequestProperty("Cookie", cookie);
+        }
+
+        final OutputStream os = postCon.getOutputStream();
+        final OutputStreamWriter out = new OutputStreamWriter(os, "UTF8");
+
+        out.write(soapMsg);
+        out.close();
+
+        InputStream is;
+
+        try {
+            is = postCon.getInputStream();
+        } catch (IOException ioe) {
+            is = postCon.getErrorStream();
+        }
+
+        if (cookie == null) {
+            cookie = postCon.getHeaderField("Set-Cookie");
+        }
+        return is;
+    }
+
+    /*===============================================
+       * API versions *
+      "4.0"       vSphere 4.0 (and u1)
+      "4.1"       vSphere 4.1
+      "5.0"       vSphere 5.0
+      "5.1"       vSphere 5.1
+      "5.5"       vSphere 5.5
+      "6.0"       vSphere 6.0
+      "6.5"       vSphere 6.5
+      ===============================================*/
+    public void setSoapActionOnApiVersion(String apiVersion) {
+        switch (apiVersion) {
+            case "4.0":
+                soapAction = SOAP_ACTION_V40;
+                break;
+            case "4.1":
+                soapAction = SOAP_ACTION_V41;
+                break;
+            case "5.0":
+                soapAction = SOAP_ACTION_V50;
+                break;
+            case "5.1":
+                soapAction = SOAP_ACTION_V51;
+                break;
+            case "5.5":
+                soapAction = SOAP_ACTION_V55;
+                break;
+            case "6.0":
+                soapAction = SOAP_ACTION_V60;
+                break;
+            case "6.5":
+                soapAction = SOAP_ACTION_V65;
+                break;
+            default:
+                soapAction = SOAP_ACTION_V65;
+        }
+    }
+
+    private StringBuffer readStream(InputStream is) throws IOException {
+        try (final InputStreamReader isr = new InputStreamReader(is);
+             final BufferedReader in = new BufferedReader(isr)) {
+            final StringBuffer sb = new StringBuffer();
+            String lineStr;
+            while ((lineStr = in.readLine()) != null) {
+                sb.append(lineStr);
             }
-          }
-        );
-      } catch (Exception e)  {}
-    }
-  }
-  
-  public Object invoke(String methodName, Argument[] paras, String returnType) throws RemoteException
-  {
-    String soapMsg = XmlGen.toXML(methodName, paras, this.vimNameSpace);
-    
-    InputStream is = null;
-    try 
-    {
-      is = post(soapMsg);
-      return xmlGen.fromXML(returnType, is);
-    }
-    catch (Exception e1) 
-    {
-      throw new RemoteException("VI SDK invoke exception:" + e1, e1);
-    }
-    finally
-    {
-      if(is!=null) 
-        try { is.close(); } catch(IOException ioe) {}
-    }
-  }
-  
-  public StringBuffer invokeAsString(String methodName, Argument[] paras) throws RemoteException
-  {
-    String soapMsg = XmlGen.toXML(methodName, paras, this.vimNameSpace);
-
-    try 
-    {
-      InputStream is = post(soapMsg);
-      return readStream(is);
-    } catch (Exception e) 
-    {
-      throw new RemoteException("VI SDK invoke exception:" + e, e);
-    }
-  }
-
-  public InputStream post(String soapMsg) throws IOException
-  {
-    HttpURLConnection postCon = (HttpURLConnection) baseUrl.openConnection();
-    
-    if(connectTimeout > 0)
-      postCon.setConnectTimeout(connectTimeout);
-    if(readTimeout > 0)
-      postCon.setReadTimeout(readTimeout);
-    
-    try {
-        postCon.setRequestMethod("POST");
-    } catch (ProtocolException e) 
-    {
-        e.printStackTrace();
-    }
-    postCon.setDoOutput(true);
-    postCon.setDoInput(true);
-    postCon.setRequestProperty(SOAP_ACTION_HEADER, soapAction);
-    postCon.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
-    
-    if(cookie!=null)
-    {
-      postCon.setRequestProperty("Cookie", cookie);
+            return sb;
+        }
     }
 
-    OutputStream os = postCon.getOutputStream();
-    OutputStreamWriter out = new OutputStreamWriter(os, "UTF8");
-
-    out.write(soapMsg);
-    out.close();
-
-    InputStream is;
-    
-    try
-    {
-    	is = postCon.getInputStream();
-    } 
-    catch(IOException ioe)
-    {
-    	is = postCon.getErrorStream();
+    public URL getBaseUrl() {
+        return this.baseUrl;
     }
-    
-    if(cookie==null)
-    {
-      cookie = postCon.getHeaderField("Set-Cookie");
-    }
-    return is;
-  }
-  
-  public URL getBaseUrl()
-  {
-    return this.baseUrl;
-  }
 
-  public void setBaseUrl(URL baseUrl)
-  {
-    this.baseUrl = baseUrl;
-  }
+    public String getCookie() {
+        return cookie;
+    }
 
-  public String getCookie()
-  {
-    return cookie;
-  }
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
 
-  public void setCookie(String cookie)
-  {
-    this.cookie = cookie;
-  }
+    public String getVimNameSpace() {
+        return vimNameSpace;
+    }
 
-  public String getVimNameSpace()
-  {
-    return vimNameSpace;
-  }
+    public void setVimNameSpace(String vimNameSpace) {
+        this.vimNameSpace = vimNameSpace;
+    }
 
-  public void setVimNameSpace(String vimNameSpace)
-  {
-    this.vimNameSpace = vimNameSpace;
-  }
-  
-  public void setConnectTimeout(int timeoutMilliSec)
-  {
-    this.connectTimeout = timeoutMilliSec;
-  }
+    public int getConnectTimeout() {
+        return this.connectTimeout;
+    }
 
-  public int getConnectTimeout()
-  {
-    return this.connectTimeout;
-  }
+    public void setConnectTimeout(int timeoutMilliSec) {
+        this.connectTimeout = timeoutMilliSec;
+    }
 
-  public void setReadTimeout(int timeoutMilliSec)
-  {
-    this.readTimeout = timeoutMilliSec;
-  }
-  
-  public int getReadTimeout()
-  {
-    return this.readTimeout;
-  }
-  
-/*===============================================
-   * API versions *   
-  "2.0.0"    VI 3.0
-  "2.5.0"    VI 3.5 (and u1)
-  "2.5u2"   VI 3.5u2 (and u3, u4)
-  "4.0"       vSphere 4.0 (and u1)
-  "4.1"       vSphere 4.1
-  "5.0"       vSphere 5.0
-  "5.1"       vSphere 5.1
-  ===============================================*/
-  public void setSoapActionOnApiVersion(String apiVersion)
-  {
-    if("4.0".equals(apiVersion))
-    {
-      soapAction = SOAP_ACTION_V40;
+    public int getReadTimeout() {
+        return this.readTimeout;
     }
-    else if("4.1".equals(apiVersion))
-    {
-      soapAction = SOAP_ACTION_V41;
-    }
-    else if("5.0".equals(apiVersion))
-    {
-      soapAction = SOAP_ACTION_V50;
-    }
-    else if("5.1".equals(apiVersion))
-    {
-      soapAction = SOAP_ACTION_V51;
-    }
-    else if("5.5".equals(apiVersion))
-    {
-      soapAction = SOAP_ACTION_V55;
-    }
-    else
-    { //always defaults to latest version 
-      soapAction = SOAP_ACTION_V55;
-    }
-  }
-  
-  private StringBuffer readStream(InputStream is) throws IOException
-  {
-    StringBuffer sb = new StringBuffer();
-    BufferedReader in = new BufferedReader(new InputStreamReader(is));
-    String lineStr;
-    while ((lineStr = in.readLine()) != null) 
-    {
-      sb.append(lineStr);
-    }
-    in.close();
-    return sb;
-  }
-  
-  private static void trustAllHttpsCertificates() 
-    throws NoSuchAlgorithmException, KeyManagementException
-  {
-    TrustManager[] trustAllCerts = new TrustManager[1]; 
-    trustAllCerts[0] = new TrustAllManager(); 
-    SSLContext sc = SSLContext.getInstance("SSL"); 
-    sc.init(null, trustAllCerts, null); 
-    HttpsURLConnection.setDefaultSSLSocketFactory(
-        sc.getSocketFactory());
-  }
 
-  private static class TrustAllManager implements X509TrustManager 
-  {
-    public X509Certificate[] getAcceptedIssuers() 
-    {
-      return null;
-    } 
-    public void checkServerTrusted(X509Certificate[] certs, 
-        String authType)
-      throws CertificateException 
-    {
-    } 
-    public void checkClientTrusted(X509Certificate[] certs, 
-        String authType)
-    throws CertificateException 
-    {
+    public void setReadTimeout(int timeoutMilliSec) {
+        this.readTimeout = timeoutMilliSec;
     }
-  }
+
+    private static class TrustAllManager implements X509TrustManager {
+        public X509Certificate[] getAcceptedIssuers() {
+            return null;
+        }
+
+        @Override
+        public void checkServerTrusted(X509Certificate[] certs, String authType) throws CertificateException {
+        }
+
+        @Override
+        public void checkClientTrusted(X509Certificate[] certs, String authType) throws CertificateException {
+        }
+    }
 }

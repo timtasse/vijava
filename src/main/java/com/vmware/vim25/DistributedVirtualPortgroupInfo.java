@@ -30,73 +30,84 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class DistributedVirtualPortgroupInfo extends DynamicData {
-  public String switchName;
-  public String switchUuid;
-  public String portgroupName;
-  public String portgroupKey;
-  public String portgroupType;
-  public boolean uplinkPortgroup;
-  public ManagedObjectReference portgroup;
 
-  public String getSwitchName() {
-    return this.switchName;
-  }
+    public String switchName;
+    public String switchUuid;
+    public String portgroupName;
+    public String portgroupKey;
+    public String portgroupType;
+    public boolean uplinkPortgroup;
+    public ManagedObjectReference portgroup;
+    public Boolean networkReservationSupported;
 
-  public String getSwitchUuid() {
-    return this.switchUuid;
-  }
+    public String getSwitchName() {
+        return this.switchName;
+    }
 
-  public String getPortgroupName() {
-    return this.portgroupName;
-  }
+    public String getSwitchUuid() {
+        return this.switchUuid;
+    }
 
-  public String getPortgroupKey() {
-    return this.portgroupKey;
-  }
+    public String getPortgroupName() {
+        return this.portgroupName;
+    }
 
-  public String getPortgroupType() {
-    return this.portgroupType;
-  }
+    public String getPortgroupKey() {
+        return this.portgroupKey;
+    }
 
-  public boolean isUplinkPortgroup() {
-    return this.uplinkPortgroup;
-  }
+    public String getPortgroupType() {
+        return this.portgroupType;
+    }
 
-  public ManagedObjectReference getPortgroup() {
-    return this.portgroup;
-  }
+    public boolean isUplinkPortgroup() {
+        return this.uplinkPortgroup;
+    }
 
-  public void setSwitchName(String switchName) {
-    this.switchName=switchName;
-  }
+    public ManagedObjectReference getPortgroup() {
+        return this.portgroup;
+    }
 
-  public void setSwitchUuid(String switchUuid) {
-    this.switchUuid=switchUuid;
-  }
+    public void setSwitchName(String switchName) {
+        this.switchName = switchName;
+    }
 
-  public void setPortgroupName(String portgroupName) {
-    this.portgroupName=portgroupName;
-  }
+    public void setSwitchUuid(String switchUuid) {
+        this.switchUuid = switchUuid;
+    }
 
-  public void setPortgroupKey(String portgroupKey) {
-    this.portgroupKey=portgroupKey;
-  }
+    public void setPortgroupName(String portgroupName) {
+        this.portgroupName = portgroupName;
+    }
 
-  public void setPortgroupType(String portgroupType) {
-    this.portgroupType=portgroupType;
-  }
+    public void setPortgroupKey(String portgroupKey) {
+        this.portgroupKey = portgroupKey;
+    }
 
-  public void setUplinkPortgroup(boolean uplinkPortgroup) {
-    this.uplinkPortgroup=uplinkPortgroup;
-  }
+    public void setPortgroupType(String portgroupType) {
+        this.portgroupType = portgroupType;
+    }
 
-  public void setPortgroup(ManagedObjectReference portgroup) {
-    this.portgroup=portgroup;
-  }
+    public void setUplinkPortgroup(boolean uplinkPortgroup) {
+        this.uplinkPortgroup = uplinkPortgroup;
+    }
+
+    public void setPortgroup(ManagedObjectReference portgroup) {
+        this.portgroup = portgroup;
+    }
+
+    public boolean isNetworkReservationSupported() {
+        return networkReservationSupported;
+    }
+
+    public void setNetworkReservationSupported(final boolean networkReservationSupported) {
+        this.networkReservationSupported = networkReservationSupported;
+    }
 }

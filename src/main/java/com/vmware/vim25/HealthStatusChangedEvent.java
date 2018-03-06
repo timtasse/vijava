@@ -30,46 +30,56 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 @SuppressWarnings("all")
 public class HealthStatusChangedEvent extends Event {
-  public String componentId;
-  public String oldStatus;
-  public String newStatus;
-  public String componentName;
 
-  public String getComponentId() {
-    return this.componentId;
-  }
+    public String componentId;
+    public String oldStatus;
+    public String newStatus;
+    public String componentName;
+    public String serviceId;
 
-  public String getOldStatus() {
-    return this.oldStatus;
-  }
+    public String getComponentId() {
+        return this.componentId;
+    }
 
-  public String getNewStatus() {
-    return this.newStatus;
-  }
+    public String getOldStatus() {
+        return this.oldStatus;
+    }
 
-  public String getComponentName() {
-    return this.componentName;
-  }
+    public String getNewStatus() {
+        return this.newStatus;
+    }
 
-  public void setComponentId(String componentId) {
-    this.componentId=componentId;
-  }
+    public String getComponentName() {
+        return this.componentName;
+    }
 
-  public void setOldStatus(String oldStatus) {
-    this.oldStatus=oldStatus;
-  }
+    public void setComponentId(String componentId) {
+        this.componentId = componentId;
+    }
 
-  public void setNewStatus(String newStatus) {
-    this.newStatus=newStatus;
-  }
+    public void setOldStatus(String oldStatus) {
+        this.oldStatus = oldStatus;
+    }
 
-  public void setComponentName(String componentName) {
-    this.componentName=componentName;
-  }
+    public void setNewStatus(String newStatus) {
+        this.newStatus = newStatus;
+    }
+
+    public void setComponentName(String componentName) {
+        this.componentName = componentName;
+    }
+
+    public String getServiceId() {
+        return serviceId;
+    }
+
+    public void setServiceId(final String serviceId) {
+        this.serviceId = serviceId;
+    }
 }

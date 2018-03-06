@@ -28,211 +28,250 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
 package com.vmware.vim25;
+
 import java.util.Calendar;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk
+ * @version 6.5
+ */
 
 @SuppressWarnings("all")
 public class DVSConfigInfo extends DynamicData {
-  public String uuid;
-  public String name;
-  public int numStandalonePorts;
-  public int numPorts;
-  public int maxPorts;
-  public DVSUplinkPortPolicy uplinkPortPolicy;
-  public ManagedObjectReference[] uplinkPortgroup;
-  public DVPortSetting defaultPortConfig;
-  public DistributedVirtualSwitchHostMember[] host;
-  public DistributedVirtualSwitchProductSpec productInfo;
-  public DistributedVirtualSwitchProductSpec targetInfo;
-  public String extensionKey;
-  public DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
-  public DVSPolicy policy;
-  public String description;
-  public String configVersion;
-  public DVSContactInfo contact;
-  public String switchIpAddress;
-  public Calendar createTime;
-  public Boolean networkResourceManagementEnabled;
-  public Integer defaultProxySwitchMaxNumPorts;
-  public DVSHealthCheckConfig[] healthCheckConfig;
 
-  public String getUuid() {
-    return this.uuid;
-  }
+    public String uuid;
+    public String name;
+    public int numStandalonePorts;
+    public int numPorts;
+    public int maxPorts;
+    public DVSUplinkPortPolicy uplinkPortPolicy;
+    public ManagedObjectReference[] uplinkPortgroup;
+    public DVPortSetting defaultPortConfig;
+    public DistributedVirtualSwitchHostMember[] host;
+    public DistributedVirtualSwitchProductSpec productInfo;
+    public DistributedVirtualSwitchProductSpec targetInfo;
+    public String extensionKey;
+    public DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
+    public DVSPolicy policy;
+    public String description;
+    public String configVersion;
+    public DVSContactInfo contact;
+    public String switchIpAddress;
+    public Calendar createTime;
+    public Boolean networkResourceManagementEnabled;
+    public Integer defaultProxySwitchMaxNumPorts;
+    public DVSHealthCheckConfig[] healthCheckConfig;
+    public DvsHostInfrastructureTrafficResource[] infrastructureTrafficResourceConfig;
+    public String networkResourceControlVersion;
+    public Integer pnicCapacityRatioForReservation;
+    public DVSVmVnicNetworkResourcePool[] vmVnicNetworkResourcePool;
 
-  public String getName() {
-    return this.name;
-  }
+    public String getUuid() {
+        return this.uuid;
+    }
 
-  public int getNumStandalonePorts() {
-    return this.numStandalonePorts;
-  }
+    public String getName() {
+        return this.name;
+    }
 
-  public int getNumPorts() {
-    return this.numPorts;
-  }
+    public int getNumStandalonePorts() {
+        return this.numStandalonePorts;
+    }
 
-  public int getMaxPorts() {
-    return this.maxPorts;
-  }
+    public int getNumPorts() {
+        return this.numPorts;
+    }
 
-  public DVSUplinkPortPolicy getUplinkPortPolicy() {
-    return this.uplinkPortPolicy;
-  }
+    public int getMaxPorts() {
+        return this.maxPorts;
+    }
 
-  public ManagedObjectReference[] getUplinkPortgroup() {
-    return this.uplinkPortgroup;
-  }
+    public DVSUplinkPortPolicy getUplinkPortPolicy() {
+        return this.uplinkPortPolicy;
+    }
 
-  public DVPortSetting getDefaultPortConfig() {
-    return this.defaultPortConfig;
-  }
+    public ManagedObjectReference[] getUplinkPortgroup() {
+        return this.uplinkPortgroup;
+    }
 
-  public DistributedVirtualSwitchHostMember[] getHost() {
-    return this.host;
-  }
+    public DVPortSetting getDefaultPortConfig() {
+        return this.defaultPortConfig;
+    }
 
-  public DistributedVirtualSwitchProductSpec getProductInfo() {
-    return this.productInfo;
-  }
+    public DistributedVirtualSwitchHostMember[] getHost() {
+        return this.host;
+    }
 
-  public DistributedVirtualSwitchProductSpec getTargetInfo() {
-    return this.targetInfo;
-  }
+    public DistributedVirtualSwitchProductSpec getProductInfo() {
+        return this.productInfo;
+    }
 
-  public String getExtensionKey() {
-    return this.extensionKey;
-  }
+    public DistributedVirtualSwitchProductSpec getTargetInfo() {
+        return this.targetInfo;
+    }
 
-  public DistributedVirtualSwitchKeyedOpaqueBlob[] getVendorSpecificConfig() {
-    return this.vendorSpecificConfig;
-  }
+    public String getExtensionKey() {
+        return this.extensionKey;
+    }
 
-  public DVSPolicy getPolicy() {
-    return this.policy;
-  }
+    public DistributedVirtualSwitchKeyedOpaqueBlob[] getVendorSpecificConfig() {
+        return this.vendorSpecificConfig;
+    }
 
-  public String getDescription() {
-    return this.description;
-  }
+    public DVSPolicy getPolicy() {
+        return this.policy;
+    }
 
-  public String getConfigVersion() {
-    return this.configVersion;
-  }
+    public String getDescription() {
+        return this.description;
+    }
 
-  public DVSContactInfo getContact() {
-    return this.contact;
-  }
+    public String getConfigVersion() {
+        return this.configVersion;
+    }
 
-  public String getSwitchIpAddress() {
-    return this.switchIpAddress;
-  }
+    public DVSContactInfo getContact() {
+        return this.contact;
+    }
 
-  public Calendar getCreateTime() {
-    return this.createTime;
-  }
+    public String getSwitchIpAddress() {
+        return this.switchIpAddress;
+    }
 
-  public Boolean getNetworkResourceManagementEnabled() {
-    return this.networkResourceManagementEnabled;
-  }
+    public Calendar getCreateTime() {
+        return this.createTime;
+    }
 
-  public Integer getDefaultProxySwitchMaxNumPorts() {
-    return this.defaultProxySwitchMaxNumPorts;
-  }
+    public Boolean getNetworkResourceManagementEnabled() {
+        return this.networkResourceManagementEnabled;
+    }
 
-  public DVSHealthCheckConfig[] getHealthCheckConfig() {
-    return this.healthCheckConfig;
-  }
+    public Integer getDefaultProxySwitchMaxNumPorts() {
+        return this.defaultProxySwitchMaxNumPorts;
+    }
 
-  public void setUuid(String uuid) {
-    this.uuid=uuid;
-  }
+    public DVSHealthCheckConfig[] getHealthCheckConfig() {
+        return this.healthCheckConfig;
+    }
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
 
-  public void setNumStandalonePorts(int numStandalonePorts) {
-    this.numStandalonePorts=numStandalonePorts;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public void setNumPorts(int numPorts) {
-    this.numPorts=numPorts;
-  }
+    public void setNumStandalonePorts(int numStandalonePorts) {
+        this.numStandalonePorts = numStandalonePorts;
+    }
 
-  public void setMaxPorts(int maxPorts) {
-    this.maxPorts=maxPorts;
-  }
+    public void setNumPorts(int numPorts) {
+        this.numPorts = numPorts;
+    }
 
-  public void setUplinkPortPolicy(DVSUplinkPortPolicy uplinkPortPolicy) {
-    this.uplinkPortPolicy=uplinkPortPolicy;
-  }
+    public void setMaxPorts(int maxPorts) {
+        this.maxPorts = maxPorts;
+    }
 
-  public void setUplinkPortgroup(ManagedObjectReference[] uplinkPortgroup) {
-    this.uplinkPortgroup=uplinkPortgroup;
-  }
+    public void setUplinkPortPolicy(DVSUplinkPortPolicy uplinkPortPolicy) {
+        this.uplinkPortPolicy = uplinkPortPolicy;
+    }
 
-  public void setDefaultPortConfig(DVPortSetting defaultPortConfig) {
-    this.defaultPortConfig=defaultPortConfig;
-  }
+    public void setUplinkPortgroup(ManagedObjectReference[] uplinkPortgroup) {
+        this.uplinkPortgroup = uplinkPortgroup;
+    }
 
-  public void setHost(DistributedVirtualSwitchHostMember[] host) {
-    this.host=host;
-  }
+    public void setDefaultPortConfig(DVPortSetting defaultPortConfig) {
+        this.defaultPortConfig = defaultPortConfig;
+    }
 
-  public void setProductInfo(DistributedVirtualSwitchProductSpec productInfo) {
-    this.productInfo=productInfo;
-  }
+    public void setHost(DistributedVirtualSwitchHostMember[] host) {
+        this.host = host;
+    }
 
-  public void setTargetInfo(DistributedVirtualSwitchProductSpec targetInfo) {
-    this.targetInfo=targetInfo;
-  }
+    public void setProductInfo(DistributedVirtualSwitchProductSpec productInfo) {
+        this.productInfo = productInfo;
+    }
 
-  public void setExtensionKey(String extensionKey) {
-    this.extensionKey=extensionKey;
-  }
+    public void setTargetInfo(DistributedVirtualSwitchProductSpec targetInfo) {
+        this.targetInfo = targetInfo;
+    }
 
-  public void setVendorSpecificConfig(DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig) {
-    this.vendorSpecificConfig=vendorSpecificConfig;
-  }
+    public void setExtensionKey(String extensionKey) {
+        this.extensionKey = extensionKey;
+    }
 
-  public void setPolicy(DVSPolicy policy) {
-    this.policy=policy;
-  }
+    public void setVendorSpecificConfig(DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig) {
+        this.vendorSpecificConfig = vendorSpecificConfig;
+    }
 
-  public void setDescription(String description) {
-    this.description=description;
-  }
+    public void setPolicy(DVSPolicy policy) {
+        this.policy = policy;
+    }
 
-  public void setConfigVersion(String configVersion) {
-    this.configVersion=configVersion;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public void setContact(DVSContactInfo contact) {
-    this.contact=contact;
-  }
+    public void setConfigVersion(String configVersion) {
+        this.configVersion = configVersion;
+    }
 
-  public void setSwitchIpAddress(String switchIpAddress) {
-    this.switchIpAddress=switchIpAddress;
-  }
+    public void setContact(DVSContactInfo contact) {
+        this.contact = contact;
+    }
 
-  public void setCreateTime(Calendar createTime) {
-    this.createTime=createTime;
-  }
+    public void setSwitchIpAddress(String switchIpAddress) {
+        this.switchIpAddress = switchIpAddress;
+    }
 
-  public void setNetworkResourceManagementEnabled(Boolean networkResourceManagementEnabled) {
-    this.networkResourceManagementEnabled=networkResourceManagementEnabled;
-  }
+    public void setCreateTime(Calendar createTime) {
+        this.createTime = createTime;
+    }
 
-  public void setDefaultProxySwitchMaxNumPorts(Integer defaultProxySwitchMaxNumPorts) {
-    this.defaultProxySwitchMaxNumPorts=defaultProxySwitchMaxNumPorts;
-  }
+    public void setNetworkResourceManagementEnabled(Boolean networkResourceManagementEnabled) {
+        this.networkResourceManagementEnabled = networkResourceManagementEnabled;
+    }
 
-  public void setHealthCheckConfig(DVSHealthCheckConfig[] healthCheckConfig) {
-    this.healthCheckConfig=healthCheckConfig;
-  }
+    public void setDefaultProxySwitchMaxNumPorts(Integer defaultProxySwitchMaxNumPorts) {
+        this.defaultProxySwitchMaxNumPorts = defaultProxySwitchMaxNumPorts;
+    }
+
+    public void setHealthCheckConfig(DVSHealthCheckConfig[] healthCheckConfig) {
+        this.healthCheckConfig = healthCheckConfig;
+    }
+
+    public DvsHostInfrastructureTrafficResource[] getInfrastructureTrafficResourceConfig() {
+        return infrastructureTrafficResourceConfig;
+    }
+
+    public void setInfrastructureTrafficResourceConfig(final DvsHostInfrastructureTrafficResource[] infrastructureTrafficResourceConfig) {
+        this.infrastructureTrafficResourceConfig = infrastructureTrafficResourceConfig;
+    }
+
+    public String getNetworkResourceControlVersion() {
+        return networkResourceControlVersion;
+    }
+
+    public void setNetworkResourceControlVersion(final String networkResourceControlVersion) {
+        this.networkResourceControlVersion = networkResourceControlVersion;
+    }
+
+    public int getPnicCapacityRatioForReservation() {
+        return pnicCapacityRatioForReservation;
+    }
+
+    public void setPnicCapacityRatioForReservation(final int pnicCapacityRatioForReservation) {
+        this.pnicCapacityRatioForReservation = pnicCapacityRatioForReservation;
+    }
+
+    public DVSVmVnicNetworkResourcePool[] getVmVnicNetworkResourcePool() {
+        return vmVnicNetworkResourcePool;
+    }
+
+    public void setVmVnicNetworkResourcePool(final DVSVmVnicNetworkResourcePool[] vmVnicNetworkResourcePool) {
+        this.vmVnicNetworkResourcePool = vmVnicNetworkResourcePool;
+    }
 }
