@@ -38,7 +38,7 @@ package com.vmware.vim25;
 public class VirtualDisk extends VirtualDevice {
 
     @Deprecated
-    public long capacityInKB;
+    public Long capacityInKB;
     public Long capacityInBytes;
     @Deprecated
     public SharesInfo shares;

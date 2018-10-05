@@ -37,8 +37,8 @@ package com.vmware.vim25;
 
 public class ManagedObjectReference {
 
-    public String val;
-    public String type;
+    private String val;
+    private String type;
 
     public static ManagedObjectReference create(final String type, final String val) {
         final ManagedObjectReference mor = new ManagedObjectReference();
