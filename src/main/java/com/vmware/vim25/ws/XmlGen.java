@@ -134,9 +134,9 @@ public abstract class XmlGen {
             sb.append("<");
             sb.append(tagName);
             sb.append(" xsi:type=\"ManagedObjectReference\" type=\"");
-            sb.append(mor.type);
+            sb.append(mor.getType());
             sb.append("\">");
-            sb.append(mor.val);
+            sb.append(mor.getVal());
             SoapConsts.appendTagEnd(sb, tagName);
             return;
         }
@@ -263,11 +263,11 @@ public abstract class XmlGen {
         else if (clazz == ManagedObjectReference.class) { //MOR]
             final ManagedObjectReference mor = (ManagedObjectReference) obj;
             if (clazz == type) {
-                sb.append("<" + tagName + " type=\"" + mor.type + "\">");
+                sb.append("<" + tagName + " type=\"" + mor.getType() + "\">");
             } else {
-                sb.append("<" + tagName + " xsi:type=\"ManagedObjectReference\" type=\"" + mor.type + "\">");
+                sb.append("<" + tagName + " xsi:type=\"ManagedObjectReference\" type=\"" + mor.getType() + "\">");
             }
-            sb.append(mor.val);
+            sb.append(mor.getVal());
             sb.append("</" + tagName + ">");
         } else if (clazz.getCanonicalName().startsWith("java.lang")) { //basic data type
             if (clazz != type) {
