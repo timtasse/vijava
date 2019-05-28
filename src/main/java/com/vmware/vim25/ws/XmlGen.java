@@ -170,10 +170,9 @@ public abstract class XmlGen {
                 SoapConsts.appendTagStartWithXSI(sb, tagName, nameSpaceType);
             }
 
-            final Field[] fields = ReflectUtil.getAllFields(clazz);
+            final List<Field> fields = ReflectUtil.getAllFields(clazz);
 
-            for (int i = 0; i < fields.length; i++) {
-                final Field f = fields[i];
+            for (Field f : fields) {
                 final String fName = f.getName();
 
                 Object value = null;
@@ -295,10 +294,9 @@ public abstract class XmlGen {
                 sb.append("<" + tagName + " xsi:type=\"" + nameSpaceType + "\">");
             }
 
-            final Field[] fields = ReflectUtil.getAllFields(clazz);
+            final List<Field> fields = ReflectUtil.getAllFields(clazz);
 
-            for (int i = 0; i < fields.length; i++) {
-                final Field f = fields[i];
+            for (Field f : fields) {
                 final String fName = f.getName();
 
                 Object value = null;

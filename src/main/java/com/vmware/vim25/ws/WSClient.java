@@ -42,6 +42,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -70,6 +71,7 @@ public final class WSClient {
     private static final String SOAP_ACTION_V55 = "urn:vim25/5.5";
     private static final String SOAP_ACTION_V60 = "urn:vim25/6.0";
     private static final String SOAP_ACTION_V65 = "urn:vim25/6.5";
+    private static final String SOAP_ACTION_V67 = "urn:vim25/6.7";
 
     private final URL baseUrl;
     private final XmlGen xmlGen = new XmlGenDom();
@@ -165,7 +167,7 @@ public final class WSClient {
         }
 
         final OutputStream os = postCon.getOutputStream();
-        final OutputStreamWriter out = new OutputStreamWriter(os, "UTF8");
+        final OutputStreamWriter out = new OutputStreamWriter(os, StandardCharsets.UTF_8);
 
         out.write(soapMsg);
         out.close();
@@ -193,6 +195,7 @@ public final class WSClient {
       "5.5"       vSphere 5.5
       "6.0"       vSphere 6.0
       "6.5"       vSphere 6.5
+      "6.7"       vSphere 6.7
       ===============================================*/
     public void setSoapActionOnApiVersion(String apiVersion) {
         switch (apiVersion) {
@@ -216,6 +219,10 @@ public final class WSClient {
                 break;
             case "6.5":
                 soapAction = SOAP_ACTION_V65;
+                break;
+            case "6.7":
+            case "6.7.1":
+                soapAction = SOAP_ACTION_V67;
                 break;
             default:
                 soapAction = SOAP_ACTION_V65;

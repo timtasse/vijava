@@ -50,12 +50,12 @@ public class VirtualDisk extends VirtualDevice {
     public ID vDiskId;
 
     @Deprecated
-    public long getCapacityInKB() {
+    public Long getCapacityInKB() {
         return this.capacityInKB;
     }
 
     @Deprecated
-    public void setCapacityInKB(long capacityInKB) {
+    public void setCapacityInKB(Long capacityInKB) {
         this.capacityInKB = capacityInKB;
     }
 

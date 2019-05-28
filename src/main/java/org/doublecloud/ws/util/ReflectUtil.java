@@ -39,13 +39,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ReflectUtil {
-    public static Field[] getAllFields(Class<?> c) {
-        List<Field> listOfFields = new ArrayList<Field>();
+    public static List<Field> getAllFields(Class<?> c) {
+        List<Field> listOfFields = new ArrayList<>();
         getAllFields(c, listOfFields);
-
-        Field[] arrayOffields = new Field[listOfFields.size()];
-        listOfFields.toArray(arrayOffields);
-        return arrayOffields;
+        return listOfFields;
     }
 
     private static void getAllFields(Class<?> clazz, List<Field> listOfFields) {
@@ -56,12 +53,14 @@ public class ReflectUtil {
         }
 
         Field[] fields = clazz.getDeclaredFields();
-        for (int i = 0; i < fields.length; i++) {
-            listOfFields.add(fields[i]);
+        for (final Field field : fields) {
+            if (!field.isSynthetic()) {
+                listOfFields.add(field);
+            }
         }
     }
 
-    public final static void setArrayField(Object obj, List<Object> vimObjList, Field vimArrayField, Class<?> vimArrayType) throws IllegalAccessException {
+    public static void setArrayField(Object obj, List<Object> vimObjList, Field vimArrayField, Class<?> vimArrayType) throws IllegalAccessException {
         Object ao = Array.newInstance(vimArrayType, vimObjList.size());
         for (int i = 0; i < vimObjList.size(); i++) {
             Array.set(ao, i, vimObjList.get(i));
@@ -71,7 +70,7 @@ public class ReflectUtil {
         vimObjList.clear();
     }
 
-    public final static void setObjectField(Object object, Field field, String type, String value) throws IllegalArgumentException, IllegalAccessException {
+    public static void setObjectField(Object object, Field field, String type, String value) throws IllegalArgumentException, IllegalAccessException {
         if ("String".equals(type) || "string".equals(type)) {
             field.set(object, value);
         } else if ("int".equals(type)) {
