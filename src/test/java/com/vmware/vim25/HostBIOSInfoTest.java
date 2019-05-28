@@ -172,8 +172,8 @@ public class HostBIOSInfoTest {
 
     @Test
     public void testEventCollector() throws Exception {
-        final Field[] fields = ReflectUtil.getAllFields(EventFilterSpec.class);
-        LOGGER.debug(Arrays.toString(fields));
+        final List<Field> fields = ReflectUtil.getAllFields(EventFilterSpec.class);
+        LOGGER.debug(fields.toString());
         final EventManager eventManager = this.instance.getEventManager();
         LOGGER.debug("MaxCollector: {}", eventManager.getMaxCollector());
         final EventFilterSpec filterSpec = new EventFilterSpec();
