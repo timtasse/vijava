@@ -29,107 +29,110 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
+ * The ClusterConfigSpecEx data object provides a set of update specifications for complete cluster configuration.
+ * You can configure a cluster when you create a new cluster (the CreateClusterEx method) or when you reconfigure an existing cluster (the ReconfigureComputeResource_Task method).
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 6.7.1
  */
 
 @SuppressWarnings("all")
 public class ClusterConfigSpecEx extends ComputeResourceConfigSpec {
 
-    public ClusterDasConfigInfo dasConfig;
-    public ClusterDasVmConfigSpec[] dasVmConfigSpec;
-    public ClusterDrsConfigInfo drsConfig;
-    public ClusterDrsVmConfigSpec[] drsVmConfigSpec;
-    public ClusterRuleSpec[] rulesSpec;
-    public ClusterOrchestrationInfo orchestration;
-    public ClusterVmOrchestrationSpec[] vmOrchestrationSpec;
-    public ClusterDpmConfigInfo dpmConfig;
-    public ClusterDpmHostConfigSpec[] dpmHostConfigSpec;
-    public VsanClusterConfigInfo vsanConfig;
-    public VsanHostConfigInfo[] vsanHostConfigSpec;
-    public ClusterGroupSpec[] groupSpec;
-    public ClusterInfraUpdateHaConfigInfo infraUpdateHaConfig;
-    public ClusterProactiveDrsConfigInfo proactiveDrsConfig;
+    private ClusterDasConfigInfo dasConfig;
+    private ClusterDasVmConfigSpec[] dasVmConfigSpec;
+    private ClusterDpmConfigInfo dpmConfig;
+    private ClusterDpmHostConfigSpec[] dpmHostConfigSpec;
+    private ClusterDrsConfigInfo drsConfig;
+    private ClusterDrsVmConfigSpec[] drsVmConfigSpec;
+    private ClusterGroupSpec[] groupSpec;
+    private ClusterInfraUpdateHaConfigInfo infraUpdateHaConfig;
+    private Boolean inHciWorkflow;
+    private ClusterOrchestrationInfo orchestration;
+    private ClusterProactiveDrsConfigInfo proactiveDrsConfig;
+    private ClusterRuleSpec[] rulesSpec;
+    private ClusterVmOrchestrationSpec[] vmOrchestrationSpec;
+    private VsanClusterConfigInfo vsanConfig;
+    private VsanHostConfigInfo[] vsanHostConfigSpec;
 
-    public ClusterDasConfigInfo getDasConfig() {
-        return this.dasConfig;
+    @Override
+    public String toString() {
+        return "ClusterConfigSpecEx{" +
+                "dasConfig=" + dasConfig +
+                ", dasVmConfigSpec=" + Arrays.toString(dasVmConfigSpec) +
+                ", dpmConfig=" + dpmConfig +
+                ", dpmHostConfigSpec=" + Arrays.toString(dpmHostConfigSpec) +
+                ", drsConfig=" + drsConfig +
+                ", drsVmConfigSpec=" + Arrays.toString(drsVmConfigSpec) +
+                ", groupSpec=" + Arrays.toString(groupSpec) +
+                ", infraUpdateHaConfig=" + infraUpdateHaConfig +
+                ", inHciWorkflow=" + inHciWorkflow +
+                ", orchestration=" + orchestration +
+                ", proactiveDrsConfig=" + proactiveDrsConfig +
+                ", rulesSpec=" + Arrays.toString(rulesSpec) +
+                ", vmOrchestrationSpec=" + Arrays.toString(vmOrchestrationSpec) +
+                ", vsanConfig=" + vsanConfig +
+                ", vsanHostConfigSpec=" + Arrays.toString(vsanHostConfigSpec) +
+                "} " + super.toString();
     }
 
-    public void setDasConfig(ClusterDasConfigInfo dasConfig) {
+    public ClusterDasConfigInfo getDasConfig() {
+        return dasConfig;
+    }
+
+    public void setDasConfig(final ClusterDasConfigInfo dasConfig) {
         this.dasConfig = dasConfig;
     }
 
     public ClusterDasVmConfigSpec[] getDasVmConfigSpec() {
-        return this.dasVmConfigSpec;
+        return dasVmConfigSpec;
     }
 
-    public void setDasVmConfigSpec(ClusterDasVmConfigSpec[] dasVmConfigSpec) {
+    public void setDasVmConfigSpec(final ClusterDasVmConfigSpec[] dasVmConfigSpec) {
         this.dasVmConfigSpec = dasVmConfigSpec;
     }
 
-    public ClusterDrsConfigInfo getDrsConfig() {
-        return this.drsConfig;
-    }
-
-    public void setDrsConfig(ClusterDrsConfigInfo drsConfig) {
-        this.drsConfig = drsConfig;
-    }
-
-    public ClusterDrsVmConfigSpec[] getDrsVmConfigSpec() {
-        return this.drsVmConfigSpec;
-    }
-
-    public void setDrsVmConfigSpec(ClusterDrsVmConfigSpec[] drsVmConfigSpec) {
-        this.drsVmConfigSpec = drsVmConfigSpec;
-    }
-
-    public ClusterRuleSpec[] getRulesSpec() {
-        return this.rulesSpec;
-    }
-
-    public void setRulesSpec(ClusterRuleSpec[] rulesSpec) {
-        this.rulesSpec = rulesSpec;
-    }
-
     public ClusterDpmConfigInfo getDpmConfig() {
-        return this.dpmConfig;
+        return dpmConfig;
     }
 
-    public void setDpmConfig(ClusterDpmConfigInfo dpmConfig) {
+    public void setDpmConfig(final ClusterDpmConfigInfo dpmConfig) {
         this.dpmConfig = dpmConfig;
     }
 
     public ClusterDpmHostConfigSpec[] getDpmHostConfigSpec() {
-        return this.dpmHostConfigSpec;
+        return dpmHostConfigSpec;
     }
 
-    public void setDpmHostConfigSpec(ClusterDpmHostConfigSpec[] dpmHostConfigSpec) {
+    public void setDpmHostConfigSpec(final ClusterDpmHostConfigSpec[] dpmHostConfigSpec) {
         this.dpmHostConfigSpec = dpmHostConfigSpec;
     }
 
-    public VsanClusterConfigInfo getVsanConfig() {
-        return this.vsanConfig;
+    public ClusterDrsConfigInfo getDrsConfig() {
+        return drsConfig;
     }
 
-    public void setVsanConfig(VsanClusterConfigInfo vsanConfig) {
-        this.vsanConfig = vsanConfig;
+    public void setDrsConfig(final ClusterDrsConfigInfo drsConfig) {
+        this.drsConfig = drsConfig;
     }
 
-    public VsanHostConfigInfo[] getVsanHostConfigSpec() {
-        return this.vsanHostConfigSpec;
+    public ClusterDrsVmConfigSpec[] getDrsVmConfigSpec() {
+        return drsVmConfigSpec;
     }
 
-    public void setVsanHostConfigSpec(VsanHostConfigInfo[] vsanHostConfigSpec) {
-        this.vsanHostConfigSpec = vsanHostConfigSpec;
+    public void setDrsVmConfigSpec(final ClusterDrsVmConfigSpec[] drsVmConfigSpec) {
+        this.drsVmConfigSpec = drsVmConfigSpec;
     }
 
     public ClusterGroupSpec[] getGroupSpec() {
-        return this.groupSpec;
+        return groupSpec;
     }
 
-    public void setGroupSpec(ClusterGroupSpec[] groupSpec) {
+    public void setGroupSpec(final ClusterGroupSpec[] groupSpec) {
         this.groupSpec = groupSpec;
     }
 
@@ -139,6 +142,14 @@ public class ClusterConfigSpecEx extends ComputeResourceConfigSpec {
 
     public void setInfraUpdateHaConfig(final ClusterInfraUpdateHaConfigInfo infraUpdateHaConfig) {
         this.infraUpdateHaConfig = infraUpdateHaConfig;
+    }
+
+    public Boolean getInHciWorkflow() {
+        return inHciWorkflow;
+    }
+
+    public void setInHciWorkflow(final Boolean inHciWorkflow) {
+        this.inHciWorkflow = inHciWorkflow;
     }
 
     public ClusterOrchestrationInfo getOrchestration() {
@@ -157,11 +168,35 @@ public class ClusterConfigSpecEx extends ComputeResourceConfigSpec {
         this.proactiveDrsConfig = proactiveDrsConfig;
     }
 
+    public ClusterRuleSpec[] getRulesSpec() {
+        return rulesSpec;
+    }
+
+    public void setRulesSpec(final ClusterRuleSpec[] rulesSpec) {
+        this.rulesSpec = rulesSpec;
+    }
+
     public ClusterVmOrchestrationSpec[] getVmOrchestrationSpec() {
         return vmOrchestrationSpec;
     }
 
     public void setVmOrchestrationSpec(final ClusterVmOrchestrationSpec[] vmOrchestrationSpec) {
         this.vmOrchestrationSpec = vmOrchestrationSpec;
+    }
+
+    public VsanClusterConfigInfo getVsanConfig() {
+        return vsanConfig;
+    }
+
+    public void setVsanConfig(final VsanClusterConfigInfo vsanConfig) {
+        this.vsanConfig = vsanConfig;
+    }
+
+    public VsanHostConfigInfo[] getVsanHostConfigSpec() {
+        return vsanHostConfigSpec;
+    }
+
+    public void setVsanHostConfigSpec(final VsanHostConfigInfo[] vsanHostConfigSpec) {
+        this.vsanHostConfigSpec = vsanHostConfigSpec;
     }
 }

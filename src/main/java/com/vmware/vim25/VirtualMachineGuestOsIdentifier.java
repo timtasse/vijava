@@ -32,10 +32,11 @@ package com.vmware.vim25;
 /**
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.7
+ * @version 6.7.1
  */
 public enum VirtualMachineGuestOsIdentifier {
 
+    amazonlinux2_64Guest("amazonlinux2_64Guest"),
     asianux3Guest("asianux3Guest"),
     asianux3_64Guest("asianux3_64Guest"),
     asianux4Guest("asianux4Guest"),

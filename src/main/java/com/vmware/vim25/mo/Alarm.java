@@ -30,38 +30,44 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * This managed object type defines an alarm that is triggered and an action that occurs due to the triggered alarm when certain conditions are met on a specific ManagedEntity object.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
 
-public class Alarm extends ExtensibleManagedObject
-{
-	public Alarm(ServerConnection sc, ManagedObjectReference mor) 
-	{
-		super(sc, mor);
-	}
-	
-	public AlarmInfo getAlarmInfo()  
-	{
-		return (AlarmInfo) getCurrentProperty("info");
-	}
-	
-	public ManagedEntity getAssociatedEntity()
-	{
-		return (ManagedEntity) getManagedObject("info.entity");
-	}
-	
-	public void reconfigureAlarm(AlarmSpec alarmSpec) throws InvalidName, DuplicateName, RuntimeFault, RemoteException  
-	{
-		getVimService().reconfigureAlarm(getMOR(), alarmSpec);
-	}
-	
-	public void removeAlarm() throws RuntimeFault, RemoteException  
-	{
-		getVimService().removeAlarm(getMOR());
-	}
+public class Alarm extends ExtensibleManagedObject {
+
+    public Alarm(ServerConnection sc, ManagedObjectReference mor) {
+        super(sc, mor);
+    }
+
+    public AlarmInfo getAlarmInfo() {
+        return (AlarmInfo) getCurrentProperty("info");
+    }
+
+    public ManagedEntity getAssociatedEntity() {
+        return (ManagedEntity) getManagedObject("info.entity");
+    }
+
+    public void reconfigureAlarm(AlarmSpec alarmSpec) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(
+                new Argument("_this", "ManagedObjectReference", this.getMOR()),
+                new Argument("spec", "AlarmSpec", alarmSpec));
+        this.getVimService().getWsc().invokeWithoutReturn("ReconfigureAlarm", params);
+    }
+
+    public void removeAlarm() throws RuntimeFault, RemoteException {
+        final List<Argument> params = Collections.singletonList(new Argument("_this", "ManagedObjectReference", this.getMOR()));
+        this.getVimService().getWsc().invokeWithoutReturn("RemoveAlarm", params);
+    }
+
 }

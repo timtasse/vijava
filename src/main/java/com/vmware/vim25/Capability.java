@@ -29,56 +29,98 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * A particular product may or may not support certain features. This data object indicates whether or not a service instance implements these features.
+ * This data object type indicates the circumstances under which an operation throws a NotSupported fault.
+ * Support for some features is indicated by the presence or absence of the manager object from the service instance.
+ * For example, the AlarmManager manager object indicates collecting alarms is supported.
+ * Other features indicate whether or not a given operation on an object throws a NotSupported fault.
+ *
+ * Some capabilities depend on the host or virtual machine version. These are specified by using the vim.host.Capability and vim.vm.Capability objects.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7.1
+ */
 
-@SuppressWarnings("all")
 public class Capability extends DynamicData {
-  public boolean provisioningSupported;
-  public boolean multiHostSupported;
-  public boolean userShellAccessSupported;
-  public EVCMode[] supportedEVCMode;
-  public Boolean networkBackupAndRestoreSupported;
 
-  public boolean isProvisioningSupported() {
-    return this.provisioningSupported;
-  }
+    private Boolean ftDrsWithoutEvcSupported;
+    private Boolean hciWorkflowSupported;
+    private boolean multiHostSupported;
+    private Boolean networkBackupAndRestoreSupported;
+    private boolean provisioningSupported;
+    private EVCMode[] supportedEVCMode;
+    private boolean userShellAccessSupported;
 
-  public boolean isMultiHostSupported() {
-    return this.multiHostSupported;
-  }
+    @Override
+    public String toString() {
+        return "Capability{" +
+                "ftDrsWithoutEvcSupported=" + ftDrsWithoutEvcSupported +
+                ", hciWorkflowSupported=" + hciWorkflowSupported +
+                ", multiHostSupported=" + multiHostSupported +
+                ", networkBackupAndRestoreSupported=" + networkBackupAndRestoreSupported +
+                ", provisioningSupported=" + provisioningSupported +
+                ", supportedEVCMode=" + Arrays.toString(supportedEVCMode) +
+                ", userShellAccessSupported=" + userShellAccessSupported +
+                "} " + super.toString();
+    }
 
-  public boolean isUserShellAccessSupported() {
-    return this.userShellAccessSupported;
-  }
+    public Boolean getFtDrsWithoutEvcSupported() {
+        return ftDrsWithoutEvcSupported;
+    }
 
-  public EVCMode[] getSupportedEVCMode() {
-    return this.supportedEVCMode;
-  }
+    public void setFtDrsWithoutEvcSupported(final Boolean ftDrsWithoutEvcSupported) {
+        this.ftDrsWithoutEvcSupported = ftDrsWithoutEvcSupported;
+    }
 
-  public Boolean getNetworkBackupAndRestoreSupported() {
-    return this.networkBackupAndRestoreSupported;
-  }
+    public boolean isMultiHostSupported() {
+        return multiHostSupported;
+    }
 
-  public void setProvisioningSupported(boolean provisioningSupported) {
-    this.provisioningSupported=provisioningSupported;
-  }
+    public void setMultiHostSupported(final boolean multiHostSupported) {
+        this.multiHostSupported = multiHostSupported;
+    }
 
-  public void setMultiHostSupported(boolean multiHostSupported) {
-    this.multiHostSupported=multiHostSupported;
-  }
+    public Boolean getNetworkBackupAndRestoreSupported() {
+        return networkBackupAndRestoreSupported;
+    }
 
-  public void setUserShellAccessSupported(boolean userShellAccessSupported) {
-    this.userShellAccessSupported=userShellAccessSupported;
-  }
+    public void setNetworkBackupAndRestoreSupported(final Boolean networkBackupAndRestoreSupported) {
+        this.networkBackupAndRestoreSupported = networkBackupAndRestoreSupported;
+    }
 
-  public void setSupportedEVCMode(EVCMode[] supportedEVCMode) {
-    this.supportedEVCMode=supportedEVCMode;
-  }
+    public boolean isProvisioningSupported() {
+        return provisioningSupported;
+    }
 
-  public void setNetworkBackupAndRestoreSupported(Boolean networkBackupAndRestoreSupported) {
-    this.networkBackupAndRestoreSupported=networkBackupAndRestoreSupported;
-  }
+    public void setProvisioningSupported(final boolean provisioningSupported) {
+        this.provisioningSupported = provisioningSupported;
+    }
+
+    public EVCMode[] getSupportedEVCMode() {
+        return supportedEVCMode;
+    }
+
+    public void setSupportedEVCMode(final EVCMode[] supportedEVCMode) {
+        this.supportedEVCMode = supportedEVCMode;
+    }
+
+    public boolean isUserShellAccessSupported() {
+        return userShellAccessSupported;
+    }
+
+    public void setUserShellAccessSupported(final boolean userShellAccessSupported) {
+        this.userShellAccessSupported = userShellAccessSupported;
+    }
+
+    public Boolean getHciWorkflowSupported() {
+        return hciWorkflowSupported;
+    }
+
+    public void setHciWorkflowSupported(final Boolean hciWorkflowSupported) {
+        this.hciWorkflowSupported = hciWorkflowSupported;
+    }
 }

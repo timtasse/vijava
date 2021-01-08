@@ -29,110 +29,144 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * The HardwareInfo data object type describes the hardware configuration of the host.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ */
 
 @SuppressWarnings("all")
 public class HostHardwareInfo extends DynamicData {
-  public HostSystemInfo systemInfo;
-  public HostCpuPowerManagementInfo cpuPowerManagementInfo;
-  public HostCpuInfo cpuInfo;
-  public HostCpuPackage[] cpuPkg;
-  public long memorySize;
-  public HostNumaInfo numaInfo;
-  public Boolean smcPresent;
-  public HostPciDevice[] pciDevice;
-  public HostCpuIdInfo[] cpuFeature;
-  public HostBIOSInfo biosInfo;
-  public HostReliableMemoryInfo reliableMemoryInfo;
 
-  public HostSystemInfo getSystemInfo() {
-    return this.systemInfo;
-  }
+    private HostBIOSInfo biosInfo;
+    private HostCpuIdInfo[] cpuFeature;
+    private HostCpuInfo cpuInfo;
+    private HostCpuPackage[] cpuPkg;
+    private HostCpuPowerManagementInfo cpuPowerManagementInfo;
+    private long memorySize;
+    private HostNumaInfo numaInfo;
+    private HostPciDevice[] pciDevice;
+    private HostPersistentMemoryInfo persistentMemoryInfo;
+    private HostReliableMemoryInfo reliableMemoryInfo;
+    private Boolean smcPresent;
+    private HostSystemInfo systemInfo;
 
-  public HostCpuPowerManagementInfo getCpuPowerManagementInfo() {
-    return this.cpuPowerManagementInfo;
-  }
+    @Override
+    public String toString() {
+        return "HostHardwareInfo{" +
+                "biosInfo=" + biosInfo +
+                ", cpuFeature=" + Arrays.toString(cpuFeature) +
+                ", cpuInfo=" + cpuInfo +
+                ", cpuPkg=" + Arrays.toString(cpuPkg) +
+                ", cpuPowerManagementInfo=" + cpuPowerManagementInfo +
+                ", memorySize=" + memorySize +
+                ", numaInfo=" + numaInfo +
+                ", pciDevice=" + Arrays.toString(pciDevice) +
+                ", persistentMemoryInfo=" + persistentMemoryInfo +
+                ", reliableMemoryInfo=" + reliableMemoryInfo +
+                ", smcPresent=" + smcPresent +
+                ", systemInfo=" + systemInfo +
+                "} " + super.toString();
+    }
 
-  public HostCpuInfo getCpuInfo() {
-    return this.cpuInfo;
-  }
+    public HostSystemInfo getSystemInfo() {
+        return this.systemInfo;
+    }
 
-  public HostCpuPackage[] getCpuPkg() {
-    return this.cpuPkg;
-  }
+    public void setSystemInfo(HostSystemInfo systemInfo) {
+        this.systemInfo = systemInfo;
+    }
 
-  public long getMemorySize() {
-    return this.memorySize;
-  }
+    public HostCpuPowerManagementInfo getCpuPowerManagementInfo() {
+        return this.cpuPowerManagementInfo;
+    }
 
-  public HostNumaInfo getNumaInfo() {
-    return this.numaInfo;
-  }
+    public void setCpuPowerManagementInfo(HostCpuPowerManagementInfo cpuPowerManagementInfo) {
+        this.cpuPowerManagementInfo = cpuPowerManagementInfo;
+    }
 
-  public Boolean getSmcPresent() {
-    return this.smcPresent;
-  }
+    public HostCpuInfo getCpuInfo() {
+        return this.cpuInfo;
+    }
 
-  public HostPciDevice[] getPciDevice() {
-    return this.pciDevice;
-  }
+    public void setCpuInfo(HostCpuInfo cpuInfo) {
+        this.cpuInfo = cpuInfo;
+    }
 
-  public HostCpuIdInfo[] getCpuFeature() {
-    return this.cpuFeature;
-  }
+    public HostCpuPackage[] getCpuPkg() {
+        return this.cpuPkg;
+    }
 
-  public HostBIOSInfo getBiosInfo() {
-    return this.biosInfo;
-  }
+    public void setCpuPkg(HostCpuPackage[] cpuPkg) {
+        this.cpuPkg = cpuPkg;
+    }
 
-  public HostReliableMemoryInfo getReliableMemoryInfo() {
-    return this.reliableMemoryInfo;
-  }
+    public long getMemorySize() {
+        return this.memorySize;
+    }
 
-  public void setSystemInfo(HostSystemInfo systemInfo) {
-    this.systemInfo=systemInfo;
-  }
+    public void setMemorySize(long memorySize) {
+        this.memorySize = memorySize;
+    }
 
-  public void setCpuPowerManagementInfo(HostCpuPowerManagementInfo cpuPowerManagementInfo) {
-    this.cpuPowerManagementInfo=cpuPowerManagementInfo;
-  }
+    public HostNumaInfo getNumaInfo() {
+        return this.numaInfo;
+    }
 
-  public void setCpuInfo(HostCpuInfo cpuInfo) {
-    this.cpuInfo=cpuInfo;
-  }
+    public void setNumaInfo(HostNumaInfo numaInfo) {
+        this.numaInfo = numaInfo;
+    }
 
-  public void setCpuPkg(HostCpuPackage[] cpuPkg) {
-    this.cpuPkg=cpuPkg;
-  }
+    public Boolean getSmcPresent() {
+        return this.smcPresent;
+    }
 
-  public void setMemorySize(long memorySize) {
-    this.memorySize=memorySize;
-  }
+    public void setSmcPresent(Boolean smcPresent) {
+        this.smcPresent = smcPresent;
+    }
 
-  public void setNumaInfo(HostNumaInfo numaInfo) {
-    this.numaInfo=numaInfo;
-  }
+    public HostPciDevice[] getPciDevice() {
+        return this.pciDevice;
+    }
 
-  public void setSmcPresent(Boolean smcPresent) {
-    this.smcPresent=smcPresent;
-  }
+    public void setPciDevice(HostPciDevice[] pciDevice) {
+        this.pciDevice = pciDevice;
+    }
 
-  public void setPciDevice(HostPciDevice[] pciDevice) {
-    this.pciDevice=pciDevice;
-  }
+    public HostCpuIdInfo[] getCpuFeature() {
+        return this.cpuFeature;
+    }
 
-  public void setCpuFeature(HostCpuIdInfo[] cpuFeature) {
-    this.cpuFeature=cpuFeature;
-  }
+    public void setCpuFeature(HostCpuIdInfo[] cpuFeature) {
+        this.cpuFeature = cpuFeature;
+    }
 
-  public void setBiosInfo(HostBIOSInfo biosInfo) {
-    this.biosInfo=biosInfo;
-  }
+    public HostBIOSInfo getBiosInfo() {
+        return this.biosInfo;
+    }
 
-  public void setReliableMemoryInfo(HostReliableMemoryInfo reliableMemoryInfo) {
-    this.reliableMemoryInfo=reliableMemoryInfo;
-  }
+    public void setBiosInfo(HostBIOSInfo biosInfo) {
+        this.biosInfo = biosInfo;
+    }
+
+    public HostReliableMemoryInfo getReliableMemoryInfo() {
+        return this.reliableMemoryInfo;
+    }
+
+    public void setReliableMemoryInfo(HostReliableMemoryInfo reliableMemoryInfo) {
+        this.reliableMemoryInfo = reliableMemoryInfo;
+    }
+
+    public HostPersistentMemoryInfo getPersistentMemoryInfo() {
+        return persistentMemoryInfo;
+    }
+
+    public void setPersistentMemoryInfo(final HostPersistentMemoryInfo persistentMemoryInfo) {
+        this.persistentMemoryInfo = persistentMemoryInfo;
+    }
+
 }

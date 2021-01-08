@@ -64,7 +64,7 @@ public abstract class XmlGen {
     }
 
     public static String toXML(final String methodName, final Argument[] paras, final String vimNameSpace) {
-        final StringBuffer sb = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         sb.append(SoapConsts.SOAP_HEADER);
 
         sb.append("<" + methodName + vimNameSpace);
@@ -177,7 +177,13 @@ public abstract class XmlGen {
 
                 Object value = null;
                 try {
-                    value = f.get(obj);
+                    if (!f.canAccess(obj)) {
+                        f.setAccessible(true);
+                        value = f.get(obj);
+                        f.setAccessible(false);
+                    } else {
+                        value = f.get(obj);
+                    }
                 } catch (IllegalAccessException iae) {
                     LOGGER.error("ReflectionError in Field {} of Class {}", fName, clazz.getSimpleName(), iae);
                 }

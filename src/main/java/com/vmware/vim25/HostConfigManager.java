@@ -30,51 +30,54 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * This data object type describes the configuration of a host across products and versions.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 6.7
  */
 @SuppressWarnings("all")
 public class HostConfigManager extends DynamicData {
 
-    public ManagedObjectReference accountManager;
-    public ManagedObjectReference advancedOption;
-    public ManagedObjectReference authenticationManager;
-    public ManagedObjectReference autoStartManager;
-    public ManagedObjectReference bootDeviceSystem;
-    public ManagedObjectReference cacheConfigurationManager;
-    public ManagedObjectReference certificateManager;
-    public ManagedObjectReference cpuScheduler;
-    public ManagedObjectReference cryptoManager;
-    public ManagedObjectReference datastoreSystem;
-    public ManagedObjectReference dateTimeSystem;
-    public ManagedObjectReference diagnosticSystem;
-    public ManagedObjectReference esxAgentHostManager;
-    public ManagedObjectReference firewallSystem;
-    public ManagedObjectReference firmwareSystem;
-    public ManagedObjectReference graphicsManager;
-    public ManagedObjectReference healthStatusSystem;
-    public ManagedObjectReference hostAccessManager;
-    public ManagedObjectReference imageConfigManager;
-    public ManagedObjectReference iscsiManager;
-    public ManagedObjectReference kernelModuleSystem;
-    public ManagedObjectReference licenseManager;
-    public ManagedObjectReference memoryManager;
-    public ManagedObjectReference messageBusProxy;
-    public ManagedObjectReference networkSystem;
-    public ManagedObjectReference patchManager;
-    public ManagedObjectReference pciPassthruSystem;
-    public ManagedObjectReference powerSystem;
-    public ManagedObjectReference serviceSystem;
-    public ManagedObjectReference snmpSystem;
-    public ManagedObjectReference storageSystem;
-    public ManagedObjectReference userDirectory;
-    public ManagedObjectReference vFlashManager;
-    public ManagedObjectReference virtualNicManager;
+    private ManagedObjectReference accountManager;
+    private ManagedObjectReference advancedOption;
+    private ManagedObjectReference authenticationManager;
+    private ManagedObjectReference autoStartManager;
+    private ManagedObjectReference bootDeviceSystem;
+    private ManagedObjectReference cacheConfigurationManager;
+    private ManagedObjectReference certificateManager;
+    private ManagedObjectReference cpuScheduler;
+    private ManagedObjectReference cryptoManager;
+    private ManagedObjectReference datastoreSystem;
+    private ManagedObjectReference dateTimeSystem;
+    private ManagedObjectReference diagnosticSystem;
+    private ManagedObjectReference esxAgentHostManager;
+    private ManagedObjectReference firewallSystem;
+    private ManagedObjectReference firmwareSystem;
+    private ManagedObjectReference graphicsManager;
+    private ManagedObjectReference healthStatusSystem;
+    private ManagedObjectReference hostAccessManager;
+    private ManagedObjectReference imageConfigManager;
+    private ManagedObjectReference iscsiManager;
+    private ManagedObjectReference kernelModuleSystem;
+    private ManagedObjectReference licenseManager;
+    private ManagedObjectReference memoryManager;
+    private ManagedObjectReference messageBusProxy;
+    private ManagedObjectReference networkSystem;
+    private ManagedObjectReference nvdimmSystem;
+    private ManagedObjectReference patchManager;
+    private ManagedObjectReference pciPassthruSystem;
+    private ManagedObjectReference powerSystem;
+    private ManagedObjectReference serviceSystem;
+    private ManagedObjectReference snmpSystem;
+    private ManagedObjectReference storageSystem;
+    private ManagedObjectReference userDirectory;
+    private ManagedObjectReference vFlashManager;
+    private ManagedObjectReference virtualNicManager;
     @Deprecated
-    public ManagedObjectReference vmotionSystem;
-    public ManagedObjectReference vsanInternalSystem;
-    public ManagedObjectReference vsanSystem;
+    private ManagedObjectReference vmotionSystem;
+    private ManagedObjectReference vsanInternalSystem;
+    private ManagedObjectReference vsanSystem;
 
     public ManagedObjectReference getCpuScheduler() {
         return this.cpuScheduler;
@@ -372,5 +375,21 @@ public class HostConfigManager extends DynamicData {
 
     public void setUserDirectory(final ManagedObjectReference userDirectory) {
         this.userDirectory = userDirectory;
+    }
+
+    public ManagedObjectReference getNvdimmSystem() {
+        return nvdimmSystem;
+    }
+
+    public void setNvdimmSystem(final ManagedObjectReference nvdimmSystem) {
+        this.nvdimmSystem = nvdimmSystem;
+    }
+
+    public ManagedObjectReference getvFlashManager() {
+        return vFlashManager;
+    }
+
+    public void setvFlashManager(final ManagedObjectReference vFlashManager) {
+        this.vFlashManager = vFlashManager;
     }
 }

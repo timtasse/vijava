@@ -29,21 +29,40 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
+ * The OpaqueSwitch contains basic information about virtual switches that are managed by a management plane outside of vSphere.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @version 6.5
  */
 @SuppressWarnings("all")
 public class HostOpaqueSwitch extends DynamicData {
 
-    public String key;
-    public String name;
-    public String[] pnic;
-    public OptionValue[] extraConfig;
-    public HostOpaqueSwitchPhysicalNicZone[] pnicZone;
-    public String status;
-    public HostVirtualNic[] vtep;
+    private OptionValue[] extraConfig;
+    private HostFeatureCapability[] featureCapability;
+    private String key;
+    private String name;
+    private String[] pnic;
+    private HostOpaqueSwitchPhysicalNicZone[] pnicZone;
+    private String status;
+    private HostVirtualNic[] vtep;
+
+    @Override
+    public String toString() {
+        return "HostOpaqueSwitch{" +
+                "extraConfig=" + Arrays.toString(extraConfig) +
+                ", featureCapability=" + Arrays.toString(featureCapability) +
+                ", key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", pnic=" + Arrays.toString(pnic) +
+                ", pnicZone=" + Arrays.toString(pnicZone) +
+                ", status='" + status + '\'' +
+                ", vtep=" + Arrays.toString(vtep) +
+                "} " + super.toString();
+    }
 
     public String getKey() {
         return this.key;
@@ -100,4 +119,13 @@ public class HostOpaqueSwitch extends DynamicData {
     public void setVtep(final HostVirtualNic[] vtep) {
         this.vtep = vtep;
     }
+
+    public HostFeatureCapability[] getFeatureCapability() {
+        return featureCapability;
+    }
+
+    public void setFeatureCapability(final HostFeatureCapability[] featureCapability) {
+        this.featureCapability = featureCapability;
+    }
+
 }

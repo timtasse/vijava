@@ -30,19 +30,42 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * Dataobject for configuring the DNS settings on the host.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 4.0
+ */
 
 @SuppressWarnings("all")
 public class HostDnsConfigSpec extends HostDnsConfig {
-  public HostVirtualNicConnection virtualNicConnection;
 
-  public HostVirtualNicConnection getVirtualNicConnection() {
-    return this.virtualNicConnection;
-  }
+    private HostVirtualNicConnection virtualNicConnection;
+    private HostVirtualNicConnection virtualNicConnectionV6;
 
-  public void setVirtualNicConnection(HostVirtualNicConnection virtualNicConnection) {
-    this.virtualNicConnection=virtualNicConnection;
-  }
+    @Override
+    public String toString() {
+        return "HostDnsConfigSpec{" +
+                "virtualNicConnection=" + virtualNicConnection +
+                ", virtualNicConnectionV6=" + virtualNicConnectionV6 +
+                "} " + super.toString();
+    }
+
+    public HostVirtualNicConnection getVirtualNicConnection() {
+        return this.virtualNicConnection;
+    }
+
+    public void setVirtualNicConnection(HostVirtualNicConnection virtualNicConnection) {
+        this.virtualNicConnection = virtualNicConnection;
+    }
+
+    public HostVirtualNicConnection getVirtualNicConnectionV6() {
+        return virtualNicConnectionV6;
+    }
+
+    public void setVirtualNicConnectionV6(final HostVirtualNicConnection virtualNicConnectionV6) {
+        this.virtualNicConnectionV6 = virtualNicConnectionV6;
+    }
+
 }

@@ -29,39 +29,64 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * The managed object class corresponding to the one defined in VI SDK API reference.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  * @since 4.0
  */
-public class HostProfile extends Profile 
-{
-	public HostProfile(ServerConnection sc, ManagedObjectReference mor) 
-	{
-		super(sc, mor);
-	}
-	
-	public HostSystem getReferenceHost()
-	{
-		return (HostSystem) getManagedObject("referenceHost");
-	}
-	
-	public ProfileExecuteResult executeHostProfile(HostSystem host, ProfileDeferredPolicyOptionParameter[] deferredParam) throws RuntimeFault, RemoteException
-	{
-		return getVimService().executeHostProfile(getMOR(), host.getMOR(), deferredParam);
-	}
-	
-	public void updateHostProfile(HostProfileConfigSpec config) throws DuplicateName, ProfileUpdateFailed, RuntimeFault, RemoteException
-	{
-		getVimService().updateHostProfile(getMOR(), config);
-	}
-	
-	public void updateReferenceHost(HostSystem host) throws RuntimeFault, RemoteException
-	{
-		getVimService().updateReferenceHost(getMOR(), 
-				host==null? null : host.getMOR());
-	}
+public class HostProfile extends Profile {
+
+    public HostProfile(ServerConnection sc, ManagedObjectReference mor) {
+        super(sc, mor);
+    }
+
+    public HostSystem getReferenceHost() {
+        return (HostSystem) getManagedObject("referenceHost");
+    }
+
+    public HostProfileValidationFailureInfo validationFailureInfo() {
+        return (HostProfileValidationFailureInfo) this.getCurrentProperty("validationFailureInfo");
+    }
+
+    public String validationState() {
+        return (String) this.getCurrentProperty("validationState");
+    }
+
+    public Calendar validationStateUpdateTime() {
+        return (Calendar) this.getCurrentProperty("validationStateUpdateTime");
+    }
+
+    public ProfileExecuteResult executeHostProfile(HostSystem host, ProfileDeferredPolicyOptionParameter[] deferredParam) throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("host", "ManagedObjectReference", host.getMOR()),
+                new Argument("deferredParam", "ProfileDeferredPolicyOptionParameter[]", deferredParam));
+        return (ProfileExecuteResult) this.getVimService().getWsc().invoke("ExecuteHostProfile", params, "ProfileExecuteResult");
+    }
+
+    public void updateHostProfile(HostProfileConfigSpec config) throws DuplicateName, ProfileUpdateFailed, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("config", "HostProfileConfigSpec", config));
+        this.getVimService().getWsc().invokeWithoutReturn("UpdateHostProfile", params);
+    }
+
+    public void updateReferenceHost(HostSystem host) throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("host", "ManagedObjectReference", host == null ? null : host.getMOR()));
+        this.getVimService().getWsc().invokeWithoutReturn("UpdateReferenceHost", params);
+    }
+
+    public void hostProfileResetValidationState() throws RuntimeFault, RemoteException {
+        this.getVimService().getWsc().invokeWithoutReturn("HostProfileResetValidationState", this.getSingleSelfArgumentList());
+    }
+
 }

@@ -30,28 +30,39 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * Static strings used for describing an object or property.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
-@SuppressWarnings("all")
 public class Description extends DynamicData {
-  public String label;
-  public String summary;
 
-  public String getLabel() {
-    return this.label;
-  }
+    private String label;
+    private String summary;
 
-  public String getSummary() {
-    return this.summary;
-  }
+    @Override
+    public String toString() {
+        return "Description{" +
+                "label='" + label + '\'' +
+                ", summary='" + summary + '\'' +
+                "} " + super.toString();
+    }
 
-  public void setLabel(String label) {
-    this.label=label;
-  }
+    public String getLabel() {
+        return this.label;
+    }
 
-  public void setSummary(String summary) {
-    this.summary=summary;
-  }
+    public void setLabel(String label) {
+        this.label = label;
+    }
+
+    public String getSummary() {
+        return this.summary;
+    }
+
+    public void setSummary(String summary) {
+        this.summary = summary;
+    }
+
 }

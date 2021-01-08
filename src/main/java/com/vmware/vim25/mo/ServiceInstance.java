@@ -39,22 +39,26 @@ import java.rmi.RemoteException;
 import java.util.Calendar;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * The ServiceInstance managed object is the singleton root object of the inventory on both vCenter servers and servers running on standalone host agents.
+ * The server creates the ServiceInstance automatically, and also automatically creates the various manager entities that provide services in the virtual environment.
+ * Some examples of manager entities are LicenseManager, PerformanceManager, and ViewManager. You can access the manager entities through the content property.
  *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
 
 public class ServiceInstance extends ManagedObject {
-    private ServiceContent serviceContent = null;
-    final static ManagedObjectReference SERVICE_INSTANCE_MOR;
+
     public final static String VIM25_NAMESPACE = " xmlns=\"urn:vim25\">";
-    public final static String VIM20_NAMESPACE = " xmlns=\"urn:vim2\">";
+    final static ManagedObjectReference SERVICE_INSTANCE_MOR;
 
     static {
         SERVICE_INSTANCE_MOR = new ManagedObjectReference();
         SERVICE_INSTANCE_MOR.setVal("ServiceInstance");
         SERVICE_INSTANCE_MOR.setType("ServiceInstance");
     }
+
+    private ServiceContent serviceContent = null;
 
     public ServiceInstance(URL url, String username, String password)
             throws RemoteException, MalformedURLException {
@@ -117,27 +121,34 @@ public class ServiceInstance extends ManagedObject {
         super(sc, SERVICE_INSTANCE_MOR);
     }
 
-    public Calendar getServerClock() {
-        return (Calendar) getCurrentProperty("serverClock");
+    private ManagedObject createMO(ManagedObjectReference mor) {
+        return MorUtil.createExactManagedObject(getServerConnection(), mor);
     }
 
     public Capability getCapability() {
         return (Capability) getCurrentProperty("capability");
     }
 
-    public ClusterProfileManager getClusterProfileManager() {
-        return (ClusterProfileManager) createMO(getServiceContent().getClusterProfileManager());
+    public ServiceContent getServiceContent() {
+        if (serviceContent == null) {
+            try {
+                serviceContent = retrieveServiceContent();
+            } catch (Exception e) {
+                throw new IllegalStateException("Cannot retrieve ServiceContent", e);
+            }
+        }
+        return serviceContent;
+    }
+
+    public Calendar getServerClock() {
+        return (Calendar) getCurrentProperty("serverClock");
     }
 
     public Calendar currentTime() throws RuntimeFault, RemoteException {
         return getVimService().currentTime(getMOR());
     }
 
-
-    public Folder getRootFolder() {
-        return new Folder(this.getServerConnection(), this.getServiceContent().getRootFolder());
-    }
-
+    @Deprecated
     public HostVMotionCompatibility[] queryVMotionCompatibility(VirtualMachine vm, HostSystem[] hosts, String[] compatibility) throws RuntimeFault, RemoteException {
         if (vm == null || hosts == null) {
             throw new IllegalArgumentException("Neither vm or hosts can be null.");
@@ -153,6 +164,7 @@ public class ServiceInstance extends ManagedObject {
         return getVimService().retrieveServiceContent(getMOR());
     }
 
+    @Deprecated
     public Event[] validateMigration(VirtualMachine[] vms, VirtualMachinePowerState state, String[] testType
             , ResourcePool pool, HostSystem host) throws InvalidState, RuntimeFault, RemoteException {
         if (vms == null) {
@@ -163,19 +175,12 @@ public class ServiceInstance extends ManagedObject {
                 pool == null ? null : pool.getMOR(), host == null ? null : host.getMOR());
     }
 
-    public ServiceContent getServiceContent() {
-        if (serviceContent == null) {
-            try {
-                serviceContent = retrieveServiceContent();
-            } catch (Exception e) {
-                System.out.println("Exceptoin: " + e);
-            }
-        }
-        return serviceContent;
-    }
-
     public AboutInfo getAboutInfo() {
         return getServiceContent().getAbout();
+    }
+
+    public HostLocalAccountManager getAccountManager() {
+        return (HostLocalAccountManager) createMO(getServiceContent().getAccountManager());
     }
 
     public AlarmManager getAlarmManager() {
@@ -186,6 +191,22 @@ public class ServiceInstance extends ManagedObject {
         return (AuthorizationManager) createMO(getServiceContent().getAuthorizationManager());
     }
 
+    public CertificateManager getCertificateManager() {
+        return (CertificateManager) createMO(this.getServiceContent().getCertificateManager());
+    }
+
+    public ClusterProfileManager getClusterProfileManager() {
+        return (ClusterProfileManager) createMO(getServiceContent().getClusterProfileManager());
+    }
+
+    public ProfileComplianceManager getComplianceManager() {
+        return (ProfileComplianceManager) createMO(getServiceContent().getComplianceManager());
+    }
+
+    public CryptoManager getCryptoManager() {
+        return (CryptoManager) createMO(this.getServiceContent().getCryptoManager());
+    }
+
     public CustomFieldsManager getCustomFieldsManager() {
         return (CustomFieldsManager) createMO(getServiceContent().getCustomFieldsManager());
     }
@@ -194,8 +215,8 @@ public class ServiceInstance extends ManagedObject {
         return (CustomizationSpecManager) createMO(getServiceContent().getCustomizationSpecManager());
     }
 
-    public EventManager getEventManager() {
-        return (EventManager) createMO(getServiceContent().getEventManager());
+    public DatastoreNamespaceManager getDatastoreNamespaceManager() {
+        return (DatastoreNamespaceManager) createMO(this.getServiceContent().getDatastoreNamespaceManager());
     }
 
     public DiagnosticManager getDiagnosticManager() {
@@ -206,8 +227,20 @@ public class ServiceInstance extends ManagedObject {
         return (DistributedVirtualSwitchManager) createMO(getServiceContent().getDvSwitchManager());
     }
 
+    public EventManager getEventManager() {
+        return (EventManager) createMO(getServiceContent().getEventManager());
+    }
+
     public ExtensionManager getExtensionManager() {
         return (ExtensionManager) createMO(getServiceContent().getExtensionManager());
+    }
+
+    public FailoverClusterConfigurator getFailoverClusterConfigurator() {
+        return (FailoverClusterConfigurator) createMO(this.getServiceContent().getFailoverClusterConfigurator());
+    }
+
+    public FailoverClusterManager getFailoverClusterManager() {
+        return (FailoverClusterManager) createMO(this.getServiceContent().getFailoverClusterManager());
     }
 
     public FileManager getFileManager() {
@@ -218,8 +251,24 @@ public class ServiceInstance extends ManagedObject {
         return (GuestOperationsManager) createMO(getServiceContent().getGuestOperationsManager());
     }
 
-    public HostLocalAccountManager getAccountManager() {
-        return (HostLocalAccountManager) createMO(getServiceContent().getAccountManager());
+    public HealthUpdateManager getHealthUpdateManager() {
+        return (HealthUpdateManager) this.createMO(this.getServiceContent().getHealthUpdateManager());
+    }
+
+    public HostProfileManager getHostProfileManager() {
+        return (HostProfileManager) createMO(getServiceContent().getHostProfileManager());
+    }
+
+    public HostSpecificationManager getHostSpecificationManager() {
+        return (HostSpecificationManager) createMO(this.getServiceContent().getHostSpecManager());
+    }
+
+    public IoFilterManager getIoFilterManager() {
+        return (IoFilterManager) createMO(this.getServiceContent().getIoFilterManager());
+    }
+
+    public IpPoolManager getIpPoolManager() {
+        return (IpPoolManager) createMO(getServiceContent().getIpPoolManager());
     }
 
     public LicenseManager getLicenseManager() {
@@ -230,16 +279,24 @@ public class ServiceInstance extends ManagedObject {
         return (LocalizationManager) createMO(getServiceContent().getLocalizationManager());
     }
 
+    public OverheadMemoryManager getOverheadMemoryManager() {
+        return (OverheadMemoryManager) createMO(this.getServiceContent().getOverheadMemoryManager());
+    }
+
+    public OvfManager getOvfManager() {
+        return (OvfManager) createMO(getServiceContent().getOvfManager());
+    }
+
     public PerformanceManager getPerformanceManager() {
         return (PerformanceManager) createMO(getServiceContent().getPerfManager());
     }
 
-    public ProfileComplianceManager getProfileComplianceManager() {
-        return (ProfileComplianceManager) createMO(getServiceContent().getComplianceManager());
-    }
-
     public PropertyCollector getPropertyCollector() {
         return (PropertyCollector) createMO(getServiceContent().getPropertyCollector());
+    }
+
+    public Folder getRootFolder() {
+        return new Folder(this.getServerConnection(), this.getServiceContent().getRootFolder());
     }
 
     public ScheduledTaskManager getScheduledTaskManager() {
@@ -250,28 +307,28 @@ public class ServiceInstance extends ManagedObject {
         return (SearchIndex) createMO(getServiceContent().getSearchIndex());
     }
 
+    public ServiceManager getServiceManager() {
+        return (ServiceManager) createMO(this.getServiceContent().getServiceManager());
+    }
+
     public SessionManager getSessionManager() {
         return (SessionManager) createMO(getServiceContent().getSessionManager());
     }
 
-    public HostSnmpSystem getHostSnmpSystem() {
+    public OptionManager getSetting() {
+        return (OptionManager) createMO(getServiceContent().getSetting());
+    }
+
+    public HostSnmpSystem getSnmpSystem() {
         return (HostSnmpSystem) createMO(getServiceContent().getSnmpSystem());
     }
 
-    public HostProfileManager getHostProfileManager() {
-        return (HostProfileManager) createMO(getServiceContent().getHostProfileManager());
+    public StorageQueryManager getStorageQueryManager() {
+        return new StorageQueryManager(this.getServerConnection(), this.getServiceContent().getStorageQueryManager());
     }
 
-    public IpPoolManager getIpPoolManager() {
-        return (IpPoolManager) createMO(getServiceContent().getIpPoolManager());
-    }
-
-    public VirtualMachineProvisioningChecker getVirtualMachineProvisioningChecker() {
-        return (VirtualMachineProvisioningChecker) createMO(getServiceContent().getVmProvisioningChecker());
-    }
-
-    public VirtualMachineCompatibilityChecker getVirtualMachineCompatibilityChecker() {
-        return (VirtualMachineCompatibilityChecker) createMO(getServiceContent().getVmCompatibilityChecker());
+    public StorageResourceManager getStorageResourceManager() {
+        return (StorageResourceManager) createMO(this.getServiceContent().getStorageResourceManager());
     }
 
     public TaskManager getTaskManager() {
@@ -290,18 +347,16 @@ public class ServiceInstance extends ManagedObject {
         return (VirtualDiskManager) createMO(getServiceContent().getVirtualDiskManager());
     }
 
-    public OptionManager getOptionManager() {
-        return (OptionManager) createMO(getServiceContent().getSetting());
+    public VirtualMachineCompatibilityChecker getVmCompatibilityChecker() {
+        return (VirtualMachineCompatibilityChecker) createMO(getServiceContent().getVmCompatibilityChecker());
     }
 
-    public OvfManager getOvfManager() {
-        return (OvfManager) createMO(getServiceContent().getOvfManager());
+    public VirtualMachineProvisioningChecker getVmProvisioningChecker() {
+        return (VirtualMachineProvisioningChecker) createMO(getServiceContent().getVmProvisioningChecker());
     }
 
-    private ManagedObject createMO(ManagedObjectReference mor) {
-        return MorUtil.createExactManagedObject(getServerConnection(), mor);
+    public VStorageObjectManagerBase getVStorageObjectManager() {
+        return (VStorageObjectManagerBase) createMO(this.getServiceContent().getvStorageObjectManager());
     }
-
-    // TODO vim.VirtualizationManager is defined in servicecontent but no documentation there. Filed a bug already
 
 }

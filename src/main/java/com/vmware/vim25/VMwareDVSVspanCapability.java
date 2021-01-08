@@ -30,19 +30,36 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * Indicators of support for version-specific Distributed Port Mirroring sessions.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 5.1
  */
 @SuppressWarnings("all")
 public class VMwareDVSVspanCapability extends DynamicData {
 
-    public boolean dvportSupported;
-    public boolean encapRemoteSourceSupported;
-    public Boolean erspanProtocolSupported;
-    public boolean mixedDestSupported;
-    public boolean remoteDestSupported;
-    public boolean remoteSourceSupported;
+    private boolean dvportSupported;
+    private boolean encapRemoteSourceSupported;
+    private Boolean erspanProtocolSupported;
+    private Boolean mirrorNetstackSupported;
+    private boolean mixedDestSupported;
+    private boolean remoteDestSupported;
+    private boolean remoteSourceSupported;
+
+    @Override
+    public String toString() {
+        return "VMwareDVSVspanCapability{" +
+                "dvportSupported=" + dvportSupported +
+                ", encapRemoteSourceSupported=" + encapRemoteSourceSupported +
+                ", erspanProtocolSupported=" + erspanProtocolSupported +
+                ", mirrorNetstackSupported=" + mirrorNetstackSupported +
+                ", mixedDestSupported=" + mixedDestSupported +
+                ", remoteDestSupported=" + remoteDestSupported +
+                ", remoteSourceSupported=" + remoteSourceSupported +
+                "} " + super.toString();
+    }
 
     public boolean isMixedDestSupported() {
         return this.mixedDestSupported;
@@ -84,11 +101,20 @@ public class VMwareDVSVspanCapability extends DynamicData {
         this.encapRemoteSourceSupported = encapRemoteSourceSupported;
     }
 
-    public boolean isErspanProtocolSupported() {
+    public Boolean getErspanProtocolSupported() {
         return erspanProtocolSupported;
     }
 
-    public void setErspanProtocolSupported(final boolean erspanProtocolSupported) {
+    public void setErspanProtocolSupported(final Boolean erspanProtocolSupported) {
         this.erspanProtocolSupported = erspanProtocolSupported;
     }
+
+    public Boolean getMirrorNetstackSupported() {
+        return mirrorNetstackSupported;
+    }
+
+    public void setMirrorNetstackSupported(final Boolean mirrorNetstackSupported) {
+        this.mirrorNetstackSupported = mirrorNetstackSupported;
+    }
+
 }

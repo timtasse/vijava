@@ -30,61 +30,80 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * Information about the capabilities of this datastore.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 6.7
  */
-@SuppressWarnings("all")
 public class DatastoreCapability extends DynamicData {
 
-    public boolean directoryHierarchySupported;
-    public boolean nativeSnapshotSupported;
-    public boolean perFileThinProvisioningSupported;
-    public boolean rawDiskMappingsSupported;
-    public Boolean seSparseSupported;
-    public boolean storageIORMSupported;
-    public Boolean topLevelDirectoryCreateSupported;
-    public Boolean upitSupported;
-    public Boolean vmfsSparseSupported;
-    public Boolean vsanSparseSupported;
+    private boolean directoryHierarchySupported;
+    private boolean nativeSnapshotSupported;
+    private boolean perFileThinProvisioningSupported;
+    private boolean rawDiskMappingsSupported;
+    private Boolean seSparseSupported;
+    private boolean storageIORMSupported;
+    private Boolean topLevelDirectoryCreateSupported;
+    private Boolean upitSupported;
+    private Boolean vmdkExpandSupported;
+    private Boolean vmfsSparseSupported;
+    private Boolean vsanSparseSupported;
+
+    @Override
+    public String toString() {
+        return "DatastoreCapability{" +
+                "directoryHierarchySupported=" + directoryHierarchySupported +
+                ", nativeSnapshotSupported=" + nativeSnapshotSupported +
+                ", perFileThinProvisioningSupported=" + perFileThinProvisioningSupported +
+                ", rawDiskMappingsSupported=" + rawDiskMappingsSupported +
+                ", seSparseSupported=" + seSparseSupported +
+                ", storageIORMSupported=" + storageIORMSupported +
+                ", topLevelDirectoryCreateSupported=" + topLevelDirectoryCreateSupported +
+                ", upitSupported=" + upitSupported +
+                ", vmdkExpandSupported=" + vmdkExpandSupported +
+                ", vmfsSparseSupported=" + vmfsSparseSupported +
+                ", vsanSparseSupported=" + vsanSparseSupported +
+                "} " + super.toString();
+    }
 
     public boolean isDirectoryHierarchySupported() {
-        return this.directoryHierarchySupported;
+        return directoryHierarchySupported;
     }
 
-    public void setDirectoryHierarchySupported(boolean directoryHierarchySupported) {
+    public void setDirectoryHierarchySupported(final boolean directoryHierarchySupported) {
         this.directoryHierarchySupported = directoryHierarchySupported;
-    }
-
-    public boolean isRawDiskMappingsSupported() {
-        return this.rawDiskMappingsSupported;
-    }
-
-    public void setRawDiskMappingsSupported(boolean rawDiskMappingsSupported) {
-        this.rawDiskMappingsSupported = rawDiskMappingsSupported;
-    }
-
-    public boolean isPerFileThinProvisioningSupported() {
-        return this.perFileThinProvisioningSupported;
-    }
-
-    public void setPerFileThinProvisioningSupported(boolean perFileThinProvisioningSupported) {
-        this.perFileThinProvisioningSupported = perFileThinProvisioningSupported;
     }
 
     public boolean isNativeSnapshotSupported() {
         return nativeSnapshotSupported;
     }
 
-    public void setNativeSnapshotSupported(boolean nativeSnapshotSupported) {
+    public void setNativeSnapshotSupported(final boolean nativeSnapshotSupported) {
         this.nativeSnapshotSupported = nativeSnapshotSupported;
     }
 
-    public boolean isSeSparseSupported() {
+    public boolean isPerFileThinProvisioningSupported() {
+        return perFileThinProvisioningSupported;
+    }
+
+    public void setPerFileThinProvisioningSupported(final boolean perFileThinProvisioningSupported) {
+        this.perFileThinProvisioningSupported = perFileThinProvisioningSupported;
+    }
+
+    public boolean isRawDiskMappingsSupported() {
+        return rawDiskMappingsSupported;
+    }
+
+    public void setRawDiskMappingsSupported(final boolean rawDiskMappingsSupported) {
+        this.rawDiskMappingsSupported = rawDiskMappingsSupported;
+    }
+
+    public Boolean getSeSparseSupported() {
         return seSparseSupported;
     }
 
-    public void setSeSparseSupported(boolean seSparseSupported) {
+    public void setSeSparseSupported(final Boolean seSparseSupported) {
         this.seSparseSupported = seSparseSupported;
     }
 
@@ -92,39 +111,48 @@ public class DatastoreCapability extends DynamicData {
         return storageIORMSupported;
     }
 
-    public void setStorageIORMSupported(boolean storageIORMSupported) {
+    public void setStorageIORMSupported(final boolean storageIORMSupported) {
         this.storageIORMSupported = storageIORMSupported;
     }
 
-    public boolean isTopLevelDirectoryCreateSupported() {
+    public Boolean getTopLevelDirectoryCreateSupported() {
         return topLevelDirectoryCreateSupported;
     }
 
-    public void setTopLevelDirectoryCreateSupported(boolean topLevelDirectoryCreateSupported) {
+    public void setTopLevelDirectoryCreateSupported(final Boolean topLevelDirectoryCreateSupported) {
         this.topLevelDirectoryCreateSupported = topLevelDirectoryCreateSupported;
     }
 
-    public boolean isUpitSupported() {
+    public Boolean getUpitSupported() {
         return upitSupported;
     }
 
-    public void setUpitSupported(final boolean upitSupported) {
+    public void setUpitSupported(final Boolean upitSupported) {
         this.upitSupported = upitSupported;
     }
 
-    public boolean isVmfsSparseSupported() {
+    public Boolean getVmdkExpandSupported() {
+        return vmdkExpandSupported;
+    }
+
+    public void setVmdkExpandSupported(final Boolean vmdkExpandSupported) {
+        this.vmdkExpandSupported = vmdkExpandSupported;
+    }
+
+    public Boolean getVmfsSparseSupported() {
         return vmfsSparseSupported;
     }
 
-    public void setVmfsSparseSupported(final boolean vmfsSparseSupported) {
+    public void setVmfsSparseSupported(final Boolean vmfsSparseSupported) {
         this.vmfsSparseSupported = vmfsSparseSupported;
     }
 
-    public boolean isVsanSparseSupported() {
+    public Boolean getVsanSparseSupported() {
         return vsanSparseSupported;
     }
 
-    public void setVsanSparseSupported(final boolean vsanSparseSupported) {
+    public void setVsanSparseSupported(final Boolean vsanSparseSupported) {
         this.vsanSparseSupported = vsanSparseSupported;
     }
+
 }

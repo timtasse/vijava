@@ -91,7 +91,7 @@ public class PropertyCollectorUtil {
         pfs.setObjectSet(oss);
         pfs.setPropSet(new PropertySpec[]{pSpec});
 
-        ObjectContent[] objs = pc.retrieveProperties(new PropertyFilterSpec[]{pfs});
+        ObjectContent[] objs = pc.retrievePropertiesEx(new PropertyFilterSpec[]{pfs}, new RetrieveOptions()).getObjects();
 
         Hashtable[] pTables = new Hashtable[mos.length];
 

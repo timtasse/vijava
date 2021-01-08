@@ -29,75 +29,103 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
+ * The ProfileParameterMetadata data object represents the metadata information for expressions, policy options, and host-specific configuration data.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  */
 @SuppressWarnings("all")
 public class ProfileParameterMetadata extends DynamicData {
 
-    public Object defaultValue;
-    public Boolean hidden;
-    public ExtendedElementDescription id;
-    public boolean optional;
-    public Boolean readOnly;
-    public Boolean securitySensitive;
-    public String type;
+    private Object defaultValue;
+    private Boolean hidden;
+    private ExtendedElementDescription id;
+    private boolean optional;
+    private ProfileParameterMetadataParameterRelationMetadata[] parameterRelations;
+    private Boolean readOnly;
+    private Boolean securitySensitive;
+    private String type;
 
-    public ExtendedElementDescription getId() {
-        return this.id;
-    }
-
-    public void setId(ExtendedElementDescription id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return this.type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public boolean isOptional() {
-        return this.optional;
-    }
-
-    public void setOptional(boolean optional) {
-        this.optional = optional;
+    @Override
+    public String toString() {
+        return "ProfileParameterMetadata{" +
+                "defaultValue=" + defaultValue +
+                ", hidden=" + hidden +
+                ", id=" + id +
+                ", optional=" + optional +
+                ", parameterRelations=" + Arrays.toString(parameterRelations) +
+                ", readOnly=" + readOnly +
+                ", securitySensitive=" + securitySensitive +
+                ", type='" + type + '\'' +
+                "} " + super.toString();
     }
 
     public Object getDefaultValue() {
-        return this.defaultValue;
+        return defaultValue;
     }
 
-    public void setDefaultValue(Object defaultValue) {
+    public void setDefaultValue(final Object defaultValue) {
         this.defaultValue = defaultValue;
     }
 
-    public boolean isHidden() {
+    public Boolean getHidden() {
         return hidden;
     }
 
-    public void setHidden(final boolean hidden) {
+    public void setHidden(final Boolean hidden) {
         this.hidden = hidden;
     }
 
-    public boolean isReadOnly() {
+    public ExtendedElementDescription getId() {
+        return id;
+    }
+
+    public void setId(final ExtendedElementDescription id) {
+        this.id = id;
+    }
+
+    public boolean isOptional() {
+        return optional;
+    }
+
+    public void setOptional(final boolean optional) {
+        this.optional = optional;
+    }
+
+    public ProfileParameterMetadataParameterRelationMetadata[] getParameterRelations() {
+        return parameterRelations;
+    }
+
+    public void setParameterRelations(final ProfileParameterMetadataParameterRelationMetadata[] parameterRelations) {
+        this.parameterRelations = parameterRelations;
+    }
+
+    public Boolean getReadOnly() {
         return readOnly;
     }
 
-    public void setReadOnly(final boolean readOnly) {
+    public void setReadOnly(final Boolean readOnly) {
         this.readOnly = readOnly;
     }
 
-    public boolean isSecuritySensitive() {
+    public Boolean getSecuritySensitive() {
         return securitySensitive;
     }
 
-    public void setSecuritySensitive(final boolean securitySensitive) {
+    public void setSecuritySensitive(final Boolean securitySensitive) {
         this.securitySensitive = securitySensitive;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(final String type) {
+        this.type = type;
+    }
+
 }

@@ -29,65 +29,95 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * This data object represents the metadata information of a Profile.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 4.0
+ */
 
 @SuppressWarnings("all")
 public class ProfileMetadata extends DynamicData {
-  public String key;
-  public String profileTypeName;
-  public ExtendedDescription description;
-  public ProfileMetadataProfileSortSpec[] sortSpec;
-  public String profileCategory;
-  public String profileComponent;
 
-  public String getKey() {
-    return this.key;
-  }
+    private ExtendedDescription description;
+    private String key;
+    private ProfileMetadataProfileOperationMessage[] operationMessages;
+    private String profileCategory;
+    private String profileComponent;
+    private String profileTypeName;
+    private ProfileMetadataProfileSortSpec[] sortSpec;
 
-  public String getProfileTypeName() {
-    return this.profileTypeName;
-  }
+    @Override
+    public String toString() {
+        return "ProfileMetadata{" +
+                "description=" + description +
+                ", key='" + key + '\'' +
+                ", operationMessages=" + Arrays.toString(operationMessages) +
+                ", profileCategory='" + profileCategory + '\'' +
+                ", profileComponent='" + profileComponent + '\'' +
+                ", profileTypeName='" + profileTypeName + '\'' +
+                ", sortSpec=" + Arrays.toString(sortSpec) +
+                "} " + super.toString();
+    }
 
-  public ExtendedDescription getDescription() {
-    return this.description;
-  }
+    public String getKey() {
+        return this.key;
+    }
 
-  public ProfileMetadataProfileSortSpec[] getSortSpec() {
-    return this.sortSpec;
-  }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-  public String getProfileCategory() {
-    return this.profileCategory;
-  }
+    public String getProfileTypeName() {
+        return this.profileTypeName;
+    }
 
-  public String getProfileComponent() {
-    return this.profileComponent;
-  }
+    public void setProfileTypeName(String profileTypeName) {
+        this.profileTypeName = profileTypeName;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public ExtendedDescription getDescription() {
+        return this.description;
+    }
 
-  public void setProfileTypeName(String profileTypeName) {
-    this.profileTypeName=profileTypeName;
-  }
+    public void setDescription(ExtendedDescription description) {
+        this.description = description;
+    }
 
-  public void setDescription(ExtendedDescription description) {
-    this.description=description;
-  }
+    public ProfileMetadataProfileSortSpec[] getSortSpec() {
+        return this.sortSpec;
+    }
 
-  public void setSortSpec(ProfileMetadataProfileSortSpec[] sortSpec) {
-    this.sortSpec=sortSpec;
-  }
+    public void setSortSpec(ProfileMetadataProfileSortSpec[] sortSpec) {
+        this.sortSpec = sortSpec;
+    }
 
-  public void setProfileCategory(String profileCategory) {
-    this.profileCategory=profileCategory;
-  }
+    public String getProfileCategory() {
+        return this.profileCategory;
+    }
 
-  public void setProfileComponent(String profileComponent) {
-    this.profileComponent=profileComponent;
-  }
+    public void setProfileCategory(String profileCategory) {
+        this.profileCategory = profileCategory;
+    }
+
+    public String getProfileComponent() {
+        return this.profileComponent;
+    }
+
+    public void setProfileComponent(String profileComponent) {
+        this.profileComponent = profileComponent;
+    }
+
+    public ProfileMetadataProfileOperationMessage[] getOperationMessages() {
+        return operationMessages;
+    }
+
+    public void setOperationMessages(final ProfileMetadataProfileOperationMessage[] operationMessages) {
+        this.operationMessages = operationMessages;
+    }
+
 }

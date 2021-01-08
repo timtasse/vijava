@@ -1,16 +1,28 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 31.03.2018
+ * Data object representing VASA Provider.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  * @since 6.0
  */
 public class VimVasaProvider extends DynamicData {
 
-    public String name;
-    public String selfSignedCertificate;
-    public String url;
+    private String name;
+    private String selfSignedCertificate;
+    private String uid;
+    private String url;
+
+    @Override
+    public String toString() {
+        return "VimVasaProvider{" +
+                "name='" + name + '\'' +
+                ", selfSignedCertificate='" + selfSignedCertificate + '\'' +
+                ", uid='" + uid + '\'' +
+                ", url='" + url + '\'' +
+                "} " + super.toString();
+    }
 
     public String getName() {
         return name;
@@ -35,4 +47,13 @@ public class VimVasaProvider extends DynamicData {
     public void setUrl(final String url) {
         this.url = url;
     }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(final String uid) {
+        this.uid = uid;
+    }
+
 }

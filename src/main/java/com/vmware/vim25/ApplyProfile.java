@@ -30,102 +30,115 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * The ApplyProfile data object is the base class for all data objects that define profile configuration data.
+ * ApplyProfile defines ESX configuration data storage and it supports recursive profile definition for the profile plug-in architecture.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 4.0
  */
 
-@SuppressWarnings("all")
 public class ApplyProfile extends DynamicData {
 
-    public Boolean copyEnableStatus;
-    public boolean enabled;
-    public Boolean favorite;
-    public ProfilePolicy[] policy;
-    public String profileTypeName;
-    public String profileVersion;
-    public ProfileApplyProfileProperty[] property;
-    public Boolean toBeDeleted;
-    public Boolean toBeMerged;
-    public Boolean toReplaceWith;
+    private Boolean copyEnableStatus;
+    private boolean enabled;
+    private Boolean favorite;
+    private Boolean hidden;
+    private ProfilePolicy[] policy;
+    private String profileTypeName;
+    private String profileVersion;
+    private ProfileApplyProfileProperty[] property;
+    private Boolean toBeDeleted;
+    private Boolean toBeMerged;
+    private Boolean toReplaceWith;
 
-    public boolean isEnabled() {
-        return this.enabled;
+    public Boolean getCopyEnableStatus() {
+        return copyEnableStatus;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setCopyEnableStatus(final Boolean copyEnableStatus) {
+        this.copyEnableStatus = copyEnableStatus;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(final boolean enabled) {
         this.enabled = enabled;
     }
 
-    public ProfilePolicy[] getPolicy() {
-        return this.policy;
+    public Boolean getFavorite() {
+        return favorite;
     }
 
-    public void setPolicy(ProfilePolicy[] policy) {
+    public void setFavorite(final Boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public Boolean getHidden() {
+        return hidden;
+    }
+
+    public void setHidden(final Boolean hidden) {
+        this.hidden = hidden;
+    }
+
+    public ProfilePolicy[] getPolicy() {
+        return policy;
+    }
+
+    public void setPolicy(final ProfilePolicy[] policy) {
         this.policy = policy;
     }
 
     public String getProfileTypeName() {
-        return this.profileTypeName;
+        return profileTypeName;
     }
 
-    public void setProfileTypeName(String profileTypeName) {
+    public void setProfileTypeName(final String profileTypeName) {
         this.profileTypeName = profileTypeName;
     }
 
     public String getProfileVersion() {
-        return this.profileVersion;
+        return profileVersion;
     }
 
-    public void setProfileVersion(String profileVersion) {
+    public void setProfileVersion(final String profileVersion) {
         this.profileVersion = profileVersion;
     }
 
     public ProfileApplyProfileProperty[] getProperty() {
-        return this.property;
+        return property;
     }
 
-    public void setProperty(ProfileApplyProfileProperty[] property) {
+    public void setProperty(final ProfileApplyProfileProperty[] property) {
         this.property = property;
     }
 
-    public boolean isCopyEnableStatus() {
-        return copyEnableStatus;
-    }
-
-    public void setCopyEnableStatus(final boolean copyEnableStatus) {
-        this.copyEnableStatus = copyEnableStatus;
-    }
-
-    public boolean isFavorite() {
-        return favorite;
-    }
-
-    public void setFavorite(final boolean favorite) {
-        this.favorite = favorite;
-    }
-
-    public boolean isToBeDeleted() {
+    public Boolean getToBeDeleted() {
         return toBeDeleted;
     }
 
-    public void setToBeDeleted(final boolean toBeDeleted) {
+    public void setToBeDeleted(final Boolean toBeDeleted) {
         this.toBeDeleted = toBeDeleted;
     }
 
-    public boolean isToBeMerged() {
+    public Boolean getToBeMerged() {
         return toBeMerged;
     }
 
-    public void setToBeMerged(final boolean toBeMerged) {
+    public void setToBeMerged(final Boolean toBeMerged) {
         this.toBeMerged = toBeMerged;
     }
 
-    public boolean isToReplaceWith() {
+    public Boolean getToReplaceWith() {
         return toReplaceWith;
     }
 
-    public void setToReplaceWith(final boolean toReplaceWith) {
+    public void setToReplaceWith(final Boolean toReplaceWith) {
         this.toReplaceWith = toReplaceWith;
     }
+
 }

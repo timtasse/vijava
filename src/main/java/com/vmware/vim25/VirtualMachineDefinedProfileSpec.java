@@ -29,17 +29,36 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
+ * Policy specification that carries a pre-defined Storage Policy to be associated with a Virtual Machine Home or a Virtual Disk object.
+ * Such a pre-defined policy can be either be vSphere Storage Administrator defined or may come from a set of pre-defined policies from Storage Vendor.
+ * Neither the association nor the policy data is persisted in Virtual Machine configuration.
+ * This data is managed by the an extension of Virtual Center (Storage Policy Based Management).
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 5.5
  */
 @SuppressWarnings("all")
 public class VirtualMachineDefinedProfileSpec extends VirtualMachineProfileSpec {
 
-    public String profileId;
-    public ReplicationSpec replicationSpec;
-    public VirtualMachineProfileRawData profileData;
+    private VirtualMachineProfileRawData profileData;
+    private String profileId;
+    private KeyValue[] profileParams;
+    private ReplicationSpec replicationSpec;
+
+    @Override
+    public String toString() {
+        return "VirtualMachineDefinedProfileSpec{" +
+                "profileData=" + profileData +
+                ", profileId='" + profileId + '\'' +
+                ", profileParams=" + Arrays.toString(profileParams) +
+                ", replicationSpec=" + replicationSpec +
+                "} " + super.toString();
+    }
 
     public String getProfileId() {
         return this.profileId;
@@ -64,4 +83,13 @@ public class VirtualMachineDefinedProfileSpec extends VirtualMachineProfileSpec 
     public void setReplicationSpec(final ReplicationSpec replicationSpec) {
         this.replicationSpec = replicationSpec;
     }
+
+    public KeyValue[] getProfileParams() {
+        return profileParams;
+    }
+
+    public void setProfileParams(final KeyValue[] profileParams) {
+        this.profileParams = profileParams;
+    }
+
 }

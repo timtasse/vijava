@@ -41,11 +41,10 @@ import java.rmi.RemoteException;
  */
 public class ManagedEntity extends ExtensibleManagedObject {
 
-    private final String name;
+    private String name;
 
     public ManagedEntity(ServerConnection sc, ManagedObjectReference mor) {
         super(sc, mor);
-        this.name = getRealName();
     }
 
     public String getRealName() {
@@ -87,7 +86,14 @@ public class ManagedEntity extends ExtensibleManagedObject {
     }
 
     public String getName() {
+        if (this.name == null) {
+            this.name = this.getRealName();
+        }
         return this.name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
     }
 
     public ManagedEntityStatus getOverallStatus() {

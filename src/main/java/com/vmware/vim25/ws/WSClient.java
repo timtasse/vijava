@@ -33,47 +33,50 @@ package com.vmware.vim25.ws;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import java.io.*;
-import java.net.HttpURLConnection;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
-import java.net.ProtocolException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
+import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
  * The Web Service Engine
  *
  * @author Steve Jin (sjin@vmware.com)
- * @author Stefan Dilk
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
+@SuppressWarnings("unchecked")
+public abstract class WSClient {
 
-public final class WSClient {
-
-    public static final ConcurrentLinkedQueue<Long> COUNT_OLD = new ConcurrentLinkedQueue<>();
-    public static final ConcurrentLinkedQueue<Long> COUNT_NEW = new ConcurrentLinkedQueue<>();
-    private static final Logger LOGGER = LoggerFactory.getLogger(WSClient.class);
-    private static final String SOAP_ACTION_HEADER = "SOAPAction";
-    private static final String SOAP_ACTION_V40 = "urn:vim25/4.0";
-    private static final String SOAP_ACTION_V41 = "urn:vim25/4.1";
-    private static final String SOAP_ACTION_V50 = "urn:vim25/5.0";
-    private static final String SOAP_ACTION_V51 = "urn:vim25/5.1";
-    private static final String SOAP_ACTION_V55 = "urn:vim25/5.5";
-    private static final String SOAP_ACTION_V60 = "urn:vim25/6.0";
-    private static final String SOAP_ACTION_V65 = "urn:vim25/6.5";
-    private static final String SOAP_ACTION_V67 = "urn:vim25/6.7";
+    protected static final Logger LOGGER = LoggerFactory.getLogger(WSClient.class);
+    protected static final String SOAP_ACTION_HEADER = "SOAPAction";
+    protected static final String SOAP_ACTION_V40 = "urn:vim25/4.0";
+    protected static final String SOAP_ACTION_V41 = "urn:vim25/4.1";
+    protected static final String SOAP_ACTION_V50 = "urn:vim25/5.0";
+    protected static final String SOAP_ACTION_V51 = "urn:vim25/5.1";
+    protected static final String SOAP_ACTION_V55 = "urn:vim25/5.5";
+    protected static final String SOAP_ACTION_V60 = "urn:vim25/6.0";
+    protected static final String SOAP_ACTION_V65 = "urn:vim25/6.5";
+    protected static final String SOAP_ACTION_V67 = "urn:vim25/6.7";
+    protected static final String SOAP_ACTION_V671 = "urn:vim25/6.7.1";
+    protected static final String SOAP_ACTION_V672 = "urn:vim25/6.7.2";
+    protected static final String SOAP_ACTION_V70 = "urn:vim25/7.0";
 
     private final URL baseUrl;
+    private final URI baseUri;
     private final XmlGen xmlGen = new XmlGenDom();
     private String cookie;
     private String vimNameSpace;
@@ -81,110 +84,53 @@ public final class WSClient {
     private int connectTimeout;
     private int readTimeout;
 
-    public WSClient(final String serverUrl) throws MalformedURLException {
-        this(serverUrl, true);
+    public WSClient(final String serverUrl, final boolean ignoreCert) {
+        try {
+            if (serverUrl.endsWith("/")) {
+                this.baseUrl = new URL(serverUrl.substring(0, serverUrl.length() - 1));
+            } else {
+                this.baseUrl = new URL(serverUrl);
+            }
+        } catch (MalformedURLException e) {
+            LOGGER.error("URL is malformed: {}", serverUrl, e);
+            throw new IllegalArgumentException("URL is malformed", e);
+        }
+        URI uri;
+        try {
+            uri = this.baseUrl.toURI();
+        } catch (URISyntaxException e) {
+            LOGGER.error("URI Error", e);
+            uri = null;
+        }
+        this.baseUri = uri;
     }
 
-    public WSClient(final String serverUrl, final boolean ignoreCert) throws MalformedURLException {
-        if (serverUrl.endsWith("/")) {
-            this.baseUrl = new URL(serverUrl.substring(0, serverUrl.length() - 1));
-        } else {
-            this.baseUrl = new URL(serverUrl);
-        }
-        if (ignoreCert) {
-            trustAllHttpsCertificates();
-            HttpsURLConnection.setDefaultHostnameVerifier((urlHostName, session) -> true);
-        }
-    }
-
-    private static void trustAllHttpsCertificates() {
+    protected static SSLContext trustAllHttpsCertificates() {
         try {
             final TrustManager[] trustAllCerts = new TrustManager[1];
             trustAllCerts[0] = new TrustAllManager();
             final SSLContext sc = SSLContext.getInstance("SSL");
             sc.init(null, trustAllCerts, null);
-            HttpsURLConnection.setDefaultSSLSocketFactory(sc.getSocketFactory());
+            return sc;
         } catch (NoSuchAlgorithmException | KeyManagementException e) {
             LOGGER.error("Error in setting other SSLContext", e);
         }
+        return null;
     }
 
     public Object invoke(final String methodName, final Argument[] paras, final String returnType) throws RemoteException {
-        final long start = System.nanoTime();
-        final String soapMsg = XmlGen.toXML(methodName, paras, this.vimNameSpace);
-        COUNT_OLD.add(System.nanoTime() - start);
-
-        try (final InputStream is = this.post(soapMsg)) {
-            return xmlGen.fromXML(returnType, is);
-        } catch (Exception e) {
-            throw new RemoteException("VI SDK invoke exception:" + e, e);
-        }
+        return this.invoke(methodName, Arrays.asList(paras), returnType);
     }
 
-    public Object invoke(final String methodName, final List<Argument> paras, final String returnType) throws RemoteException {
-        final long start = System.nanoTime();
-        final String soapMsg = XmlGen.generateSoapMethod(methodName, paras, this.vimNameSpace);
-        COUNT_NEW.add(System.nanoTime() - start);
-
-        try (final InputStream is = this.post(soapMsg)) {
-            return xmlGen.fromXML(returnType, is);
-        } catch (Exception e) {
-            throw new RemoteException("VI SDK invoke exception:" + e, e);
-        }
+    public <T> T invoke(final String methodName, final List<Argument> paras, final Class<?> T) throws RemoteException {
+        return (T) this.invoke(methodName, paras, T.getSimpleName());
     }
 
-    public StringBuffer invokeAsString(String methodName, Argument[] paras) throws RemoteException {
-        final String soapMsg = XmlGen.toXML(methodName, paras, this.vimNameSpace);
-
-        try (final InputStream is = post(soapMsg)) {
-            return readStream(is);
-        } catch (Exception e) {
-            throw new RemoteException("VI SDK invoke exception:" + e, e);
-        }
+    public <T> T invokeWithoutReturn(final String methodName, final List<Argument> paras) throws RemoteException {
+        return (T) this.invoke(methodName, paras, (String) null);
     }
 
-    public InputStream post(String soapMsg) throws IOException {
-        final HttpURLConnection postCon = (HttpURLConnection) baseUrl.openConnection();
-
-        if (connectTimeout > 0) {
-            postCon.setConnectTimeout(connectTimeout);
-        }
-        if (readTimeout > 0) {
-            postCon.setReadTimeout(readTimeout);
-        }
-        try {
-            postCon.setRequestMethod("POST");
-        } catch (ProtocolException e) {
-            LOGGER.error("Error during setRequestMethod in SOAPConnection", e);
-        }
-        postCon.setDoOutput(true);
-        postCon.setDoInput(true);
-        postCon.setRequestProperty(SOAP_ACTION_HEADER, soapAction);
-        postCon.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
-
-        if (cookie != null) {
-            postCon.setRequestProperty("Cookie", cookie);
-        }
-
-        final OutputStream os = postCon.getOutputStream();
-        final OutputStreamWriter out = new OutputStreamWriter(os, StandardCharsets.UTF_8);
-
-        out.write(soapMsg);
-        out.close();
-
-        InputStream is;
-
-        try {
-            is = postCon.getInputStream();
-        } catch (IOException ioe) {
-            is = postCon.getErrorStream();
-        }
-
-        if (cookie == null) {
-            cookie = postCon.getHeaderField("Set-Cookie");
-        }
-        return is;
-    }
+    public abstract Object invoke(final String methodName, final List<Argument> paras, final String returnType) throws RemoteException;
 
     /*===============================================
        * API versions *
@@ -196,6 +142,8 @@ public final class WSClient {
       "6.0"       vSphere 6.0
       "6.5"       vSphere 6.5
       "6.7"       vSphere 6.7
+      "6.7.1"     vSphere 6.7u1
+      "6.7.2"     vSphere 6.7u3
       ===============================================*/
     public void setSoapActionOnApiVersion(String apiVersion) {
         switch (apiVersion) {
@@ -221,11 +169,19 @@ public final class WSClient {
                 soapAction = SOAP_ACTION_V65;
                 break;
             case "6.7":
-            case "6.7.1":
                 soapAction = SOAP_ACTION_V67;
                 break;
+            case "6.7.1":
+                soapAction = SOAP_ACTION_V671;
+                break;
+            case "6.7.2":
+                soapAction = SOAP_ACTION_V672;
+                break;
+//            case "7.0.0.0":
+//                soapAction = SOAP_ACTION_V70;
+//                break;
             default:
-                soapAction = SOAP_ACTION_V65;
+                soapAction = SOAP_ACTION_V672;
         }
     }
 
@@ -243,6 +199,18 @@ public final class WSClient {
 
     public URL getBaseUrl() {
         return this.baseUrl;
+    }
+
+    public URI getBaseUri() {
+        return baseUri;
+    }
+
+    public XmlGen getXmlGen() {
+        return xmlGen;
+    }
+
+    public String getSoapAction() {
+        return soapAction;
     }
 
     public String getCookie() {
@@ -277,7 +245,7 @@ public final class WSClient {
         this.readTimeout = timeoutMilliSec;
     }
 
-    private static class TrustAllManager implements X509TrustManager {
+    static class TrustAllManager implements X509TrustManager {
         public X509Certificate[] getAcceptedIssuers() {
             return null;
         }

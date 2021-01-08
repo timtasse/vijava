@@ -29,38 +29,50 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
 @SuppressWarnings("all")
 public class ObjectContent extends DynamicData {
-  public ManagedObjectReference obj;
-  public DynamicProperty[] propSet;
-  public MissingProperty[] missingSet;
 
-  public ManagedObjectReference getObj() {
-    return this.obj;
-  }
+    public ManagedObjectReference obj;
+    public DynamicProperty[] propSet;
+    public MissingProperty[] missingSet;
 
-  public DynamicProperty[] getPropSet() {
-    return this.propSet;
-  }
+    @Override
+    public String toString() {
+        return "ObjectContent{" +
+                "obj=" + obj +
+                ", propSet=" + Arrays.toString(propSet) +
+                ", missingSet=" + Arrays.toString(missingSet) +
+                "} " + super.toString();
+    }
 
-  public MissingProperty[] getMissingSet() {
-    return this.missingSet;
-  }
+    public ManagedObjectReference getObj() {
+        return this.obj;
+    }
 
-  public void setObj(ManagedObjectReference obj) {
-    this.obj=obj;
-  }
+    public void setObj(ManagedObjectReference obj) {
+        this.obj = obj;
+    }
 
-  public void setPropSet(DynamicProperty[] propSet) {
-    this.propSet=propSet;
-  }
+    public DynamicProperty[] getPropSet() {
+        return this.propSet;
+    }
 
-  public void setMissingSet(MissingProperty[] missingSet) {
-    this.missingSet=missingSet;
-  }
+    public void setPropSet(DynamicProperty[] propSet) {
+        this.propSet = propSet;
+    }
+
+    public MissingProperty[] getMissingSet() {
+        return this.missingSet;
+    }
+
+    public void setMissingSet(MissingProperty[] missingSet) {
+        this.missingSet = missingSet;
+    }
 }

@@ -28,30 +28,57 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 package com.vmware.vim25.mo;
 
-import com.vmware.vim25.InvalidState;
-import com.vmware.vim25.ManagedObjectReference;
-import com.vmware.vim25.NoActiveHostInCluster;
-import com.vmware.vim25.RuntimeFault;
+import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * A singleton managed object that can answer questions about compatibility of a virtual machine with a host.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @Version 6.7
  * @since 4.0
  */
-public class VirtualMachineCompatibilityChecker extends ManagedObject 
-{
-	public VirtualMachineCompatibilityChecker(ServerConnection sc, ManagedObjectReference mor) 
-	{
-		super(sc, mor);
-	}
-	
-	public Task checkCompatibility_Task(VirtualMachine vm, HostSystem host, ResourcePool pool, String[] testType) throws NoActiveHostInCluster, InvalidState, RuntimeFault, RemoteException
-	{
-		ManagedObjectReference taskMor = getVimService().checkCompatibility_Task(getMOR(), 
-			vm==null?null:vm.getMOR(), host==null?null:host.getMOR(), 
-			pool==null?null:pool.getMOR(), testType);
-		return new Task(getServerConnection(), taskMor);
-	}
+public class VirtualMachineCompatibilityChecker extends ManagedObject {
+
+    public VirtualMachineCompatibilityChecker(ServerConnection sc, ManagedObjectReference mor) {
+        super(sc, mor);
+    }
+
+    public Task checkCompatibility_Task(VirtualMachine vm, HostSystem host, ResourcePool pool, String[] testType)
+            throws NoActiveHostInCluster, InvalidState, RuntimeFault, RemoteException {
+        ManagedObjectReference taskMor = getVimService().checkCompatibility_Task(getMOR(),
+                vm == null ? null : vm.getMOR(), host == null ? null : host.getMOR(),
+                pool == null ? null : pool.getMOR(), testType);
+        return new Task(getServerConnection(), taskMor);
+    }
+
+    public Task checkPowerOn(final ManagedObjectReference vm, final ManagedObjectReference host, final ManagedObjectReference pool, final List<String> testType)
+            throws DatacenterMismatch, InvalidArgument, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vm", ManagedObjectReference.class, vm),
+                new Argument("host", ManagedObjectReference.class, host),
+                new Argument("pool", ManagedObjectReference.class, pool),
+                new Argument("testType", "String[]", testType != null ? testType.toArray() : null));
+        final ManagedObjectReference mor = this.getVimService().getWsc()
+                .invoke("CheckPowerOn_Task", params, ManagedObjectReference.class);
+        return new Task(this.getServerConnection(), mor);
+    }
+
+    public Task checkVmConfig(final VirtualMachineConfigSpec spec, final ManagedObjectReference vm, final ManagedObjectReference host, final ManagedObjectReference pool, final List<String> testType)
+            throws DatacenterMismatch, InvalidArgument, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", VirtualMachineConfigSpec.class, spec),
+                new Argument("vm", ManagedObjectReference.class, vm),
+                new Argument("host", ManagedObjectReference.class, host),
+                new Argument("pool", ManagedObjectReference.class, pool),
+                new Argument("testType", "String[]", testType != null ? testType.toArray() : null));
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("CheckVmConfig_Task", params, ManagedObjectReference.class);
+        return new Task(this.getServerConnection(), mor);
+    }
+
 }

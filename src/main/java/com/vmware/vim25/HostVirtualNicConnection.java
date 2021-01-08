@@ -30,28 +30,55 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * DataObject which provides a level of indirection when identifying VirtualNics during configuration.
+ * This dataObject lets users specify a VirtualNic in terms of the portgroup/Dv Port the Virtual NIC is connected to.
+ * This is useful in cases where VirtualNic will be created as part of a configuration operation and the created VirtualNic is referred to in some other part of configuration.
+ * e.g: for configuring VMotion
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 4.0
+ */
 
 @SuppressWarnings("all")
 public class HostVirtualNicConnection extends DynamicData {
-  public String portgroup;
-  public DistributedVirtualSwitchPortConnection dvPort;
 
-  public String getPortgroup() {
-    return this.portgroup;
-  }
+    private DistributedVirtualSwitchPortConnection dvPort;
+    private HostVirtualNicOpaqueNetworkSpec opNetwork;
+    private String portgroup;
 
-  public DistributedVirtualSwitchPortConnection getDvPort() {
-    return this.dvPort;
-  }
+    @Override
+    public String toString() {
+        return "HostVirtualNicConnection{" +
+                "dvPort=" + dvPort +
+                ", opNetwork=" + opNetwork +
+                ", portgroup='" + portgroup + '\'' +
+                "} " + super.toString();
+    }
 
-  public void setPortgroup(String portgroup) {
-    this.portgroup=portgroup;
-  }
+    public String getPortgroup() {
+        return this.portgroup;
+    }
 
-  public void setDvPort(DistributedVirtualSwitchPortConnection dvPort) {
-    this.dvPort=dvPort;
-  }
+    public void setPortgroup(String portgroup) {
+        this.portgroup = portgroup;
+    }
+
+    public DistributedVirtualSwitchPortConnection getDvPort() {
+        return this.dvPort;
+    }
+
+    public void setDvPort(DistributedVirtualSwitchPortConnection dvPort) {
+        this.dvPort = dvPort;
+    }
+
+    public HostVirtualNicOpaqueNetworkSpec getOpNetwork() {
+        return opNetwork;
+    }
+
+    public void setOpNetwork(final HostVirtualNicOpaqueNetworkSpec opNetwork) {
+        this.opNetwork = opNetwork;
+    }
+
 }

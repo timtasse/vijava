@@ -30,64 +30,102 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * Provides a manifest for downloaded (exported) files and disks.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 4.1
+ */
 
 @SuppressWarnings("all")
 public class HttpNfcLeaseManifestEntry extends DynamicData {
-  public String key;
-  public String sha1;
-  public long size;
-  public boolean disk;
-  public Long capacity;
-  public Long populatedSize;
 
-  public String getKey() {
-    return this.key;
-  }
+    private Long capacity;
+    private String checksum;
+    private String checksumType;
+    private boolean disk;
+    private String key;
+    private Long populatedSize;
+    private String sha1;
+    private long size;
 
-  public String getSha1() {
-    return this.sha1;
-  }
+    @Override
+    public String toString() {
+        return "HttpNfcLeaseManifestEntry{" +
+                "capacity=" + capacity +
+                ", checksum='" + checksum + '\'' +
+                ", checksumType='" + checksumType + '\'' +
+                ", disk=" + disk +
+                ", key='" + key + '\'' +
+                ", populatedSize=" + populatedSize +
+                ", sha1='" + sha1 + '\'' +
+                ", size=" + size +
+                "} " + super.toString();
+    }
 
-  public long getSize() {
-    return this.size;
-  }
+    public String getKey() {
+        return this.key;
+    }
 
-  public boolean isDisk() {
-    return this.disk;
-  }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-  public Long getCapacity() {
-    return this.capacity;
-  }
+    public String getSha1() {
+        return this.sha1;
+    }
 
-  public Long getPopulatedSize() {
-    return this.populatedSize;
-  }
+    public void setSha1(String sha1) {
+        this.sha1 = sha1;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public long getSize() {
+        return this.size;
+    }
 
-  public void setSha1(String sha1) {
-    this.sha1=sha1;
-  }
+    public void setSize(long size) {
+        this.size = size;
+    }
 
-  public void setSize(long size) {
-    this.size=size;
-  }
+    public boolean isDisk() {
+        return this.disk;
+    }
 
-  public void setDisk(boolean disk) {
-    this.disk=disk;
-  }
+    public void setDisk(boolean disk) {
+        this.disk = disk;
+    }
 
-  public void setCapacity(Long capacity) {
-    this.capacity=capacity;
-  }
+    public Long getCapacity() {
+        return this.capacity;
+    }
 
-  public void setPopulatedSize(Long populatedSize) {
-    this.populatedSize=populatedSize;
-  }
+    public void setCapacity(Long capacity) {
+        this.capacity = capacity;
+    }
+
+    public Long getPopulatedSize() {
+        return this.populatedSize;
+    }
+
+    public void setPopulatedSize(Long populatedSize) {
+        this.populatedSize = populatedSize;
+    }
+
+    public String getChecksum() {
+        return checksum;
+    }
+
+    public void setChecksum(final String checksum) {
+        this.checksum = checksum;
+    }
+
+    public String getChecksumType() {
+        return checksumType;
+    }
+
+    public void setChecksumType(final String checksumType) {
+        this.checksumType = checksumType;
+    }
+
 }

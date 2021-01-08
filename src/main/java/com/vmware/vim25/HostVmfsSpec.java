@@ -30,21 +30,39 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * This data object type describes the VMware File System (VMFS) creation specification.
+ * Once created, these properties for the most part cannot be changed. There are a few exceptions.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  */
 @SuppressWarnings("all")
 public class HostVmfsSpec extends DynamicData {
 
-    public HostScsiDiskPartition extent;
+    private Integer blockSize;
     @Deprecated
-    public Integer blockSizeMb;
-    public int majorVersion;
-    public String volumeName;
-    public Integer blockSize;
-    public Integer unmapGranularity;
-    public String unmapPriority;
+    private Integer blockSizeMb;
+    private HostScsiDiskPartition extent;
+    private int majorVersion;
+    private VmfsUnmapBandwidthSpec unmapBandwidthSpec;
+    private Integer unmapGranularity;
+    private String unmapPriority;
+    private String volumeName;
+
+    @Override
+    public String toString() {
+        return "HostVmfsSpec{" +
+                "blockSize=" + blockSize +
+                ", blockSizeMb=" + blockSizeMb +
+                ", extent=" + extent +
+                ", majorVersion=" + majorVersion +
+                ", unmapBandwidthSpec=" + unmapBandwidthSpec +
+                ", unmapGranularity=" + unmapGranularity +
+                ", unmapPriority='" + unmapPriority + '\'' +
+                ", volumeName='" + volumeName + '\'' +
+                "} " + super.toString();
+    }
 
     public HostScsiDiskPartition getExtent() {
         return this.extent;
@@ -62,14 +80,6 @@ public class HostVmfsSpec extends DynamicData {
     @Deprecated
     public void setBlockSizeMb(Integer blockSizeMb) {
         this.blockSizeMb = blockSizeMb;
-    }
-
-    public Integer getMajorVersion() {
-        return this.majorVersion;
-    }
-
-    public void setMajorVersion(Integer majorVersion) {
-        this.majorVersion = majorVersion;
     }
 
     public String getVolumeName() {
@@ -103,4 +113,21 @@ public class HostVmfsSpec extends DynamicData {
     public void setUnmapPriority(final String unmapPriority) {
         this.unmapPriority = unmapPriority;
     }
+
+    public int getMajorVersion() {
+        return majorVersion;
+    }
+
+    public void setMajorVersion(final int majorVersion) {
+        this.majorVersion = majorVersion;
+    }
+
+    public VmfsUnmapBandwidthSpec getUnmapBandwidthSpec() {
+        return unmapBandwidthSpec;
+    }
+
+    public void setUnmapBandwidthSpec(final VmfsUnmapBandwidthSpec unmapBandwidthSpec) {
+        this.unmapBandwidthSpec = unmapBandwidthSpec;
+    }
+
 }

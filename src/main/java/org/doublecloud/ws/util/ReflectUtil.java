@@ -29,6 +29,9 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package org.doublecloud.ws.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.xml.bind.DatatypeConverter;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -39,9 +42,17 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class ReflectUtil {
+
+    protected static final Logger LOGGER = LoggerFactory.getLogger(ReflectUtil.class);
+
     public static List<Field> getAllFields(Class<?> c) {
         List<Field> listOfFields = new ArrayList<>();
         getAllFields(c, listOfFields);
+        //LOGGER.debug(listOfFields.stream().map(Field::getName).collect(Collectors.joining(",")));
+        //LOGGER.debug("-----------");
+        listOfFields.sort(ReflectUtil::compare);
+        //LOGGER.debug(listOfFields.stream().map(Field::getName).collect(Collectors.joining(",")));
+        //LOGGER.debug("!!!-----------");
         return listOfFields;
     }
 
@@ -260,5 +271,15 @@ public class ReflectUtil {
         } else {
             throw new RuntimeException("Unexpected Type at parseToObject: " + type + values.get(0));
         }
+    }
+
+    private static int compare(Field o1, Field o2) {
+        if (o1.getName().equals("name") || o1.getName().equals("propSet")) {
+            return -1;
+        }
+        if (o2.getName().equals("name") || o2.getName().equals("propSet")) {
+            return 1;
+        }
+        return 1;
     }
 }

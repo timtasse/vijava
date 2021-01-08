@@ -59,7 +59,7 @@ public class SearchIndex extends ManagedObject
 	public ManagedEntity findByInventoryPath(String inventoryPath) throws RuntimeFault, RemoteException
 	{
 		ManagedObjectReference mor = getVimService().findByInventoryPath(getMOR(), inventoryPath);
-		return MorUtil.createExactManagedEntity(getServerConnection(), mor);
+		return MorUtil.createExactManagedEntity(getServerConnection(), mor, null);
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class SearchIndex extends ManagedObject
 	public ManagedEntity findByIp(Datacenter datacenter, String ip, boolean vmOnly) throws RuntimeFault, RemoteException
 	{
 		ManagedObjectReference mor = getVimService().findByIp(getMOR(), datacenter==null? null : datacenter.getMOR(), ip, vmOnly);
-		return MorUtil.createExactManagedEntity(getServerConnection(), mor);
+		return MorUtil.createExactManagedEntity(getServerConnection(), mor, null);
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class SearchIndex extends ManagedObject
 	public ManagedEntity findByDnsName(Datacenter datacenter, String dnsName, boolean vmOnly) throws RuntimeFault, RemoteException
 	{
 		ManagedObjectReference mor = getVimService().findByDnsName(getMOR(), datacenter==null? null : datacenter.getMOR(), dnsName, vmOnly);
-		return MorUtil.createExactManagedEntity(getServerConnection(), mor);
+		return MorUtil.createExactManagedEntity(getServerConnection(), mor, null);
 	}
 
 	/** @since SDK4.0 */
@@ -134,7 +134,7 @@ public class SearchIndex extends ManagedObject
 		}
 		
 		ManagedObjectReference mor = getVimService().findByDatastorePath(getMOR(), datacenter.getMOR(), dPath);
-		return (VirtualMachine) MorUtil.createExactManagedEntity(getServerConnection(), mor);
+		return (VirtualMachine) MorUtil.createExactManagedEntity(getServerConnection(), mor, null);
 	}
 	
 	/**
@@ -157,7 +157,7 @@ public class SearchIndex extends ManagedObject
 	public ManagedEntity findByUuid(Datacenter datacenter, String uuid, boolean vmOnly, Boolean instanceUuid) throws RuntimeFault, RemoteException
 	{
 		ManagedObjectReference mor = getVimService().findByUuid(getMOR(), datacenter==null? null : datacenter.getMOR(), uuid, vmOnly, instanceUuid);
-		return MorUtil.createExactManagedEntity(getServerConnection(), mor);
+		return MorUtil.createExactManagedEntity(getServerConnection(), mor, null);
 	}
 
 	/**
@@ -175,7 +175,7 @@ public class SearchIndex extends ManagedObject
 			throw new IllegalArgumentException("parent entity must not be null.");
 		}
 		ManagedObjectReference mor = getVimService().findChild(getMOR(), parent.getMOR(), name);
-		return MorUtil.createExactManagedEntity(getServerConnection(), mor);
+		return MorUtil.createExactManagedEntity(getServerConnection(), mor, null);
 	}
 	
 }

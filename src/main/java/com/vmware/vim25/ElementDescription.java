@@ -30,19 +30,29 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * Static strings used for describing an object model string or enumeration.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
-@SuppressWarnings("all")
 public class ElementDescription extends Description {
-  public String key;
 
-  public String getKey() {
-    return this.key;
-  }
+    private String key;
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    @Override
+    public String toString() {
+        return "ElementDescription{" +
+                "key='" + key + '\'' +
+                "} " + super.toString();
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(final String key) {
+        this.key = key;
+    }
+
 }

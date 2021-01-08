@@ -9,19 +9,10 @@ package com.vmware.vim25;
  */
 public enum ScsiDiskType {
 
-    emulated512("emulated512"),
-    native4k("native4k"),
-    native512("native512"),
-    SoftwareEmulated4k("SoftwareEmulated4k"),
-    unknown("unknown");
+    emulated512,
+    native4k,
+    native512,
+    SoftwareEmulated4k,
+    unknown
 
-    private final String val;
-
-    ScsiDiskType(final String val) {
-        this.val = val;
-    }
-
-    public String getVal() {
-        return this.val;
-    }
 }

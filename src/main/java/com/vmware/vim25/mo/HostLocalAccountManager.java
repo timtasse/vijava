@@ -30,55 +30,80 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The managed object class corresponding to the one defined in VI SDK API reference.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7.2
  */
 
-public class HostLocalAccountManager extends ManagedObject 
-{
+public class HostLocalAccountManager extends ManagedObject {
 
-	public HostLocalAccountManager(ServerConnection serverConnection, ManagedObjectReference mor) 
-	{
-		super(serverConnection, mor);
-	}
-	
-	public void assignUserToGroup(String user, String group) throws AlreadyExists, UserNotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().assignUserToGroup(getMOR(), user, group);
-	}
-	
-	public void createGroup(HostAccountSpec group) throws AlreadyExists, RuntimeFault, RemoteException 
-	{
-		getVimService().createGroup(getMOR(), group);
-	}
-	
-	public void createUser(HostAccountSpec user) throws AlreadyExists, RuntimeFault, RemoteException 
-	{
-		getVimService().createUser(getMOR(), user);
-	}
-	
-	public void	removeGroup(String groupName) throws UserNotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().removeGroup(getMOR(), groupName);
-	}
-	
-	public void removeUser(String userName) throws UserNotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().removeUser(getMOR(), userName);
-	}
-	
-	public void unassignUserFromGroup(String user, String group) throws UserNotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().unassignUserFromGroup(getMOR(), user, group);
-	}
-	
-	public void updateUser(HostAccountSpec user) throws AlreadyExists, UserNotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().updateUser(getMOR(), user);
-	}
+    public HostLocalAccountManager(ServerConnection serverConnection, ManagedObjectReference mor) {
+        super(serverConnection, mor);
+    }
+
+    @Deprecated(since = "5.1")
+    public void assignUserToGroup(String user, String group) throws AlreadyExists, UserNotFound, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("user", String.class, user),
+                new Argument("group", String.class, user));
+        this.getVimService().getWsc().invokeWithoutReturn("AssignUserToGroup", params);
+    }
+
+    public void changePassword(final String user, final String oldPassword, final String newPassword) throws InvalidArgument, InvalidLogin, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("user", String.class, user),
+                new Argument("oldPassword", String.class, oldPassword),
+                new Argument("newPassword", String.class, newPassword));
+        this.getVimService().getWsc().invokeWithoutReturn("ChangePassword", params);
+    }
+
+    @Deprecated(since = "5.1")
+    public void createGroup(HostAccountSpec group) throws AlreadyExists, InvalidArgument, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("group", HostAccountSpec.class, group));
+        this.getVimService().getWsc().invokeWithoutReturn("CreateGroup", params);
+    }
+
+    public void createUser(HostAccountSpec user) throws AlreadyExists, InvalidArgument, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("user", HostAccountSpec.class, user));
+        this.getVimService().getWsc().invokeWithoutReturn("CreateUser", params);
+    }
+
+    @Deprecated(since = "5.1")
+    public void removeGroup(String groupName) throws UserNotFound, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("groupName", String.class, groupName));
+        this.getVimService().getWsc().invokeWithoutReturn("RemoveGroup", params);
+    }
+
+    public void removeUser(String userName) throws UserNotFound, RuntimeFault, SecurityError, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("userName", String.class, userName));
+        this.getVimService().getWsc().invokeWithoutReturn("RemoveUser", params);
+    }
+
+    @Deprecated(since = "5.1")
+    public void unassignUserFromGroup(String user, String group) throws NoPermission, UserNotFound, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("user", String.class, user),
+                new Argument("group", String.class, group));
+        this.getVimService().getWsc().invokeWithoutReturn("UnassignUserFromGroup", params);
+    }
+
+    public void updateUser(HostAccountSpec user) throws AlreadyExists, InvalidArgument, UserNotFound, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("user", HostAccountSpec.class, user));
+        this.getVimService().getWsc().invokeWithoutReturn("UpdateUser", params);
+    }
 
 }

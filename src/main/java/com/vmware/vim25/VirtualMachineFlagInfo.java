@@ -30,148 +30,91 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * The FlagInfo data object type encapsulates the flag settings for a virtual machine.
+ * These properties are optional since the same structure is used to change the values during an edit or create operation.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 6.7
  */
 @SuppressWarnings("all")
 public class VirtualMachineFlagInfo extends DynamicData {
 
-    public Boolean disableAcceleration;
-    public Boolean enableLogging;
-    public Boolean useToe;
+    private Boolean cbrcCacheEnabled;
+    private Boolean disableAcceleration;
+    private Boolean diskUuidEnabled;
+    private Boolean enableLogging;
+    private String faultToleranceType;
     @Deprecated
-    public Boolean runWithDebugInfo;
-    public String monitorType;
-    public String htSharing;
+    private String htSharing;
+    private String monitorType;
     @Deprecated
-    public Boolean snapshotDisabled;
-    public Boolean snapshotLocked;
-    public Boolean diskUuidEnabled;
-    public String virtualMmuUsage;
-    public String virtualExecUsage;
-    public String snapshotPowerOffBehavior;
+    private Boolean recordReplayEnabled;
     @Deprecated
-    public Boolean recordReplayEnabled;
-    public Boolean cbrcCacheEnabled;
-    public String faultToleranceType;
-
-    public String getMonitorType() {
-        return this.monitorType;
-    }
-
-    public void setMonitorType(String monitorType) {
-        this.monitorType = monitorType;
-    }
-
-    public String getHtSharing() {
-        return this.htSharing;
-    }
-
-    public void setHtSharing(String htSharing) {
-        this.htSharing = htSharing;
-    }
-
-    public String getVirtualMmuUsage() {
-        return this.virtualMmuUsage;
-    }
-
-    public void setVirtualMmuUsage(String virtualMmuUsage) {
-        this.virtualMmuUsage = virtualMmuUsage;
-    }
-
-    public String getVirtualExecUsage() {
-        return this.virtualExecUsage;
-    }
-
-    public void setVirtualExecUsage(String virtualExecUsage) {
-        this.virtualExecUsage = virtualExecUsage;
-    }
-
-    public String getSnapshotPowerOffBehavior() {
-        return this.snapshotPowerOffBehavior;
-    }
-
-    public void setSnapshotPowerOffBehavior(String snapshotPowerOffBehavior) {
-        this.snapshotPowerOffBehavior = snapshotPowerOffBehavior;
-    }
-
-    public Boolean isDisableAcceleration() {
-        return disableAcceleration;
-    }
-
-    public void setDisableAcceleration(Boolean disableAcceleration) {
-        this.disableAcceleration = disableAcceleration;
-    }
-
-    public Boolean isEnableLogging() {
-        return enableLogging;
-    }
-
-    public void setEnableLogging(Boolean enableLogging) {
-        this.enableLogging = enableLogging;
-    }
-
-    public Boolean isUseToe() {
-        return useToe;
-    }
-
-    public void setUseToe(Boolean useToe) {
-        this.useToe = useToe;
-    }
-
+    private Boolean runWithDebugInfo;
     @Deprecated
-    public Boolean isRunWithDebugInfo() {
-        return runWithDebugInfo;
+    private Boolean snapshotDisabled;
+    private Boolean snapshotLocked;
+    private String snapshotPowerOffBehavior;
+    private Boolean useToe;
+    private Boolean vbsEnabled;
+    private String virtualExecUsage;
+    private String virtualMmuUsage;
+    private Boolean vvtdEnabled;
+
+    @Override
+    public String toString() {
+        return "VirtualMachineFlagInfo{" +
+                "cbrcCacheEnabled=" + cbrcCacheEnabled +
+                ", disableAcceleration=" + disableAcceleration +
+                ", diskUuidEnabled=" + diskUuidEnabled +
+                ", enableLogging=" + enableLogging +
+                ", faultToleranceType='" + faultToleranceType + '\'' +
+                ", htSharing='" + htSharing + '\'' +
+                ", monitorType='" + monitorType + '\'' +
+                ", recordReplayEnabled=" + recordReplayEnabled +
+                ", runWithDebugInfo=" + runWithDebugInfo +
+                ", snapshotDisabled=" + snapshotDisabled +
+                ", snapshotLocked=" + snapshotLocked +
+                ", snapshotPowerOffBehavior='" + snapshotPowerOffBehavior + '\'' +
+                ", useToe=" + useToe +
+                ", vbsEnabled=" + vbsEnabled +
+                ", virtualExecUsage='" + virtualExecUsage + '\'' +
+                ", virtualMmuUsage='" + virtualMmuUsage + '\'' +
+                ", vvtdEnabled=" + vvtdEnabled +
+                "} " + super.toString();
     }
 
-    @Deprecated
-    public void setRunWithDebugInfo(Boolean runWithDebugInfo) {
-        this.runWithDebugInfo = runWithDebugInfo;
-    }
-
-    @Deprecated
-    public Boolean isSnapshotDisabled() {
-        return snapshotDisabled;
-    }
-
-    @Deprecated
-    public void setSnapshotDisabled(Boolean snapshotDisabled) {
-        this.snapshotDisabled = snapshotDisabled;
-    }
-
-    public Boolean isSnapshotLocked() {
-        return snapshotLocked;
-    }
-
-    public void setSnapshotLocked(Boolean snapshotLocked) {
-        this.snapshotLocked = snapshotLocked;
-    }
-
-    public Boolean isDiskUuidEnabled() {
-        return diskUuidEnabled;
-    }
-
-    public void setDiskUuidEnabled(Boolean diskUuidEnabled) {
-        this.diskUuidEnabled = diskUuidEnabled;
-    }
-
-    @Deprecated
-    public Boolean isRecordReplayEnabled() {
-        return recordReplayEnabled;
-    }
-
-    @Deprecated
-    public void setRecordReplayEnabled(Boolean recordReplayEnabled) {
-        this.recordReplayEnabled = recordReplayEnabled;
-    }
-
-    public Boolean isCbrcCacheEnabled() {
+    public Boolean getCbrcCacheEnabled() {
         return cbrcCacheEnabled;
     }
 
     public void setCbrcCacheEnabled(final Boolean cbrcCacheEnabled) {
         this.cbrcCacheEnabled = cbrcCacheEnabled;
+    }
+
+    public Boolean getDisableAcceleration() {
+        return disableAcceleration;
+    }
+
+    public void setDisableAcceleration(final Boolean disableAcceleration) {
+        this.disableAcceleration = disableAcceleration;
+    }
+
+    public Boolean getDiskUuidEnabled() {
+        return diskUuidEnabled;
+    }
+
+    public void setDiskUuidEnabled(final Boolean diskUuidEnabled) {
+        this.diskUuidEnabled = diskUuidEnabled;
+    }
+
+    public Boolean getEnableLogging() {
+        return enableLogging;
+    }
+
+    public void setEnableLogging(final Boolean enableLogging) {
+        this.enableLogging = enableLogging;
     }
 
     public String getFaultToleranceType() {
@@ -181,4 +124,101 @@ public class VirtualMachineFlagInfo extends DynamicData {
     public void setFaultToleranceType(final String faultToleranceType) {
         this.faultToleranceType = faultToleranceType;
     }
+
+    public String getHtSharing() {
+        return htSharing;
+    }
+
+    public void setHtSharing(final String htSharing) {
+        this.htSharing = htSharing;
+    }
+
+    public String getMonitorType() {
+        return monitorType;
+    }
+
+    public void setMonitorType(final String monitorType) {
+        this.monitorType = monitorType;
+    }
+
+    public Boolean getRecordReplayEnabled() {
+        return recordReplayEnabled;
+    }
+
+    public void setRecordReplayEnabled(final Boolean recordReplayEnabled) {
+        this.recordReplayEnabled = recordReplayEnabled;
+    }
+
+    public Boolean getRunWithDebugInfo() {
+        return runWithDebugInfo;
+    }
+
+    public void setRunWithDebugInfo(final Boolean runWithDebugInfo) {
+        this.runWithDebugInfo = runWithDebugInfo;
+    }
+
+    public Boolean getSnapshotDisabled() {
+        return snapshotDisabled;
+    }
+
+    public void setSnapshotDisabled(final Boolean snapshotDisabled) {
+        this.snapshotDisabled = snapshotDisabled;
+    }
+
+    public Boolean getSnapshotLocked() {
+        return snapshotLocked;
+    }
+
+    public void setSnapshotLocked(final Boolean snapshotLocked) {
+        this.snapshotLocked = snapshotLocked;
+    }
+
+    public String getSnapshotPowerOffBehavior() {
+        return snapshotPowerOffBehavior;
+    }
+
+    public void setSnapshotPowerOffBehavior(final String snapshotPowerOffBehavior) {
+        this.snapshotPowerOffBehavior = snapshotPowerOffBehavior;
+    }
+
+    public Boolean getUseToe() {
+        return useToe;
+    }
+
+    public void setUseToe(final Boolean useToe) {
+        this.useToe = useToe;
+    }
+
+    public Boolean getVbsEnabled() {
+        return vbsEnabled;
+    }
+
+    public void setVbsEnabled(final Boolean vbsEnabled) {
+        this.vbsEnabled = vbsEnabled;
+    }
+
+    public String getVirtualExecUsage() {
+        return virtualExecUsage;
+    }
+
+    public void setVirtualExecUsage(final String virtualExecUsage) {
+        this.virtualExecUsage = virtualExecUsage;
+    }
+
+    public String getVirtualMmuUsage() {
+        return virtualMmuUsage;
+    }
+
+    public void setVirtualMmuUsage(final String virtualMmuUsage) {
+        this.virtualMmuUsage = virtualMmuUsage;
+    }
+
+    public Boolean getVvtdEnabled() {
+        return vvtdEnabled;
+    }
+
+    public void setVvtdEnabled(final Boolean vvtdEnabled) {
+        this.vvtdEnabled = vvtdEnabled;
+    }
+
 }

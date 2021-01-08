@@ -31,81 +31,100 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
-public class StorageResourceManager extends ManagedObject
-{
-  public StorageResourceManager(ServerConnection serverConnection, ManagedObjectReference mor) 
-  {
-    super(serverConnection, mor);
-  }
-  
-  /**
-   * @since SDK5.0
-   */
-  public Task applyStorageDrsRecommendation_Task( String[] keys) throws RuntimeFault, RemoteException
-  {
-    ManagedObjectReference taskMor = getVimService().applyStorageDrsRecommendation_Task(getMOR(), keys);
-    return new Task(getServerConnection(), taskMor);
-  }
-  
-  /**
-   * @since SDK5.0
-   */
-  public Task applyStorageDrsRecommendationToPod_Task(StoragePod pod, String key) throws RuntimeFault, RemoteException
-  {
-    ManagedObjectReference taskMor = getVimService().applyStorageDrsRecommendationToPod_Task(getMOR(), pod.getMOR(), key);
-    return new Task(getServerConnection(), taskMor);    
-  }
+/**
+ * This managed object type provides a way to configure resource usage for storage resources.
+ *
+ * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 4.1
+ */
+public class StorageResourceManager extends ManagedObject {
 
-  /**
-   * @since SDK5.0
-   */
-  public void cancelStorageDrsRecommendation(String[] keys) throws RuntimeFault, RemoteException
-  {
-    getVimService().cancelStorageDrsRecommendation(getMOR(), keys);
-  }
-  
-  public Task configureDatastoreIORM_Task(Datastore datastore, StorageIORMConfigSpec spec) throws InaccessibleDatastore, IORMNotSupportedHostOnDatastore, RuntimeFault, RemoteException
-  {
-    ManagedObjectReference mor = getVimService().configureDatastoreIORM_Task(getMOR(), datastore.getMOR(), spec);
-    return new Task(getServerConnection(), mor);
-  }
-  
-  /**
-   * @since SDK5.0
-   */
-  public Task configureStorageDrsForPod_Task(StoragePod pod, StorageDrsConfigSpec spec, boolean modify) throws RuntimeFault, RemoteException
-  {
-    ManagedObjectReference taskMor = getVimService().configureStorageDrsForPod_Task(getMOR(), pod.getMOR(), spec, modify);
-    return new Task(getServerConnection(), taskMor);
-  }
-  
-  /** @since SDK5.1 */
-  public StoragePerformanceSummary[] queryDatastorePerformanceSummary(Datastore datastore) throws NotFound, RuntimeFault, RemoteException
-  {
-      return getVimService().queryDatastorePerformanceSummary(getMOR(), datastore.getMOR());
-  }
-  
-  public StorageIORMConfigOption queryIORMConfigOption(HostSystem host) throws RuntimeFault, RemoteException
-  {
-    return getVimService().queryIORMConfigOption(getMOR(), host.getMOR());
-  }
-  
-  /**
-   * @since SDK5.0
-   */
-  public StoragePlacementResult recommendDatastores(StoragePlacementSpec storageSpec) throws RuntimeFault, RemoteException
-  {
-    return getVimService().recommendDatastores(getMOR(), storageSpec);
-  }
+    public StorageResourceManager(ServerConnection serverConnection, ManagedObjectReference mor) {
+        super(serverConnection, mor);
+    }
 
-  /**
-   * @since SDK5.0
-   */
-  public void refreshStorageDrsRecommendation(StoragePod pod) throws RuntimeFault, RemoteException
-  {
-    getVimService().refreshStorageDrsRecommendation(getMOR(), pod.getMOR());
-  }
+    /**
+     * @since SDK5.0
+     */
+    public Task applyStorageDrsRecommendation_Task(String[] keys) throws RuntimeFault, RemoteException {
+        ManagedObjectReference taskMor = getVimService().applyStorageDrsRecommendation_Task(getMOR(), keys);
+        return new Task(getServerConnection(), taskMor);
+    }
+
+    /**
+     * @since SDK5.0
+     */
+    public Task applyStorageDrsRecommendationToPod_Task(StoragePod pod, String key) throws RuntimeFault, RemoteException {
+        ManagedObjectReference taskMor = getVimService().applyStorageDrsRecommendationToPod_Task(getMOR(), pod.getMOR(), key);
+        return new Task(getServerConnection(), taskMor);
+    }
+
+    /**
+     * @since SDK5.0
+     */
+    public void cancelStorageDrsRecommendation(String[] keys) throws RuntimeFault, RemoteException {
+        getVimService().cancelStorageDrsRecommendation(getMOR(), keys);
+    }
+
+    public Task configureDatastoreIORM_Task(Datastore datastore, StorageIORMConfigSpec spec) throws InaccessibleDatastore, IORMNotSupportedHostOnDatastore, RuntimeFault, RemoteException {
+        ManagedObjectReference mor = getVimService().configureDatastoreIORM_Task(getMOR(), datastore.getMOR(), spec);
+        return new Task(getServerConnection(), mor);
+    }
+
+    /**
+     * @since SDK5.0
+     */
+    public Task configureStorageDrsForPod_Task(StoragePod pod, StorageDrsConfigSpec spec, boolean modify) throws RuntimeFault, RemoteException {
+        ManagedObjectReference taskMor = getVimService().configureStorageDrsForPod_Task(getMOR(), pod.getMOR(), spec, modify);
+        return new Task(getServerConnection(), taskMor);
+    }
+
+    /**
+     * @since SDK5.1
+     */
+    public StoragePerformanceSummary[] queryDatastorePerformanceSummary(Datastore datastore) throws NotFound, RuntimeFault, RemoteException {
+        return getVimService().queryDatastorePerformanceSummary(getMOR(), datastore.getMOR());
+    }
+
+    public StorageIORMConfigOption queryIORMConfigOption(HostSystem host) throws RuntimeFault, RemoteException {
+        return getVimService().queryIORMConfigOption(getMOR(), host.getMOR());
+    }
+
+    /**
+     * @since SDK5.0
+     */
+    public StoragePlacementResult recommendDatastores(StoragePlacementSpec storageSpec) throws RuntimeFault, RemoteException {
+        return getVimService().recommendDatastores(getMOR(), storageSpec);
+    }
+
+    /**
+     * @since SDK5.0
+     */
+    public void refreshStorageDrsRecommendation(StoragePod pod) throws RuntimeFault, RemoteException {
+        getVimService().refreshStorageDrsRecommendation(getMOR(), pod.getMOR());
+    }
+
+    public Task refreshRecommendationsForPod(final ManagedObjectReference pod) throws InvalidArgument, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("pod", ManagedObjectReference.class.getSimpleName(), pod));
+        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc()
+                .invoke("RefreshStorageDrsRecommendationsForPod_Task", params, ManagedObjectReference.class.getSimpleName());
+        return new Task(this.getServerConnection(), mor);
+    }
+
+    public MethodFault validateStoragePodConfig(final ManagedObjectReference pod, final StorageDrsConfigSpec spec) throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("pod", ManagedObjectReference.class.getSimpleName(), pod),
+                new Argument("spec", StorageDrsConfigSpec.class.getSimpleName(), spec));
+        return (MethodFault) this.getVimService().getWsc().invoke("ValidateStoragePodConfig", params, MethodFault.class.getSimpleName());
+    }
+
 }

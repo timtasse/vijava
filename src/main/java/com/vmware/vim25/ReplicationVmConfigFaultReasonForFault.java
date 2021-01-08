@@ -37,32 +37,22 @@ package com.vmware.vim25;
  */
 public enum ReplicationVmConfigFaultReasonForFault {
 
-    cannotRetrieveVmReplicationConfiguration("cannotRetrieveVmReplicationConfiguration"),
-    encryptedVm("encryptedVm"),
-    incompatibleDevice("incompatibleDevice"),
-    incompatibleHwVersion("incompatibleHwVersion"),
-    invalidDestinationIpAddress("invalidDestinationIpAddress"),
-    invalidDestinationPort("invalidDestinationPort"),
-    invalidExtraVmOptions("invalidExtraVmOptions"),
-    invalidGenerationNumber("invalidGenerationNumber"),
-    invalidPriorConfiguration("invalidPriorConfiguration"),
-    invalidThumbprint("invalidThumbprint"),
-    invalidVmReplicationId("invalidVmReplicationId"),
-    outOfBoundsRpoValue("outOfBoundsRpoValue"),
-    reconfigureVmReplicationIdNotAllowed("reconfigureVmReplicationIdNotAllowed"),
-    replicationAlreadyEnabled("replicationAlreadyEnabled"),
-    replicationConfigurationFailed("replicationConfigurationFailed"),
-    replicationNotEnabled("replicationNotEnabled"),
-    staleGenerationNumber("staleGenerationNumber");
+    cannotRetrieveVmReplicationConfiguration,
+    encryptedVm,
+    incompatibleDevice,
+    incompatibleHwVersion,
+    invalidDestinationIpAddress,
+    invalidDestinationPort,
+    invalidExtraVmOptions,
+    invalidGenerationNumber,
+    invalidPriorConfiguration,
+    invalidThumbprint,
+    invalidVmReplicationId,
+    outOfBoundsRpoValue,
+    reconfigureVmReplicationIdNotAllowed,
+    replicationAlreadyEnabled,
+    replicationConfigurationFailed,
+    replicationNotEnabled,
+    staleGenerationNumber
 
-    @SuppressWarnings("unused")
-    private final String val;
-
-    ReplicationVmConfigFaultReasonForFault(String val) {
-        this.val = val;
-    }
-
-    public String getVal() {
-        return val;
-    }
 }

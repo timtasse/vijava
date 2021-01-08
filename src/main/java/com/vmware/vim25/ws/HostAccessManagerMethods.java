@@ -23,7 +23,7 @@ public interface HostAccessManagerMethods extends WSClientBasedInterfaces {
                 new Argument("principal", "String", principal),
                 new Argument("isGroup", "boolean", isGroup),
                 new Argument("accessMode", "HostAccessMode", accessMode));
-        getWsc().invoke("ChangeAccessMode", params, null);
+        getWsc().invokeWithoutReturn("ChangeAccessMode", params);
     }
 
     default List<String> querySystemUsers(final ManagedObjectReference mor) throws RemoteException {

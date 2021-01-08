@@ -1,14 +1,24 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * Specification of the backing of a virtual storage object.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  * @since 6.5
  */
 public class VslmCreateSpecBackingSpec extends DynamicData {
 
-    public ManagedObjectReference datastore;
+    private ManagedObjectReference datastore;
+    private String path;
+
+    @Override
+    public String toString() {
+        return "VslmCreateSpecBackingSpec{" +
+                "datastore=" + datastore +
+                ", path='" + path + '\'' +
+                "} " + super.toString();
+    }
 
     public ManagedObjectReference getDatastore() {
         return datastore;
@@ -17,4 +27,13 @@ public class VslmCreateSpecBackingSpec extends DynamicData {
     public void setDatastore(final ManagedObjectReference datastore) {
         this.datastore = datastore;
     }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(final String path) {
+        this.path = path;
+    }
+
 }

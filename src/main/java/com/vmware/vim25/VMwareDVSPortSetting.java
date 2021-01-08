@@ -30,73 +30,102 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * This class defines the VMware specific configuration for DistributedVirtualPort.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 4.0
+ */
 
 @SuppressWarnings("all")
 public class VMwareDVSPortSetting extends DVPortSetting {
-  public VmwareDistributedVirtualSwitchVlanSpec vlan;
-  public IntPolicy qosTag;
-  public VmwareUplinkPortTeamingPolicy uplinkTeamingPolicy;
-  public DVSSecurityPolicy securityPolicy;
-  public BoolPolicy ipfixEnabled;
-  public BoolPolicy txUplink;
-  public VMwareUplinkLacpPolicy lacpPolicy;
 
-  public VmwareDistributedVirtualSwitchVlanSpec getVlan() {
-    return this.vlan;
-  }
+    private BoolPolicy ipfixEnabled;
+    private VMwareUplinkLacpPolicy lacpPolicy;
+    private DVSMacManagementPolicy macManagementPolicy;
+    private IntPolicy qosTag;
+    private DVSSecurityPolicy securityPolicy;
+    private BoolPolicy txUplink;
+    private VmwareUplinkPortTeamingPolicy uplinkTeamingPolicy;
+    private VmwareDistributedVirtualSwitchVlanSpec vlan;
 
-  public IntPolicy getQosTag() {
-    return this.qosTag;
-  }
+    @Override
+    public String toString() {
+        return "VMwareDVSPortSetting{" +
+                "ipfixEnabled=" + ipfixEnabled +
+                ", lacpPolicy=" + lacpPolicy +
+                ", macManagementPolicy=" + macManagementPolicy +
+                ", qosTag=" + qosTag +
+                ", securityPolicy=" + securityPolicy +
+                ", txUplink=" + txUplink +
+                ", uplinkTeamingPolicy=" + uplinkTeamingPolicy +
+                ", vlan=" + vlan +
+                "} " + super.toString();
+    }
 
-  public VmwareUplinkPortTeamingPolicy getUplinkTeamingPolicy() {
-    return this.uplinkTeamingPolicy;
-  }
+    public VmwareDistributedVirtualSwitchVlanSpec getVlan() {
+        return this.vlan;
+    }
 
-  public DVSSecurityPolicy getSecurityPolicy() {
-    return this.securityPolicy;
-  }
+    public void setVlan(VmwareDistributedVirtualSwitchVlanSpec vlan) {
+        this.vlan = vlan;
+    }
 
-  public BoolPolicy getIpfixEnabled() {
-    return this.ipfixEnabled;
-  }
+    public IntPolicy getQosTag() {
+        return this.qosTag;
+    }
 
-  public BoolPolicy getTxUplink() {
-    return this.txUplink;
-  }
+    public void setQosTag(IntPolicy qosTag) {
+        this.qosTag = qosTag;
+    }
 
-  public VMwareUplinkLacpPolicy getLacpPolicy() {
-    return this.lacpPolicy;
-  }
+    public VmwareUplinkPortTeamingPolicy getUplinkTeamingPolicy() {
+        return this.uplinkTeamingPolicy;
+    }
 
-  public void setVlan(VmwareDistributedVirtualSwitchVlanSpec vlan) {
-    this.vlan=vlan;
-  }
+    public void setUplinkTeamingPolicy(VmwareUplinkPortTeamingPolicy uplinkTeamingPolicy) {
+        this.uplinkTeamingPolicy = uplinkTeamingPolicy;
+    }
 
-  public void setQosTag(IntPolicy qosTag) {
-    this.qosTag=qosTag;
-  }
+    public DVSSecurityPolicy getSecurityPolicy() {
+        return this.securityPolicy;
+    }
 
-  public void setUplinkTeamingPolicy(VmwareUplinkPortTeamingPolicy uplinkTeamingPolicy) {
-    this.uplinkTeamingPolicy=uplinkTeamingPolicy;
-  }
+    public void setSecurityPolicy(DVSSecurityPolicy securityPolicy) {
+        this.securityPolicy = securityPolicy;
+    }
 
-  public void setSecurityPolicy(DVSSecurityPolicy securityPolicy) {
-    this.securityPolicy=securityPolicy;
-  }
+    public BoolPolicy getIpfixEnabled() {
+        return this.ipfixEnabled;
+    }
 
-  public void setIpfixEnabled(BoolPolicy ipfixEnabled) {
-    this.ipfixEnabled=ipfixEnabled;
-  }
+    public void setIpfixEnabled(BoolPolicy ipfixEnabled) {
+        this.ipfixEnabled = ipfixEnabled;
+    }
 
-  public void setTxUplink(BoolPolicy txUplink) {
-    this.txUplink=txUplink;
-  }
+    public BoolPolicy getTxUplink() {
+        return this.txUplink;
+    }
 
-  public void setLacpPolicy(VMwareUplinkLacpPolicy lacpPolicy) {
-    this.lacpPolicy=lacpPolicy;
-  }
+    public void setTxUplink(BoolPolicy txUplink) {
+        this.txUplink = txUplink;
+    }
+
+    public VMwareUplinkLacpPolicy getLacpPolicy() {
+        return this.lacpPolicy;
+    }
+
+    public void setLacpPolicy(VMwareUplinkLacpPolicy lacpPolicy) {
+        this.lacpPolicy = lacpPolicy;
+    }
+
+    public DVSMacManagementPolicy getMacManagementPolicy() {
+        return macManagementPolicy;
+    }
+
+    public void setMacManagementPolicy(final DVSMacManagementPolicy macManagementPolicy) {
+        this.macManagementPolicy = macManagementPolicy;
+    }
+
 }

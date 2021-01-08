@@ -43,6 +43,7 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -90,6 +91,7 @@ final class XmlGenDom extends XmlGen {
 
     public Object fromXML(final String returnType, final InputStream is) throws RemoteException {
         final Element body = this.parseInputStreamXML(is);
+        //LOGGER.debug(body.asXML());
         final Element fault = body.element(SoapConsts.FAULT_QNAME);
         if (fault != null) {
             final SoapFaultException sfe = this.parseSoapFault(fault);
@@ -136,9 +138,12 @@ final class XmlGenDom extends XmlGen {
     }
 
     private Object parseXmlElement(final String type, final Element root) throws Exception {
-        List<Element> subNodes = root.elements();
+        final List<Element> subNodes = root.elements();
 
-        if (subNodes.size() == 0) {
+        if (subNodes.isEmpty()) {
+            if (type.startsWith("List.")) {
+                return Collections.EMPTY_LIST;
+            }
             return null;
         }
 
@@ -156,19 +161,27 @@ final class XmlGenDom extends XmlGen {
             }
         } else if (TypeUtil.isBasicType(type)) {
             final List<String> vals = new ArrayList<>();
-            for (int i = 0; i < subNodes.size(); i++) {
-                vals.add(subNodes.get(i).getText());
+            for (Element subNode : subNodes) {
+                vals.add(subNode.getText());
             }
             return ReflectUtil.parseToObject(type, vals);
         } else if (type.startsWith("List.")) {
             final String arrayItemTypeName = type.substring(5);
-            final Class<?> clazz = TypeUtil.getVimClass(arrayItemTypeName);
-            final List<Object> list = createList(clazz, subNodes.size());
-            for (Element e : subNodes) {
-                final String xsiType = e.attributeValue(SoapConsts.XSI_TYPE);
-                list.add(parseVimClassFromElement(TypeUtil.getVimClass(xsiType == null ? arrayItemTypeName : xsiType), e));
+            if ("ManagedObjectReference".equals(arrayItemTypeName)) {
+                final List<ManagedObjectReference> morList = new ArrayList<>(subNodes.size());
+                for (Element e : subNodes) {
+                    morList.add(ManagedObjectReference.create(e.attributeValue("type"), e.getText()));
+                }
+                return morList;
+            } else {
+                final Class<?> clazz = TypeUtil.getVimClass(arrayItemTypeName);
+                final List<Object> list = createList(clazz, subNodes.size());
+                for (Element e : subNodes) {
+                    final String xsiType = e.attributeValue(SoapConsts.XSI_TYPE);
+                    list.add(parseVimClassFromElement(TypeUtil.getVimClass(xsiType == null ? arrayItemTypeName : xsiType), e));
+                }
+                return list;
             }
-            return list;
         } else if (type.endsWith("[]")) { // array type
             final String arrayItemTypeName = type.substring(0, type.length() - 2);
             final Class<?> clazz = TypeUtil.getVimClass(arrayItemTypeName);
@@ -298,18 +311,28 @@ final class XmlGenDom extends XmlGen {
         } else {
             name = tagName;
         }
-
         Field field;
         try {
             field = clazz.getField(name);
         } catch (NoSuchFieldException e) {
-            field = clazz.getDeclaredField(name);
+            field = this.getFieldRecursive(clazz, name);
         }
-
         if (!field.isAccessible()) {
             field.setAccessible(true);
         }
         return field;
+    }
+
+    private Field getFieldRecursive(final Class<?> clazz, final String name) throws NoSuchFieldException {
+        try {
+            return clazz.getDeclaredField(name);
+        } catch (NoSuchFieldException e) {
+            final Class<?> superclass = clazz.getSuperclass();
+            if (superclass == null) {
+                throw e;
+            }
+            return this.getFieldRecursive(superclass, name);
+        }
     }
 
 }

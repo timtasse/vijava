@@ -13,6 +13,6 @@ public enum ProfileParameterMetadataRelationType {
     extensible_relation,
     localizable_relation,
     static_relation,
-    validation_relation
+    validation_relation;
 
 }

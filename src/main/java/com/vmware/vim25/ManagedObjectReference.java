@@ -47,6 +47,14 @@ public class ManagedObjectReference {
         return mor;
     }
 
+    @Override
+    public String toString() {
+        return "ManagedObjectReference{" +
+                "val='" + val + '\'' +
+                ", type='" + type + '\'' +
+                '}';
+    }
+
     public String getVal() {
         return val;
     }

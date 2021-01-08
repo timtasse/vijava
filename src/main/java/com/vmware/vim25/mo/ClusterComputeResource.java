@@ -31,15 +31,22 @@ package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.util.MorUtil;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * The ClusterComputeResource data object aggregates the compute resources of associated HostSystem objects into a single compute resource for use by virtual machines.
+ * The cluster services such as HA (High Availability), DRS (Distributed Resource Scheduling), and EVC (Enhanced vMotion Compatibility), enhance the utility of this single compute resource.
+ * Use the Folder.CreateClusterEx method to create an instance of this object.
  *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7.2
  */
-
+@SuppressWarnings("unchecked")
 public class ClusterComputeResource extends ComputeResource {
 
     public ClusterComputeResource(ServerConnection sc, ManagedObjectReference mor) {
@@ -50,25 +57,11 @@ public class ClusterComputeResource extends ComputeResource {
         return (ClusterActionHistory[]) this.getCurrentProperty("actionHistory");
     }
 
-    public ClusterEVCManager getEvcManager() throws RemoteException {
-        final ManagedObjectReference mor = getVimService().evcManager(getMOR());
-        if (mor == null) {
-            return null;
-        }
-        return new ClusterEVCManager(this.getServerConnection(), mor);
-    }
-
-    /*
-     * @deprecated
-     */
     @Deprecated
     public ClusterConfigInfo getConfiguration() {
         return (ClusterConfigInfo) getCurrentProperty("configuration");
     }
 
-    /**
-     * @since 4.0
-     */
     public ClusterDrsFaults[] getDrsFault() {
         return (ClusterDrsFaults[]) getCurrentProperty("drsFault");
     }
@@ -78,12 +71,20 @@ public class ClusterComputeResource extends ComputeResource {
         return (ClusterDrsRecommendation[]) getCurrentProperty("drsRecommendation");
     }
 
+    public ClusterComputeResourceHCIConfigInfo getClusterComputeResourceHCIConfigInfo() {
+        return (ClusterComputeResourceHCIConfigInfo) this.getCurrentProperty("hciConfig");
+    }
+
     public ClusterDrsMigration[] getMigrationHistory() {
         return (ClusterDrsMigration[]) getCurrentProperty("migrationHistory");
     }
 
     public ClusterRecommendation[] getRecommendation() {
         return (ClusterRecommendation[]) getCurrentProperty("recommendation");
+    }
+
+    public void abandonHciWorkflow() throws InvalidState, RuntimeFault, RemoteException {
+        this.getVimService().getWsc().invokeWithoutReturn("AbandonHciWorkflow", this.getSingleSelfArgumentList());
     }
 
     // SDK 2.5 signature for back compatibility
@@ -101,19 +102,48 @@ public class ClusterComputeResource extends ComputeResource {
         getVimService().applyRecommendation(getMOR(), key);
     }
 
-    /**
-     * @since SDK4.1
-     */
     public void cancelRecommendation(String key) throws RuntimeFault, RemoteException {
         getVimService().cancelRecommendation(getMOR(), key);
     }
 
-    /**
-     * @since SDK5.0
-     */
     public ClusterEnterMaintenanceResult clusterEnterMaintenanceMode(HostSystem[] hosts, OptionValue[] option) throws RuntimeFault, RemoteException {
         ManagedObjectReference[] hostMors = MorUtil.createMORs(hosts);
         return getVimService().clusterEnterMaintenanceMode(getMOR(), hostMors, option);
+    }
+
+    public Task configureHCI(final ClusterComputeResourceHCIConfigSpec clusterSpec, final List<ClusterComputeResourceHostConfigurationInput> hostInputs)
+            throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("clusterSpec", ClusterComputeResourceHCIConfigSpec.class, clusterSpec),
+                new Argument("hostInputs", "ClusterComputeResourceHostConfigurationInput[]", hostInputs.toArray()));
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("ConfigureHCI_Task", params, ManagedObjectReference.class);
+        return new Task(this.getServerConnection(), mor);
+    }
+
+    public ClusterEVCManager getEvcManager() throws RemoteException {
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("EvcManager", this.getSingleSelfArgumentList(), ManagedObjectReference.class);
+        if (mor == null) {
+            return null;
+        }
+        return new ClusterEVCManager(this.getServerConnection(), mor);
+    }
+
+    public Task extendHCI(final List<ClusterComputeResourceHostConfigurationInput> hostInputs, final SDDCBase vSanConfigSpec) throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("hostInputs", "ClusterComputeResourceHostConfigurationInput[]", hostInputs),
+                new Argument("vSanConfigSpec", SDDCBase.class, vSanConfigSpec));
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("ExtendHCI_Task", params, ManagedObjectReference.class);
+        return new Task(this.getServerConnection(), mor);
+    }
+
+    public List<ClusterRuleInfo> findRulesForVm(final ManagedObjectReference vm) throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vm", ManagedObjectReference.class, vm));
+        return (List<ClusterRuleInfo>) this.getVimService().getWsc().invoke("FindRulesForVm", params, "List.ClusterRuleInfo");
+    }
+
+    public ClusterResourceUsageSummary getResourceUsage() throws RuntimeFault, RemoteException {
+        return this.getVimService().getWsc().invoke("GetResourceUsage", this.getSingleSelfArgumentList(), ClusterResourceUsageSummary.class);
     }
 
     public Task moveHostInto_Task(HostSystem host, ResourcePool resourcePool) throws TooManyHosts, InvalidState, RuntimeFault, RemoteException {
@@ -132,6 +162,13 @@ public class ClusterComputeResource extends ComputeResource {
         return new Task(getServerConnection(), taskMOR);
     }
 
+    public PlacementResult placeVm(final PlacementSpec placementSpec) throws InvalidArgument, InvalidState, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("placementSpec", PlacementSpec.class, placementSpec));
+        return this.getVimService().getWsc().invoke("PlaceVm", params, PlacementResult.class);
+    }
+
+    @Deprecated
     public ClusterHostRecommendation[] recommendHostsForVm(VirtualMachine vm, ResourcePool pool) throws RuntimeFault, RemoteException {
         if (vm == null) {
             throw new IllegalArgumentException("vm must not be null.");
@@ -139,19 +176,31 @@ public class ClusterComputeResource extends ComputeResource {
         return getVimService().recommendHostsForVm(getMOR(), vm.getMOR(), pool == null ? null : pool.getMOR());
     }
 
+    @Deprecated
     public Task reconfigureCluster_Task(ClusterConfigSpec spec, boolean modify) throws RuntimeFault, RemoteException {
         ManagedObjectReference taskMOR = getVimService().reconfigureCluster_Task(getMOR(), spec, modify);
         return new Task(getServerConnection(), taskMOR);
     }
 
     public void refreshRecommendation() throws RuntimeFault, RemoteException {
-        getVimService().refreshRecommendation(getMOR());
+        getVimService().getWsc().invokeWithoutReturn("RefreshRecommendation", this.getSingleSelfArgumentList());
     }
 
-    /**
-     * @since 4.0
-     */
     public ClusterDasAdvancedRuntimeInfo retrieveDasAdvancedRuntimeInfo() throws RuntimeFault, RemoteException {
-        return getVimService().retrieveDasAdvancedRuntimeInfo(getMOR());
+        return this.getVimService().getWsc().invoke("RetrieveDasAdvancedRuntimeInfo", this.getSingleSelfArgumentList(), ClusterDasAdvancedRuntimeInfo.class);
     }
+
+    public Task stampAllRulesWithUuid() throws RuntimeFault, RemoteException {
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("StampAllRulesWithUuid_Task", this.getSingleSelfArgumentList(), ManagedObjectReference.class);
+        return new Task(this.getServerConnection(), mor);
+    }
+
+    public List<ClusterComputeResourceValidationResultBase> validateHCIConfiguration(final ClusterComputeResourceHCIConfigSpec hciConfigSpec, final List<ManagedObjectReference> hosts)
+            throws InvalidState, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("hciConfigSpec", ClusterComputeResourceHCIConfigSpec.class, hciConfigSpec),
+                new Argument("hosts", "ManagedObjectReference[]", hosts));
+        return (List<ClusterComputeResourceValidationResultBase>) this.getVimService().getWsc().invoke("ValidateHCIConfiguration", params, "List.ClusterComputeResourceValidationResultBase");
+    }
+
 }

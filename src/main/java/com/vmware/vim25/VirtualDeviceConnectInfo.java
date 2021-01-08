@@ -30,46 +30,71 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * The VirtualDeviceConnectInfo data object type contains information about connectable virtual devices.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ */
 
 @SuppressWarnings("all")
 public class VirtualDeviceConnectInfo extends DynamicData {
-  public boolean startConnected;
-  public boolean allowGuestControl;
-  public boolean connected;
-  public String status;
 
-  public boolean isStartConnected() {
-    return this.startConnected;
-  }
+    private boolean allowGuestControl;
+    private boolean connected;
+    private String migrateConnect;
+    private boolean startConnected;
+    private String status;
 
-  public boolean isAllowGuestControl() {
-    return this.allowGuestControl;
-  }
+    @Override
+    public String toString() {
+        return "VirtualDeviceConnectInfo{" +
+                "allowGuestControl=" + allowGuestControl +
+                ", connected=" + connected +
+                ", migrateConnect='" + migrateConnect + '\'' +
+                ", startConnected=" + startConnected +
+                ", status='" + status + '\'' +
+                "} " + super.toString();
+    }
 
-  public boolean isConnected() {
-    return this.connected;
-  }
+    public boolean isStartConnected() {
+        return this.startConnected;
+    }
 
-  public String getStatus() {
-    return this.status;
-  }
+    public void setStartConnected(boolean startConnected) {
+        this.startConnected = startConnected;
+    }
 
-  public void setStartConnected(boolean startConnected) {
-    this.startConnected=startConnected;
-  }
+    public boolean isAllowGuestControl() {
+        return this.allowGuestControl;
+    }
 
-  public void setAllowGuestControl(boolean allowGuestControl) {
-    this.allowGuestControl=allowGuestControl;
-  }
+    public void setAllowGuestControl(boolean allowGuestControl) {
+        this.allowGuestControl = allowGuestControl;
+    }
 
-  public void setConnected(boolean connected) {
-    this.connected=connected;
-  }
+    public boolean isConnected() {
+        return this.connected;
+    }
 
-  public void setStatus(String status) {
-    this.status=status;
-  }
+    public void setConnected(boolean connected) {
+        this.connected = connected;
+    }
+
+    public String getStatus() {
+        return this.status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getMigrateConnect() {
+        return migrateConnect;
+    }
+
+    public void setMigrateConnect(final String migrateConnect) {
+        this.migrateConnect = migrateConnect;
+    }
+
 }

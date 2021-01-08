@@ -29,27 +29,52 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
+ * This data object type encapsulates a typical set of host information that is useful for list views and summary pages.
+ * VirtualCenter can retrieve this information very efficiently, even for a large set of hosts.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 6.7
  */
 
 @SuppressWarnings("all")
 public class HostListSummary extends DynamicData {
 
-    public ManagedObjectReference host;
-    public HostHardwareSummary hardware;
-    public HostRuntimeInfo runtime;
-    public HostConfigSummary config;
-    public HostListSummaryQuickStats quickStats;
-    public ManagedEntityStatus overallStatus;
-    public boolean rebootRequired;
-    public CustomFieldValue[] customValue;
-    public String managementServerIp;
-    public String maxEVCModeKey;
-    public String currentEVCModeKey;
-    public HostListSummaryGatewaySummary gateway;
+    private HostConfigSummary config;
+    private String currentEVCModeKey;
+    private CustomFieldValue[] customValue;
+    private HostListSummaryGatewaySummary gateway;
+    private HostHardwareSummary hardware;
+    private ManagedObjectReference host;
+    private String managementServerIp;
+    private String maxEVCModeKey;
+    private ManagedEntityStatus overallStatus;
+    private HostListSummaryQuickStats quickStats;
+    private boolean rebootRequired;
+    private HostRuntimeInfo runtime;
+    private HostTpmAttestationInfo tpmAttestation;
+
+    @Override
+    public String toString() {
+        return "HostListSummary{" +
+                "config=" + config +
+                ", currentEVCModeKey='" + currentEVCModeKey + '\'' +
+                ", customValue=" + Arrays.toString(customValue) +
+                ", gateway=" + gateway +
+                ", hardware=" + hardware +
+                ", host=" + host +
+                ", managementServerIp='" + managementServerIp + '\'' +
+                ", maxEVCModeKey='" + maxEVCModeKey + '\'' +
+                ", overallStatus=" + overallStatus +
+                ", quickStats=" + quickStats +
+                ", rebootRequired=" + rebootRequired +
+                ", runtime=" + runtime +
+                ", tpmAttestation=" + tpmAttestation +
+                "} " + super.toString();
+    }
 
     public ManagedObjectReference getHost() {
         return this.host;
@@ -146,4 +171,13 @@ public class HostListSummary extends DynamicData {
     public void setGateway(final HostListSummaryGatewaySummary gateway) {
         this.gateway = gateway;
     }
+
+    public HostTpmAttestationInfo getTpmAttestation() {
+        return tpmAttestation;
+    }
+
+    public void setTpmAttestation(final HostTpmAttestationInfo tpmAttestation) {
+        this.tpmAttestation = tpmAttestation;
+    }
+
 }

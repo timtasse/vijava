@@ -30,23 +30,44 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * This data object type contains information about backing a virtual disk using a raw device mapping. Supported for ESX Server 2.5 and 3.x.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  */
 
 @SuppressWarnings("all")
 public class VirtualDiskRawDiskMappingVer1BackingInfo extends VirtualDeviceFileBackingInfo {
 
-    public String lunUuid;
-    public String deviceName;
-    public String compatibilityMode;
-    public String diskMode;
-    public String uuid;
-    public String contentId;
-    public String changeId;
-    public String sharing;
-    public VirtualDiskRawDiskMappingVer1BackingInfo parent;
+    private String changeId;
+    private String compatibilityMode;
+    private String contentId;
+    private String deltaDiskFormat;
+    private Integer deltaGrainSize;
+    private String deviceName;
+    private String diskMode;
+    private String lunUuid;
+    private VirtualDiskRawDiskMappingVer1BackingInfo parent;
+    private String sharing;
+    private String uuid;
+
+    @Override
+    public String toString() {
+        return "VirtualDiskRawDiskMappingVer1BackingInfo{" +
+                "changeId='" + changeId + '\'' +
+                ", compatibilityMode='" + compatibilityMode + '\'' +
+                ", contentId='" + contentId + '\'' +
+                ", deltaDiskFormat='" + deltaDiskFormat + '\'' +
+                ", deltaGrainSize=" + deltaGrainSize +
+                ", deviceName='" + deviceName + '\'' +
+                ", diskMode='" + diskMode + '\'' +
+                ", lunUuid='" + lunUuid + '\'' +
+                ", parent=" + parent +
+                ", sharing='" + sharing + '\'' +
+                ", uuid='" + uuid + '\'' +
+                "} " + super.toString();
+    }
 
     public String getLunUuid() {
         return this.lunUuid;
@@ -119,4 +140,21 @@ public class VirtualDiskRawDiskMappingVer1BackingInfo extends VirtualDeviceFileB
     public void setSharing(final String sharing) {
         this.sharing = sharing;
     }
+
+    public String getDeltaDiskFormat() {
+        return deltaDiskFormat;
+    }
+
+    public void setDeltaDiskFormat(final String deltaDiskFormat) {
+        this.deltaDiskFormat = deltaDiskFormat;
+    }
+
+    public Integer getDeltaGrainSize() {
+        return deltaGrainSize;
+    }
+
+    public void setDeltaGrainSize(final Integer deltaGrainSize) {
+        this.deltaGrainSize = deltaGrainSize;
+    }
+
 }

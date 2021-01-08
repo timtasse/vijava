@@ -30,55 +30,86 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * Included in the host statistics are fairness scores. Fairness scores are represented in units with relative values,
+ * meaning they are evaluated relative to the scores of other hosts.
+ * They should not be thought of as having any particular absolute value. Each fairness unit represents an increment of 0.001 in a fairness score.
+ * The further the fairness score diverges from 1, the less fair the allocation.
+ * Therefore, a fairness score of 990, representing 0.990, is more fair than a fairness score of 1015, which represents 1.015.
+ * This is because 1.015 is further from 1 than 0.990.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ */
 
 @SuppressWarnings("all")
 public class HostListSummaryQuickStats extends DynamicData {
-  public Integer overallCpuUsage;
-  public Integer overallMemoryUsage;
-  public Integer distributedCpuFairness;
-  public Integer distributedMemoryFairness;
-  public Integer uptime;
 
-  public Integer getOverallCpuUsage() {
-    return this.overallCpuUsage;
-  }
+    private Integer availablePMemCapacity;
+    private Integer distributedCpuFairness;
+    private Integer distributedMemoryFairness;
+    private Integer overallCpuUsage;
+    private Integer overallMemoryUsage;
+    private Integer uptime;
 
-  public Integer getOverallMemoryUsage() {
-    return this.overallMemoryUsage;
-  }
+    @Override
+    public String toString() {
+        return "HostListSummaryQuickStats{" +
+                "availablePMemCapacity=" + availablePMemCapacity +
+                ", distributedCpuFairness=" + distributedCpuFairness +
+                ", distributedMemoryFairness=" + distributedMemoryFairness +
+                ", overallCpuUsage=" + overallCpuUsage +
+                ", overallMemoryUsage=" + overallMemoryUsage +
+                ", uptime=" + uptime +
+                "} " + super.toString();
+    }
 
-  public Integer getDistributedCpuFairness() {
-    return this.distributedCpuFairness;
-  }
+    public Integer getOverallCpuUsage() {
+        return this.overallCpuUsage;
+    }
 
-  public Integer getDistributedMemoryFairness() {
-    return this.distributedMemoryFairness;
-  }
+    public void setOverallCpuUsage(Integer overallCpuUsage) {
+        this.overallCpuUsage = overallCpuUsage;
+    }
 
-  public Integer getUptime() {
-    return this.uptime;
-  }
+    public Integer getOverallMemoryUsage() {
+        return this.overallMemoryUsage;
+    }
 
-  public void setOverallCpuUsage(Integer overallCpuUsage) {
-    this.overallCpuUsage=overallCpuUsage;
-  }
+    public void setOverallMemoryUsage(Integer overallMemoryUsage) {
+        this.overallMemoryUsage = overallMemoryUsage;
+    }
 
-  public void setOverallMemoryUsage(Integer overallMemoryUsage) {
-    this.overallMemoryUsage=overallMemoryUsage;
-  }
+    public Integer getDistributedCpuFairness() {
+        return this.distributedCpuFairness;
+    }
 
-  public void setDistributedCpuFairness(Integer distributedCpuFairness) {
-    this.distributedCpuFairness=distributedCpuFairness;
-  }
+    public void setDistributedCpuFairness(Integer distributedCpuFairness) {
+        this.distributedCpuFairness = distributedCpuFairness;
+    }
 
-  public void setDistributedMemoryFairness(Integer distributedMemoryFairness) {
-    this.distributedMemoryFairness=distributedMemoryFairness;
-  }
+    public Integer getDistributedMemoryFairness() {
+        return this.distributedMemoryFairness;
+    }
 
-  public void setUptime(Integer uptime) {
-    this.uptime=uptime;
-  }
+    public void setDistributedMemoryFairness(Integer distributedMemoryFairness) {
+        this.distributedMemoryFairness = distributedMemoryFairness;
+    }
+
+    public Integer getUptime() {
+        return this.uptime;
+    }
+
+    public void setUptime(Integer uptime) {
+        this.uptime = uptime;
+    }
+
+    public Integer getAvailablePMemCapacity() {
+        return availablePMemCapacity;
+    }
+
+    public void setAvailablePMemCapacity(final Integer availablePMemCapacity) {
+        this.availablePMemCapacity = availablePMemCapacity;
+    }
+
 }

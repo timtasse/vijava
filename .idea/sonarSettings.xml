@@ -3,7 +3,7 @@
   <component name="projectSettings">
     <option name="alternativeWorkingDirPath" value="" />
     <option name="localAnalysisScripName" value="&lt;NO LOCAL ANALYSIS&gt;" />
-    <option name="serverName" value="dev-vmware" />
+    <option name="serverName" value="sonar" />
     <option name="useAlternativeWorkingDir" value="false" />
     <option name="workingDirSelection" value="&lt;PROJECT&gt;" />
   </component>

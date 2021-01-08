@@ -29,30 +29,44 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-/**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+import java.util.Arrays;
 
-@SuppressWarnings("all")
+/**
+ * DynamicData is a builtin object model data object type for manipulating data properties dynamically.
+ * The primary usage is as a base class for types that may be extended with subtypes in the future,
+ * where new properties should be sent to old clients as a set of dynamic properties.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
 public class DynamicData {
-  public String dynamicType;
-  public DynamicProperty[] dynamicProperty;
 
-  public String getDynamicType() {
-    return this.dynamicType;
-  }
+    private String dynamicType;
+    private DynamicProperty[] dynamicProperty;
 
-  public DynamicProperty[] getDynamicProperty() {
-    return this.dynamicProperty;
-  }
+    @Override
+    public String toString() {
+        return "DynamicData{" +
+                "dynamicType='" + dynamicType + '\'' +
+                ", dynamicProperty=" + Arrays.toString(dynamicProperty) +
+                '}';
+    }
 
-  public void setDynamicType(String dynamicType) {
-    this.dynamicType=dynamicType;
-  }
+    public String getDynamicType() {
+        return dynamicType;
+    }
 
-  public void setDynamicProperty(DynamicProperty[] dynamicProperty) {
-    this.dynamicProperty=dynamicProperty;
-  }
+    public void setDynamicType(final String dynamicType) {
+        this.dynamicType = dynamicType;
+    }
+
+    public DynamicProperty[] getDynamicProperty() {
+        return dynamicProperty;
+    }
+
+    public void setDynamicProperty(final DynamicProperty[] dynamicProperty) {
+        this.dynamicProperty = dynamicProperty;
+    }
+
 }

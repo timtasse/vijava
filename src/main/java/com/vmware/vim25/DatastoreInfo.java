@@ -32,77 +32,74 @@ package com.vmware.vim25;
 import java.util.Calendar;
 
 /**
+ * Detailed information about a datastore. This is a base type for derived types that have more specific details about a datastore.
+ * @see HostVmfsVolume
+ * @see HostNasVolume
+ * @see HostLocalFileSystemVolume
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 6.7.1
  */
 
 @SuppressWarnings("all")
 public class DatastoreInfo extends DynamicData {
 
-    public String name;
-    public String url;
-    public long freeSpace;
-    public long maxFileSize;
-    public Long maxVirtualDiskCapacity;
-    public Calendar timestamp;
-    public String containerId;
-    public long maxMemoryFileSize;
+    private String aliasOf;
+    private String containerId;
+    private long freeSpace;
+    private long maxFileSize;
+    private long maxMemoryFileSize;
+    private Long maxVirtualDiskCapacity;
+    private String name;
+    private Calendar timestamp;
+    private String url;
 
-    public String getName() {
-        return this.name;
+    @Override
+    public String toString() {
+        return "DatastoreInfo{" +
+                "aliasOf='" + aliasOf + '\'' +
+                ", containerId='" + containerId + '\'' +
+                ", freeSpace=" + freeSpace +
+                ", maxFileSize=" + maxFileSize +
+                ", maxMemoryFileSize=" + maxMemoryFileSize +
+                ", maxVirtualDiskCapacity=" + maxVirtualDiskCapacity +
+                ", name='" + name + '\'' +
+                ", timestamp=" + timestamp +
+                ", url='" + url + '\'' +
+                "} " + super.toString();
     }
 
-    public String getUrl() {
-        return this.url;
+    public String getAliasOf() {
+        return aliasOf;
     }
 
-    public long getFreeSpace() {
-        return this.freeSpace;
-    }
-
-    public long getMaxFileSize() {
-        return this.maxFileSize;
-    }
-
-    public Long getMaxVirtualDiskCapacity() {
-        return this.maxVirtualDiskCapacity;
-    }
-
-    public Calendar getTimestamp() {
-        return this.timestamp;
+    public void setAliasOf(final String aliasOf) {
+        this.aliasOf = aliasOf;
     }
 
     public String getContainerId() {
-        return this.containerId;
+        return containerId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setContainerId(final String containerId) {
+        this.containerId = containerId;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public long getFreeSpace() {
+        return freeSpace;
     }
 
-    public void setFreeSpace(long freeSpace) {
+    public void setFreeSpace(final long freeSpace) {
         this.freeSpace = freeSpace;
     }
 
-    public void setMaxFileSize(long maxFileSize) {
+    public long getMaxFileSize() {
+        return maxFileSize;
+    }
+
+    public void setMaxFileSize(final long maxFileSize) {
         this.maxFileSize = maxFileSize;
-    }
-
-    public void setMaxVirtualDiskCapacity(Long maxVirtualDiskCapacity) {
-        this.maxVirtualDiskCapacity = maxVirtualDiskCapacity;
-    }
-
-    public void setTimestamp(Calendar timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public void setContainerId(String containerId) {
-        this.containerId = containerId;
     }
 
     public long getMaxMemoryFileSize() {
@@ -112,4 +109,37 @@ public class DatastoreInfo extends DynamicData {
     public void setMaxMemoryFileSize(final long maxMemoryFileSize) {
         this.maxMemoryFileSize = maxMemoryFileSize;
     }
+
+    public Long getMaxVirtualDiskCapacity() {
+        return maxVirtualDiskCapacity;
+    }
+
+    public void setMaxVirtualDiskCapacity(final Long maxVirtualDiskCapacity) {
+        this.maxVirtualDiskCapacity = maxVirtualDiskCapacity;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public Calendar getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(final Calendar timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(final String url) {
+        this.url = url;
+    }
+
 }

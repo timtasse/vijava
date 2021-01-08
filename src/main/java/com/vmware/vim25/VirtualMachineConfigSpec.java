@@ -29,534 +29,245 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+import java.util.Calendar;
+
 /**
+ * This data object type encapsulates configuration settings when creating or reconfiguring a virtual machine.
+ * To support incremental changes, these properties are all optional.
+ * If an optional property is unset, or any nested optional property is unset, the property will not be changed unless 'unset' is a valid value for the property.
+ * To determine whether 'unset' is a valid value for a particular property, refer to the documentation for that property.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  */
 @SuppressWarnings("all")
 public class VirtualMachineConfigSpec extends DynamicData {
 
-    public String changeVersion;
-    public String name;
-    public String version;
-    public String uuid;
-    public String instanceUuid;
-    public Long[] npivNodeWorldWideName;
-    public Long[] npivPortWorldWideName;
-    public String npivWorldWideNameType;
-    public Short npivDesiredNodeWwns;
-    public Short npivDesiredPortWwns;
-    public Boolean npivTemporaryDisabled;
-    public Boolean npivOnNonRdmDisks;
-    public String npivWorldWideNameOp;
-    public String locationId;
-    public String guestId;
-    public String alternateGuestName;
-    public String annotation;
-    public VirtualMachineFileInfo files;
-    public ToolsConfigInfo tools;
-    public VirtualMachineFlagInfo flags;
-    public VirtualMachineConsolePreferences consolePreferences;
-    public VirtualMachineDefaultPowerOpInfo powerOpInfo;
-    public Integer numCPUs;
-    public Integer numCoresPerSocket;
-    public Long memoryMB;
-    public Boolean memoryHotAddEnabled;
-    public Boolean cpuHotAddEnabled;
-    public Boolean cpuHotRemoveEnabled;
-    public Boolean virtualICH7MPresent;
-    public Boolean virtualSMCPresent;
-    public VirtualDeviceConfigSpec[] deviceChange;
-    public ResourceAllocationInfo cpuAllocation;
-    public ResourceAllocationInfo memoryAllocation;
-    public LatencySensitivity latencySensitivity;
-    public VirtualMachineAffinityInfo cpuAffinity;
+    private String alternateGuestName;
+    private String annotation;
+    private VirtualMachineBootOptions bootOptions;
+    private Boolean changeTrackingEnabled;
+    private String changeVersion;
+    private VirtualMachineConsolePreferences consolePreferences;
+    private VirtualMachineAffinityInfo cpuAffinity;
+    private ResourceAllocationInfo cpuAllocation;
+    private VirtualMachineCpuIdInfoSpec[] cpuFeatureMask;
+    private Boolean cpuHotAddEnabled;
+    private Boolean cpuHotRemoveEnabled;
+    private Calendar createDate;
+    private CryptoSpec crypto;
+    private VirtualDeviceConfigSpec[] deviceChange;
+    private OptionValue[] extraConfig;
+    private VirtualMachineFileInfo files;
+    private String firmware;
+    private VirtualMachineFlagInfo flags;
+    private FaultToleranceConfigInfo ftInfo;
+    private Boolean guestAutoLockEnabled;
+    private String guestId;
+    private String instanceUuid;
+    private LatencySensitivity latencySensitivity;
+    private String locationId;
+    private ManagedByInfo managedBy;
+    private Integer maxMksConnections;
     @Deprecated
-    public VirtualMachineAffinityInfo memoryAffinity;
+    private VirtualMachineAffinityInfo memoryAffinity;
+    private ResourceAllocationInfo memoryAllocation;
+    private Boolean memoryHotAddEnabled;
+    private Long memoryMB;
+    private Boolean memoryReservationLockedToMax;
+    private Boolean messageBusTunnelEnabled;
+    private String migrateEncryption;
+    private String name;
+    private Boolean nestedHVEnabled;
     @Deprecated
-    public VirtualMachineNetworkShaperInfo networkShaper;
-    public VirtualMachineCpuIdInfoSpec[] cpuFeatureMask;
-    public OptionValue[] extraConfig;
-    public String swapPlacement;
-    public VirtualMachineBootOptions bootOptions;
-    public VmConfigSpec vAppConfig;
-    public FaultToleranceConfigInfo ftInfo;
-    public ReplicationConfigSpec repConfig;
-    public Boolean vAppConfigRemoved;
-    public Boolean vAssertsEnabled;
-    public Boolean changeTrackingEnabled;
-    public String firmware;
-    public Integer maxMksConnections;
-    public Boolean guestAutoLockEnabled;
-    public ManagedByInfo managedBy;
-    public Boolean memoryReservationLockedToMax;
-    public Boolean nestedHVEnabled;
-    public Boolean vPMCEnabled;
-    public ScheduledHardwareUpgradeInfo scheduledHardwareUpgradeInfo;
-    public VirtualMachineProfileSpec[] vmProfile;
-    public Boolean messageBusTunnelEnabled;
-    public CryptoSpec crypto;
-    public String migrateEncryption;
+    private VirtualMachineNetworkShaperInfo networkShaper;
+    private Short npivDesiredNodeWwns;
+    private Short npivDesiredPortWwns;
+    private Long[] npivNodeWorldWideName;
+    private Boolean npivOnNonRdmDisks;
+    private Long[] npivPortWorldWideName;
+    private Boolean npivTemporaryDisabled;
+    private String npivWorldWideNameOp;
+    private String npivWorldWideNameType;
+    private Integer numCoresPerSocket;
+    private Integer numCPUs;
+    private VirtualMachineDefaultPowerOpInfo powerOpInfo;
+    private ReplicationConfigSpec repConfig;
+    private ScheduledHardwareUpgradeInfo scheduledHardwareUpgradeInfo;
+    private String swapPlacement;
+    private ToolsConfigInfo tools;
+    private String uuid;
+    private VmConfigSpec vAppConfig;
+    private Boolean vAppConfigRemoved;
+    private Boolean vAssertsEnabled;
+    private String version;
+    private Boolean virtualICH7MPresent;
+    private Boolean virtualSMCPresent;
+    private VirtualMachineProfileSpec[] vmProfile;
+    private Boolean vPMCEnabled;
 
-    public String getChangeVersion() {
-        return this.changeVersion;
-    }
-
-    public void setChangeVersion(String changeVersion) {
-        this.changeVersion = changeVersion;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getVersion() {
-        return this.version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getUuid() {
-        return this.uuid;
-    }
-
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
-    }
-
-    public String getInstanceUuid() {
-        return this.instanceUuid;
-    }
-
-    public void setInstanceUuid(String instanceUuid) {
-        this.instanceUuid = instanceUuid;
-    }
-
-    public Long[] getNpivNodeWorldWideName() {
-        return this.npivNodeWorldWideName;
-    }
-
-    public void setNpivNodeWorldWideName(Long[] npivNodeWorldWideName) {
-        this.npivNodeWorldWideName = npivNodeWorldWideName;
-    }
-
-    public Long[] getNpivPortWorldWideName() {
-        return this.npivPortWorldWideName;
-    }
-
-    public void setNpivPortWorldWideName(Long[] npivPortWorldWideName) {
-        this.npivPortWorldWideName = npivPortWorldWideName;
-    }
-
-    public String getNpivWorldWideNameType() {
-        return this.npivWorldWideNameType;
-    }
-
-    public void setNpivWorldWideNameType(String npivWorldWideNameType) {
-        this.npivWorldWideNameType = npivWorldWideNameType;
-    }
-
-    public Short getNpivDesiredNodeWwns() {
-        return this.npivDesiredNodeWwns;
-    }
-
-    public void setNpivDesiredNodeWwns(Short npivDesiredNodeWwns) {
-        this.npivDesiredNodeWwns = npivDesiredNodeWwns;
-    }
-
-    public Short getNpivDesiredPortWwns() {
-        return this.npivDesiredPortWwns;
-    }
-
-    public void setNpivDesiredPortWwns(Short npivDesiredPortWwns) {
-        this.npivDesiredPortWwns = npivDesiredPortWwns;
-    }
-
-    public String getNpivWorldWideNameOp() {
-        return this.npivWorldWideNameOp;
-    }
-
-    public void setNpivWorldWideNameOp(String npivWorldWideNameOp) {
-        this.npivWorldWideNameOp = npivWorldWideNameOp;
-    }
-
-    public String getLocationId() {
-        return this.locationId;
-    }
-
-    public void setLocationId(String locationId) {
-        this.locationId = locationId;
-    }
-
-    public String getGuestId() {
-        return this.guestId;
-    }
-
-    public void setGuestId(String guestId) {
-        this.guestId = guestId;
+    @Override
+    public String toString() {
+        return "VirtualMachineConfigSpec{" +
+                "alternateGuestName='" + alternateGuestName + '\'' +
+                ", annotation='" + annotation + '\'' +
+                ", bootOptions=" + bootOptions +
+                ", changeTrackingEnabled=" + changeTrackingEnabled +
+                ", changeVersion='" + changeVersion + '\'' +
+                ", consolePreferences=" + consolePreferences +
+                ", cpuAffinity=" + cpuAffinity +
+                ", cpuAllocation=" + cpuAllocation +
+                ", cpuFeatureMask=" + Arrays.toString(cpuFeatureMask) +
+                ", cpuHotAddEnabled=" + cpuHotAddEnabled +
+                ", cpuHotRemoveEnabled=" + cpuHotRemoveEnabled +
+                ", createDate=" + createDate +
+                ", crypto=" + crypto +
+                ", deviceChange=" + Arrays.toString(deviceChange) +
+                ", extraConfig=" + Arrays.toString(extraConfig) +
+                ", files=" + files +
+                ", firmware='" + firmware + '\'' +
+                ", flags=" + flags +
+                ", ftInfo=" + ftInfo +
+                ", guestAutoLockEnabled=" + guestAutoLockEnabled +
+                ", guestId='" + guestId + '\'' +
+                ", instanceUuid='" + instanceUuid + '\'' +
+                ", latencySensitivity=" + latencySensitivity +
+                ", locationId='" + locationId + '\'' +
+                ", managedBy=" + managedBy +
+                ", maxMksConnections=" + maxMksConnections +
+                ", memoryAffinity=" + memoryAffinity +
+                ", memoryAllocation=" + memoryAllocation +
+                ", memoryHotAddEnabled=" + memoryHotAddEnabled +
+                ", memoryMB=" + memoryMB +
+                ", memoryReservationLockedToMax=" + memoryReservationLockedToMax +
+                ", messageBusTunnelEnabled=" + messageBusTunnelEnabled +
+                ", migrateEncryption='" + migrateEncryption + '\'' +
+                ", name='" + name + '\'' +
+                ", nestedHVEnabled=" + nestedHVEnabled +
+                ", networkShaper=" + networkShaper +
+                ", npivDesiredNodeWwns=" + npivDesiredNodeWwns +
+                ", npivDesiredPortWwns=" + npivDesiredPortWwns +
+                ", npivNodeWorldWideName=" + Arrays.toString(npivNodeWorldWideName) +
+                ", npivOnNonRdmDisks=" + npivOnNonRdmDisks +
+                ", npivPortWorldWideName=" + Arrays.toString(npivPortWorldWideName) +
+                ", npivTemporaryDisabled=" + npivTemporaryDisabled +
+                ", npivWorldWideNameOp='" + npivWorldWideNameOp + '\'' +
+                ", npivWorldWideNameType='" + npivWorldWideNameType + '\'' +
+                ", numCoresPerSocket=" + numCoresPerSocket +
+                ", numCPUs=" + numCPUs +
+                ", powerOpInfo=" + powerOpInfo +
+                ", repConfig=" + repConfig +
+                ", scheduledHardwareUpgradeInfo=" + scheduledHardwareUpgradeInfo +
+                ", swapPlacement='" + swapPlacement + '\'' +
+                ", tools=" + tools +
+                ", uuid='" + uuid + '\'' +
+                ", vAppConfig=" + vAppConfig +
+                ", vAppConfigRemoved=" + vAppConfigRemoved +
+                ", vAssertsEnabled=" + vAssertsEnabled +
+                ", version='" + version + '\'' +
+                ", virtualICH7MPresent=" + virtualICH7MPresent +
+                ", virtualSMCPresent=" + virtualSMCPresent +
+                ", vmProfile=" + Arrays.toString(vmProfile) +
+                ", vPMCEnabled=" + vPMCEnabled +
+                "} " + super.toString();
     }
 
     public String getAlternateGuestName() {
-        return this.alternateGuestName;
+        return alternateGuestName;
     }
 
-    public void setAlternateGuestName(String alternateGuestName) {
+    public void setAlternateGuestName(final String alternateGuestName) {
         this.alternateGuestName = alternateGuestName;
     }
 
     public String getAnnotation() {
-        return this.annotation;
+        return annotation;
     }
 
-    public void setAnnotation(String annotation) {
+    public void setAnnotation(final String annotation) {
         this.annotation = annotation;
     }
 
-    public VirtualMachineFileInfo getFiles() {
-        return this.files;
-    }
-
-    public void setFiles(VirtualMachineFileInfo files) {
-        this.files = files;
-    }
-
-    public ToolsConfigInfo getTools() {
-        return this.tools;
-    }
-
-    public void setTools(ToolsConfigInfo tools) {
-        this.tools = tools;
-    }
-
-    public VirtualMachineFlagInfo getFlags() {
-        return this.flags;
-    }
-
-    public void setFlags(VirtualMachineFlagInfo flags) {
-        this.flags = flags;
-    }
-
-    public VirtualMachineConsolePreferences getConsolePreferences() {
-        return this.consolePreferences;
-    }
-
-    public void setConsolePreferences(VirtualMachineConsolePreferences consolePreferences) {
-        this.consolePreferences = consolePreferences;
-    }
-
-    public VirtualMachineDefaultPowerOpInfo getPowerOpInfo() {
-        return this.powerOpInfo;
-    }
-
-    public void setPowerOpInfo(VirtualMachineDefaultPowerOpInfo powerOpInfo) {
-        this.powerOpInfo = powerOpInfo;
-    }
-
-    public Integer getNumCPUs() {
-        return this.numCPUs;
-    }
-
-    public void setNumCPUs(Integer numCPUs) {
-        this.numCPUs = numCPUs;
-    }
-
-    public Integer getNumCoresPerSocket() {
-        return this.numCoresPerSocket;
-    }
-
-    public void setNumCoresPerSocket(Integer numCoresPerSocket) {
-        this.numCoresPerSocket = numCoresPerSocket;
-    }
-
-    public Long getMemoryMB() {
-        return this.memoryMB;
-    }
-
-    public void setMemoryMB(Long memoryMB) {
-        this.memoryMB = memoryMB;
-    }
-
-    public VirtualDeviceConfigSpec[] getDeviceChange() {
-        return this.deviceChange;
-    }
-
-    public void setDeviceChange(VirtualDeviceConfigSpec[] deviceChange) {
-        this.deviceChange = deviceChange;
-    }
-
-    public ResourceAllocationInfo getCpuAllocation() {
-        return this.cpuAllocation;
-    }
-
-    public void setCpuAllocation(ResourceAllocationInfo cpuAllocation) {
-        this.cpuAllocation = cpuAllocation;
-    }
-
-    public ResourceAllocationInfo getMemoryAllocation() {
-        return this.memoryAllocation;
-    }
-
-    public void setMemoryAllocation(ResourceAllocationInfo memoryAllocation) {
-        this.memoryAllocation = memoryAllocation;
-    }
-
-    public LatencySensitivity getLatencySensitivity() {
-        return this.latencySensitivity;
-    }
-
-    public void setLatencySensitivity(LatencySensitivity latencySensitivity) {
-        this.latencySensitivity = latencySensitivity;
-    }
-
-    public VirtualMachineAffinityInfo getCpuAffinity() {
-        return this.cpuAffinity;
-    }
-
-    public void setCpuAffinity(VirtualMachineAffinityInfo cpuAffinity) {
-        this.cpuAffinity = cpuAffinity;
-    }
-
-    @Deprecated
-    public VirtualMachineAffinityInfo getMemoryAffinity() {
-        return this.memoryAffinity;
-    }
-
-    @Deprecated
-    public void setMemoryAffinity(VirtualMachineAffinityInfo memoryAffinity) {
-        this.memoryAffinity = memoryAffinity;
-    }
-
-    @Deprecated
-    public VirtualMachineNetworkShaperInfo getNetworkShaper() {
-        return this.networkShaper;
-    }
-
-    @Deprecated
-    public void setNetworkShaper(VirtualMachineNetworkShaperInfo networkShaper) {
-        this.networkShaper = networkShaper;
-    }
-
-    public VirtualMachineCpuIdInfoSpec[] getCpuFeatureMask() {
-        return this.cpuFeatureMask;
-    }
-
-    public void setCpuFeatureMask(VirtualMachineCpuIdInfoSpec[] cpuFeatureMask) {
-        this.cpuFeatureMask = cpuFeatureMask;
-    }
-
-    public OptionValue[] getExtraConfig() {
-        return this.extraConfig;
-    }
-
-    public void setExtraConfig(OptionValue[] extraConfig) {
-        this.extraConfig = extraConfig;
-    }
-
-    public String getSwapPlacement() {
-        return this.swapPlacement;
-    }
-
-    public void setSwapPlacement(String swapPlacement) {
-        this.swapPlacement = swapPlacement;
-    }
-
     public VirtualMachineBootOptions getBootOptions() {
-        return this.bootOptions;
+        return bootOptions;
     }
 
-    public void setBootOptions(VirtualMachineBootOptions bootOptions) {
+    public void setBootOptions(final VirtualMachineBootOptions bootOptions) {
         this.bootOptions = bootOptions;
     }
 
-    public VmConfigSpec getVAppConfig() {
-        return this.vAppConfig;
-    }
-
-    public void setVAppConfig(VmConfigSpec vAppConfig) {
-        this.vAppConfig = vAppConfig;
-    }
-
-    public FaultToleranceConfigInfo getFtInfo() {
-        return this.ftInfo;
-    }
-
-    public void setFtInfo(FaultToleranceConfigInfo ftInfo) {
-        this.ftInfo = ftInfo;
-    }
-
-    public Boolean getVAssertsEnabled() {
-        return this.vAssertsEnabled;
-    }
-
-    public void setVAssertsEnabled(Boolean vAssertsEnabled) {
-        this.vAssertsEnabled = vAssertsEnabled;
-    }
-
-    public String getFirmware() {
-        return this.firmware;
-    }
-
-    public void setFirmware(String firmware) {
-        this.firmware = firmware;
-    }
-
-    public Integer getMaxMksConnections() {
-        return this.maxMksConnections;
-    }
-
-    public void setMaxMksConnections(Integer maxMksConnections) {
-        this.maxMksConnections = maxMksConnections;
-    }
-
-    public ManagedByInfo getManagedBy() {
-        return this.managedBy;
-    }
-
-    public void setManagedBy(ManagedByInfo managedBy) {
-        this.managedBy = managedBy;
-    }
-
-    public ScheduledHardwareUpgradeInfo getScheduledHardwareUpgradeInfo() {
-        return this.scheduledHardwareUpgradeInfo;
-    }
-
-    public void setScheduledHardwareUpgradeInfo(ScheduledHardwareUpgradeInfo scheduledHardwareUpgradeInfo) {
-        this.scheduledHardwareUpgradeInfo = scheduledHardwareUpgradeInfo;
-    }
-
-    public VirtualMachineProfileSpec[] getVmProfile() {
-        return this.vmProfile;
-    }
-
-    public void setVmProfile(VirtualMachineProfileSpec[] vmProfile) {
-        this.vmProfile = vmProfile;
-    }
-
-    public Boolean isNpivTemporaryDisabled() {
-        return npivTemporaryDisabled;
-    }
-
-    public void setNpivTemporaryDisabled(Boolean npivTemporaryDisabled) {
-        this.npivTemporaryDisabled = npivTemporaryDisabled;
-    }
-
-    public Boolean isNpivOnNonRdmDisks() {
-        return npivOnNonRdmDisks;
-    }
-
-    public void setNpivOnNonRdmDisks(Boolean npivOnNonRdmDisks) {
-        this.npivOnNonRdmDisks = npivOnNonRdmDisks;
-    }
-
-    public Boolean isMemoryHotAddEnabled() {
-        return memoryHotAddEnabled;
-    }
-
-    public void setMemoryHotAddEnabled(Boolean memoryHotAddEnabled) {
-        this.memoryHotAddEnabled = memoryHotAddEnabled;
-    }
-
-    public Boolean isCpuHotAddEnabled() {
-        return cpuHotAddEnabled;
-    }
-
-    public void setCpuHotAddEnabled(Boolean cpuHotAddEnabled) {
-        this.cpuHotAddEnabled = cpuHotAddEnabled;
-    }
-
-    public Boolean isCpuHotRemoveEnabled() {
-        return cpuHotRemoveEnabled;
-    }
-
-    public void setCpuHotRemoveEnabled(Boolean cpuHotRemoveEnabled) {
-        this.cpuHotRemoveEnabled = cpuHotRemoveEnabled;
-    }
-
-    public Boolean isVirtualICH7MPresent() {
-        return virtualICH7MPresent;
-    }
-
-    public void setVirtualICH7MPresent(Boolean virtualICH7MPresent) {
-        this.virtualICH7MPresent = virtualICH7MPresent;
-    }
-
-    public Boolean isVirtualSMCPresent() {
-        return virtualSMCPresent;
-    }
-
-    public void setVirtualSMCPresent(Boolean virtualSMCPresent) {
-        this.virtualSMCPresent = virtualSMCPresent;
-    }
-
-    public VmConfigSpec getvAppConfig() {
-        return vAppConfig;
-    }
-
-    public void setvAppConfig(final VmConfigSpec vAppConfig) {
-        this.vAppConfig = vAppConfig;
-    }
-
-    public Boolean isvAppConfigRemoved() {
-        return vAppConfigRemoved;
-    }
-
-    public void setvAppConfigRemoved(final Boolean vAppConfigRemoved) {
-        this.vAppConfigRemoved = vAppConfigRemoved;
-    }
-
-    public Boolean isvAssertsEnabled() {
-        return vAssertsEnabled;
-    }
-
-    public void setvAssertsEnabled(final Boolean vAssertsEnabled) {
-        this.vAssertsEnabled = vAssertsEnabled;
-    }
-
-    public Boolean isChangeTrackingEnabled() {
+    public Boolean getChangeTrackingEnabled() {
         return changeTrackingEnabled;
     }
 
-    public void setChangeTrackingEnabled(Boolean changeTrackingEnabled) {
+    public void setChangeTrackingEnabled(final Boolean changeTrackingEnabled) {
         this.changeTrackingEnabled = changeTrackingEnabled;
     }
 
-    public Boolean isGuestAutoLockEnabled() {
-        return guestAutoLockEnabled;
+    public String getChangeVersion() {
+        return changeVersion;
     }
 
-    public void setGuestAutoLockEnabled(Boolean guestAutoLockEnabled) {
-        this.guestAutoLockEnabled = guestAutoLockEnabled;
+    public void setChangeVersion(final String changeVersion) {
+        this.changeVersion = changeVersion;
     }
 
-    public Boolean isMemoryReservationLockedToMax() {
-        return memoryReservationLockedToMax;
+    public VirtualMachineConsolePreferences getConsolePreferences() {
+        return consolePreferences;
     }
 
-    public void setMemoryReservationLockedToMax(Boolean memoryReservationLockedToMax) {
-        this.memoryReservationLockedToMax = memoryReservationLockedToMax;
+    public void setConsolePreferences(final VirtualMachineConsolePreferences consolePreferences) {
+        this.consolePreferences = consolePreferences;
     }
 
-    public Boolean isNestedHVEnabled() {
-        return nestedHVEnabled;
+    public VirtualMachineAffinityInfo getCpuAffinity() {
+        return cpuAffinity;
     }
 
-    public void setNestedHVEnabled(Boolean nestedHVEnabled) {
-        this.nestedHVEnabled = nestedHVEnabled;
+    public void setCpuAffinity(final VirtualMachineAffinityInfo cpuAffinity) {
+        this.cpuAffinity = cpuAffinity;
     }
 
-    public Boolean isvPMCEnabled() {
-        return vPMCEnabled;
+    public ResourceAllocationInfo getCpuAllocation() {
+        return cpuAllocation;
     }
 
-    public void setvPMCEnabled(final Boolean vPMCEnabled) {
-        this.vPMCEnabled = vPMCEnabled;
+    public void setCpuAllocation(final ResourceAllocationInfo cpuAllocation) {
+        this.cpuAllocation = cpuAllocation;
+    }
+
+    public VirtualMachineCpuIdInfoSpec[] getCpuFeatureMask() {
+        return cpuFeatureMask;
+    }
+
+    public void setCpuFeatureMask(final VirtualMachineCpuIdInfoSpec[] cpuFeatureMask) {
+        this.cpuFeatureMask = cpuFeatureMask;
+    }
+
+    public Boolean getCpuHotAddEnabled() {
+        return cpuHotAddEnabled;
+    }
+
+    public void setCpuHotAddEnabled(final Boolean cpuHotAddEnabled) {
+        this.cpuHotAddEnabled = cpuHotAddEnabled;
+    }
+
+    public Boolean getCpuHotRemoveEnabled() {
+        return cpuHotRemoveEnabled;
+    }
+
+    public void setCpuHotRemoveEnabled(final Boolean cpuHotRemoveEnabled) {
+        this.cpuHotRemoveEnabled = cpuHotRemoveEnabled;
+    }
+
+    public Calendar getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(final Calendar createDate) {
+        this.createDate = createDate;
     }
 
     public CryptoSpec getCrypto() {
@@ -567,7 +278,151 @@ public class VirtualMachineConfigSpec extends DynamicData {
         this.crypto = crypto;
     }
 
-    public Boolean isMessageBusTunnelEnabled() {
+    public VirtualDeviceConfigSpec[] getDeviceChange() {
+        return deviceChange;
+    }
+
+    public void setDeviceChange(final VirtualDeviceConfigSpec[] deviceChange) {
+        this.deviceChange = deviceChange;
+    }
+
+    public OptionValue[] getExtraConfig() {
+        return extraConfig;
+    }
+
+    public void setExtraConfig(final OptionValue[] extraConfig) {
+        this.extraConfig = extraConfig;
+    }
+
+    public VirtualMachineFileInfo getFiles() {
+        return files;
+    }
+
+    public void setFiles(final VirtualMachineFileInfo files) {
+        this.files = files;
+    }
+
+    public String getFirmware() {
+        return firmware;
+    }
+
+    public void setFirmware(final String firmware) {
+        this.firmware = firmware;
+    }
+
+    public VirtualMachineFlagInfo getFlags() {
+        return flags;
+    }
+
+    public void setFlags(final VirtualMachineFlagInfo flags) {
+        this.flags = flags;
+    }
+
+    public FaultToleranceConfigInfo getFtInfo() {
+        return ftInfo;
+    }
+
+    public void setFtInfo(final FaultToleranceConfigInfo ftInfo) {
+        this.ftInfo = ftInfo;
+    }
+
+    public Boolean getGuestAutoLockEnabled() {
+        return guestAutoLockEnabled;
+    }
+
+    public void setGuestAutoLockEnabled(final Boolean guestAutoLockEnabled) {
+        this.guestAutoLockEnabled = guestAutoLockEnabled;
+    }
+
+    public String getGuestId() {
+        return guestId;
+    }
+
+    public void setGuestId(final String guestId) {
+        this.guestId = guestId;
+    }
+
+    public String getInstanceUuid() {
+        return instanceUuid;
+    }
+
+    public void setInstanceUuid(final String instanceUuid) {
+        this.instanceUuid = instanceUuid;
+    }
+
+    public LatencySensitivity getLatencySensitivity() {
+        return latencySensitivity;
+    }
+
+    public void setLatencySensitivity(final LatencySensitivity latencySensitivity) {
+        this.latencySensitivity = latencySensitivity;
+    }
+
+    public String getLocationId() {
+        return locationId;
+    }
+
+    public void setLocationId(final String locationId) {
+        this.locationId = locationId;
+    }
+
+    public ManagedByInfo getManagedBy() {
+        return managedBy;
+    }
+
+    public void setManagedBy(final ManagedByInfo managedBy) {
+        this.managedBy = managedBy;
+    }
+
+    public Integer getMaxMksConnections() {
+        return maxMksConnections;
+    }
+
+    public void setMaxMksConnections(final Integer maxMksConnections) {
+        this.maxMksConnections = maxMksConnections;
+    }
+
+    public VirtualMachineAffinityInfo getMemoryAffinity() {
+        return memoryAffinity;
+    }
+
+    public void setMemoryAffinity(final VirtualMachineAffinityInfo memoryAffinity) {
+        this.memoryAffinity = memoryAffinity;
+    }
+
+    public ResourceAllocationInfo getMemoryAllocation() {
+        return memoryAllocation;
+    }
+
+    public void setMemoryAllocation(final ResourceAllocationInfo memoryAllocation) {
+        this.memoryAllocation = memoryAllocation;
+    }
+
+    public Boolean getMemoryHotAddEnabled() {
+        return memoryHotAddEnabled;
+    }
+
+    public void setMemoryHotAddEnabled(final Boolean memoryHotAddEnabled) {
+        this.memoryHotAddEnabled = memoryHotAddEnabled;
+    }
+
+    public Long getMemoryMB() {
+        return memoryMB;
+    }
+
+    public void setMemoryMB(final Long memoryMB) {
+        this.memoryMB = memoryMB;
+    }
+
+    public Boolean getMemoryReservationLockedToMax() {
+        return memoryReservationLockedToMax;
+    }
+
+    public void setMemoryReservationLockedToMax(final Boolean memoryReservationLockedToMax) {
+        this.memoryReservationLockedToMax = memoryReservationLockedToMax;
+    }
+
+    public Boolean getMessageBusTunnelEnabled() {
         return messageBusTunnelEnabled;
     }
 
@@ -583,6 +438,118 @@ public class VirtualMachineConfigSpec extends DynamicData {
         this.migrateEncryption = migrateEncryption;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public Boolean getNestedHVEnabled() {
+        return nestedHVEnabled;
+    }
+
+    public void setNestedHVEnabled(final Boolean nestedHVEnabled) {
+        this.nestedHVEnabled = nestedHVEnabled;
+    }
+
+    public VirtualMachineNetworkShaperInfo getNetworkShaper() {
+        return networkShaper;
+    }
+
+    public void setNetworkShaper(final VirtualMachineNetworkShaperInfo networkShaper) {
+        this.networkShaper = networkShaper;
+    }
+
+    public Short getNpivDesiredNodeWwns() {
+        return npivDesiredNodeWwns;
+    }
+
+    public void setNpivDesiredNodeWwns(final Short npivDesiredNodeWwns) {
+        this.npivDesiredNodeWwns = npivDesiredNodeWwns;
+    }
+
+    public Short getNpivDesiredPortWwns() {
+        return npivDesiredPortWwns;
+    }
+
+    public void setNpivDesiredPortWwns(final Short npivDesiredPortWwns) {
+        this.npivDesiredPortWwns = npivDesiredPortWwns;
+    }
+
+    public Long[] getNpivNodeWorldWideName() {
+        return npivNodeWorldWideName;
+    }
+
+    public void setNpivNodeWorldWideName(final Long[] npivNodeWorldWideName) {
+        this.npivNodeWorldWideName = npivNodeWorldWideName;
+    }
+
+    public Boolean getNpivOnNonRdmDisks() {
+        return npivOnNonRdmDisks;
+    }
+
+    public void setNpivOnNonRdmDisks(final Boolean npivOnNonRdmDisks) {
+        this.npivOnNonRdmDisks = npivOnNonRdmDisks;
+    }
+
+    public Long[] getNpivPortWorldWideName() {
+        return npivPortWorldWideName;
+    }
+
+    public void setNpivPortWorldWideName(final Long[] npivPortWorldWideName) {
+        this.npivPortWorldWideName = npivPortWorldWideName;
+    }
+
+    public Boolean getNpivTemporaryDisabled() {
+        return npivTemporaryDisabled;
+    }
+
+    public void setNpivTemporaryDisabled(final Boolean npivTemporaryDisabled) {
+        this.npivTemporaryDisabled = npivTemporaryDisabled;
+    }
+
+    public String getNpivWorldWideNameOp() {
+        return npivWorldWideNameOp;
+    }
+
+    public void setNpivWorldWideNameOp(final String npivWorldWideNameOp) {
+        this.npivWorldWideNameOp = npivWorldWideNameOp;
+    }
+
+    public String getNpivWorldWideNameType() {
+        return npivWorldWideNameType;
+    }
+
+    public void setNpivWorldWideNameType(final String npivWorldWideNameType) {
+        this.npivWorldWideNameType = npivWorldWideNameType;
+    }
+
+    public Integer getNumCoresPerSocket() {
+        return numCoresPerSocket;
+    }
+
+    public void setNumCoresPerSocket(final Integer numCoresPerSocket) {
+        this.numCoresPerSocket = numCoresPerSocket;
+    }
+
+    public Integer getNumCPUs() {
+        return numCPUs;
+    }
+
+    public void setNumCPUs(final Integer numCPUs) {
+        this.numCPUs = numCPUs;
+    }
+
+    public VirtualMachineDefaultPowerOpInfo getPowerOpInfo() {
+        return powerOpInfo;
+    }
+
+    public void setPowerOpInfo(final VirtualMachineDefaultPowerOpInfo powerOpInfo) {
+        this.powerOpInfo = powerOpInfo;
+    }
+
     public ReplicationConfigSpec getRepConfig() {
         return repConfig;
     }
@@ -590,4 +557,101 @@ public class VirtualMachineConfigSpec extends DynamicData {
     public void setRepConfig(final ReplicationConfigSpec repConfig) {
         this.repConfig = repConfig;
     }
+
+    public ScheduledHardwareUpgradeInfo getScheduledHardwareUpgradeInfo() {
+        return scheduledHardwareUpgradeInfo;
+    }
+
+    public void setScheduledHardwareUpgradeInfo(final ScheduledHardwareUpgradeInfo scheduledHardwareUpgradeInfo) {
+        this.scheduledHardwareUpgradeInfo = scheduledHardwareUpgradeInfo;
+    }
+
+    public String getSwapPlacement() {
+        return swapPlacement;
+    }
+
+    public void setSwapPlacement(final String swapPlacement) {
+        this.swapPlacement = swapPlacement;
+    }
+
+    public ToolsConfigInfo getTools() {
+        return tools;
+    }
+
+    public void setTools(final ToolsConfigInfo tools) {
+        this.tools = tools;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(final String uuid) {
+        this.uuid = uuid;
+    }
+
+    public VmConfigSpec getvAppConfig() {
+        return vAppConfig;
+    }
+
+    public void setvAppConfig(final VmConfigSpec vAppConfig) {
+        this.vAppConfig = vAppConfig;
+    }
+
+    public Boolean getvAppConfigRemoved() {
+        return vAppConfigRemoved;
+    }
+
+    public void setvAppConfigRemoved(final Boolean vAppConfigRemoved) {
+        this.vAppConfigRemoved = vAppConfigRemoved;
+    }
+
+    public Boolean getvAssertsEnabled() {
+        return vAssertsEnabled;
+    }
+
+    public void setvAssertsEnabled(final Boolean vAssertsEnabled) {
+        this.vAssertsEnabled = vAssertsEnabled;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(final String version) {
+        this.version = version;
+    }
+
+    public Boolean getVirtualICH7MPresent() {
+        return virtualICH7MPresent;
+    }
+
+    public void setVirtualICH7MPresent(final Boolean virtualICH7MPresent) {
+        this.virtualICH7MPresent = virtualICH7MPresent;
+    }
+
+    public Boolean getVirtualSMCPresent() {
+        return virtualSMCPresent;
+    }
+
+    public void setVirtualSMCPresent(final Boolean virtualSMCPresent) {
+        this.virtualSMCPresent = virtualSMCPresent;
+    }
+
+    public VirtualMachineProfileSpec[] getVmProfile() {
+        return vmProfile;
+    }
+
+    public void setVmProfile(final VirtualMachineProfileSpec[] vmProfile) {
+        this.vmProfile = vmProfile;
+    }
+
+    public Boolean getvPMCEnabled() {
+        return vPMCEnabled;
+    }
+
+    public void setvPMCEnabled(final Boolean vPMCEnabled) {
+        this.vPMCEnabled = vPMCEnabled;
+    }
+
 }

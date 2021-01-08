@@ -29,74 +29,115 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * The EVCMode data object describes an Enhanced vMotion Compatibility mode. An EVC mode is associated with a set of CPU features.
+ * A vCenter Server defines the available EVC modes. You use them to establish a common set of features for compatibility between hosts in a cluster.
+ * An EVC-enabled cluster supports safe vMotion of virtual machines across a range of CPU generations. You must use the vSphere Client to configure EVC.
+ * When you add a host to an EVC-enabled cluster, the vCenter Server determines the CPU compatibility to preserve vMotion compatibility within the cluster.
+ * If the host CPU is compatible with those already in the cluster, the Server adds the host to the cluster and configures it for compatible operation.
+ * Hosts that are not compatible are not allowed to join the cluster.
+ * <p>
+ * The inherited key property is a string value that uniquely identifies an EVC mode. The vCenter Server assigns the key value;
+ * the vSphere API uses the key to identify modes in summary and information objects:
+ * <p>
+ * ClusterComputeResourceSummary.currentEVCModeKey
+ * HostListSummary.currentEVCModeKey
+ * HostListSummary.maxEVCModeKey
+ * VirtualMachineRuntimeInfo.minRequiredEVCModeKey
+ * The inherited label and summary properties are human-readable strings.
+ * <p>
+ * You can use the track and vendorTier properties to determine feature-superset relationships between modes without examining the individual feature bits in guaranteedCPUFeatures.
+ * The CPU feature baseline of mode A is a superset of mode B's baseline if and only if:
+ * <p>
+ * modeA.track is the same as or a superset of modeB.track
+ * modeA.vendorTier is equal to or greater than modeB.vendorTier
+ * Use the track and vendorTier properties only for the purpose of feature-superset calculations as described above.
+ * Do not use them to infer the presence or absence of specific features. The property values for a given mode may change across releases as the set of available EVC modes changes,
+ * to better represent mode relationships.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
-@SuppressWarnings("all")
 public class EVCMode extends ElementDescription {
-  public HostCpuIdInfo[] guaranteedCPUFeatures;
-  public HostFeatureCapability[] featureCapability;
-  public HostFeatureMask[] featureMask;
-  public VirtualMachineFeatureRequirement[] featureRequirement;
-  public String vendor;
-  public String[] track;
-  public int vendorTier;
 
-  public HostCpuIdInfo[] getGuaranteedCPUFeatures() {
-    return this.guaranteedCPUFeatures;
-  }
+    private HostCpuIdInfo[] guaranteedCPUFeatures;
+    private HostFeatureCapability[] featureCapability;
+    private HostFeatureMask[] featureMask;
+    private VirtualMachineFeatureRequirement[] featureRequirement;
+    private String vendor;
+    private String[] track;
+    private int vendorTier;
 
-  public HostFeatureCapability[] getFeatureCapability() {
-    return this.featureCapability;
-  }
+    @Override
+    public String toString() {
+        return "EVCMode{" +
+                "guaranteedCPUFeatures=" + Arrays.toString(guaranteedCPUFeatures) +
+                ", featureCapability=" + Arrays.toString(featureCapability) +
+                ", featureMask=" + Arrays.toString(featureMask) +
+                ", featureRequirement=" + Arrays.toString(featureRequirement) +
+                ", vendor='" + vendor + '\'' +
+                ", track=" + Arrays.toString(track) +
+                ", vendorTier=" + vendorTier +
+                "} " + super.toString();
+    }
 
-  public HostFeatureMask[] getFeatureMask() {
-    return this.featureMask;
-  }
+    public HostCpuIdInfo[] getGuaranteedCPUFeatures() {
+        return guaranteedCPUFeatures;
+    }
 
-  public VirtualMachineFeatureRequirement[] getFeatureRequirement() {
-    return this.featureRequirement;
-  }
+    public void setGuaranteedCPUFeatures(final HostCpuIdInfo[] guaranteedCPUFeatures) {
+        this.guaranteedCPUFeatures = guaranteedCPUFeatures;
+    }
 
-  public String getVendor() {
-    return this.vendor;
-  }
+    public HostFeatureCapability[] getFeatureCapability() {
+        return featureCapability;
+    }
 
-  public String[] getTrack() {
-    return this.track;
-  }
+    public void setFeatureCapability(final HostFeatureCapability[] featureCapability) {
+        this.featureCapability = featureCapability;
+    }
 
-  public int getVendorTier() {
-    return this.vendorTier;
-  }
+    public HostFeatureMask[] getFeatureMask() {
+        return featureMask;
+    }
 
-  public void setGuaranteedCPUFeatures(HostCpuIdInfo[] guaranteedCPUFeatures) {
-    this.guaranteedCPUFeatures=guaranteedCPUFeatures;
-  }
+    public void setFeatureMask(final HostFeatureMask[] featureMask) {
+        this.featureMask = featureMask;
+    }
 
-  public void setFeatureCapability(HostFeatureCapability[] featureCapability) {
-    this.featureCapability=featureCapability;
-  }
+    public VirtualMachineFeatureRequirement[] getFeatureRequirement() {
+        return featureRequirement;
+    }
 
-  public void setFeatureMask(HostFeatureMask[] featureMask) {
-    this.featureMask=featureMask;
-  }
+    public void setFeatureRequirement(final VirtualMachineFeatureRequirement[] featureRequirement) {
+        this.featureRequirement = featureRequirement;
+    }
 
-  public void setFeatureRequirement(VirtualMachineFeatureRequirement[] featureRequirement) {
-    this.featureRequirement=featureRequirement;
-  }
+    public String getVendor() {
+        return vendor;
+    }
 
-  public void setVendor(String vendor) {
-    this.vendor=vendor;
-  }
+    public void setVendor(final String vendor) {
+        this.vendor = vendor;
+    }
 
-  public void setTrack(String[] track) {
-    this.track=track;
-  }
+    public String[] getTrack() {
+        return track;
+    }
 
-  public void setVendorTier(int vendorTier) {
-    this.vendorTier=vendorTier;
-  }
+    public void setTrack(final String[] track) {
+        this.track = track;
+    }
+
+    public int getVendorTier() {
+        return vendorTier;
+    }
+
+    public void setVendorTier(final int vendorTier) {
+        this.vendorTier = vendorTier;
+    }
+
 }

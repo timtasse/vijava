@@ -29,146 +29,184 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * This data object type describes the physical network adapter as seen by the primary operating system.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ */
 
 @SuppressWarnings("all")
 public class PhysicalNic extends DynamicData {
-  public String key;
-  public String device;
-  public String pci;
-  public String driver;
-  public PhysicalNicLinkInfo linkSpeed;
-  public PhysicalNicLinkInfo[] validLinkSpecification;
-  public PhysicalNicSpec spec;
-  public boolean wakeOnLanSupported;
-  public String mac;
-  public FcoeConfig fcoeConfiguration;
-  public Boolean vmDirectPathGen2Supported;
-  public String vmDirectPathGen2SupportedMode;
-  public Boolean resourcePoolSchedulerAllowed;
-  public String[] resourcePoolSchedulerDisallowedReason;
-  public Boolean autoNegotiateSupported;
 
-  public String getKey() {
-    return this.key;
-  }
+    public Boolean autoNegotiateSupported;
+    public String device;
+    public String driver;
+    private Boolean enhancedNetworkingStackSupported;
+    public FcoeConfig fcoeConfiguration;
+    public String key;
+    public PhysicalNicLinkInfo linkSpeed;
+    public String mac;
+    public String pci;
+    public Boolean resourcePoolSchedulerAllowed;
+    public String[] resourcePoolSchedulerDisallowedReason;
+    public PhysicalNicSpec spec;
+    public PhysicalNicLinkInfo[] validLinkSpecification;
+    public Boolean vmDirectPathGen2Supported;
+    public String vmDirectPathGen2SupportedMode;
+    public boolean wakeOnLanSupported;
 
-  public String getDevice() {
-    return this.device;
-  }
+    @Override
+    public String toString() {
+        return "PhysicalNic{" +
+                "autoNegotiateSupported=" + autoNegotiateSupported +
+                ", device='" + device + '\'' +
+                ", driver='" + driver + '\'' +
+                ", enhancedNetworkingStackSupported=" + enhancedNetworkingStackSupported +
+                ", fcoeConfiguration=" + fcoeConfiguration +
+                ", key='" + key + '\'' +
+                ", linkSpeed=" + linkSpeed +
+                ", mac='" + mac + '\'' +
+                ", pci='" + pci + '\'' +
+                ", resourcePoolSchedulerAllowed=" + resourcePoolSchedulerAllowed +
+                ", resourcePoolSchedulerDisallowedReason=" + Arrays.toString(resourcePoolSchedulerDisallowedReason) +
+                ", spec=" + spec +
+                ", validLinkSpecification=" + Arrays.toString(validLinkSpecification) +
+                ", vmDirectPathGen2Supported=" + vmDirectPathGen2Supported +
+                ", vmDirectPathGen2SupportedMode='" + vmDirectPathGen2SupportedMode + '\'' +
+                ", wakeOnLanSupported=" + wakeOnLanSupported +
+                "} " + super.toString();
+    }
 
-  public String getPci() {
-    return this.pci;
-  }
+    public String getKey() {
+        return this.key;
+    }
 
-  public String getDriver() {
-    return this.driver;
-  }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-  public PhysicalNicLinkInfo getLinkSpeed() {
-    return this.linkSpeed;
-  }
+    public String getDevice() {
+        return this.device;
+    }
 
-  public PhysicalNicLinkInfo[] getValidLinkSpecification() {
-    return this.validLinkSpecification;
-  }
+    public void setDevice(String device) {
+        this.device = device;
+    }
 
-  public PhysicalNicSpec getSpec() {
-    return this.spec;
-  }
+    public String getPci() {
+        return this.pci;
+    }
 
-  public boolean isWakeOnLanSupported() {
-    return this.wakeOnLanSupported;
-  }
+    public void setPci(String pci) {
+        this.pci = pci;
+    }
 
-  public String getMac() {
-    return this.mac;
-  }
+    public String getDriver() {
+        return this.driver;
+    }
 
-  public FcoeConfig getFcoeConfiguration() {
-    return this.fcoeConfiguration;
-  }
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
 
-  public Boolean getVmDirectPathGen2Supported() {
-    return this.vmDirectPathGen2Supported;
-  }
+    public PhysicalNicLinkInfo getLinkSpeed() {
+        return this.linkSpeed;
+    }
 
-  public String getVmDirectPathGen2SupportedMode() {
-    return this.vmDirectPathGen2SupportedMode;
-  }
+    public void setLinkSpeed(PhysicalNicLinkInfo linkSpeed) {
+        this.linkSpeed = linkSpeed;
+    }
 
-  public Boolean getResourcePoolSchedulerAllowed() {
-    return this.resourcePoolSchedulerAllowed;
-  }
+    public PhysicalNicLinkInfo[] getValidLinkSpecification() {
+        return this.validLinkSpecification;
+    }
 
-  public String[] getResourcePoolSchedulerDisallowedReason() {
-    return this.resourcePoolSchedulerDisallowedReason;
-  }
+    public void setValidLinkSpecification(PhysicalNicLinkInfo[] validLinkSpecification) {
+        this.validLinkSpecification = validLinkSpecification;
+    }
 
-  public Boolean getAutoNegotiateSupported() {
-    return this.autoNegotiateSupported;
-  }
+    public PhysicalNicSpec getSpec() {
+        return this.spec;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public void setSpec(PhysicalNicSpec spec) {
+        this.spec = spec;
+    }
 
-  public void setDevice(String device) {
-    this.device=device;
-  }
+    public boolean isWakeOnLanSupported() {
+        return this.wakeOnLanSupported;
+    }
 
-  public void setPci(String pci) {
-    this.pci=pci;
-  }
+    public void setWakeOnLanSupported(boolean wakeOnLanSupported) {
+        this.wakeOnLanSupported = wakeOnLanSupported;
+    }
 
-  public void setDriver(String driver) {
-    this.driver=driver;
-  }
+    public String getMac() {
+        return this.mac;
+    }
 
-  public void setLinkSpeed(PhysicalNicLinkInfo linkSpeed) {
-    this.linkSpeed=linkSpeed;
-  }
+    public void setMac(String mac) {
+        this.mac = mac;
+    }
 
-  public void setValidLinkSpecification(PhysicalNicLinkInfo[] validLinkSpecification) {
-    this.validLinkSpecification=validLinkSpecification;
-  }
+    public FcoeConfig getFcoeConfiguration() {
+        return this.fcoeConfiguration;
+    }
 
-  public void setSpec(PhysicalNicSpec spec) {
-    this.spec=spec;
-  }
+    public void setFcoeConfiguration(FcoeConfig fcoeConfiguration) {
+        this.fcoeConfiguration = fcoeConfiguration;
+    }
 
-  public void setWakeOnLanSupported(boolean wakeOnLanSupported) {
-    this.wakeOnLanSupported=wakeOnLanSupported;
-  }
+    public Boolean getVmDirectPathGen2Supported() {
+        return this.vmDirectPathGen2Supported;
+    }
 
-  public void setMac(String mac) {
-    this.mac=mac;
-  }
+    public void setVmDirectPathGen2Supported(Boolean vmDirectPathGen2Supported) {
+        this.vmDirectPathGen2Supported = vmDirectPathGen2Supported;
+    }
 
-  public void setFcoeConfiguration(FcoeConfig fcoeConfiguration) {
-    this.fcoeConfiguration=fcoeConfiguration;
-  }
+    public String getVmDirectPathGen2SupportedMode() {
+        return this.vmDirectPathGen2SupportedMode;
+    }
 
-  public void setVmDirectPathGen2Supported(Boolean vmDirectPathGen2Supported) {
-    this.vmDirectPathGen2Supported=vmDirectPathGen2Supported;
-  }
+    public void setVmDirectPathGen2SupportedMode(String vmDirectPathGen2SupportedMode) {
+        this.vmDirectPathGen2SupportedMode = vmDirectPathGen2SupportedMode;
+    }
 
-  public void setVmDirectPathGen2SupportedMode(String vmDirectPathGen2SupportedMode) {
-    this.vmDirectPathGen2SupportedMode=vmDirectPathGen2SupportedMode;
-  }
+    public Boolean getResourcePoolSchedulerAllowed() {
+        return this.resourcePoolSchedulerAllowed;
+    }
 
-  public void setResourcePoolSchedulerAllowed(Boolean resourcePoolSchedulerAllowed) {
-    this.resourcePoolSchedulerAllowed=resourcePoolSchedulerAllowed;
-  }
+    public void setResourcePoolSchedulerAllowed(Boolean resourcePoolSchedulerAllowed) {
+        this.resourcePoolSchedulerAllowed = resourcePoolSchedulerAllowed;
+    }
 
-  public void setResourcePoolSchedulerDisallowedReason(String[] resourcePoolSchedulerDisallowedReason) {
-    this.resourcePoolSchedulerDisallowedReason=resourcePoolSchedulerDisallowedReason;
-  }
+    public String[] getResourcePoolSchedulerDisallowedReason() {
+        return this.resourcePoolSchedulerDisallowedReason;
+    }
 
-  public void setAutoNegotiateSupported(Boolean autoNegotiateSupported) {
-    this.autoNegotiateSupported=autoNegotiateSupported;
-  }
+    public void setResourcePoolSchedulerDisallowedReason(String[] resourcePoolSchedulerDisallowedReason) {
+        this.resourcePoolSchedulerDisallowedReason = resourcePoolSchedulerDisallowedReason;
+    }
+
+    public Boolean getAutoNegotiateSupported() {
+        return this.autoNegotiateSupported;
+    }
+
+    public void setAutoNegotiateSupported(Boolean autoNegotiateSupported) {
+        this.autoNegotiateSupported = autoNegotiateSupported;
+    }
+
+    public Boolean getEnhancedNetworkingStackSupported() {
+        return enhancedNetworkingStackSupported;
+    }
+
+    public void setEnhancedNetworkingStackSupported(final Boolean enhancedNetworkingStackSupported) {
+        this.enhancedNetworkingStackSupported = enhancedNetworkingStackSupported;
+    }
+
 }

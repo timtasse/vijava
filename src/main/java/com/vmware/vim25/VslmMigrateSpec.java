@@ -1,15 +1,28 @@
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * Base specification of moving or copying a virtual storage object.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  * @since 6.5
  */
 public class VslmMigrateSpec extends DynamicData {
 
-    public VslmCreateSpecBackingSpec backingSpec;
-    public Boolean consolidate;
+    private VslmCreateSpecBackingSpec backingSpec;
+    private Boolean consolidate;
+    private VirtualMachineProfileSpec[] profile;
+
+    @Override
+    public String toString() {
+        return "VslmMigrateSpec{" +
+                "backingSpec=" + backingSpec +
+                ", consolidate=" + consolidate +
+                ", profile=" + Arrays.toString(profile) +
+                "} " + super.toString();
+    }
 
     public VslmCreateSpecBackingSpec getBackingSpec() {
         return backingSpec;
@@ -19,11 +32,20 @@ public class VslmMigrateSpec extends DynamicData {
         this.backingSpec = backingSpec;
     }
 
-    public Boolean isConsolidate() {
+    public Boolean getConsolidate() {
         return consolidate;
     }
 
     public void setConsolidate(final Boolean consolidate) {
         this.consolidate = consolidate;
     }
+
+    public VirtualMachineProfileSpec[] getProfile() {
+        return profile;
+    }
+
+    public void setProfile(final VirtualMachineProfileSpec[] profile) {
+        this.profile = profile;
+    }
+
 }

@@ -29,110 +29,150 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * This configuration data object type contains information about the execution environment for a virtual machine.
+ * This includes information about which features are supported, such as:
+ * Which guest operating systems are supported.
+ * How devices are emulated. For example, that a CD-ROM drive can be emulated with a file or that a serial port can be emulated with a pipe.
+ * VirtualCenter can provide a broader environment than any single physical host.
+ * This is a departure from traditional virtualization approaches, which rely on the host system to define the environment for virtual machines.
+ * This data object describes environment capabilities and is used by VirtualCenter to choose hosts on which to run virtual machines.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ */
 
 @SuppressWarnings("all")
 public class VirtualMachineConfigOption extends DynamicData {
-  public String version;
-  public String description;
-  public GuestOsDescriptor[] guestOSDescriptor;
-  public int guestOSDefaultIndex;
-  public VirtualHardwareOption hardwareOptions;
-  public VirtualMachineCapability capabilities;
-  public DatastoreOption datastore;
-  public VirtualDevice[] defaultDevice;
-  public String[] supportedMonitorType;
-  public String[] supportedOvfEnvironmentTransport;
-  public String[] supportedOvfInstallTransport;
 
-  public String getVersion() {
-    return this.version;
-  }
+    private VirtualMachineCapability capabilities;
+    private DatastoreOption datastore;
+    private VirtualDevice[] defaultDevice;
+    private String description;
+    private int guestOSDefaultIndex;
+    private GuestOsDescriptor[] guestOSDescriptor;
+    private VirtualHardwareOption hardwareOptions;
+    private VirtualMachinePropertyRelation[] propertyRelations;
+    private String[] supportedMonitorType;
+    private String[] supportedOvfEnvironmentTransport;
+    private String[] supportedOvfInstallTransport;
+    private String version;
 
-  public String getDescription() {
-    return this.description;
-  }
+    @Override
+    public String toString() {
+        return "VirtualMachineConfigOption{" +
+                "capabilities=" + capabilities +
+                ", datastore=" + datastore +
+                ", defaultDevice=" + Arrays.toString(defaultDevice) +
+                ", description='" + description + '\'' +
+                ", guestOSDefaultIndex=" + guestOSDefaultIndex +
+                ", guestOSDescriptor=" + Arrays.toString(guestOSDescriptor) +
+                ", hardwareOptions=" + hardwareOptions +
+                ", propertyRelations=" + Arrays.toString(propertyRelations) +
+                ", supportedMonitorType=" + Arrays.toString(supportedMonitorType) +
+                ", supportedOvfEnvironmentTransport=" + Arrays.toString(supportedOvfEnvironmentTransport) +
+                ", supportedOvfInstallTransport=" + Arrays.toString(supportedOvfInstallTransport) +
+                ", version='" + version + '\'' +
+                "} " + super.toString();
+    }
 
-  public GuestOsDescriptor[] getGuestOSDescriptor() {
-    return this.guestOSDescriptor;
-  }
+    public String getVersion() {
+        return this.version;
+    }
 
-  public int getGuestOSDefaultIndex() {
-    return this.guestOSDefaultIndex;
-  }
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-  public VirtualHardwareOption getHardwareOptions() {
-    return this.hardwareOptions;
-  }
+    public String getDescription() {
+        return this.description;
+    }
 
-  public VirtualMachineCapability getCapabilities() {
-    return this.capabilities;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public DatastoreOption getDatastore() {
-    return this.datastore;
-  }
+    public GuestOsDescriptor[] getGuestOSDescriptor() {
+        return this.guestOSDescriptor;
+    }
 
-  public VirtualDevice[] getDefaultDevice() {
-    return this.defaultDevice;
-  }
+    public void setGuestOSDescriptor(GuestOsDescriptor[] guestOSDescriptor) {
+        this.guestOSDescriptor = guestOSDescriptor;
+    }
 
-  public String[] getSupportedMonitorType() {
-    return this.supportedMonitorType;
-  }
+    public int getGuestOSDefaultIndex() {
+        return this.guestOSDefaultIndex;
+    }
 
-  public String[] getSupportedOvfEnvironmentTransport() {
-    return this.supportedOvfEnvironmentTransport;
-  }
+    public void setGuestOSDefaultIndex(int guestOSDefaultIndex) {
+        this.guestOSDefaultIndex = guestOSDefaultIndex;
+    }
 
-  public String[] getSupportedOvfInstallTransport() {
-    return this.supportedOvfInstallTransport;
-  }
+    public VirtualHardwareOption getHardwareOptions() {
+        return this.hardwareOptions;
+    }
 
-  public void setVersion(String version) {
-    this.version=version;
-  }
+    public void setHardwareOptions(VirtualHardwareOption hardwareOptions) {
+        this.hardwareOptions = hardwareOptions;
+    }
 
-  public void setDescription(String description) {
-    this.description=description;
-  }
+    public VirtualMachineCapability getCapabilities() {
+        return this.capabilities;
+    }
 
-  public void setGuestOSDescriptor(GuestOsDescriptor[] guestOSDescriptor) {
-    this.guestOSDescriptor=guestOSDescriptor;
-  }
+    public void setCapabilities(VirtualMachineCapability capabilities) {
+        this.capabilities = capabilities;
+    }
 
-  public void setGuestOSDefaultIndex(int guestOSDefaultIndex) {
-    this.guestOSDefaultIndex=guestOSDefaultIndex;
-  }
+    public DatastoreOption getDatastore() {
+        return this.datastore;
+    }
 
-  public void setHardwareOptions(VirtualHardwareOption hardwareOptions) {
-    this.hardwareOptions=hardwareOptions;
-  }
+    public void setDatastore(DatastoreOption datastore) {
+        this.datastore = datastore;
+    }
 
-  public void setCapabilities(VirtualMachineCapability capabilities) {
-    this.capabilities=capabilities;
-  }
+    public VirtualDevice[] getDefaultDevice() {
+        return this.defaultDevice;
+    }
 
-  public void setDatastore(DatastoreOption datastore) {
-    this.datastore=datastore;
-  }
+    public void setDefaultDevice(VirtualDevice[] defaultDevice) {
+        this.defaultDevice = defaultDevice;
+    }
 
-  public void setDefaultDevice(VirtualDevice[] defaultDevice) {
-    this.defaultDevice=defaultDevice;
-  }
+    public String[] getSupportedMonitorType() {
+        return this.supportedMonitorType;
+    }
 
-  public void setSupportedMonitorType(String[] supportedMonitorType) {
-    this.supportedMonitorType=supportedMonitorType;
-  }
+    public void setSupportedMonitorType(String[] supportedMonitorType) {
+        this.supportedMonitorType = supportedMonitorType;
+    }
 
-  public void setSupportedOvfEnvironmentTransport(String[] supportedOvfEnvironmentTransport) {
-    this.supportedOvfEnvironmentTransport=supportedOvfEnvironmentTransport;
-  }
+    public String[] getSupportedOvfEnvironmentTransport() {
+        return this.supportedOvfEnvironmentTransport;
+    }
 
-  public void setSupportedOvfInstallTransport(String[] supportedOvfInstallTransport) {
-    this.supportedOvfInstallTransport=supportedOvfInstallTransport;
-  }
+    public void setSupportedOvfEnvironmentTransport(String[] supportedOvfEnvironmentTransport) {
+        this.supportedOvfEnvironmentTransport = supportedOvfEnvironmentTransport;
+    }
+
+    public String[] getSupportedOvfInstallTransport() {
+        return this.supportedOvfInstallTransport;
+    }
+
+    public void setSupportedOvfInstallTransport(String[] supportedOvfInstallTransport) {
+        this.supportedOvfInstallTransport = supportedOvfInstallTransport;
+    }
+
+    public VirtualMachinePropertyRelation[] getPropertyRelations() {
+        return propertyRelations;
+    }
+
+    public void setPropertyRelations(final VirtualMachinePropertyRelation[] propertyRelations) {
+        this.propertyRelations = propertyRelations;
+    }
+
 }

@@ -79,8 +79,14 @@ public final class MorUtil {
         }
     }
 
-    public static ManagedEntity createExactManagedEntity(ServerConnection sc, ManagedObjectReference mor) {
-        return (ManagedEntity) createExactManagedObject(sc, mor);
+    public static ManagedEntity createExactManagedEntity(ServerConnection sc, ManagedObjectReference mor, final String name) {
+        final ManagedEntity entity = (ManagedEntity) createExactManagedObject(sc, mor);
+        if (name != null) {
+            entity.setName(name);
+        } else {
+            entity.getRealName();
+        }
+        return entity;
     }
 
     public static ManagedEntity[] createManagedEntities(ServerConnection sc, ManagedObjectReference[] mors) {
@@ -90,7 +96,7 @@ public final class MorUtil {
         ManagedEntity[] mes = new ManagedEntity[mors.length];
 
         for (int i = 0; i < mors.length; i++) {
-            mes[i] = createExactManagedEntity(sc, mors[i]);
+            mes[i] = createExactManagedEntity(sc, mors[i], null);
         }
 
         return mes;

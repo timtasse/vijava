@@ -29,47 +29,74 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * Information about the system as a whole.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ */
 
 @SuppressWarnings("all")
 public class HostSystemInfo extends DynamicData {
-  public String vendor;
-  public String model;
-  public String uuid;
-  public HostSystemIdentificationInfo[] otherIdentifyingInfo;
 
-  public String getVendor() {
-    return this.vendor;
-  }
+    private String model;
+    private HostSystemIdentificationInfo[] otherIdentifyingInfo;
+    private String serialNumber;
+    private String uuid;
+    private String vendor;
 
-  public String getModel() {
-    return this.model;
-  }
+    @Override
+    public String toString() {
+        return "HostSystemInfo{" +
+                "model='" + model + '\'' +
+                ", otherIdentifyingInfo=" + Arrays.toString(otherIdentifyingInfo) +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", vendor='" + vendor + '\'' +
+                "} " + super.toString();
+    }
 
-  public String getUuid() {
-    return this.uuid;
-  }
+    public String getVendor() {
+        return this.vendor;
+    }
 
-  public HostSystemIdentificationInfo[] getOtherIdentifyingInfo() {
-    return this.otherIdentifyingInfo;
-  }
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
 
-  public void setVendor(String vendor) {
-    this.vendor=vendor;
-  }
+    public String getModel() {
+        return this.model;
+    }
 
-  public void setModel(String model) {
-    this.model=model;
-  }
+    public void setModel(String model) {
+        this.model = model;
+    }
 
-  public void setUuid(String uuid) {
-    this.uuid=uuid;
-  }
+    public String getUuid() {
+        return this.uuid;
+    }
 
-  public void setOtherIdentifyingInfo(HostSystemIdentificationInfo[] otherIdentifyingInfo) {
-    this.otherIdentifyingInfo=otherIdentifyingInfo;
-  }
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    public HostSystemIdentificationInfo[] getOtherIdentifyingInfo() {
+        return this.otherIdentifyingInfo;
+    }
+
+    public void setOtherIdentifyingInfo(HostSystemIdentificationInfo[] otherIdentifyingInfo) {
+        this.otherIdentifyingInfo = otherIdentifyingInfo;
+    }
+
+    public String getSerialNumber() {
+        return serialNumber;
+    }
+
+    public void setSerialNumber(final String serialNumber) {
+        this.serialNumber = serialNumber;
+    }
+
 }

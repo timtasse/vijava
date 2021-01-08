@@ -30,91 +30,106 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
 @SuppressWarnings("all")
 public class EventDescriptionEventDetail extends DynamicData {
-  public String key;
-  public String description;
-  public String category;
-  public String formatOnDatacenter;
-  public String formatOnComputeResource;
-  public String formatOnHost;
-  public String formatOnVm;
-  public String fullFormat;
-  public String longDescription;
+    public String key;
+    public String description;
+    public String category;
+    public String formatOnDatacenter;
+    public String formatOnComputeResource;
+    public String formatOnHost;
+    public String formatOnVm;
+    public String fullFormat;
+    public String longDescription;
 
-  public String getKey() {
-    return this.key;
-  }
+    @Override
+    public String toString() {
+        return "EventDescriptionEventDetail{" +
+                "key='" + key + '\'' +
+                ", description='" + description + '\'' +
+                ", category='" + category + '\'' +
+                ", formatOnDatacenter='" + formatOnDatacenter + '\'' +
+                ", formatOnComputeResource='" + formatOnComputeResource + '\'' +
+                ", formatOnHost='" + formatOnHost + '\'' +
+                ", formatOnVm='" + formatOnVm + '\'' +
+                ", fullFormat='" + fullFormat + '\'' +
+                ", longDescription='" + longDescription + '\'' +
+                "} " + super.toString();
+    }
 
-  public String getDescription() {
-    return this.description;
-  }
+    public String getKey() {
+        return this.key;
+    }
 
-  public String getCategory() {
-    return this.category;
-  }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-  public String getFormatOnDatacenter() {
-    return this.formatOnDatacenter;
-  }
+    public String getDescription() {
+        return this.description;
+    }
 
-  public String getFormatOnComputeResource() {
-    return this.formatOnComputeResource;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public String getFormatOnHost() {
-    return this.formatOnHost;
-  }
+    public String getCategory() {
+        return this.category;
+    }
 
-  public String getFormatOnVm() {
-    return this.formatOnVm;
-  }
+    public void setCategory(String category) {
+        this.category = category;
+    }
 
-  public String getFullFormat() {
-    return this.fullFormat;
-  }
+    public String getFormatOnDatacenter() {
+        return this.formatOnDatacenter;
+    }
 
-  public String getLongDescription() {
-    return this.longDescription;
-  }
+    public void setFormatOnDatacenter(String formatOnDatacenter) {
+        this.formatOnDatacenter = formatOnDatacenter;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public String getFormatOnComputeResource() {
+        return this.formatOnComputeResource;
+    }
 
-  public void setDescription(String description) {
-    this.description=description;
-  }
+    public void setFormatOnComputeResource(String formatOnComputeResource) {
+        this.formatOnComputeResource = formatOnComputeResource;
+    }
 
-  public void setCategory(String category) {
-    this.category=category;
-  }
+    public String getFormatOnHost() {
+        return this.formatOnHost;
+    }
 
-  public void setFormatOnDatacenter(String formatOnDatacenter) {
-    this.formatOnDatacenter=formatOnDatacenter;
-  }
+    public void setFormatOnHost(String formatOnHost) {
+        this.formatOnHost = formatOnHost;
+    }
 
-  public void setFormatOnComputeResource(String formatOnComputeResource) {
-    this.formatOnComputeResource=formatOnComputeResource;
-  }
+    public String getFormatOnVm() {
+        return this.formatOnVm;
+    }
 
-  public void setFormatOnHost(String formatOnHost) {
-    this.formatOnHost=formatOnHost;
-  }
+    public void setFormatOnVm(String formatOnVm) {
+        this.formatOnVm = formatOnVm;
+    }
 
-  public void setFormatOnVm(String formatOnVm) {
-    this.formatOnVm=formatOnVm;
-  }
+    public String getFullFormat() {
+        return this.fullFormat;
+    }
 
-  public void setFullFormat(String fullFormat) {
-    this.fullFormat=fullFormat;
-  }
+    public void setFullFormat(String fullFormat) {
+        this.fullFormat = fullFormat;
+    }
 
-  public void setLongDescription(String longDescription) {
-    this.longDescription=longDescription;
-  }
+    public String getLongDescription() {
+        return this.longDescription;
+    }
+
+    public void setLongDescription(String longDescription) {
+        this.longDescription = longDescription;
+    }
 }

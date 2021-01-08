@@ -30,37 +30,64 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * The ProfilePropertyPath data object represents the path to a profile, policy option, or specific parameter.
+ * If profilePath, policyId, and parameterId are all specified, the combination of the three identifies a particular parameter.
+ * If only profilePath and policyId are specified, the combination identifies a specific profile policy option.
+ * If just the profilePath is specified, the data object identifies a profile instance.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 4.0
+ */
 
 @SuppressWarnings("all")
 public class ProfilePropertyPath extends DynamicData {
-  public String profilePath;
-  public String policyId;
-  public String parameterId;
 
-  public String getProfilePath() {
-    return this.profilePath;
-  }
+    private String parameterId;
+    private String policyId;
+    private String policyOptionId;
+    private String profilePath;
 
-  public String getPolicyId() {
-    return this.policyId;
-  }
+    @Override
+    public String toString() {
+        return "ProfilePropertyPath{" +
+                "parameterId='" + parameterId + '\'' +
+                ", policyId='" + policyId + '\'' +
+                ", policyOptionId='" + policyOptionId + '\'' +
+                ", profilePath='" + profilePath + '\'' +
+                "} " + super.toString();
+    }
 
-  public String getParameterId() {
-    return this.parameterId;
-  }
+    public String getProfilePath() {
+        return this.profilePath;
+    }
 
-  public void setProfilePath(String profilePath) {
-    this.profilePath=profilePath;
-  }
+    public void setProfilePath(String profilePath) {
+        this.profilePath = profilePath;
+    }
 
-  public void setPolicyId(String policyId) {
-    this.policyId=policyId;
-  }
+    public String getPolicyId() {
+        return this.policyId;
+    }
 
-  public void setParameterId(String parameterId) {
-    this.parameterId=parameterId;
-  }
+    public void setPolicyId(String policyId) {
+        this.policyId = policyId;
+    }
+
+    public String getParameterId() {
+        return this.parameterId;
+    }
+
+    public void setParameterId(String parameterId) {
+        this.parameterId = parameterId;
+    }
+
+    public String getPolicyOptionId() {
+        return policyOptionId;
+    }
+
+    public void setPolicyOptionId(final String policyOptionId) {
+        this.policyOptionId = policyOptionId;
+    }
 }

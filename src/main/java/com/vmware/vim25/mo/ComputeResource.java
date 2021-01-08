@@ -30,60 +30,64 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * Represents a set of physical compute resources for a set of virtual machines.
+ * The base type ComputeResource, when instantiated by calling AddStandaloneHost_Task, represents a single host.
+ * The subclass ClusterComputeResource represents a cluster of hosts and adds distributed management features such as availability and resource scheduling.
+ *
+ * A ComputeResource always has a root ResourcePool associated with it.
+ * Certain types of clusters such as those with VMware DRS enabled and standalone hosts (ESX Server 3) support the creation of ResourcePool hierarchies.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
 
-public class ComputeResource extends ManagedEntity
-{
-	public ComputeResource(ServerConnection sc, ManagedObjectReference mor) 
-	{
-		super(sc, mor);
-	}
-	
-	public ComputeResourceConfigInfo getConfigurationEx()
-	{
-		return (ComputeResourceConfigInfo) this.getCurrentProperty("configurationEx");	
-	}
-	
-	public Datastore[] getDatastores()
-	{
-		return getDatastores("datastore");
-	}
-	
-	public Network[] getNetworks()
-	{
-		return getNetworks("network");
-	}
-	
-	public HostSystem[] getHosts()
-	{
-		return getHosts("host");
-	}
-	
-	public ResourcePool getResourcePool()
-	{
-		return (ResourcePool) this.getManagedObject("resourcePool");
-	}
+public class ComputeResource extends ManagedEntity {
 
-	public EnvironmentBrowser getEnvironmentBrowser()
-	{
-		return (EnvironmentBrowser)this.getManagedObject("environmentBrowser");
-	}
+    public ComputeResource(ServerConnection sc, ManagedObjectReference mor) {
+        super(sc, mor);
+    }
 
-	public ComputeResourceSummary getSummary()
-	{
-		return (ComputeResourceSummary) this.getCurrentProperty("summary");
-	}
+    public ComputeResourceConfigInfo getConfigurationEx() {
+        return (ComputeResourceConfigInfo) this.getCurrentProperty("configurationEx");
+    }
 
-	public Task reconfigureComputeResource_Task(ComputeResourceConfigSpec spec, boolean modify) throws RuntimeFault, RemoteException  
-	{
-		ManagedObjectReference taskMOR = getVimService().reconfigureComputeResource_Task(getMOR(), spec, modify);
-		return new Task(getServerConnection(), taskMOR);
-	}
-	
+    public Datastore[] getDatastores() {
+        return getDatastores("datastore");
+    }
+
+    public EnvironmentBrowser getEnvironmentBrowser() {
+        return (EnvironmentBrowser) this.getManagedObject("environmentBrowser");
+    }
+
+    public HostSystem[] getHosts() {
+        return getHosts("host");
+    }
+
+    public Network[] getNetworks() {
+        return getNetworks("network");
+    }
+
+    public ResourcePool getResourcePool() {
+        return (ResourcePool) this.getManagedObject("resourcePool");
+    }
+
+    public ComputeResourceSummary getSummary() {
+        return (ComputeResourceSummary) this.getCurrentProperty("summary");
+    }
+
+    public Task reconfigureComputeResource_Task(final ComputeResourceConfigSpec spec, final boolean modify) throws CannotDisableDrsOnClustersWithVApps, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", ComputeResourceConfigSpec.class, spec),
+                new Argument("modify", "boolean", modify));
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("ReconfigureComputeResource_Task", params, ManagedObjectReference.class);
+        return new Task(this.getServerConnection(), mor);
+    }
+
 }

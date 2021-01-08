@@ -30,19 +30,27 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
 @SuppressWarnings("all")
 public class VmEventArgument extends EntityEventArgument {
-  public ManagedObjectReference vm;
 
-  public ManagedObjectReference getVm() {
-    return this.vm;
-  }
+    public ManagedObjectReference vm;
 
-  public void setVm(ManagedObjectReference vm) {
-    this.vm=vm;
-  }
+    @Override
+    public String toString() {
+        return "VmEventArgument{" +
+                "vm=" + vm +
+                "} " + super.toString();
+    }
+
+    public ManagedObjectReference getVm() {
+        return this.vm;
+    }
+
+    public void setVm(ManagedObjectReference vm) {
+        this.vm = vm;
+    }
 }

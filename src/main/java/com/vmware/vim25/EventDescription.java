@@ -29,38 +29,50 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
 @SuppressWarnings("all")
 public class EventDescription extends DynamicData {
-  public ElementDescription[] category;
-  public EventDescriptionEventDetail[] eventInfo;
-  public EnumDescription[] enumeratedTypes;
 
-  public ElementDescription[] getCategory() {
-    return this.category;
-  }
+    public ElementDescription[] category;
+    public EventDescriptionEventDetail[] eventInfo;
+    public EnumDescription[] enumeratedTypes;
 
-  public EventDescriptionEventDetail[] getEventInfo() {
-    return this.eventInfo;
-  }
+    @Override
+    public String toString() {
+        return "EventDescription{" +
+                "category=" + Arrays.toString(category) +
+                ", eventInfo=" + Arrays.toString(eventInfo) +
+                ", enumeratedTypes=" + Arrays.toString(enumeratedTypes) +
+                "} " + super.toString();
+    }
 
-  public EnumDescription[] getEnumeratedTypes() {
-    return this.enumeratedTypes;
-  }
+    public ElementDescription[] getCategory() {
+        return this.category;
+    }
 
-  public void setCategory(ElementDescription[] category) {
-    this.category=category;
-  }
+    public void setCategory(ElementDescription[] category) {
+        this.category = category;
+    }
 
-  public void setEventInfo(EventDescriptionEventDetail[] eventInfo) {
-    this.eventInfo=eventInfo;
-  }
+    public EventDescriptionEventDetail[] getEventInfo() {
+        return this.eventInfo;
+    }
 
-  public void setEnumeratedTypes(EnumDescription[] enumeratedTypes) {
-    this.enumeratedTypes=enumeratedTypes;
-  }
+    public void setEventInfo(EventDescriptionEventDetail[] eventInfo) {
+        this.eventInfo = eventInfo;
+    }
+
+    public EnumDescription[] getEnumeratedTypes() {
+        return this.enumeratedTypes;
+    }
+
+    public void setEnumeratedTypes(EnumDescription[] enumeratedTypes) {
+        this.enumeratedTypes = enumeratedTypes;
+    }
 }

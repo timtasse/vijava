@@ -29,56 +29,85 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * Storage DRS configuration for a single virtual machine. This makes it possible to override the default behavior for an individual virtual machine.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 5.0
+ */
 
 @SuppressWarnings("all")
 public class StorageDrsVmConfigInfo extends DynamicData {
-  public ManagedObjectReference vm;
-  public Boolean enabled;
-  public String behavior;
-  public Boolean intraVmAffinity;
-  public VirtualDiskAntiAffinityRuleSpec intraVmAntiAffinity;
 
-  public ManagedObjectReference getVm() {
-    return this.vm;
-  }
+    private String behavior;
+    private Boolean enabled;
+    private Boolean intraVmAffinity;
+    private VirtualDiskAntiAffinityRuleSpec intraVmAntiAffinity;
+    private VirtualDiskRuleSpec[] virtualDiskRules;
+    private ManagedObjectReference vm;
 
-  public Boolean getEnabled() {
-    return this.enabled;
-  }
+    @Override
+    public String toString() {
+        return "StorageDrsVmConfigInfo{" +
+                "behavior='" + behavior + '\'' +
+                ", enabled=" + enabled +
+                ", intraVmAffinity=" + intraVmAffinity +
+                ", intraVmAntiAffinity=" + intraVmAntiAffinity +
+                ", virtualDiskRules=" + Arrays.toString(virtualDiskRules) +
+                ", vm=" + vm +
+                "} " + super.toString();
+    }
 
-  public String getBehavior() {
-    return this.behavior;
-  }
+    public ManagedObjectReference getVm() {
+        return this.vm;
+    }
 
-  public Boolean getIntraVmAffinity() {
-    return this.intraVmAffinity;
-  }
+    public void setVm(ManagedObjectReference vm) {
+        this.vm = vm;
+    }
 
-  public VirtualDiskAntiAffinityRuleSpec getIntraVmAntiAffinity() {
-    return this.intraVmAntiAffinity;
-  }
+    public Boolean getEnabled() {
+        return this.enabled;
+    }
 
-  public void setVm(ManagedObjectReference vm) {
-    this.vm=vm;
-  }
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
-  public void setEnabled(Boolean enabled) {
-    this.enabled=enabled;
-  }
+    public String getBehavior() {
+        return this.behavior;
+    }
 
-  public void setBehavior(String behavior) {
-    this.behavior=behavior;
-  }
+    public void setBehavior(String behavior) {
+        this.behavior = behavior;
+    }
 
-  public void setIntraVmAffinity(Boolean intraVmAffinity) {
-    this.intraVmAffinity=intraVmAffinity;
-  }
+    public Boolean getIntraVmAffinity() {
+        return this.intraVmAffinity;
+    }
 
-  public void setIntraVmAntiAffinity(VirtualDiskAntiAffinityRuleSpec intraVmAntiAffinity) {
-    this.intraVmAntiAffinity=intraVmAntiAffinity;
-  }
+    public void setIntraVmAffinity(Boolean intraVmAffinity) {
+        this.intraVmAffinity = intraVmAffinity;
+    }
+
+    public VirtualDiskAntiAffinityRuleSpec getIntraVmAntiAffinity() {
+        return this.intraVmAntiAffinity;
+    }
+
+    public void setIntraVmAntiAffinity(VirtualDiskAntiAffinityRuleSpec intraVmAntiAffinity) {
+        this.intraVmAntiAffinity = intraVmAntiAffinity;
+    }
+
+    public VirtualDiskRuleSpec[] getVirtualDiskRules() {
+        return virtualDiskRules;
+    }
+
+    public void setVirtualDiskRules(final VirtualDiskRuleSpec[] virtualDiskRules) {
+        this.virtualDiskRules = virtualDiskRules;
+    }
+
 }

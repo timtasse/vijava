@@ -30,28 +30,51 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * This data object type describes the physical network adapter specification representing the properties on a physical network adapter that can be configured once the object exists.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ */
 
 @SuppressWarnings("all")
 public class PhysicalNicSpec extends DynamicData {
-  public HostIpConfig ip;
-  public PhysicalNicLinkInfo linkSpeed;
 
-  public HostIpConfig getIp() {
-    return this.ip;
-  }
+    private Boolean enableEnhancedNetworkingStack;
+    private HostIpConfig ip;
+    private PhysicalNicLinkInfo linkSpeed;
 
-  public PhysicalNicLinkInfo getLinkSpeed() {
-    return this.linkSpeed;
-  }
+    @Override
+    public String toString() {
+        return "PhysicalNicSpec{" +
+                "enableEnhancedNetworkingStack=" + enableEnhancedNetworkingStack +
+                ", ip=" + ip +
+                ", linkSpeed=" + linkSpeed +
+                "} " + super.toString();
+    }
 
-  public void setIp(HostIpConfig ip) {
-    this.ip=ip;
-  }
+    public HostIpConfig getIp() {
+        return this.ip;
+    }
 
-  public void setLinkSpeed(PhysicalNicLinkInfo linkSpeed) {
-    this.linkSpeed=linkSpeed;
-  }
+    public void setIp(HostIpConfig ip) {
+        this.ip = ip;
+    }
+
+    public PhysicalNicLinkInfo getLinkSpeed() {
+        return this.linkSpeed;
+    }
+
+    public void setLinkSpeed(PhysicalNicLinkInfo linkSpeed) {
+        this.linkSpeed = linkSpeed;
+    }
+
+    public Boolean getEnableEnhancedNetworkingStack() {
+        return enableEnhancedNetworkingStack;
+    }
+
+    public void setEnableEnhancedNetworkingStack(final Boolean enableEnhancedNetworkingStack) {
+        this.enableEnhancedNetworkingStack = enableEnhancedNetworkingStack;
+    }
+
 }

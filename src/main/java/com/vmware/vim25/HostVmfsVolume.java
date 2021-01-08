@@ -29,29 +29,55 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
+ * The VMFS file system.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  */
 @SuppressWarnings("all")
 public class HostVmfsVolume extends HostFileSystemVolume {
 
-    public Integer blockSize;
+    private Integer blockSize;
     @Deprecated
-    public int blockSizeMb;
-    public HostScsiDiskPartition[] extent;
-    public HostForceMountedInfo forceMountedInfo;
-    public Boolean local;
-    public int majorVersion;
-    public int maxBlocks;
-    public String scsiDiskType;
-    public Boolean ssd;
-    public Integer unmapGranularity;
-    public String unmapPriority;
-    public String uuid;
-    public String version;
-    public boolean vmfsUpgradable;
+    private int blockSizeMb;
+    private HostScsiDiskPartition[] extent;
+    private HostForceMountedInfo forceMountedInfo;
+    private Boolean local;
+    private int majorVersion;
+    private int maxBlocks;
+    private String scsiDiskType;
+    private Boolean ssd;
+    private VmfsUnmapBandwidthSpec unmapBandwidthSpec;
+    private Integer unmapGranularity;
+    private String unmapPriority;
+    private String uuid;
+    private String version;
+    private boolean vmfsUpgradable;
+
+    @Override
+    public String toString() {
+        return "HostVmfsVolume{" +
+                "blockSize=" + blockSize +
+                ", blockSizeMb=" + blockSizeMb +
+                ", extent=" + Arrays.toString(extent) +
+                ", forceMountedInfo=" + forceMountedInfo +
+                ", local=" + local +
+                ", majorVersion=" + majorVersion +
+                ", maxBlocks=" + maxBlocks +
+                ", scsiDiskType='" + scsiDiskType + '\'' +
+                ", ssd=" + ssd +
+                ", unmapBandwidthSpec=" + unmapBandwidthSpec +
+                ", unmapGranularity=" + unmapGranularity +
+                ", unmapPriority='" + unmapPriority + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", version='" + version + '\'' +
+                ", vmfsUpgradable=" + vmfsUpgradable +
+                "} " + super.toString();
+    }
 
     @Deprecated
     public int getBlockSizeMb() {
@@ -119,19 +145,19 @@ public class HostVmfsVolume extends HostFileSystemVolume {
         this.forceMountedInfo = forceMountedInfo;
     }
 
-    public int getBlockSize() {
+    public Integer getBlockSize() {
         return blockSize;
     }
 
-    public void setBlockSize(final int blockSize) {
+    public void setBlockSize(final Integer blockSize) {
         this.blockSize = blockSize;
     }
 
-    public boolean isLocal() {
+    public Boolean getLocal() {
         return local;
     }
 
-    public void setLocal(boolean local) {
+    public void setLocal(final Boolean local) {
         this.local = local;
     }
 
@@ -143,19 +169,19 @@ public class HostVmfsVolume extends HostFileSystemVolume {
         this.scsiDiskType = scsiDiskType;
     }
 
-    public boolean isSsd() {
+    public Boolean getSsd() {
         return ssd;
     }
 
-    public void setSsd(boolean ssd) {
+    public void setSsd(final Boolean ssd) {
         this.ssd = ssd;
     }
 
-    public int getUnmapGranularity() {
+    public Integer getUnmapGranularity() {
         return unmapGranularity;
     }
 
-    public void setUnmapGranularity(final int unmapGranularity) {
+    public void setUnmapGranularity(final Integer unmapGranularity) {
         this.unmapGranularity = unmapGranularity;
     }
 
@@ -166,4 +192,13 @@ public class HostVmfsVolume extends HostFileSystemVolume {
     public void setUnmapPriority(final String unmapPriority) {
         this.unmapPriority = unmapPriority;
     }
+
+    public VmfsUnmapBandwidthSpec getUnmapBandwidthSpec() {
+        return unmapBandwidthSpec;
+    }
+
+    public void setUnmapBandwidthSpec(final VmfsUnmapBandwidthSpec unmapBandwidthSpec) {
+        this.unmapBandwidthSpec = unmapBandwidthSpec;
+    }
+
 }

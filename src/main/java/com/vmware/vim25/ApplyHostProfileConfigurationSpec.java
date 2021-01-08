@@ -1,19 +1,33 @@
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * The data object that contains the objects needed to remediate a host in host profile batch apply.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.5
  */
 public class ApplyHostProfileConfigurationSpec extends ProfileExecuteResult {
 
-    public ManagedObjectReference host;
-    public String[] taskListRequirement;
-    public LocalizableMessage[] taskDescription;
-    public Boolean rebootStateless;
-    public Boolean rebootHost;
-    public LocalizedMethodFault faultData;
+    private ManagedObjectReference host;
+    private String[] taskListRequirement;
+    private LocalizableMessage[] taskDescription;
+    private Boolean rebootStateless;
+    private Boolean rebootHost;
+    private LocalizedMethodFault faultData;
+
+    @Override
+    public String toString() {
+        return "ApplyHostProfileConfigurationSpec{" +
+                "host=" + host +
+                ", taskListRequirement=" + Arrays.toString(taskListRequirement) +
+                ", taskDescription=" + Arrays.toString(taskDescription) +
+                ", rebootStateless=" + rebootStateless +
+                ", rebootHost=" + rebootHost +
+                ", faultData=" + faultData +
+                "} " + super.toString();
+    }
 
     public LocalizedMethodFault getFaultData() {
         return faultData;

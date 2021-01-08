@@ -30,25 +30,47 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * This data object type contains the options for a virtual PCI Controller.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  */
 @SuppressWarnings("all")
 public class VirtualPCIControllerOption extends VirtualControllerOption {
 
-    public IntOption numEthernetCards;
-    public IntOption numNVMEControllers;
-    public IntOption numPCIPassthroughDevices;
-    public IntOption numParaVirtualSCSIControllers;
-    public IntOption numSATAControllers;
-    public IntOption numSCSIControllers;
-    public IntOption numSasSCSIControllers;
-    public IntOption numSoundCards;
-    public IntOption numVideoCards;
-    public IntOption numVmciDevices;
-    public IntOption numVmiRoms;
-    public IntOption numVmxnet3EthernetCards;
+    private IntOption numEthernetCards;
+    private IntOption numNVMEControllers;
+    private IntOption numParaVirtualSCSIControllers;
+    private IntOption numPCIPassthroughDevices;
+    private IntOption numSasSCSIControllers;
+    private IntOption numSATAControllers;
+    private IntOption numSCSIControllers;
+    private IntOption numSoundCards;
+    private IntOption numVideoCards;
+    private IntOption numVmciDevices;
+    private IntOption numVmiRoms;
+    private IntOption numVmxnet3EthernetCards;
+    private IntOption numVmxnet3VrdmaEthernetCards;
+
+    @Override
+    public String toString() {
+        return "VirtualPCIControllerOption{" +
+                "numEthernetCards=" + numEthernetCards +
+                ", numNVMEControllers=" + numNVMEControllers +
+                ", numParaVirtualSCSIControllers=" + numParaVirtualSCSIControllers +
+                ", numPCIPassthroughDevices=" + numPCIPassthroughDevices +
+                ", numSasSCSIControllers=" + numSasSCSIControllers +
+                ", numSATAControllers=" + numSATAControllers +
+                ", numSCSIControllers=" + numSCSIControllers +
+                ", numSoundCards=" + numSoundCards +
+                ", numVideoCards=" + numVideoCards +
+                ", numVmciDevices=" + numVmciDevices +
+                ", numVmiRoms=" + numVmiRoms +
+                ", numVmxnet3EthernetCards=" + numVmxnet3EthernetCards +
+                ", numVmxnet3VrdmaEthernetCards=" + numVmxnet3VrdmaEthernetCards +
+                "} " + super.toString();
+    }
 
     public IntOption getNumSCSIControllers() {
         return this.numSCSIControllers;
@@ -145,4 +167,13 @@ public class VirtualPCIControllerOption extends VirtualControllerOption {
     public void setNumNVMEControllers(final IntOption numNVMEControllers) {
         this.numNVMEControllers = numNVMEControllers;
     }
+
+    public IntOption getNumVmxnet3VrdmaEthernetCards() {
+        return numVmxnet3VrdmaEthernetCards;
+    }
+
+    public void setNumVmxnet3VrdmaEthernetCards(final IntOption numVmxnet3VrdmaEthernetCards) {
+        this.numVmxnet3VrdmaEthernetCards = numVmxnet3VrdmaEthernetCards;
+    }
+
 }

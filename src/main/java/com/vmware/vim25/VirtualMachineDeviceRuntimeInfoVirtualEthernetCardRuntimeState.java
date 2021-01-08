@@ -29,56 +29,95 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * Runtime state of a virtual ethernet card device.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ * @since 4.1
+ */
 
 @SuppressWarnings("all")
 public class VirtualMachineDeviceRuntimeInfoVirtualEthernetCardRuntimeState extends VirtualMachineDeviceRuntimeInfoDeviceRuntimeState {
-  public boolean vmDirectPathGen2Active;
-  public String[] vmDirectPathGen2InactiveReasonVm;
-  public String[] vmDirectPathGen2InactiveReasonOther;
-  public String vmDirectPathGen2InactiveReasonExtended;
-  public String reservationStatus;
 
-  public boolean isVmDirectPathGen2Active() {
-    return this.vmDirectPathGen2Active;
-  }
+    private String attachmentStatus;
+    private VirtualMachineFeatureRequirement[] featureRequirement;
+    private String reservationStatus;
+    private boolean vmDirectPathGen2Active;
+    private String vmDirectPathGen2InactiveReasonExtended;
+    private String[] vmDirectPathGen2InactiveReasonOther;
+    private String[] vmDirectPathGen2InactiveReasonVm;
 
-  public String[] getVmDirectPathGen2InactiveReasonVm() {
-    return this.vmDirectPathGen2InactiveReasonVm;
-  }
+    @Override
+    public String toString() {
+        return "VirtualMachineDeviceRuntimeInfoVirtualEthernetCardRuntimeState{" +
+                "attachmentStatus='" + attachmentStatus + '\'' +
+                ", featureRequirement=" + Arrays.toString(featureRequirement) +
+                ", reservationStatus='" + reservationStatus + '\'' +
+                ", vmDirectPathGen2Active=" + vmDirectPathGen2Active +
+                ", vmDirectPathGen2InactiveReasonExtended='" + vmDirectPathGen2InactiveReasonExtended + '\'' +
+                ", vmDirectPathGen2InactiveReasonOther=" + Arrays.toString(vmDirectPathGen2InactiveReasonOther) +
+                ", vmDirectPathGen2InactiveReasonVm=" + Arrays.toString(vmDirectPathGen2InactiveReasonVm) +
+                "} " + super.toString();
+    }
 
-  public String[] getVmDirectPathGen2InactiveReasonOther() {
-    return this.vmDirectPathGen2InactiveReasonOther;
-  }
+    public boolean isVmDirectPathGen2Active() {
+        return this.vmDirectPathGen2Active;
+    }
 
-  public String getVmDirectPathGen2InactiveReasonExtended() {
-    return this.vmDirectPathGen2InactiveReasonExtended;
-  }
+    public void setVmDirectPathGen2Active(boolean vmDirectPathGen2Active) {
+        this.vmDirectPathGen2Active = vmDirectPathGen2Active;
+    }
 
-  public String getReservationStatus() {
-    return this.reservationStatus;
-  }
+    public String[] getVmDirectPathGen2InactiveReasonVm() {
+        return this.vmDirectPathGen2InactiveReasonVm;
+    }
 
-  public void setVmDirectPathGen2Active(boolean vmDirectPathGen2Active) {
-    this.vmDirectPathGen2Active=vmDirectPathGen2Active;
-  }
+    public void setVmDirectPathGen2InactiveReasonVm(String[] vmDirectPathGen2InactiveReasonVm) {
+        this.vmDirectPathGen2InactiveReasonVm = vmDirectPathGen2InactiveReasonVm;
+    }
 
-  public void setVmDirectPathGen2InactiveReasonVm(String[] vmDirectPathGen2InactiveReasonVm) {
-    this.vmDirectPathGen2InactiveReasonVm=vmDirectPathGen2InactiveReasonVm;
-  }
+    public String[] getVmDirectPathGen2InactiveReasonOther() {
+        return this.vmDirectPathGen2InactiveReasonOther;
+    }
 
-  public void setVmDirectPathGen2InactiveReasonOther(String[] vmDirectPathGen2InactiveReasonOther) {
-    this.vmDirectPathGen2InactiveReasonOther=vmDirectPathGen2InactiveReasonOther;
-  }
+    public void setVmDirectPathGen2InactiveReasonOther(String[] vmDirectPathGen2InactiveReasonOther) {
+        this.vmDirectPathGen2InactiveReasonOther = vmDirectPathGen2InactiveReasonOther;
+    }
 
-  public void setVmDirectPathGen2InactiveReasonExtended(String vmDirectPathGen2InactiveReasonExtended) {
-    this.vmDirectPathGen2InactiveReasonExtended=vmDirectPathGen2InactiveReasonExtended;
-  }
+    public String getVmDirectPathGen2InactiveReasonExtended() {
+        return this.vmDirectPathGen2InactiveReasonExtended;
+    }
 
-  public void setReservationStatus(String reservationStatus) {
-    this.reservationStatus=reservationStatus;
-  }
+    public void setVmDirectPathGen2InactiveReasonExtended(String vmDirectPathGen2InactiveReasonExtended) {
+        this.vmDirectPathGen2InactiveReasonExtended = vmDirectPathGen2InactiveReasonExtended;
+    }
+
+    public String getReservationStatus() {
+        return this.reservationStatus;
+    }
+
+    public void setReservationStatus(String reservationStatus) {
+        this.reservationStatus = reservationStatus;
+    }
+
+    public String getAttachmentStatus() {
+        return attachmentStatus;
+    }
+
+    public void setAttachmentStatus(final String attachmentStatus) {
+        this.attachmentStatus = attachmentStatus;
+    }
+
+    public VirtualMachineFeatureRequirement[] getFeatureRequirement() {
+        return featureRequirement;
+    }
+
+    public void setFeatureRequirement(final VirtualMachineFeatureRequirement[] featureRequirement) {
+        this.featureRequirement = featureRequirement;
+    }
+
 }

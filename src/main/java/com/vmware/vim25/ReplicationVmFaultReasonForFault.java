@@ -38,24 +38,14 @@ package com.vmware.vim25;
 
 public enum ReplicationVmFaultReasonForFault {
 
-    closeDiskError("closeDiskError"),
-    groupExist("groupExist"),
-    invalidInstanceId("invalidInstanceId"),
-    invalidState("invalidState"),
-    notConfigured("notConfigured"),
-    offlineReplicating("offlineReplicating"),
-    poweredOff("poweredOff"),
-    poweredOn("poweredOn"),
-    suspended("suspended");
+    closeDiskError,
+    groupExist,
+    invalidInstanceId,
+    invalidState,
+    notConfigured,
+    offlineReplicating,
+    poweredOff,
+    poweredOn,
+    suspended
 
-    @SuppressWarnings("unused")
-    private final String val;
-
-    ReplicationVmFaultReasonForFault(String val) {
-        this.val = val;
-    }
-
-    public String getVal() {
-        return val;
-    }
 }

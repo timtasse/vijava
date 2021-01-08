@@ -9,23 +9,14 @@ package com.vmware.vim25;
  */
 public enum HostFileSystemVolumeFileSystemType {
 
-    CIFS("CIFS"),
-    NFS("NFS"),
-    NFS41("NFS41"),
-    OTHER("OTHER"),
-    PMEM("PMEM"),
-    VFFS("VFFS"),
-    VMFS("VMFS"),
-    vsan("vsan"),
-    VVOL("VVOL");
+    CIFS,
+    NFS,
+    NFS41,
+    OTHER,
+    PMEM,
+    VFFS,
+    VMFS,
+    vsan,
+    VVOL
 
-    private final String val;
-
-    HostFileSystemVolumeFileSystemType(final String val) {
-        this.val = val;
-    }
-
-    public String getVal() {
-        return val;
-    }
 }

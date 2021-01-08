@@ -29,25 +29,29 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25.mo;
 
-import com.vmware.vim25.HostGraphicsConfig;
-import com.vmware.vim25.HostGraphicsInfo;
-import com.vmware.vim25.ManagedObjectReference;
-import com.vmware.vim25.RuntimeFault;
+import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * This managed object manages the graphics state of the host.
  *
  * @author Steve JIN (http://www.doublecloud.org)
- * @author Stefan Dilk
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 5.5
- * @version 6.5
+ * @version 6.7
  */
 public class HostGraphicsManager extends ExtensibleManagedObject {
 
     public HostGraphicsManager(ServerConnection serverConnection, ManagedObjectReference mor) {
         super(serverConnection, mor);
+    }
+
+    public HostGraphicsConfig graphicsConfig() {
+        return (HostGraphicsConfig) getCurrentProperty("graphicsConfig");
     }
 
     public HostGraphicsInfo[] getGraphicsInfo() {
@@ -58,15 +62,26 @@ public class HostGraphicsManager extends ExtensibleManagedObject {
         return (String[]) getCurrentProperty("sharedPassthruGpuTypes");
     }
 
-    public HostGraphicsConfig graphicsConfig() {
-        return (HostGraphicsConfig) getCurrentProperty("graphicsConfig");
+    public HostSharedGpuCapabilities[] sharedGpuCapabilities() {
+        return (HostSharedGpuCapabilities[]) this.getCurrentProperty("sharedGpuCapabilities");
+    }
+
+    public String[] sharedPassthruGpuTypes() {
+        return (String[]) this.getCurrentProperty("sharedPassthruGpuTypes");
     }
 
     public boolean isSharedGraphicsActive() throws RuntimeFault, RemoteException {
-        return getVimService().isSharedGraphicsActive(this.getMOR());
+        return this.getVimService().getWsc().invoke("IsSharedGraphicsActive", this.getSingleSelfArgumentList(), Boolean.class);
     }
 
     public void refreshGraphicsManager() throws RuntimeFault, RemoteException {
-        getVimService().queryFirmwareConfigUploadURL(this.getMOR());
+        this.getVimService().getWsc().invokeWithoutReturn("RefreshGraphicsManager", this.getSingleSelfArgumentList());
     }
+
+    public void updateGraphicsConfig(final HostGraphicsConfig config) throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("config", HostGraphicsConfig.class, config));
+        this.getVimService().getWsc().invokeWithoutReturn("UpdateGraphicsConfig", params);
+    }
+
 }

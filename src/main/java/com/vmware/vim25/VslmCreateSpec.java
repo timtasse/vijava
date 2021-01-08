@@ -1,16 +1,34 @@
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * Specification to create a virtual storage object.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  * @since 6.5
  */
 public class VslmCreateSpec extends DynamicData {
 
-    public String name;
-    public VslmCreateSpecBackingSpec backingSpec;
-    public long capacityInMB;
+    private VslmCreateSpecBackingSpec backingSpec;
+    private long capacityInMB;
+    private Boolean keepAfterDeleteVm;
+    private KeyValue[] metadata;
+    private String name;
+    private VirtualMachineProfileSpec[] profile;
+
+    @Override
+    public String toString() {
+        return "VslmCreateSpec{" +
+                "backingSpec=" + backingSpec +
+                ", capacityInMB=" + capacityInMB +
+                ", keepAfterDeleteVm=" + keepAfterDeleteVm +
+                ", metadata=" + Arrays.toString(metadata) +
+                ", name='" + name + '\'' +
+                ", profile=" + Arrays.toString(profile) +
+                "} " + super.toString();
+    }
 
     public VslmCreateSpecBackingSpec getBackingSpec() {
         return backingSpec;
@@ -34,5 +52,29 @@ public class VslmCreateSpec extends DynamicData {
 
     public void setName(final String name) {
         this.name = name;
+    }
+
+    public Boolean getKeepAfterDeleteVm() {
+        return keepAfterDeleteVm;
+    }
+
+    public void setKeepAfterDeleteVm(final Boolean keepAfterDeleteVm) {
+        this.keepAfterDeleteVm = keepAfterDeleteVm;
+    }
+
+    public VirtualMachineProfileSpec[] getProfile() {
+        return profile;
+    }
+
+    public void setProfile(final VirtualMachineProfileSpec[] profile) {
+        this.profile = profile;
+    }
+
+    public KeyValue[] getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(final KeyValue[] metadata) {
+        this.metadata = metadata;
     }
 }

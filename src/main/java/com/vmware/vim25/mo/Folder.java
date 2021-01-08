@@ -31,126 +31,146 @@ package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.util.MorUtil;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * The Folder managed object is a container for storing and organizing inventory objects. Folders can contain folders and other objects.
+ * The childType property identifies a folder's type and determines the types of folders and objects the folder can contain.
+ *  A folder can contain a child folder of the same type as the parent folder.
+ *  All Datacenter objects contain dedicated folders for:
+ *      VirtualMachine, templates, and VirtualApp objects.
+ *      ComputeResource hierarchies.
+ *      Network, DistributedVirtualSwitch, and DistributedVirtualPortgroup objects.
+ *      Datastore objects.
+ *  A folder can contain child objects of type childType. Virtual machine and network entity folders can also contain additional object types.
+ *  The root folder is a data center folder.
+ *
+ * See ServiceInstance for a representation of the organization of the inventory.
+ *
+ * The Folder managed object also acts as a factory object, meaning it creates new entities in a folder.
+ * The object provides methods to create child folders and objects, methods to add existing objects to folders, and methods to remove objects from folders and to delete folders.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7.1
  */
 
-public class Folder extends ManagedEntity 
-{
-	public Folder(ServerConnection sc, ManagedObjectReference mor) 
-	{
-		super(sc, mor);
-	}
-	
-	// the array could have different real types, therefore cannot use getManagedObjects()
-	public ManagedEntity[] getChildEntity() throws InvalidProperty, RuntimeFault, RemoteException 
-	{
-		ManagedObjectReference[] mors = (ManagedObjectReference[]) getCurrentProperty("childEntity");;
-		
-		if(mors==null)
-		{
-			return new ManagedEntity[] {};
-		}
-		
-		ManagedEntity[] mes = new ManagedEntity[mors.length];
-		for(int i=0; i<mors.length; i++)
-		{
-			mes[i] = MorUtil.createExactManagedEntity(getServerConnection(), mors[i]);
-		}
-		return mes;
-	}
+public class Folder extends ManagedEntity {
 
-	public String[] getChildType()
-	{
-		return (String[]) getCurrentProperty("childType");
-	}
+    public Folder(ServerConnection sc, ManagedObjectReference mor) {
+        super(sc, mor);
+    }
 
-	// SDK2.5 signature for back compatibility
-	public Task addStandaloneHost_Task(HostConnectSpec spec, ComputeResourceConfigSpec compResSpec, boolean addConnected) throws InvalidLogin, HostConnectFault, RuntimeFault, RemoteException 
-	{
-		return addStandaloneHost_Task(spec, compResSpec, addConnected, null);
-	}
+    // the array could have different real types, therefore cannot use getManagedObjects()
+    public ManagedEntity[] getChildEntity() throws InvalidProperty, RuntimeFault, RemoteException {
+        ManagedObjectReference[] mors = (ManagedObjectReference[]) getCurrentProperty("childEntity");
+        ;
 
-	// new 4.0 signature
-	public Task addStandaloneHost_Task(HostConnectSpec spec, ComputeResourceConfigSpec compResSpec, boolean addConnected, String license) throws InvalidLogin, HostConnectFault, RuntimeFault, RemoteException 
-	{
-		return new Task(getServerConnection(),
-			getVimService().addStandaloneHost_Task(getMOR(), spec, compResSpec, addConnected, license));
-	}
+        if (mors == null) {
+            return new ManagedEntity[]{};
+        }
 
-	public ClusterComputeResource createCluster(String name, ClusterConfigSpec spec) throws InvalidName, DuplicateName, RuntimeFault, RemoteException 
-	{
-		return new ClusterComputeResource(getServerConnection(),
-			getVimService().createCluster(getMOR(), name, spec) );
-	}
-	
-	public ClusterComputeResource createClusterEx(String name, ClusterConfigSpecEx spec) throws InvalidName, DuplicateName, RuntimeFault, RemoteException 
-	{
-		return new ClusterComputeResource(getServerConnection(),
-			getVimService().createClusterEx(getMOR(), name, spec) );
-	}
-	
-	public Datacenter createDatacenter(String name) throws InvalidName, DuplicateName, RuntimeFault, RemoteException 
-	{
-		return new Datacenter(getServerConnection(),
-			getVimService().createDatacenter(getMOR(), name) );
-	}
-	
-	/**
-	 * @since 4.0
-	 */
-	public Task createDVS_Task(DVSCreateSpec spec) throws DvsNotAuthorized, DvsFault, DuplicateName, InvalidName, NotFound, RuntimeFault, RemoteException
-	{
-		ManagedObjectReference taskMor = getVimService().createDVS_Task(getMOR(), spec);
-		return new Task(getServerConnection(), taskMor);
-	}
-	
-	public Folder createFolder(String name) throws InvalidName, DuplicateName, RuntimeFault, RemoteException 
-	{
-		return new Folder(getServerConnection(),
-			getVimService().createFolder(getMOR(), name) );
-	}
+        ManagedEntity[] mes = new ManagedEntity[mors.length];
+        for (int i = 0; i < mors.length; i++) {
+            mes[i] = MorUtil.createExactManagedEntity(getServerConnection(), mors[i], null);
+        }
+        return mes;
+    }
 
-	/**
-	 * @since SDK5.0
-	 */
-	public StoragePod createStoragePod(String name) throws DuplicateName, InvalidName, RuntimeFault, RemoteException
-	{
-	  ManagedObjectReference mor = getVimService().createStoragePod(getMOR(), name);
-	  return new StoragePod(getServerConnection(), mor);
-	}
-	
-	public Task createVM_Task(VirtualMachineConfigSpec config, ResourcePool pool, HostSystem host) throws InvalidName, VmConfigFault, DuplicateName, FileFault, OutOfBounds, InsufficientResourcesFault, InvalidDatastore, RuntimeFault, RemoteException 
-	{
-		return new Task(getServerConnection(),
-			getVimService().createVM_Task(getMOR(), config, pool.getMOR(), host==null? null : host.getMOR()) );
-	}
-	
-	public Task moveIntoFolder_Task(ManagedEntity[] entities) throws DuplicateName, InvalidState, InvalidFolder, RuntimeFault, RemoteException 
-	{
-		if(entities==null)
-		{
-			throw new IllegalArgumentException("entities must not be null");
-		}
-			
-		return new Task( getServerConnection(),
-			getVimService().moveIntoFolder_Task(getMOR(), MorUtil.createMORs(entities)) );
-	}
-	
-	public Task registerVM_Task(String path, String name, boolean asTemplate, ResourcePool pool, HostSystem host) throws VmConfigFault, InvalidName, DuplicateName, FileFault, OutOfBounds, InsufficientResourcesFault, InvalidDatastore, AlreadyExists, NotFound, RuntimeFault, RemoteException 
-	{
-		return new Task( getServerConnection(),
-			getVimService().registerVM_Task(getMOR(), path, name, asTemplate, 
-			pool==null? null : pool.getMOR(), host==null? null : host.getMOR()) );
-	}
-	
-	public Task unregisterAndDestroy_Task() throws InvalidState, ConcurrentAccess, RuntimeFault, RemoteException 
-	{
-		return new Task( getServerConnection(),
-			getVimService().unregisterAndDestroy_Task(getMOR()) );
-	}
+    public String[] getChildType() {
+        return (String[]) getCurrentProperty("childType");
+    }
+
+    // SDK2.5 signature for back compatibility
+    public Task addStandaloneHost_Task(HostConnectSpec spec, ComputeResourceConfigSpec compResSpec, boolean addConnected) throws InvalidLogin, HostConnectFault, RuntimeFault, RemoteException {
+        return addStandaloneHost_Task(spec, compResSpec, addConnected, null);
+    }
+
+    // new 4.0 signature
+    public Task addStandaloneHost_Task(HostConnectSpec spec, ComputeResourceConfigSpec compResSpec, boolean addConnected, String license) throws InvalidLogin, HostConnectFault, RuntimeFault, RemoteException {
+        return new Task(getServerConnection(),
+                getVimService().addStandaloneHost_Task(getMOR(), spec, compResSpec, addConnected, license));
+    }
+
+    public Task batchAddHostsToCluster(final ManagedObjectReference cluster, final List<FolderNewHostSpec> newHosts,
+                                       final List<ManagedObjectReference> existingHosts, final ComputeResourceConfigSpec compResSpec, final String desiredState)
+            throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("cluster", ManagedObjectReference.class, cluster),
+                new Argument("newHosts", "FolderNewHostSpec[]", newHosts.toArray()),
+                new Argument("existingHosts", "ManagedObjectReference[]", existingHosts.toArray()),
+                new Argument("compResSpec", ComputeResourceConfigSpec.class, compResSpec),
+                new Argument("desiredState", "String", desiredState));
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("BatchAddHostsToCluster_Task", params, ManagedObjectReference.class);
+        return new Task(this.getServerConnection(), mor);
+    }
+
+    public Task batchAddStandaloneHosts(final List<FolderNewHostSpec> newHosts, final ComputeResourceConfigSpec compResSpec, final boolean addConnected) throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("newHosts", "FolderNewHostSpec[]", newHosts.toArray()),
+                new Argument("compResSpec", ComputeResourceConfigSpec.class, compResSpec),
+                new Argument("addConnected", "boolean", addConnected));
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("BatchAddStandaloneHosts_Task", params, ManagedObjectReference.class);
+        return new Task(this.getServerConnection(), mor);
+    }
+
+    @Deprecated
+    public ClusterComputeResource createCluster(String name, ClusterConfigSpec spec) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
+        return new ClusterComputeResource(getServerConnection(),
+                getVimService().createCluster(getMOR(), name, spec));
+    }
+
+    public ClusterComputeResource createClusterEx(String name, ClusterConfigSpecEx spec) throws InvalidName, DuplicateName, InvalidArgument, NotSupported, RuntimeFault, RemoteException {
+        return new ClusterComputeResource(getServerConnection(),
+                getVimService().createClusterEx(getMOR(), name, spec));
+    }
+
+    public Datacenter createDatacenter(String name) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
+        return new Datacenter(getServerConnection(),
+                getVimService().createDatacenter(getMOR(), name));
+    }
+
+    public Task createDVS_Task(DVSCreateSpec spec) throws DvsNotAuthorized, DvsFault, DuplicateName, InvalidName, NotFound, RuntimeFault, RemoteException {
+        ManagedObjectReference taskMor = getVimService().createDVS_Task(getMOR(), spec);
+        return new Task(getServerConnection(), taskMor);
+    }
+
+    public Folder createFolder(String name) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
+        return new Folder(getServerConnection(),
+                getVimService().createFolder(getMOR(), name));
+    }
+
+    public StoragePod createStoragePod(String name) throws DuplicateName, InvalidName, RuntimeFault, RemoteException {
+        ManagedObjectReference mor = getVimService().createStoragePod(getMOR(), name);
+        return new StoragePod(getServerConnection(), mor);
+    }
+
+    public Task createVM_Task(VirtualMachineConfigSpec config, ResourcePool pool, HostSystem host) throws InvalidName, VmConfigFault, DuplicateName, FileFault, OutOfBounds, InsufficientResourcesFault, InvalidDatastore, RuntimeFault, RemoteException {
+        return new Task(getServerConnection(),
+                getVimService().createVM_Task(getMOR(), config, pool.getMOR(), host == null ? null : host.getMOR()));
+    }
+
+    public Task moveIntoFolder_Task(ManagedEntity[] entities) throws DuplicateName, InvalidState, InvalidFolder, RuntimeFault, RemoteException {
+        if (entities == null) {
+            throw new IllegalArgumentException("entities must not be null");
+        }
+        return new Task(getServerConnection(),
+                getVimService().moveIntoFolder_Task(getMOR(), MorUtil.createMORs(entities)));
+    }
+
+    public Task registerVM_Task(String path, String name, boolean asTemplate, ResourcePool pool, HostSystem host) throws VmConfigFault, InvalidName, DuplicateName, FileFault, OutOfBounds, InsufficientResourcesFault, InvalidDatastore, AlreadyExists, NotFound, RuntimeFault, RemoteException {
+        return new Task(getServerConnection(),
+                getVimService().registerVM_Task(getMOR(), path, name, asTemplate,
+                        pool == null ? null : pool.getMOR(), host == null ? null : host.getMOR()));
+    }
+
+    public Task unregisterAndDestroy_Task() throws InvalidState, ConcurrentAccess, RuntimeFault, RemoteException {
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("UnregisterAndDestroy_Task", this.getSingleSelfArgumentList(), ManagedObjectReference.class);
+        return new Task(getServerConnection(), mor);
+    }
+
 }

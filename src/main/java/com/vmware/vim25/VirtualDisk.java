@@ -29,86 +29,116 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
+ * This data object type contains information about a disk in a virtual machine.
+ * The virtual disk backing object types describe the different virtual disk backings available. The disk format version in each case describes the version of the format that is used.
+ *
+ * Supported virtual disk backings:
+ * Sparse disk format, version 1 and 2
+ * The virtual disk backing grows when needed. Supported only for VMware Server.
+ * Flat disk format, version 1 and 2
+ * The virtual disk backing is preallocated. Version 1 is supported only for VMware Server.
+ * Space efficient sparse disk format
+ * The virtual disk backing grows on demand and incorporates additional space optimizations.
+ * Raw disk format, version 2
+ * The virtual disk backing uses a full physical disk drive to back the virtual disk. Supported only for VMware Server.
+ * Partitioned raw disk format, version 2
+ * The virtual disk backing uses one or more partitions on a physical disk drive to back a virtual disk. Supported only for VMware Server.
+ * Raw disk mapping, version 1
+ * The virtual disk backing uses a raw device mapping to back the virtual disk. Supported for ESX Server 2.5 and 3.x.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  */
 @SuppressWarnings("all")
 public class VirtualDisk extends VirtualDevice {
 
+    private Long capacityInBytes;
     @Deprecated
-    public Long capacityInKB;
-    public Long capacityInBytes;
+    private Long capacityInKB;
     @Deprecated
-    public SharesInfo shares;
-    public StorageIOAllocationInfo storageIOAllocation;
+    private String diskObjectId;
+    private String[] iofilter;
+    private Boolean nativeUnmanagedLinkedClone;
     @Deprecated
-    public String diskObjectId;
-    public VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo;
-    public String[] iofilter;
-    public ID vDiskId;
+    private SharesInfo shares;
+    @Deprecated
+    private StorageIOAllocationInfo storageIOAllocation;
+    private ID vDiskId;
+    private VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo;
 
-    @Deprecated
-    public Long getCapacityInKB() {
-        return this.capacityInKB;
-    }
-
-    @Deprecated
-    public void setCapacityInKB(Long capacityInKB) {
-        this.capacityInKB = capacityInKB;
+    @Override
+    public String toString() {
+        return "VirtualDisk{" +
+                "capacityInBytes=" + capacityInBytes +
+                ", capacityInKB=" + capacityInKB +
+                ", diskObjectId='" + diskObjectId + '\'' +
+                ", iofilter=" + Arrays.toString(iofilter) +
+                ", nativeUnmanagedLinkedClone=" + nativeUnmanagedLinkedClone +
+                ", shares=" + shares +
+                ", storageIOAllocation=" + storageIOAllocation +
+                ", vDiskId=" + vDiskId +
+                ", vFlashCacheConfigInfo=" + vFlashCacheConfigInfo +
+                "} " + super.toString();
     }
 
     public Long getCapacityInBytes() {
-        return this.capacityInBytes;
+        return capacityInBytes;
     }
 
-    public void setCapacityInBytes(Long capacityInBytes) {
+    public void setCapacityInBytes(final Long capacityInBytes) {
         this.capacityInBytes = capacityInBytes;
     }
 
-    @Deprecated
-    public SharesInfo getShares() {
-        return this.shares;
+    public Long getCapacityInKB() {
+        return capacityInKB;
     }
 
-    @Deprecated
-    public void setShares(SharesInfo shares) {
+    public void setCapacityInKB(final Long capacityInKB) {
+        this.capacityInKB = capacityInKB;
+    }
+
+    public String getDiskObjectId() {
+        return diskObjectId;
+    }
+
+    public void setDiskObjectId(final String diskObjectId) {
+        this.diskObjectId = diskObjectId;
+    }
+
+    public String[] getIofilter() {
+        return iofilter;
+    }
+
+    public void setIofilter(final String[] iofilter) {
+        this.iofilter = iofilter;
+    }
+
+    public Boolean getNativeUnmanagedLinkedClone() {
+        return nativeUnmanagedLinkedClone;
+    }
+
+    public void setNativeUnmanagedLinkedClone(final Boolean nativeUnmanagedLinkedClone) {
+        this.nativeUnmanagedLinkedClone = nativeUnmanagedLinkedClone;
+    }
+
+    public SharesInfo getShares() {
+        return shares;
+    }
+
+    public void setShares(final SharesInfo shares) {
         this.shares = shares;
     }
 
     public StorageIOAllocationInfo getStorageIOAllocation() {
-        return this.storageIOAllocation;
+        return storageIOAllocation;
     }
 
-    public void setStorageIOAllocation(StorageIOAllocationInfo storageIOAllocation) {
+    public void setStorageIOAllocation(final StorageIOAllocationInfo storageIOAllocation) {
         this.storageIOAllocation = storageIOAllocation;
-    }
-
-    @Deprecated
-    public String getDiskObjectId() {
-        return this.diskObjectId;
-    }
-
-    @Deprecated
-    public void setDiskObjectId(String diskObjectId) {
-        this.diskObjectId = diskObjectId;
-    }
-
-    public VirtualDiskVFlashCacheConfigInfo getVFlashCacheConfigInfo() {
-        return this.vFlashCacheConfigInfo;
-    }
-
-    public void setVFlashCacheConfigInfo(VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo) {
-        this.vFlashCacheConfigInfo = vFlashCacheConfigInfo;
-    }
-
-    public VirtualDiskVFlashCacheConfigInfo getvFlashCacheConfigInfo() {
-        return vFlashCacheConfigInfo;
-    }
-
-    public void setvFlashCacheConfigInfo(final VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo) {
-        this.vFlashCacheConfigInfo = vFlashCacheConfigInfo;
     }
 
     public ID getvDiskId() {
@@ -119,11 +149,12 @@ public class VirtualDisk extends VirtualDevice {
         this.vDiskId = vDiskId;
     }
 
-    public String[] getIofilter() {
-        return iofilter;
+    public VirtualDiskVFlashCacheConfigInfo getvFlashCacheConfigInfo() {
+        return vFlashCacheConfigInfo;
     }
 
-    public void setIofilter(final String[] iofilter) {
-        this.iofilter = iofilter;
+    public void setvFlashCacheConfigInfo(final VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo) {
+        this.vFlashCacheConfigInfo = vFlashCacheConfigInfo;
     }
+
 }

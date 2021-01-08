@@ -30,46 +30,71 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * This class defines the VMware specific configuration for DistributedVirtualPort.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7.1
+ */
 
 @SuppressWarnings("all")
 public class VMwareDVSPortgroupPolicy extends DVPortgroupPolicy {
-  public boolean vlanOverrideAllowed;
-  public boolean uplinkTeamingOverrideAllowed;
-  public boolean securityPolicyOverrideAllowed;
-  public Boolean ipfixOverrideAllowed;
 
-  public boolean isVlanOverrideAllowed() {
-    return this.vlanOverrideAllowed;
-  }
+    private Boolean ipfixOverrideAllowed;
+    private Boolean macManagementOverrideAllowed;
+    @Deprecated(since = "6.7.1")
+    private boolean securityPolicyOverrideAllowed;
+    private boolean uplinkTeamingOverrideAllowed;
+    private boolean vlanOverrideAllowed;
 
-  public boolean isUplinkTeamingOverrideAllowed() {
-    return this.uplinkTeamingOverrideAllowed;
-  }
+    @Override
+    public String toString() {
+        return "VMwareDVSPortgroupPolicy{" +
+                "ipfixOverrideAllowed=" + ipfixOverrideAllowed +
+                ", macManagementOverrideAllowed=" + macManagementOverrideAllowed +
+                ", securityPolicyOverrideAllowed=" + securityPolicyOverrideAllowed +
+                ", uplinkTeamingOverrideAllowed=" + uplinkTeamingOverrideAllowed +
+                ", vlanOverrideAllowed=" + vlanOverrideAllowed +
+                "} " + super.toString();
+    }
 
-  public boolean isSecurityPolicyOverrideAllowed() {
-    return this.securityPolicyOverrideAllowed;
-  }
+    public Boolean getIpfixOverrideAllowed() {
+        return ipfixOverrideAllowed;
+    }
 
-  public Boolean getIpfixOverrideAllowed() {
-    return this.ipfixOverrideAllowed;
-  }
+    public void setIpfixOverrideAllowed(final Boolean ipfixOverrideAllowed) {
+        this.ipfixOverrideAllowed = ipfixOverrideAllowed;
+    }
 
-  public void setVlanOverrideAllowed(boolean vlanOverrideAllowed) {
-    this.vlanOverrideAllowed=vlanOverrideAllowed;
-  }
+    public Boolean getMacManagementOverrideAllowed() {
+        return macManagementOverrideAllowed;
+    }
 
-  public void setUplinkTeamingOverrideAllowed(boolean uplinkTeamingOverrideAllowed) {
-    this.uplinkTeamingOverrideAllowed=uplinkTeamingOverrideAllowed;
-  }
+    public void setMacManagementOverrideAllowed(final Boolean macManagementOverrideAllowed) {
+        this.macManagementOverrideAllowed = macManagementOverrideAllowed;
+    }
 
-  public void setSecurityPolicyOverrideAllowed(boolean securityPolicyOverrideAllowed) {
-    this.securityPolicyOverrideAllowed=securityPolicyOverrideAllowed;
-  }
+    public boolean isSecurityPolicyOverrideAllowed() {
+        return securityPolicyOverrideAllowed;
+    }
 
-  public void setIpfixOverrideAllowed(Boolean ipfixOverrideAllowed) {
-    this.ipfixOverrideAllowed=ipfixOverrideAllowed;
-  }
+    public void setSecurityPolicyOverrideAllowed(final boolean securityPolicyOverrideAllowed) {
+        this.securityPolicyOverrideAllowed = securityPolicyOverrideAllowed;
+    }
+
+    public boolean isUplinkTeamingOverrideAllowed() {
+        return uplinkTeamingOverrideAllowed;
+    }
+
+    public void setUplinkTeamingOverrideAllowed(final boolean uplinkTeamingOverrideAllowed) {
+        this.uplinkTeamingOverrideAllowed = uplinkTeamingOverrideAllowed;
+    }
+
+    public boolean isVlanOverrideAllowed() {
+        return vlanOverrideAllowed;
+    }
+
+    public void setVlanOverrideAllowed(final boolean vlanOverrideAllowed) {
+        this.vlanOverrideAllowed = vlanOverrideAllowed;
+    }
 }

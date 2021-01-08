@@ -1,19 +1,36 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 31.03.2018
+ * This class contains cpu, memory and storage usage information at cluster level.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
  * @since 6.0
  */
 public class ClusterResourceUsageSummary extends DynamicData {
 
-    public int cpuCapacityMHz;
-    public int cpuUsedMHz;
-    public int memCapacityMB;
-    public int memUsedMB;
-    public long storageCapacityMB;
-    public long storageUsedMB;
+    private int cpuCapacityMHz;
+    private int cpuUsedMHz;
+    private int memCapacityMB;
+    private int memUsedMB;
+    private Long pMemAvailableMB;
+    private Long pMemCapacityMB;
+    private long storageCapacityMB;
+    private long storageUsedMB;
+
+    @Override
+    public String toString() {
+        return "ClusterResourceUsageSummary{" +
+                "cpuCapacityMHz=" + cpuCapacityMHz +
+                ", cpuUsedMHz=" + cpuUsedMHz +
+                ", memCapacityMB=" + memCapacityMB +
+                ", memUsedMB=" + memUsedMB +
+                ", pMemAvailableMB=" + pMemAvailableMB +
+                ", pMemCapacityMB=" + pMemCapacityMB +
+                ", storageCapacityMB=" + storageCapacityMB +
+                ", storageUsedMB=" + storageUsedMB +
+                "} " + super.toString();
+    }
 
     public int getCpuCapacityMHz() {
         return cpuCapacityMHz;
@@ -61,5 +78,21 @@ public class ClusterResourceUsageSummary extends DynamicData {
 
     public void setStorageUsedMB(final long storageUsedMB) {
         this.storageUsedMB = storageUsedMB;
+    }
+
+    public Long getpMemAvailableMB() {
+        return pMemAvailableMB;
+    }
+
+    public void setpMemAvailableMB(final Long pMemAvailableMB) {
+        this.pMemAvailableMB = pMemAvailableMB;
+    }
+
+    public Long getpMemCapacityMB() {
+        return pMemCapacityMB;
+    }
+
+    public void setpMemCapacityMB(final Long pMemCapacityMB) {
+        this.pMemCapacityMB = pMemCapacityMB;
     }
 }

@@ -29,92 +29,123 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * The DVSFeatureCapability data object represents the capabilities supported by a DistributedVirtualSwitch.
+ * These properties are read-only with the exception of vmDirectPathGen2Supported.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ */
 
-@SuppressWarnings("all")
 public class DVSFeatureCapability extends DynamicData {
-  public boolean networkResourceManagementSupported;
-  public boolean vmDirectPathGen2Supported;
-  public String[] nicTeamingPolicy;
-  public Integer networkResourcePoolHighShareValue;
-  public DVSNetworkResourceManagementCapability networkResourceManagementCapability;
-  public DVSHealthCheckCapability healthCheckCapability;
-  public DVSRollbackCapability rollbackCapability;
-  public DVSBackupRestoreCapability backupRestoreCapability;
-  public Boolean networkFilterSupported;
 
-  public boolean isNetworkResourceManagementSupported() {
-    return this.networkResourceManagementSupported;
-  }
+    private DVSBackupRestoreCapability backupRestoreCapability;
+    private DVSHealthCheckCapability healthCheckCapability;
+    private Boolean macLearningSupported;
+    private Boolean networkFilterSupported;
+    private DVSNetworkResourceManagementCapability networkResourceManagementCapability;
+    private boolean networkResourceManagementSupported;
+    private Integer networkResourcePoolHighShareValue;
+    private String[] nicTeamingPolicy;
+    private DVSRollbackCapability rollbackCapability;
+    private boolean vmDirectPathGen2Supported;
 
-  public boolean isVmDirectPathGen2Supported() {
-    return this.vmDirectPathGen2Supported;
-  }
+    @Override
+    public String toString() {
+        return "DVSFeatureCapability{" +
+                "backupRestoreCapability=" + backupRestoreCapability +
+                ", healthCheckCapability=" + healthCheckCapability +
+                ", macLearningSupported=" + macLearningSupported +
+                ", networkFilterSupported=" + networkFilterSupported +
+                ", networkResourceManagementCapability=" + networkResourceManagementCapability +
+                ", networkResourceManagementSupported=" + networkResourceManagementSupported +
+                ", networkResourcePoolHighShareValue=" + networkResourcePoolHighShareValue +
+                ", nicTeamingPolicy=" + Arrays.toString(nicTeamingPolicy) +
+                ", rollbackCapability=" + rollbackCapability +
+                ", vmDirectPathGen2Supported=" + vmDirectPathGen2Supported +
+                "} " + super.toString();
+    }
 
-  public String[] getNicTeamingPolicy() {
-    return this.nicTeamingPolicy;
-  }
+    public DVSBackupRestoreCapability getBackupRestoreCapability() {
+        return backupRestoreCapability;
+    }
 
-  public Integer getNetworkResourcePoolHighShareValue() {
-    return this.networkResourcePoolHighShareValue;
-  }
+    public void setBackupRestoreCapability(final DVSBackupRestoreCapability backupRestoreCapability) {
+        this.backupRestoreCapability = backupRestoreCapability;
+    }
 
-  public DVSNetworkResourceManagementCapability getNetworkResourceManagementCapability() {
-    return this.networkResourceManagementCapability;
-  }
+    public DVSHealthCheckCapability getHealthCheckCapability() {
+        return healthCheckCapability;
+    }
 
-  public DVSHealthCheckCapability getHealthCheckCapability() {
-    return this.healthCheckCapability;
-  }
+    public void setHealthCheckCapability(final DVSHealthCheckCapability healthCheckCapability) {
+        this.healthCheckCapability = healthCheckCapability;
+    }
 
-  public DVSRollbackCapability getRollbackCapability() {
-    return this.rollbackCapability;
-  }
+    public Boolean getMacLearningSupported() {
+        return macLearningSupported;
+    }
 
-  public DVSBackupRestoreCapability getBackupRestoreCapability() {
-    return this.backupRestoreCapability;
-  }
+    public void setMacLearningSupported(final Boolean macLearningSupported) {
+        this.macLearningSupported = macLearningSupported;
+    }
 
-  public Boolean getNetworkFilterSupported() {
-    return this.networkFilterSupported;
-  }
+    public Boolean getNetworkFilterSupported() {
+        return networkFilterSupported;
+    }
 
-  public void setNetworkResourceManagementSupported(boolean networkResourceManagementSupported) {
-    this.networkResourceManagementSupported=networkResourceManagementSupported;
-  }
+    public void setNetworkFilterSupported(final Boolean networkFilterSupported) {
+        this.networkFilterSupported = networkFilterSupported;
+    }
 
-  public void setVmDirectPathGen2Supported(boolean vmDirectPathGen2Supported) {
-    this.vmDirectPathGen2Supported=vmDirectPathGen2Supported;
-  }
+    public DVSNetworkResourceManagementCapability getNetworkResourceManagementCapability() {
+        return networkResourceManagementCapability;
+    }
 
-  public void setNicTeamingPolicy(String[] nicTeamingPolicy) {
-    this.nicTeamingPolicy=nicTeamingPolicy;
-  }
+    public void setNetworkResourceManagementCapability(final DVSNetworkResourceManagementCapability networkResourceManagementCapability) {
+        this.networkResourceManagementCapability = networkResourceManagementCapability;
+    }
 
-  public void setNetworkResourcePoolHighShareValue(Integer networkResourcePoolHighShareValue) {
-    this.networkResourcePoolHighShareValue=networkResourcePoolHighShareValue;
-  }
+    public boolean isNetworkResourceManagementSupported() {
+        return networkResourceManagementSupported;
+    }
 
-  public void setNetworkResourceManagementCapability(DVSNetworkResourceManagementCapability networkResourceManagementCapability) {
-    this.networkResourceManagementCapability=networkResourceManagementCapability;
-  }
+    public void setNetworkResourceManagementSupported(final boolean networkResourceManagementSupported) {
+        this.networkResourceManagementSupported = networkResourceManagementSupported;
+    }
 
-  public void setHealthCheckCapability(DVSHealthCheckCapability healthCheckCapability) {
-    this.healthCheckCapability=healthCheckCapability;
-  }
+    public Integer getNetworkResourcePoolHighShareValue() {
+        return networkResourcePoolHighShareValue;
+    }
 
-  public void setRollbackCapability(DVSRollbackCapability rollbackCapability) {
-    this.rollbackCapability=rollbackCapability;
-  }
+    public void setNetworkResourcePoolHighShareValue(final Integer networkResourcePoolHighShareValue) {
+        this.networkResourcePoolHighShareValue = networkResourcePoolHighShareValue;
+    }
 
-  public void setBackupRestoreCapability(DVSBackupRestoreCapability backupRestoreCapability) {
-    this.backupRestoreCapability=backupRestoreCapability;
-  }
+    public String[] getNicTeamingPolicy() {
+        return nicTeamingPolicy;
+    }
 
-  public void setNetworkFilterSupported(Boolean networkFilterSupported) {
-    this.networkFilterSupported=networkFilterSupported;
-  }
+    public void setNicTeamingPolicy(final String[] nicTeamingPolicy) {
+        this.nicTeamingPolicy = nicTeamingPolicy;
+    }
+
+    public DVSRollbackCapability getRollbackCapability() {
+        return rollbackCapability;
+    }
+
+    public void setRollbackCapability(final DVSRollbackCapability rollbackCapability) {
+        this.rollbackCapability = rollbackCapability;
+    }
+
+    public boolean isVmDirectPathGen2Supported() {
+        return vmDirectPathGen2Supported;
+    }
+
+    public void setVmDirectPathGen2Supported(final boolean vmDirectPathGen2Supported) {
+        this.vmDirectPathGen2Supported = vmDirectPathGen2Supported;
+    }
 }

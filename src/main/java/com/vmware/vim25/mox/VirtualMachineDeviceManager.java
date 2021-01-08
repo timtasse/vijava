@@ -34,6 +34,7 @@ import com.vmware.vim25.mo.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.lang.reflect.InvocationTargetException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +99,7 @@ public class VirtualMachineDeviceManager {
 
         VirtualFloppy floppy = new VirtualFloppy();
         floppy.connectable = new VirtualDeviceConnectInfo();
-        floppy.connectable.startConnected = startConnected;
+        floppy.connectable.setStartConnected(startConnected);
 
         if (hostDevice != null) {
             VirtualFloppyDeviceBackingInfo backing = new VirtualFloppyDeviceBackingInfo();
@@ -121,8 +122,8 @@ public class VirtualMachineDeviceManager {
             VirtualFloppyRemoteDeviceBackingInfo backing = new VirtualFloppyRemoteDeviceBackingInfo();
             backing.deviceName = "";
             floppy.backing = backing;
-            floppy.connectable.startConnected = false;
-            floppy.connectable.connected = false;
+            floppy.connectable.setStartConnected(false);
+            floppy.connectable.setConnected(false);
         }
 
         floppy.key = -1;
@@ -135,12 +136,12 @@ public class VirtualMachineDeviceManager {
         floppySpec.device = floppy;
 
         VirtualMachineConfigSpec config = new VirtualMachineConfigSpec();
-        config.deviceChange = new VirtualDeviceConfigSpec[]{floppySpec};
+        config.setDeviceChange(new VirtualDeviceConfigSpec[]{floppySpec});
 
         VirtualIDEController controller = getFirstAvailableController(VirtualIDEController.class);
 
         if (controller != null) {
-            config.deviceChange[0].device.controllerKey = controller.key;
+            config.getDeviceChange()[0].device.controllerKey = controller.key;
         } else {
             throw new RuntimeException("No available IDE controller for floppy drive.");
         }
@@ -185,8 +186,8 @@ public class VirtualMachineDeviceManager {
 
         VirtualCdrom cdrom = new VirtualCdrom();
         cdrom.connectable = new VirtualDeviceConnectInfo();
-        cdrom.connectable.allowGuestControl = true;
-        cdrom.connectable.startConnected = startConnected;
+        cdrom.connectable.setAllowGuestControl(true);
+        cdrom.connectable.setStartConnected(startConnected);
 
         if (hostDevice != null) {
             validateCdromHostDevice(hostDevice);
@@ -214,12 +215,12 @@ public class VirtualMachineDeviceManager {
         cdSpec.device = cdrom;
 
         VirtualMachineConfigSpec config = new VirtualMachineConfigSpec();
-        config.deviceChange = new VirtualDeviceConfigSpec[]{cdSpec};
+        config.setDeviceChange(new VirtualDeviceConfigSpec[]{cdSpec});
 
         VirtualIDEController controller = getFirstAvailableController(VirtualIDEController.class);
 
         if (controller != null) {
-            config.deviceChange[0].device.controllerKey = controller.key;
+            config.getDeviceChange()[0].device.controllerKey = controller.key;
         } else {
             throw new RuntimeException("No free IDE controller for addtional CD Drive.");
         }
@@ -249,8 +250,8 @@ public class VirtualMachineDeviceManager {
             throw new RuntimeException("Error in getting Cdrom devices from host.");
         }
 
-        if (configTarget != null && configTarget.cdRom != null) {
-            for (VirtualMachineCdromInfo cdromInfo : configTarget.cdRom) {
+        if (configTarget != null && configTarget.getCdRom() != null) {
+            for (VirtualMachineCdromInfo cdromInfo : configTarget.getCdRom()) {
                 result.add(cdromInfo.name);
             }
         }
@@ -409,8 +410,8 @@ public class VirtualMachineDeviceManager {
         DistributedVirtualPortgroupInfo dvPortgroupInfo = null;
 
         // Try vDS portgroup first
-        if (configTarget.distributedVirtualPortgroup != null) {
-            dvPortgroupInfo = findDVPortgroupInfo(configTarget.distributedVirtualPortgroup, networkName);
+        if (configTarget.getDistributedVirtualPortgroup() != null) {
+            dvPortgroupInfo = findDVPortgroupInfo(configTarget.getDistributedVirtualPortgroup(), networkName);
         }
 
         if (dvPortgroupInfo != null) {
@@ -422,7 +423,7 @@ public class VirtualMachineDeviceManager {
             result = createNicSpec(adapterType, macAddress, wakeOnLan, startConnected, nicBacking);
         } else {
             NetworkSummary netSummary = getHostNetworkSummaryByName(
-                    networkName, configTarget.network);
+                    networkName, configTarget.getNetwork());
             VirtualEthernetCardNetworkBackingInfo nicBacking = new VirtualEthernetCardNetworkBackingInfo();
             nicBacking.network = netSummary.network;
             nicBacking.deviceName = netSummary.name;
@@ -521,8 +522,8 @@ public class VirtualMachineDeviceManager {
 
         device.backing = nicBacking;
         device.connectable = new VirtualDeviceConnectInfo();
-        device.connectable.connected = true;
-        device.connectable.startConnected = startConnected;
+        device.connectable.setConnected(true);
+        device.connectable.setStartConnected(startConnected);
         device.key = -1;
 
         result.operation = VirtualDeviceConfigSpecOperation.add;
@@ -674,9 +675,9 @@ public class VirtualMachineDeviceManager {
 
         if (configSpecList.size() > 0) {
             VirtualMachineConfigSpec config = new VirtualMachineConfigSpec();
-            config.deviceChange = new VirtualDeviceConfigSpec[configSpecList.size()];
+            config.setDeviceChange(new VirtualDeviceConfigSpec[configSpecList.size()]);
             for (int i = 0; i < configSpecList.size(); i++) {
-                config.deviceChange[i] = configSpecList.get(i);
+                config.getDeviceChange()[i] = configSpecList.get(i);
             }
             Task task = vm.reconfigVM_Task(config);
             return task;
@@ -727,7 +728,7 @@ public class VirtualMachineDeviceManager {
         return null;
     }
 
-    private <T extends VirtualController> T getFirstAvailableController(Class<T> clazz) {
+    public <T extends VirtualController> T getFirstAvailableController(Class<T> clazz) {
         VirtualController vc = createControllerInstance(clazz);
         int maxNodes = getMaxNodesPerControllerOfType(vc);
 
@@ -743,8 +744,9 @@ public class VirtualMachineDeviceManager {
     private <T extends VirtualController> VirtualController createControllerInstance(Class<T> clazz) {
         VirtualController vc = null;
         try {
-            vc = (T) clazz.newInstance();
-        } catch (InstantiationException|IllegalAccessException e) {
+            vc = clazz.getConstructor().newInstance();
+            //vc = (T) clazz.newInstance();
+        } catch (InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             LOGGER.error("InstantiationError of {}", clazz.getSimpleName(), e);
         }
         return vc;

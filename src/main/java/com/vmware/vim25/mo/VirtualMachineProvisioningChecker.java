@@ -29,41 +29,65 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * A singleton managed object that can answer questions about the feasibility of certain provisioning operations.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @Version 6.7
  * @since 4.0
  */
-public class VirtualMachineProvisioningChecker extends ManagedObject 
-{
-	public VirtualMachineProvisioningChecker(ServerConnection sc, ManagedObjectReference mor) 
-	{
-		super(sc, mor);
-	}
-	
-	public Task checkMigrate_Task(VirtualMachine vm, HostSystem host, ResourcePool pool, VirtualMachinePowerState state, String[] testType) throws NoActiveHostInCluster, InvalidState, RuntimeFault, RemoteException
-	{
-		ManagedObjectReference taskMor = getVimService().checkMigrate_Task(getMOR(), 
-				vm.getMOR(), 
-				host==null?null : host.getMOR(), 
-				pool==null?null : pool.getMOR(), state, testType);
-		return new Task(getServerConnection(), taskMor);
-	}
-	
-	public Task checkRelocate_Task(VirtualMachine vm, VirtualMachineRelocateSpec spec, String[] testType) throws InvalidState, RuntimeFault, RemoteException
-	{
-		ManagedObjectReference taskMor = getVimService().checkRelocate_Task(getMOR(), 
-				vm.getMOR(), spec, testType);
-		return new Task(getServerConnection(), taskMor);
-	}
-	
-	public Task queryVMotionCompatibilityEx_Task(VirtualMachine[] vm, HostSystem[] host) throws RuntimeFault, RemoteException
-	{
-		ManagedObjectReference taskMor = getVimService().queryVMotionCompatibilityEx_Task(getMOR(), 
-				convertMors(vm), convertMors(host));
-		return new Task(getServerConnection(), taskMor);
-	}
+public class VirtualMachineProvisioningChecker extends ManagedObject {
+
+    public VirtualMachineProvisioningChecker(ServerConnection sc, ManagedObjectReference mor) {
+        super(sc, mor);
+    }
+
+    public Task checkClone_Task(final ManagedObjectReference vm, final ManagedObjectReference folder, final String name, final VirtualMachineCloneSpec spec, final List<String> testType)
+            throws InvalidArgument, InvalidState, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vm", ManagedObjectReference.class, vm),
+                new Argument("folder", ManagedObjectReference.class, folder),
+                new Argument("name", "String", name),
+                new Argument("spec", VirtualMachineCloneSpec.class, spec),
+                new Argument("testType", "String[]", testType == null ? null : testType.toArray()));
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("CheckClone_Task", params, ManagedObjectReference.class);
+        return new Task(this.getServerConnection(), mor);
+    }
+
+    public Task checkInstantClone_Task(final ManagedObjectReference vm, final VirtualMachineInstantCloneSpec spec, final List<String> testType) throws InvalidArgument, InvalidState, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vm", ManagedObjectReference.class, vm),
+                new Argument("spec", VirtualMachineInstantCloneSpec.class, spec),
+                new Argument("testType", "String[]", testType));
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("CheckInstantClone_Task", params, ManagedObjectReference.class);
+        return new Task(this.getServerConnection(), mor);
+    }
+
+    public Task checkMigrate_Task(VirtualMachine vm, HostSystem host, ResourcePool pool, VirtualMachinePowerState state, String[] testType) throws NoActiveHostInCluster, InvalidState, RuntimeFault, RemoteException {
+        ManagedObjectReference taskMor = getVimService().checkMigrate_Task(getMOR(),
+                vm.getMOR(),
+                host == null ? null : host.getMOR(),
+                pool == null ? null : pool.getMOR(), state, testType);
+        return new Task(getServerConnection(), taskMor);
+    }
+
+    public Task checkRelocate_Task(VirtualMachine vm, VirtualMachineRelocateSpec spec, String[] testType) throws InvalidState, RuntimeFault, RemoteException {
+        ManagedObjectReference taskMor = getVimService().checkRelocate_Task(getMOR(),
+                vm.getMOR(), spec, testType);
+        return new Task(getServerConnection(), taskMor);
+    }
+
+    public Task queryVMotionCompatibilityEx_Task(VirtualMachine[] vm, HostSystem[] host) throws RuntimeFault, RemoteException {
+        ManagedObjectReference taskMor = getVimService().queryVMotionCompatibilityEx_Task(getMOR(),
+                convertMors(vm), convertMors(host));
+        return new Task(getServerConnection(), taskMor);
+    }
+
 }

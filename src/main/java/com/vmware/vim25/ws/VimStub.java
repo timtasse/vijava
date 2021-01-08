@@ -40,10 +40,10 @@ import java.util.Calendar;
  */
 
 public class VimStub implements HostAccessManagerMethods, HostAutoStartManagerMethods, HostActiveDirectoryAuthenticationMethods {
-    private WSClient wsc = null;
+    private WSClient wsc;
 
-    public VimStub(String url, boolean ignoreCert) throws java.net.MalformedURLException {
-        this.wsc = new WSClient(url, ignoreCert);
+    public VimStub(String url, boolean ignoreCert) {
+        this.wsc = WSClientFactory.getClient(url, ignoreCert);
     }
 
     public VimStub(WSClient wsc) {
@@ -53,12 +53,6 @@ public class VimStub implements HostAccessManagerMethods, HostAutoStartManagerMe
     @Override
     public WSClient getWsc() {
         return wsc;
-    }
-
-    public ManagedObjectReference evcManager(ManagedObjectReference _this) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        return (ManagedObjectReference) wsc.invoke("EvcManager", paras, "ManagedObjectReference");
     }
 
     public void destroyPropertyFilter(ManagedObjectReference _this) throws java.rmi.RemoteException, RuntimeFault {
@@ -297,18 +291,6 @@ public class VimStub implements HostAccessManagerMethods, HostAutoStartManagerMe
         return (ManagedObjectReference) wsc.invoke("MoveHostInto_Task", paras, "ManagedObjectReference");
     }
 
-    public void refreshRecommendation(ManagedObjectReference _this) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        wsc.invoke("RefreshRecommendation", paras, null);
-    }
-
-    public ClusterDasAdvancedRuntimeInfo retrieveDasAdvancedRuntimeInfo(ManagedObjectReference _this) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        return (ClusterDasAdvancedRuntimeInfo) wsc.invoke("RetrieveDasAdvancedRuntimeInfo", paras, "ClusterDasAdvancedRuntimeInfo");
-    }
-
     public ClusterEnterMaintenanceResult clusterEnterMaintenanceMode(ManagedObjectReference _this, ManagedObjectReference[] host, OptionValue[] option) throws java.rmi.RemoteException, RuntimeFault {
         Argument[] paras = new Argument[3];
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
@@ -449,12 +431,6 @@ public class VimStub implements HostAccessManagerMethods, HostAutoStartManagerMe
         paras[1] = new Argument("vm", "ManagedObjectReference[]", vm);
         paras[2] = new Argument("option", "OptionValue[]", option);
         return (ManagedObjectReference) wsc.invoke("PowerOnMultiVM_Task", paras, "ManagedObjectReference");
-    }
-
-    public VirtualMachineConfigOptionDescriptor[] queryDatacenterConfigOptionDescriptor(ManagedObjectReference _this) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        return (VirtualMachineConfigOptionDescriptor[]) wsc.invoke("queryDatacenterConfigOptionDescriptor", paras, "VirtualMachineConfigOptionDescriptor[]");
     }
 
     public ManagedObjectReference reconfigureDatacenter_Task(ManagedObjectReference _this, DatacenterConfigSpec spec, boolean modify) throws java.rmi.RemoteException, RuntimeFault {
@@ -905,12 +881,6 @@ public class VimStub implements HostAccessManagerMethods, HostAutoStartManagerMe
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
         paras[1] = new Argument("name", "String", name);
         return (ManagedObjectReference) wsc.invoke("CreateDatacenter", paras, "ManagedObjectReference");
-    }
-
-    public ManagedObjectReference unregisterAndDestroy_Task(ManagedObjectReference _this) throws java.rmi.RemoteException, ConcurrentAccess, InvalidState, RuntimeFault {
-        Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        return (ManagedObjectReference) wsc.invoke("UnregisterAndDestroy_Task", paras, "ManagedObjectReference");
     }
 
     public ManagedObjectReference createDVS_Task(ManagedObjectReference _this, DVSCreateSpec spec) throws java.rmi.RemoteException, DvsFault, DuplicateName, InvalidName, NotFound, DvsNotAuthorized, RuntimeFault {
@@ -2483,65 +2453,6 @@ public class VimStub implements HostAccessManagerMethods, HostAutoStartManagerMe
         wsc.invoke("TerminateVM", paras, null);
     }
 
-    public void removeAlarm(ManagedObjectReference _this) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        wsc.invoke("RemoveAlarm", paras, null);
-    }
-
-    public void reconfigureAlarm(ManagedObjectReference _this, AlarmSpec spec) throws java.rmi.RemoteException, InvalidName, DuplicateName, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("spec", "AlarmSpec", spec);
-        wsc.invoke("ReconfigureAlarm", paras, null);
-    }
-
-    public ManagedObjectReference createAlarm(ManagedObjectReference _this, ManagedObjectReference entity, AlarmSpec spec) throws java.rmi.RemoteException, InvalidName, DuplicateName, RuntimeFault {
-        Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("entity", "ManagedObjectReference", entity);
-        paras[2] = new Argument("spec", "AlarmSpec", spec);
-        return (ManagedObjectReference) wsc.invoke("CreateAlarm", paras, "ManagedObjectReference");
-    }
-
-    public ManagedObjectReference[] getAlarm(ManagedObjectReference _this, ManagedObjectReference entity) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("entity", "ManagedObjectReference", entity);
-        return (ManagedObjectReference[]) wsc.invoke("GetAlarm", paras, "ManagedObjectReference[]");
-    }
-
-    public boolean areAlarmActionsEnabled(ManagedObjectReference _this, ManagedObjectReference entity) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("entity", "ManagedObjectReference", entity);
-        Boolean ret = (Boolean) wsc.invoke("AreAlarmActionsEnabled", paras, "boolean");
-        return ret.booleanValue();
-    }
-
-    public void enableAlarmActions(ManagedObjectReference _this, ManagedObjectReference entity, boolean enabled) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("entity", "ManagedObjectReference", entity);
-        paras[2] = new Argument("enabled", "boolean", enabled);
-        wsc.invoke("EnableAlarmActions", paras, null);
-    }
-
-    public AlarmState[] getAlarmState(ManagedObjectReference _this, ManagedObjectReference entity) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("entity", "ManagedObjectReference", entity);
-        return (AlarmState[]) wsc.invoke("GetAlarmState", paras, "AlarmState[]");
-    }
-
-    public void acknowledgeAlarm(ManagedObjectReference _this, ManagedObjectReference alarm, ManagedObjectReference entity) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("alarm", "ManagedObjectReference", alarm);
-        paras[2] = new Argument("entity", "ManagedObjectReference", entity);
-        wsc.invoke("AcknowledgeAlarm", paras, null);
-    }
-
     public ManagedObjectReference reconfigureDVPortgroup_Task(ManagedObjectReference _this, DVPortgroupConfigSpec spec) throws java.rmi.RemoteException, DvsFault, ConcurrentAccess, DuplicateName, InvalidName, RuntimeFault {
         Argument[] paras = new Argument[2];
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
@@ -3124,57 +3035,6 @@ public class VimStub implements HostAccessManagerMethods, HostAutoStartManagerMe
         return (String) wsc.invoke("QueryConfiguredModuleOptionString", paras, "String");
     }
 
-    public void createUser(ManagedObjectReference _this, HostAccountSpec user) throws java.rmi.RemoteException, AlreadyExists, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("user", "HostAccountSpec", user);
-        wsc.invoke("CreateUser", paras, null);
-    }
-
-    public void updateUser(ManagedObjectReference _this, HostAccountSpec user) throws java.rmi.RemoteException, UserNotFound, AlreadyExists, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("user", "HostAccountSpec", user);
-        wsc.invoke("UpdateUser", paras, null);
-    }
-
-    public void createGroup(ManagedObjectReference _this, HostAccountSpec group) throws java.rmi.RemoteException, AlreadyExists, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("group", "HostAccountSpec", group);
-        wsc.invoke("CreateGroup", paras, null);
-    }
-
-    public void removeUser(ManagedObjectReference _this, String userName) throws java.rmi.RemoteException, UserNotFound, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("userName", "String", userName);
-        wsc.invoke("RemoveUser", paras, null);
-    }
-
-    public void removeGroup(ManagedObjectReference _this, String groupName) throws java.rmi.RemoteException, UserNotFound, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("groupName", "String", groupName);
-        wsc.invoke("RemoveGroup", paras, null);
-    }
-
-    public void assignUserToGroup(ManagedObjectReference _this, String user, String group) throws java.rmi.RemoteException, UserNotFound, AlreadyExists, RuntimeFault {
-        Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("user", "String", user);
-        paras[2] = new Argument("group", "String", group);
-        wsc.invoke("AssignUserToGroup", paras, null);
-    }
-
-    public void unassignUserFromGroup(ManagedObjectReference _this, String user, String group) throws java.rmi.RemoteException, UserNotFound, RuntimeFault {
-        Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("user", "String", user);
-        paras[2] = new Argument("group", "String", group);
-        wsc.invoke("UnassignUserFromGroup", paras, null);
-    }
-
     public void reconfigureServiceConsoleReservation(ManagedObjectReference _this, long cfgBytes) throws java.rmi.RemoteException, RuntimeFault {
         Argument[] paras = new Argument[2];
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
@@ -3536,13 +3396,6 @@ public class VimStub implements HostAccessManagerMethods, HostAutoStartManagerMe
         wsc.invoke("MountVmfsVolume", paras, null);
     }
 
-    public void unmountVmfsVolume(ManagedObjectReference _this, String vmfsUuid) throws java.rmi.RemoteException, NotFound, InvalidState, HostConfigFault, ResourceInUse, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("vmfsUuid", "String", vmfsUuid);
-        wsc.invoke("UnmountVmfsVolume", paras, null);
-    }
-
     public void deleteVmfsVolumeState(ManagedObjectReference _this, String vmfsUuid) throws java.rmi.RemoteException, HostConfigFault, RuntimeFault {
         Argument[] paras = new Argument[2];
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
@@ -3797,14 +3650,6 @@ public class VimStub implements HostAccessManagerMethods, HostAutoStartManagerMe
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
         paras[1] = new Argument("fcoeSpec", "FcoeConfigFcoeSpecification", fcoeSpec);
         wsc.invoke("DiscoverFcoeHbas", paras, null);
-    }
-
-    public void markForRemoval(ManagedObjectReference _this, String hbaName, boolean remove) throws java.rmi.RemoteException, NotFound, HostConfigFault, RuntimeFault {
-        Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("hbaName", "String", hbaName);
-        paras[2] = new Argument("remove", "boolean", remove);
-        wsc.invoke("MarkForRemoval", paras, null);
     }
 
     public HostVffsVolume formatVffs(ManagedObjectReference _this, HostVffsSpec createSpec) throws java.rmi.RemoteException, AlreadyExists, HostConfigFault, ResourceInUse, RuntimeFault {
@@ -4129,28 +3974,6 @@ public class VimStub implements HostAccessManagerMethods, HostAutoStartManagerMe
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
         paras[1] = new Argument("config", "ClusterProfileConfigSpec", config);
         wsc.invoke("UpdateClusterProfile", paras, null);
-    }
-
-    public void updateReferenceHost(ManagedObjectReference _this, ManagedObjectReference host) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("host", "ManagedObjectReference", host);
-        wsc.invoke("UpdateReferenceHost", paras, null);
-    }
-
-    public void updateHostProfile(ManagedObjectReference _this, HostProfileConfigSpec config) throws java.rmi.RemoteException, DuplicateName, ProfileUpdateFailed, RuntimeFault {
-        Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("config", "HostProfileConfigSpec", config);
-        wsc.invoke("UpdateHostProfile", paras, null);
-    }
-
-    public ProfileExecuteResult executeHostProfile(ManagedObjectReference _this, ManagedObjectReference host, ProfileDeferredPolicyOptionParameter[] deferredParam) throws java.rmi.RemoteException, RuntimeFault {
-        Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("host", "ManagedObjectReference", host);
-        paras[2] = new Argument("deferredParam", "ProfileDeferredPolicyOptionParameter[]", deferredParam);
-        return (ProfileExecuteResult) wsc.invoke("ExecuteHostProfile", paras, "ProfileExecuteResult");
     }
 
     public ManagedObjectReference applyHostConfig_Task(ManagedObjectReference _this, ManagedObjectReference host, HostConfigSpec configSpec, ProfileDeferredPolicyOptionParameter[] userInput) throws java.rmi.RemoteException, InvalidState, HostConfigFailed, RuntimeFault {

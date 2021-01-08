@@ -32,13 +32,16 @@ package com.vmware.vim25.mo;
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.util.MorUtil;
 import com.vmware.vim25.mo.util.PropertyCollectorUtil;
+import com.vmware.vim25.ws.Argument;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.rmi.RemoteException;
+import java.util.Collections;
 import java.util.Hashtable;
+import java.util.List;
 
 /**
  * This class is intended to provide a wrapper around a managed object class.
@@ -137,7 +140,7 @@ abstract public class ManagedObject {
 
         ObjectContent[] objs;
         try {
-            objs = pc.retrieveProperties(new PropertyFilterSpec[]{pfSpec});
+            objs = pc.retrievePropertiesEx(new PropertyFilterSpec[]{pfSpec}, null).getObjects();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -209,20 +212,20 @@ abstract public class ManagedObject {
         Object mos = new ManagedObject[mors.length];
 
         try {
-            Class moClass = null;
+            Class<?> moClass = null;
 
-            if (mixedType == false) {
+            if (!mixedType) {
                 moClass = Class.forName(MO_PACKAGE_NAME + "." + mors[0].getType());
                 mos = Array.newInstance(moClass, mors.length);
             }
 
             for (int i = 0; i < mors.length; i++) {
-                if (mixedType == true) {
+                if (mixedType) {
                     moClass = Class.forName(MO_PACKAGE_NAME + "." + mors[i].getType());
                 }
-                Constructor constructor = moClass.getConstructor(new Class[]{ServerConnection.class, ManagedObjectReference.class});
+                Constructor<?> constructor = moClass.getConstructor(ServerConnection.class, ManagedObjectReference.class);
 
-                Array.set(mos, i, constructor.newInstance(new Object[]{getServerConnection(), mors[i]}));
+                Array.set(mos, i, constructor.newInstance(getServerConnection(), mors[i]));
             }
         } catch (Exception e) {
             LOGGER.error("ReflectionError during getManagedObjects", e);
@@ -423,6 +426,14 @@ abstract public class ManagedObject {
             mors = MorUtil.createMORs(mos);
         }
         return mors;
+    }
+
+    protected Argument getSelfArgument() {
+        return new Argument("_this", ManagedObjectReference.class.getSimpleName(), this.getMOR());
+    }
+
+    protected List<Argument> getSingleSelfArgumentList() {
+        return Collections.singletonList(this.getSelfArgument());
     }
 
 }

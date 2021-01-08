@@ -30,60 +30,65 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * The ServiceContent data object defines properties for the ServiceInstance managed object.
+ * The ServiceInstance itself does not have directly-accessible properties because reading the properties of a managed object requires the use of a property collector,
+ * and the property collector itself is a property of the ServiceInstance. For this reason, use the method RetrieveServiceContent to retrieve the ServiceContent object.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7.2
  */
 @SuppressWarnings("all")
 public class ServiceContent extends DynamicData {
 
-    public AboutInfo about;
-    public ManagedObjectReference accountManager;
-    public ManagedObjectReference alarmManager;
-    public ManagedObjectReference authorizationManager;
-    public ManagedObjectReference certificateManager;
-    public ManagedObjectReference clusterProfileManager;
-    public ManagedObjectReference complianceManager;
-    public ManagedObjectReference cryptoManager;
-    public ManagedObjectReference customFieldsManager;
-    public ManagedObjectReference customizationSpecManager;
-    public ManagedObjectReference datastoreNamespaceManager;
-    public ManagedObjectReference diagnosticManager;
-    public ManagedObjectReference dvSwitchManager;
-    public ManagedObjectReference eventManager;
-    public ManagedObjectReference extensionManager;
-    public ManagedObjectReference failoverClusterConfigurator;
-    public ManagedObjectReference failoverClusterManager;
-    public ManagedObjectReference fileManager;
-    public ManagedObjectReference guestOperationsManager;
-    public ManagedObjectReference healthUpdateManager;
-    public ManagedObjectReference hostProfileManager;
-    public ManagedObjectReference hostSpecManager;
-    public ManagedObjectReference ioFilterManager;
-    public ManagedObjectReference ipPoolManager;
-    public ManagedObjectReference licenseManager;
-    public ManagedObjectReference localizationManager;
-    public ManagedObjectReference overheadMemoryManager;
-    public ManagedObjectReference ovfManager;
-    public ManagedObjectReference perfManager;
-    public ManagedObjectReference propertyCollector;
-    public ManagedObjectReference rootFolder;
-    public ManagedObjectReference scheduledTaskManager;
-    public ManagedObjectReference searchIndex;
-    public ManagedObjectReference serviceManager;
-    public ManagedObjectReference sessionManager;
-    public ManagedObjectReference setting;
-    public ManagedObjectReference snmpSystem;
-    public ManagedObjectReference storageResourceManager;
-    public ManagedObjectReference taskManager;
-    public ManagedObjectReference userDirectory;
-    public ManagedObjectReference viewManager;
-    public ManagedObjectReference virtualDiskManager;
+    private AboutInfo about;
+    private ManagedObjectReference accountManager;
+    private ManagedObjectReference alarmManager;
+    private ManagedObjectReference authorizationManager;
+    private ManagedObjectReference certificateManager;
+    private ManagedObjectReference clusterProfileManager;
+    private ManagedObjectReference complianceManager;
+    private ManagedObjectReference cryptoManager;
+    private ManagedObjectReference customFieldsManager;
+    private ManagedObjectReference customizationSpecManager;
+    private ManagedObjectReference datastoreNamespaceManager;
+    private ManagedObjectReference diagnosticManager;
+    private ManagedObjectReference dvSwitchManager;
+    private ManagedObjectReference eventManager;
+    private ManagedObjectReference extensionManager;
+    private ManagedObjectReference failoverClusterConfigurator;
+    private ManagedObjectReference failoverClusterManager;
+    private ManagedObjectReference fileManager;
+    private ManagedObjectReference guestOperationsManager;
+    private ManagedObjectReference healthUpdateManager;
+    private ManagedObjectReference hostProfileManager;
+    private ManagedObjectReference hostSpecManager;
+    private ManagedObjectReference ioFilterManager;
+    private ManagedObjectReference ipPoolManager;
+    private ManagedObjectReference licenseManager;
+    private ManagedObjectReference localizationManager;
+    private ManagedObjectReference overheadMemoryManager;
+    private ManagedObjectReference ovfManager;
+    private ManagedObjectReference perfManager;
+    private ManagedObjectReference propertyCollector;
+    private ManagedObjectReference rootFolder;
+    private ManagedObjectReference scheduledTaskManager;
+    private ManagedObjectReference searchIndex;
+    private ManagedObjectReference serviceManager;
+    private ManagedObjectReference sessionManager;
+    private ManagedObjectReference setting;
+    private ManagedObjectReference snmpSystem;
+    private ManagedObjectReference storageQueryManager;
+    private ManagedObjectReference storageResourceManager;
+    private ManagedObjectReference taskManager;
+    private ManagedObjectReference userDirectory;
+    private ManagedObjectReference viewManager;
+    private ManagedObjectReference virtualDiskManager;
     @Deprecated
-    public ManagedObjectReference virtualizationManager;
-    public ManagedObjectReference vmCompatibilityChecker;
-    public ManagedObjectReference vmProvisioningChecker;
-    public ManagedObjectReference vStorageObjectManager;
+    private ManagedObjectReference virtualizationManager;
+    private ManagedObjectReference vmCompatibilityChecker;
+    private ManagedObjectReference vmProvisioningChecker;
+    private ManagedObjectReference vStorageObjectManager;
 
     public ManagedObjectReference getCertificateManager() {
         return certificateManager;
@@ -453,5 +458,13 @@ public class ServiceContent extends DynamicData {
 
     public void setGuestOperationsManager(ManagedObjectReference guestOperationsManager) {
         this.guestOperationsManager = guestOperationsManager;
+    }
+
+    public ManagedObjectReference getStorageQueryManager() {
+        return storageQueryManager;
+    }
+
+    public void setStorageQueryManager(final ManagedObjectReference storageQueryManager) {
+        this.storageQueryManager = storageQueryManager;
     }
 }

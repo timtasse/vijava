@@ -29,683 +29,283 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
+ * Specifies the capabilities of the particular host.
+ * This set of capabilities is referenced in other parts of the API specification to indicate under what circumstances an API will throw a NotSupported fault.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 6.7.2
  */
 
-@SuppressWarnings("all")
 public class HostCapability extends DynamicData {
 
-    public Boolean recursiveResourcePoolsSupported;
-    public Boolean cpuMemoryResourceConfigurationSupported;
-    public Boolean rebootSupported;
-    public Boolean shutdownSupported;
-    public Boolean vmotionSupported;
-    public Boolean standbySupported;
-    public Boolean ipmiSupported;
-    public Integer maxSupportedVMs;
-    public Integer maxRunningVMs;
-    public Integer maxSupportedVcpus;
-    public Integer maxRegisteredVMs;
-    public Boolean datastorePrincipalSupported;
-    public Boolean sanSupported;
-    public Boolean nfsSupported;
-    public Boolean iscsiSupported;
-    public Boolean vlanTaggingSupported;
-    public Boolean nicTeamingSupported;
-    public Boolean highGuestMemSupported;
-    public Boolean maintenanceModeSupported;
-    public Boolean suspendedRelocateSupported;
-    public Boolean restrictedSnapshotRelocateSupported;
-    public Boolean perVmSwapFiles;
-    public Boolean localSwapDatastoreSupported;
-    public Boolean unsharedSwapVMotionSupported;
-    public Boolean backgroundSnapshotsSupported;
-    public Boolean preAssignedPCIUnitNumbersSupported;
-    public Boolean screenshotSupported;
-    public Boolean scaledScreenshotSupported;
-    public Boolean storageVMotionSupported;
-    public Boolean vmotionWithStorageVMotionSupported;
-    public Boolean vmotionAcrossNetworkSupported;
-    public Boolean hbrNicSelectionSupported;
+    private boolean accel3dSupported;
+    private boolean backgroundSnapshotsSupported;
+    private boolean cloneFromSnapshotSupported;
+    private Boolean cpuHwMmuSupported;
+    private boolean cpuMemoryResourceConfigurationSupported;
+    private Boolean cryptoSupported;
+    private boolean datastorePrincipalSupported;
+    private boolean deltaDiskBackingsSupported;
+    private boolean eightPlusHostVmfsSharedAccessSupported;
+    private Boolean encryptedVMotionSupported;
+    private Boolean encryptionCBRCSupported;
+    private Boolean encryptionChangeOnAddRemoveSupported;
+    private Boolean encryptionFaultToleranceSupported;
+    private Boolean encryptionHBRSupported;
+    private Boolean encryptionHotOperationSupported;
+    private Boolean encryptionMemorySaveSupported;
+    private Boolean encryptionRDMSupported;
+    private Boolean encryptionVFlashSupported;
+    private Boolean encryptionWithSnapshotsSupported;
+    private boolean featureCapabilitiesSupported;
+    private Boolean firewallIpRulesSupported;
     @Deprecated
-    public Boolean recordReplaySupported;
+    private String[] ftCompatibilityIssues;
+    private Boolean ftEfiSupported;
     @Deprecated
-    public Boolean ftSupported;
+    private boolean ftSupported;
+    private Boolean ftVmcpSupported;
+    private Boolean gatewayOnNicSupported;
+    private boolean hbrNicSelectionSupported;
+    private boolean highGuestMemSupported;
+    private Boolean hostAccessManagerSupported;
+    private boolean interVMCommunicationThroughVMCISupported;
+    private Boolean ipmiSupported;
+    private boolean iscsiSupported;
+    private boolean latencySensitivitySupported;
+    private boolean localSwapDatastoreSupported;
+    private Boolean loginBySSLThumbprintSupported;
+    private boolean maintenanceModeSupported;
+    private Boolean markAsLocalSupported;
+    private Boolean markAsSsdSupported;
+    private Boolean markPerenniallyReservedSupported;
+    private Integer maxHostRunningVms;
+    private Integer maxHostSupportedVcpus;
+    private Integer maxMemMBPerFtVm;
+    private Integer maxNumDisksSVMotion;
+    private Integer maxRegisteredVMs;
+    private Integer maxRunningVMs;
+    private Integer maxSupportedVcpus;
+    private Integer maxSupportedVMs;
+    private Integer maxVcpusPerFtVm;
+    private Boolean messageBusProxySupported;
+    private Boolean multipleNetworkStackInstanceSupported;
+    private boolean nestedHVSupported;
+    private Boolean nfs41Krb5iSupported;
+    private Boolean nfs41Supported;
+    private boolean nfsSupported;
+    private boolean nicTeamingSupported;
+    private Boolean oneKVolumeAPIsSupported;
+    private boolean perVMNetworkTrafficShapingSupported;
+    private boolean perVmSwapFiles;
+    private Boolean pMemSnapshotSupported;
+    private Boolean pMemSupported;
+    private boolean preAssignedPCIUnitNumbersSupported;
+    private boolean provisioningNicSelectionSupported;
+    private Boolean quickBootSupported;
+    private boolean rebootSupported;
     @Deprecated
-    public String replayUnsupportedReason;
+    private boolean recordReplaySupported;
+    private boolean recursiveResourcePoolsSupported;
+    private Boolean reliableMemoryAware;
     @Deprecated
-    public String[] replayCompatibilityIssues;
+    private String[] replayCompatibilityIssues;
     @Deprecated
-    public String[] ftCompatibilityIssues;
-    public Boolean loginBySSLThumbprintSupported;
-    public Boolean cloneFromSnapshotSupported;
-    public Boolean deltaDiskBackingsSupported;
-    public Boolean perVMNetworkTrafficShapingSupported;
-    public Boolean tpmSupported;
+    private String replayUnsupportedReason;
+    private boolean restrictedSnapshotRelocateSupported;
+    private boolean sanSupported;
+    private boolean scaledScreenshotSupported;
+    private Boolean scheduledHardwareUpgradeSupported;
+    private boolean screenshotSupported;
+    private Boolean servicePackageInfoSupported;
+    private boolean shutdownSupported;
+    private Boolean smartCardAuthenticationSupported;
+    private String[] smpFtCompatibilityIssues;
+    private boolean smpFtSupported;
+    private boolean snapshotRelayoutSupported;
+    private boolean standbySupported;
+    private boolean storageIORMSupported;
+    private Boolean storagePolicySupported;
+    private boolean storageVMotionSupported;
     @Deprecated
-    public HostCpuIdInfo[] supportedCpuFeature;
-    public Boolean virtualExecUsageSupported;
-    public Boolean storageIORMSupported;
-    public Boolean vmDirectPathGen2Supported;
-    public String[] vmDirectPathGen2UnsupportedReason;
-    public String vmDirectPathGen2UnsupportedReasonExtended;
-    public int[] supportedVmfsMajorVersion;
-    public Boolean vStorageCapable;
-    public Boolean snapshotRelayoutSupported;
-    public Boolean firewallIpRulesSupported;
-    public Boolean servicePackageInfoSupported;
-    public Integer maxHostRunningVms;
-    public Integer maxHostSupportedVcpus;
-    public Boolean vmfsDatastoreMountCapable;
-    public Boolean eightPlusHostVmfsSharedAccessSupported;
-    public Boolean nestedHVSupported;
-    public Boolean vPMCSupported;
-    public Boolean interVMCommunicationThroughVMCISupported;
-    public Boolean scheduledHardwareUpgradeSupported;
-    public Boolean featureCapabilitiesSupported;
-    public Boolean latencySensitivitySupported;
-    public Boolean storagePolicySupported;
-    public Boolean accel3dSupported;
-    public Boolean reliableMemoryAware;
-    public Boolean multipleNetworkStackInstanceSupported;
-    public Boolean vsanSupported;
-    public Boolean vFlashSupported;
-    public Boolean cpuHwMmuSupported;
-    public Boolean cryptoSupported;
-    public Boolean encryptedVMotionSupported;
-    public Boolean encryptionCBRCSupported;
-    public Boolean encryptionChangeOnAddRemoveSupported;
-    public Boolean encryptionFaultToleranceSupported;
-    public Boolean encryptionHBRSupported;
-    public Boolean encryptionHotOperationSupported;
-    public Boolean encryptionMemorySaveSupported;
-    public Boolean encryptionRDMSupported;
-    public Boolean encryptionVFlashSupported;
-    public Boolean encryptionWithSnapshotsSupported;
-    public Boolean gatewayOnNicSupported, hostAccessManagerSupported, markAsLocalSupported, markAsSsdSupported;
-    public Integer maxNumDisksSVMotion;
-    public Integer maxVcpusPerFtVm;
-    public Boolean messageBusProxySupported;
-    public Boolean nfs41Krb5iSupported;
-    public Boolean nfs41Supported;
-    public Boolean oneKVolumeAPIsSupported;
-    public Boolean provisioningNicSelectionSupported;
-    public Boolean smartCardAuthenticationSupported;
-    public String[] smpFtCompatibilityIssues;
-    public Boolean smpFtSupported;
-    public Boolean turnDiskLocatorLedSupported;
-    public Boolean upitSupported;
-    public Boolean virtualVolumeDatastoreSupported;
-    public Boolean vrNfcNicSelectionSupported;
-
-    public Boolean isRecursiveResourcePoolsSupported() {
-        return this.recursiveResourcePoolsSupported;
-    }
-
-    public Boolean isCpuMemoryResourceConfigurationSupported() {
-        return this.cpuMemoryResourceConfigurationSupported;
-    }
-
-    public Boolean isRebootSupported() {
-        return this.rebootSupported;
-    }
-
-    public Boolean isShutdownSupported() {
-        return this.shutdownSupported;
-    }
-
-    public Boolean isVmotionSupported() {
-        return this.vmotionSupported;
-    }
-
-    public Boolean isStandbySupported() {
-        return this.standbySupported;
-    }
-
-    public Boolean getIpmiSupported() {
-        return this.ipmiSupported;
-    }
-
-    public Integer getMaxSupportedVMs() {
-        return this.maxSupportedVMs;
-    }
-
-    public Integer getMaxRunningVMs() {
-        return this.maxRunningVMs;
-    }
-
-    public Integer getMaxSupportedVcpus() {
-        return this.maxSupportedVcpus;
-    }
-
-    public Integer getMaxRegisteredVMs() {
-        return this.maxRegisteredVMs;
-    }
-
-    public Boolean isDatastorePrincipalSupported() {
-        return this.datastorePrincipalSupported;
-    }
-
-    public Boolean isSanSupported() {
-        return this.sanSupported;
-    }
-
-    public Boolean isNfsSupported() {
-        return this.nfsSupported;
-    }
-
-    public Boolean isIscsiSupported() {
-        return this.iscsiSupported;
-    }
-
-    public Boolean isVlanTaggingSupported() {
-        return this.vlanTaggingSupported;
-    }
-
-    public Boolean isNicTeamingSupported() {
-        return this.nicTeamingSupported;
-    }
-
-    public Boolean isHighGuestMemSupported() {
-        return this.highGuestMemSupported;
-    }
-
-    public Boolean isMaintenanceModeSupported() {
-        return this.maintenanceModeSupported;
-    }
-
-    public Boolean isSuspendedRelocateSupported() {
-        return this.suspendedRelocateSupported;
-    }
-
-    public Boolean isRestrictedSnapshotRelocateSupported() {
-        return this.restrictedSnapshotRelocateSupported;
-    }
-
-    public Boolean isPerVmSwapFiles() {
-        return this.perVmSwapFiles;
-    }
-
-    public Boolean isLocalSwapDatastoreSupported() {
-        return this.localSwapDatastoreSupported;
-    }
-
-    public Boolean isUnsharedSwapVMotionSupported() {
-        return this.unsharedSwapVMotionSupported;
-    }
-
-    public Boolean isBackgroundSnapshotsSupported() {
-        return this.backgroundSnapshotsSupported;
-    }
-
-    public Boolean isPreAssignedPCIUnitNumbersSupported() {
-        return this.preAssignedPCIUnitNumbersSupported;
-    }
-
-    public Boolean isScreenshotSupported() {
-        return this.screenshotSupported;
-    }
-
-    public Boolean isScaledScreenshotSupported() {
-        return this.scaledScreenshotSupported;
-    }
-
-    public Boolean getStorageVMotionSupported() {
-        return this.storageVMotionSupported;
-    }
-
-    public Boolean getVmotionWithStorageVMotionSupported() {
-        return this.vmotionWithStorageVMotionSupported;
-    }
-
-    public Boolean getVmotionAcrossNetworkSupported() {
-        return this.vmotionAcrossNetworkSupported;
-    }
-
-    public Boolean getHbrNicSelectionSupported() {
-        return this.hbrNicSelectionSupported;
-    }
-
-    @Deprecated
-    public Boolean getRecordReplaySupported() {
-        return this.recordReplaySupported;
-    }
-
-    @Deprecated
-    public Boolean getFtSupported() {
-        return this.ftSupported;
-    }
-
-    @Deprecated
-    public String getReplayUnsupportedReason() {
-        return this.replayUnsupportedReason;
-    }
-
-    @Deprecated
-    public String[] getReplayCompatibilityIssues() {
-        return this.replayCompatibilityIssues;
-    }
-
-    @Deprecated
-    public String[] getFtCompatibilityIssues() {
-        return this.ftCompatibilityIssues;
-    }
-
-    public Boolean getLoginBySSLThumbprintSupported() {
-        return this.loginBySSLThumbprintSupported;
-    }
-
-    public Boolean getCloneFromSnapshotSupported() {
-        return this.cloneFromSnapshotSupported;
-    }
-
-    public Boolean getDeltaDiskBackingsSupported() {
-        return this.deltaDiskBackingsSupported;
-    }
-
-    public Boolean getPerVMNetworkTrafficShapingSupported() {
-        return this.perVMNetworkTrafficShapingSupported;
-    }
-
-    public Boolean getTpmSupported() {
-        return this.tpmSupported;
-    }
-
-    @Deprecated
-    public HostCpuIdInfo[] getSupportedCpuFeature() {
-        return this.supportedCpuFeature;
-    }
-
-    public Boolean getVirtualExecUsageSupported() {
-        return this.virtualExecUsageSupported;
-    }
-
-    public Boolean getStorageIORMSupported() {
-        return this.storageIORMSupported;
-    }
-
-    public Boolean getVmDirectPathGen2Supported() {
-        return this.vmDirectPathGen2Supported;
-    }
-
-    public String[] getVmDirectPathGen2UnsupportedReason() {
-        return this.vmDirectPathGen2UnsupportedReason;
-    }
-
-    public String getVmDirectPathGen2UnsupportedReasonExtended() {
-        return this.vmDirectPathGen2UnsupportedReasonExtended;
-    }
-
-    public int[] getSupportedVmfsMajorVersion() {
-        return this.supportedVmfsMajorVersion;
-    }
-
-    public Boolean getVStorageCapable() {
-        return this.vStorageCapable;
-    }
-
-    public Boolean getSnapshotRelayoutSupported() {
-        return this.snapshotRelayoutSupported;
-    }
-
-    public Boolean getFirewallIpRulesSupported() {
-        return this.firewallIpRulesSupported;
-    }
-
-    public Boolean getServicePackageInfoSupported() {
-        return this.servicePackageInfoSupported;
-    }
-
-    public Integer getMaxHostRunningVms() {
-        return this.maxHostRunningVms;
-    }
-
-    public Integer getMaxHostSupportedVcpus() {
-        return this.maxHostSupportedVcpus;
-    }
-
-    public Boolean getVmfsDatastoreMountCapable() {
-        return this.vmfsDatastoreMountCapable;
-    }
-
-    public Boolean getEightPlusHostVmfsSharedAccessSupported() {
-        return this.eightPlusHostVmfsSharedAccessSupported;
-    }
-
-    public Boolean getNestedHVSupported() {
-        return this.nestedHVSupported;
-    }
-
-    public Boolean getVPMCSupported() {
-        return this.vPMCSupported;
-    }
-
-    public Boolean getInterVMCommunicationThroughVMCISupported() {
-        return this.interVMCommunicationThroughVMCISupported;
-    }
-
-    public Boolean getScheduledHardwareUpgradeSupported() {
-        return this.scheduledHardwareUpgradeSupported;
-    }
-
-    public Boolean getFeatureCapabilitiesSupported() {
-        return this.featureCapabilitiesSupported;
-    }
-
-    public Boolean getLatencySensitivitySupported() {
-        return this.latencySensitivitySupported;
-    }
-
-    public Boolean getStoragePolicySupported() {
-        return this.storagePolicySupported;
-    }
-
-    public Boolean getAccel3dSupported() {
-        return this.accel3dSupported;
-    }
-
-    public Boolean getReliableMemoryAware() {
-        return this.reliableMemoryAware;
-    }
-
-    public Boolean getMultipleNetworkStackInstanceSupported() {
-        return this.multipleNetworkStackInstanceSupported;
-    }
-
-    public Boolean getVsanSupported() {
-        return this.vsanSupported;
-    }
-
-    public Boolean getVFlashSupported() {
-        return this.vFlashSupported;
-    }
-
-    public void setRecursiveResourcePoolsSupported(Boolean recursiveResourcePoolsSupported) {
-        this.recursiveResourcePoolsSupported = recursiveResourcePoolsSupported;
-    }
-
-    public void setCpuMemoryResourceConfigurationSupported(Boolean cpuMemoryResourceConfigurationSupported) {
-        this.cpuMemoryResourceConfigurationSupported = cpuMemoryResourceConfigurationSupported;
-    }
-
-    public void setRebootSupported(Boolean rebootSupported) {
-        this.rebootSupported = rebootSupported;
-    }
-
-    public void setShutdownSupported(Boolean shutdownSupported) {
-        this.shutdownSupported = shutdownSupported;
-    }
-
-    public void setVmotionSupported(Boolean vmotionSupported) {
-        this.vmotionSupported = vmotionSupported;
-    }
-
-    public void setStandbySupported(Boolean standbySupported) {
-        this.standbySupported = standbySupported;
-    }
-
-    public void setIpmiSupported(Boolean ipmiSupported) {
-        this.ipmiSupported = ipmiSupported;
-    }
-
-    public void setMaxSupportedVMs(Integer maxSupportedVMs) {
-        this.maxSupportedVMs = maxSupportedVMs;
-    }
-
-    public void setMaxRunningVMs(Integer maxRunningVMs) {
-        this.maxRunningVMs = maxRunningVMs;
-    }
-
-    public void setMaxSupportedVcpus(Integer maxSupportedVcpus) {
-        this.maxSupportedVcpus = maxSupportedVcpus;
-    }
-
-    public void setMaxRegisteredVMs(Integer maxRegisteredVMs) {
-        this.maxRegisteredVMs = maxRegisteredVMs;
-    }
-
-    public void setDatastorePrincipalSupported(Boolean datastorePrincipalSupported) {
-        this.datastorePrincipalSupported = datastorePrincipalSupported;
-    }
-
-    public void setSanSupported(Boolean sanSupported) {
-        this.sanSupported = sanSupported;
-    }
-
-    public void setNfsSupported(Boolean nfsSupported) {
-        this.nfsSupported = nfsSupported;
-    }
-
-    public void setIscsiSupported(Boolean iscsiSupported) {
-        this.iscsiSupported = iscsiSupported;
-    }
-
-    public void setVlanTaggingSupported(Boolean vlanTaggingSupported) {
-        this.vlanTaggingSupported = vlanTaggingSupported;
-    }
-
-    public void setNicTeamingSupported(Boolean nicTeamingSupported) {
-        this.nicTeamingSupported = nicTeamingSupported;
-    }
-
-    public void setHighGuestMemSupported(Boolean highGuestMemSupported) {
-        this.highGuestMemSupported = highGuestMemSupported;
-    }
-
-    public void setMaintenanceModeSupported(Boolean maintenanceModeSupported) {
-        this.maintenanceModeSupported = maintenanceModeSupported;
-    }
-
-    public void setSuspendedRelocateSupported(Boolean suspendedRelocateSupported) {
-        this.suspendedRelocateSupported = suspendedRelocateSupported;
-    }
-
-    public void setRestrictedSnapshotRelocateSupported(Boolean restrictedSnapshotRelocateSupported) {
-        this.restrictedSnapshotRelocateSupported = restrictedSnapshotRelocateSupported;
-    }
-
-    public void setPerVmSwapFiles(Boolean perVmSwapFiles) {
-        this.perVmSwapFiles = perVmSwapFiles;
-    }
-
-    public void setLocalSwapDatastoreSupported(Boolean localSwapDatastoreSupported) {
-        this.localSwapDatastoreSupported = localSwapDatastoreSupported;
-    }
-
-    public void setUnsharedSwapVMotionSupported(Boolean unsharedSwapVMotionSupported) {
-        this.unsharedSwapVMotionSupported = unsharedSwapVMotionSupported;
-    }
-
-    public void setBackgroundSnapshotsSupported(Boolean backgroundSnapshotsSupported) {
-        this.backgroundSnapshotsSupported = backgroundSnapshotsSupported;
-    }
-
-    public void setPreAssignedPCIUnitNumbersSupported(Boolean preAssignedPCIUnitNumbersSupported) {
-        this.preAssignedPCIUnitNumbersSupported = preAssignedPCIUnitNumbersSupported;
-    }
-
-    public void setScreenshotSupported(Boolean screenshotSupported) {
-        this.screenshotSupported = screenshotSupported;
-    }
-
-    public void setScaledScreenshotSupported(Boolean scaledScreenshotSupported) {
-        this.scaledScreenshotSupported = scaledScreenshotSupported;
-    }
-
-    public void setStorageVMotionSupported(Boolean storageVMotionSupported) {
-        this.storageVMotionSupported = storageVMotionSupported;
-    }
-
-    public void setVmotionWithStorageVMotionSupported(Boolean vmotionWithStorageVMotionSupported) {
-        this.vmotionWithStorageVMotionSupported = vmotionWithStorageVMotionSupported;
-    }
-
-    public void setVmotionAcrossNetworkSupported(Boolean vmotionAcrossNetworkSupported) {
-        this.vmotionAcrossNetworkSupported = vmotionAcrossNetworkSupported;
-    }
-
-    public void setHbrNicSelectionSupported(Boolean hbrNicSelectionSupported) {
-        this.hbrNicSelectionSupported = hbrNicSelectionSupported;
-    }
-
-    @Deprecated
-    public void setRecordReplaySupported(Boolean recordReplaySupported) {
-        this.recordReplaySupported = recordReplaySupported;
-    }
-
-    @Deprecated
-    public void setFtSupported(Boolean ftSupported) {
-        this.ftSupported = ftSupported;
-    }
-
-    @Deprecated
-    public void setReplayUnsupportedReason(String replayUnsupportedReason) {
-        this.replayUnsupportedReason = replayUnsupportedReason;
-    }
-
-    @Deprecated
-    public void setReplayCompatibilityIssues(String[] replayCompatibilityIssues) {
-        this.replayCompatibilityIssues = replayCompatibilityIssues;
-    }
-
-    @Deprecated
-    public void setFtCompatibilityIssues(String[] ftCompatibilityIssues) {
-        this.ftCompatibilityIssues = ftCompatibilityIssues;
-    }
-
-    public void setLoginBySSLThumbprintSupported(Boolean loginBySSLThumbprintSupported) {
-        this.loginBySSLThumbprintSupported = loginBySSLThumbprintSupported;
-    }
-
-    public void setCloneFromSnapshotSupported(Boolean cloneFromSnapshotSupported) {
-        this.cloneFromSnapshotSupported = cloneFromSnapshotSupported;
-    }
-
-    public void setDeltaDiskBackingsSupported(Boolean deltaDiskBackingsSupported) {
-        this.deltaDiskBackingsSupported = deltaDiskBackingsSupported;
-    }
-
-    public void setPerVMNetworkTrafficShapingSupported(Boolean perVMNetworkTrafficShapingSupported) {
-        this.perVMNetworkTrafficShapingSupported = perVMNetworkTrafficShapingSupported;
-    }
-
-    public void setTpmSupported(Boolean tpmSupported) {
-        this.tpmSupported = tpmSupported;
-    }
-
-    @Deprecated
-    public void setSupportedCpuFeature(HostCpuIdInfo[] supportedCpuFeature) {
-        this.supportedCpuFeature = supportedCpuFeature;
-    }
-
-    public void setVirtualExecUsageSupported(Boolean virtualExecUsageSupported) {
-        this.virtualExecUsageSupported = virtualExecUsageSupported;
-    }
-
-    public void setStorageIORMSupported(Boolean storageIORMSupported) {
-        this.storageIORMSupported = storageIORMSupported;
-    }
-
-    public void setVmDirectPathGen2Supported(Boolean vmDirectPathGen2Supported) {
-        this.vmDirectPathGen2Supported = vmDirectPathGen2Supported;
-    }
-
-    public void setVmDirectPathGen2UnsupportedReason(String[] vmDirectPathGen2UnsupportedReason) {
-        this.vmDirectPathGen2UnsupportedReason = vmDirectPathGen2UnsupportedReason;
-    }
-
-    public void setVmDirectPathGen2UnsupportedReasonExtended(String vmDirectPathGen2UnsupportedReasonExtended) {
-        this.vmDirectPathGen2UnsupportedReasonExtended = vmDirectPathGen2UnsupportedReasonExtended;
-    }
-
-    public void setSupportedVmfsMajorVersion(int[] supportedVmfsMajorVersion) {
-        this.supportedVmfsMajorVersion = supportedVmfsMajorVersion;
-    }
-
-    public void setVStorageCapable(Boolean vStorageCapable) {
-        this.vStorageCapable = vStorageCapable;
-    }
-
-    public void setSnapshotRelayoutSupported(Boolean snapshotRelayoutSupported) {
-        this.snapshotRelayoutSupported = snapshotRelayoutSupported;
-    }
-
-    public void setFirewallIpRulesSupported(Boolean firewallIpRulesSupported) {
-        this.firewallIpRulesSupported = firewallIpRulesSupported;
-    }
-
-    public void setServicePackageInfoSupported(Boolean servicePackageInfoSupported) {
-        this.servicePackageInfoSupported = servicePackageInfoSupported;
-    }
-
-    public void setMaxHostRunningVms(Integer maxHostRunningVms) {
-        this.maxHostRunningVms = maxHostRunningVms;
-    }
-
-    public void setMaxHostSupportedVcpus(Integer maxHostSupportedVcpus) {
-        this.maxHostSupportedVcpus = maxHostSupportedVcpus;
-    }
-
-    public void setVmfsDatastoreMountCapable(Boolean vmfsDatastoreMountCapable) {
-        this.vmfsDatastoreMountCapable = vmfsDatastoreMountCapable;
-    }
-
-    public void setEightPlusHostVmfsSharedAccessSupported(Boolean eightPlusHostVmfsSharedAccessSupported) {
-        this.eightPlusHostVmfsSharedAccessSupported = eightPlusHostVmfsSharedAccessSupported;
-    }
-
-    public void setNestedHVSupported(Boolean nestedHVSupported) {
-        this.nestedHVSupported = nestedHVSupported;
-    }
-
-    public void setVPMCSupported(Boolean vPMCSupported) {
-        this.vPMCSupported = vPMCSupported;
-    }
-
-    public void setInterVMCommunicationThroughVMCISupported(Boolean interVMCommunicationThroughVMCISupported) {
-        this.interVMCommunicationThroughVMCISupported = interVMCommunicationThroughVMCISupported;
-    }
-
-    public void setScheduledHardwareUpgradeSupported(Boolean scheduledHardwareUpgradeSupported) {
-        this.scheduledHardwareUpgradeSupported = scheduledHardwareUpgradeSupported;
-    }
-
-    public void setFeatureCapabilitiesSupported(Boolean featureCapabilitiesSupported) {
-        this.featureCapabilitiesSupported = featureCapabilitiesSupported;
-    }
-
-    public void setLatencySensitivitySupported(Boolean latencySensitivitySupported) {
-        this.latencySensitivitySupported = latencySensitivitySupported;
-    }
-
-    public void setStoragePolicySupported(Boolean storagePolicySupported) {
-        this.storagePolicySupported = storagePolicySupported;
-    }
-
-    public void setAccel3dSupported(Boolean accel3dSupported) {
+    private HostCpuIdInfo[] supportedCpuFeature;
+    private int[] supportedVmfsMajorVersion;
+    private boolean suspendedRelocateSupported;
+    private boolean tpmSupported;
+    private String tpmVersion;
+    private Boolean turnDiskLocatorLedSupported;
+    private Boolean txtEnabled;
+    private String unmapMethodSupported;
+    private boolean unsharedSwapVMotionSupported;
+    private Boolean upitSupported;
+    private Boolean vFlashSupported;
+    private Boolean virtualExecUsageIgnored;
+    private boolean virtualExecUsageSupported;
+    private Boolean virtualMmuUsageIgnored;
+    private Boolean virtualVolumeDatastoreSupported;
+    private boolean vlanTaggingSupported;
+    private Boolean vmCreateDateSupported;
+    private boolean vmDirectPathGen2Supported;
+    private String[] vmDirectPathGen2UnsupportedReason;
+    private String vmDirectPathGen2UnsupportedReasonExtended;
+    private Boolean vmfs3EOLSupported;
+    private boolean vmfsDatastoreMountCapable;
+    private Boolean vmotionAcrossNetworkSupported;
+    private boolean vmotionSupported;
+    private boolean vmotionWithStorageVMotionSupported;
+    private boolean vPMCSupported;
+    private boolean vrNfcNicSelectionSupported;
+    private Boolean vsanSupported;
+    private boolean vStorageCapable;
+
+    @Override
+    public String toString() {
+        return "HostCapability{" +
+                "accel3dSupported=" + accel3dSupported +
+                ", backgroundSnapshotsSupported=" + backgroundSnapshotsSupported +
+                ", cloneFromSnapshotSupported=" + cloneFromSnapshotSupported +
+                ", cpuHwMmuSupported=" + cpuHwMmuSupported +
+                ", cpuMemoryResourceConfigurationSupported=" + cpuMemoryResourceConfigurationSupported +
+                ", cryptoSupported=" + cryptoSupported +
+                ", datastorePrincipalSupported=" + datastorePrincipalSupported +
+                ", deltaDiskBackingsSupported=" + deltaDiskBackingsSupported +
+                ", eightPlusHostVmfsSharedAccessSupported=" + eightPlusHostVmfsSharedAccessSupported +
+                ", encryptedVMotionSupported=" + encryptedVMotionSupported +
+                ", encryptionCBRCSupported=" + encryptionCBRCSupported +
+                ", encryptionChangeOnAddRemoveSupported=" + encryptionChangeOnAddRemoveSupported +
+                ", encryptionFaultToleranceSupported=" + encryptionFaultToleranceSupported +
+                ", encryptionHBRSupported=" + encryptionHBRSupported +
+                ", encryptionHotOperationSupported=" + encryptionHotOperationSupported +
+                ", encryptionMemorySaveSupported=" + encryptionMemorySaveSupported +
+                ", encryptionRDMSupported=" + encryptionRDMSupported +
+                ", encryptionVFlashSupported=" + encryptionVFlashSupported +
+                ", encryptionWithSnapshotsSupported=" + encryptionWithSnapshotsSupported +
+                ", featureCapabilitiesSupported=" + featureCapabilitiesSupported +
+                ", firewallIpRulesSupported=" + firewallIpRulesSupported +
+                ", ftCompatibilityIssues=" + Arrays.toString(ftCompatibilityIssues) +
+                ", ftEfiSupported=" + ftEfiSupported +
+                ", ftSupported=" + ftSupported +
+                ", ftVmcpSupported=" + ftVmcpSupported +
+                ", gatewayOnNicSupported=" + gatewayOnNicSupported +
+                ", hbrNicSelectionSupported=" + hbrNicSelectionSupported +
+                ", highGuestMemSupported=" + highGuestMemSupported +
+                ", hostAccessManagerSupported=" + hostAccessManagerSupported +
+                ", interVMCommunicationThroughVMCISupported=" + interVMCommunicationThroughVMCISupported +
+                ", ipmiSupported=" + ipmiSupported +
+                ", iscsiSupported=" + iscsiSupported +
+                ", latencySensitivitySupported=" + latencySensitivitySupported +
+                ", localSwapDatastoreSupported=" + localSwapDatastoreSupported +
+                ", loginBySSLThumbprintSupported=" + loginBySSLThumbprintSupported +
+                ", maintenanceModeSupported=" + maintenanceModeSupported +
+                ", markAsLocalSupported=" + markAsLocalSupported +
+                ", markAsSsdSupported=" + markAsSsdSupported +
+                ", markPerenniallyReservedSupported=" + markPerenniallyReservedSupported +
+                ", maxHostRunningVms=" + maxHostRunningVms +
+                ", maxHostSupportedVcpus=" + maxHostSupportedVcpus +
+                ", maxMemMBPerFtVm=" + maxMemMBPerFtVm +
+                ", maxNumDisksSVMotion=" + maxNumDisksSVMotion +
+                ", maxRegisteredVMs=" + maxRegisteredVMs +
+                ", maxRunningVMs=" + maxRunningVMs +
+                ", maxSupportedVcpus=" + maxSupportedVcpus +
+                ", maxSupportedVMs=" + maxSupportedVMs +
+                ", maxVcpusPerFtVm=" + maxVcpusPerFtVm +
+                ", messageBusProxySupported=" + messageBusProxySupported +
+                ", multipleNetworkStackInstanceSupported=" + multipleNetworkStackInstanceSupported +
+                ", nestedHVSupported=" + nestedHVSupported +
+                ", nfs41Krb5iSupported=" + nfs41Krb5iSupported +
+                ", nfs41Supported=" + nfs41Supported +
+                ", nfsSupported=" + nfsSupported +
+                ", nicTeamingSupported=" + nicTeamingSupported +
+                ", oneKVolumeAPIsSupported=" + oneKVolumeAPIsSupported +
+                ", perVMNetworkTrafficShapingSupported=" + perVMNetworkTrafficShapingSupported +
+                ", perVmSwapFiles=" + perVmSwapFiles +
+                ", pMemSnapshotSupported=" + pMemSnapshotSupported +
+                ", pMemSupported=" + pMemSupported +
+                ", preAssignedPCIUnitNumbersSupported=" + preAssignedPCIUnitNumbersSupported +
+                ", provisioningNicSelectionSupported=" + provisioningNicSelectionSupported +
+                ", quickBootSupported=" + quickBootSupported +
+                ", rebootSupported=" + rebootSupported +
+                ", recordReplaySupported=" + recordReplaySupported +
+                ", recursiveResourcePoolsSupported=" + recursiveResourcePoolsSupported +
+                ", reliableMemoryAware=" + reliableMemoryAware +
+                ", replayCompatibilityIssues=" + Arrays.toString(replayCompatibilityIssues) +
+                ", replayUnsupportedReason='" + replayUnsupportedReason + '\'' +
+                ", restrictedSnapshotRelocateSupported=" + restrictedSnapshotRelocateSupported +
+                ", sanSupported=" + sanSupported +
+                ", scaledScreenshotSupported=" + scaledScreenshotSupported +
+                ", scheduledHardwareUpgradeSupported=" + scheduledHardwareUpgradeSupported +
+                ", screenshotSupported=" + screenshotSupported +
+                ", servicePackageInfoSupported=" + servicePackageInfoSupported +
+                ", shutdownSupported=" + shutdownSupported +
+                ", smartCardAuthenticationSupported=" + smartCardAuthenticationSupported +
+                ", smpFtCompatibilityIssues=" + Arrays.toString(smpFtCompatibilityIssues) +
+                ", smpFtSupported=" + smpFtSupported +
+                ", snapshotRelayoutSupported=" + snapshotRelayoutSupported +
+                ", standbySupported=" + standbySupported +
+                ", storageIORMSupported=" + storageIORMSupported +
+                ", storagePolicySupported=" + storagePolicySupported +
+                ", storageVMotionSupported=" + storageVMotionSupported +
+                ", supportedCpuFeature=" + Arrays.toString(supportedCpuFeature) +
+                ", supportedVmfsMajorVersion=" + Arrays.toString(supportedVmfsMajorVersion) +
+                ", suspendedRelocateSupported=" + suspendedRelocateSupported +
+                ", tpmSupported=" + tpmSupported +
+                ", tpmVersion='" + tpmVersion + '\'' +
+                ", turnDiskLocatorLedSupported=" + turnDiskLocatorLedSupported +
+                ", txtEnabled=" + txtEnabled +
+                ", unmapMethodSupported='" + unmapMethodSupported + '\'' +
+                ", unsharedSwapVMotionSupported=" + unsharedSwapVMotionSupported +
+                ", upitSupported=" + upitSupported +
+                ", vFlashSupported=" + vFlashSupported +
+                ", virtualExecUsageIgnored=" + virtualExecUsageIgnored +
+                ", virtualExecUsageSupported=" + virtualExecUsageSupported +
+                ", virtualMmuUsageIgnored=" + virtualMmuUsageIgnored +
+                ", virtualVolumeDatastoreSupported=" + virtualVolumeDatastoreSupported +
+                ", vlanTaggingSupported=" + vlanTaggingSupported +
+                ", vmCreateDateSupported=" + vmCreateDateSupported +
+                ", vmDirectPathGen2Supported=" + vmDirectPathGen2Supported +
+                ", vmDirectPathGen2UnsupportedReason=" + Arrays.toString(vmDirectPathGen2UnsupportedReason) +
+                ", vmDirectPathGen2UnsupportedReasonExtended='" + vmDirectPathGen2UnsupportedReasonExtended + '\'' +
+                ", vmfs3EOLSupported=" + vmfs3EOLSupported +
+                ", vmfsDatastoreMountCapable=" + vmfsDatastoreMountCapable +
+                ", vmotionAcrossNetworkSupported=" + vmotionAcrossNetworkSupported +
+                ", vmotionSupported=" + vmotionSupported +
+                ", vmotionWithStorageVMotionSupported=" + vmotionWithStorageVMotionSupported +
+                ", vPMCSupported=" + vPMCSupported +
+                ", vrNfcNicSelectionSupported=" + vrNfcNicSelectionSupported +
+                ", vsanSupported=" + vsanSupported +
+                ", vStorageCapable=" + vStorageCapable +
+                "} " + super.toString();
+    }
+
+    public boolean isAccel3dSupported() {
+        return accel3dSupported;
+    }
+
+    public void setAccel3dSupported(final boolean accel3dSupported) {
         this.accel3dSupported = accel3dSupported;
     }
 
-    public void setReliableMemoryAware(Boolean reliableMemoryAware) {
-        this.reliableMemoryAware = reliableMemoryAware;
+    public boolean isBackgroundSnapshotsSupported() {
+        return backgroundSnapshotsSupported;
     }
 
-    public void setMultipleNetworkStackInstanceSupported(Boolean multipleNetworkStackInstanceSupported) {
-        this.multipleNetworkStackInstanceSupported = multipleNetworkStackInstanceSupported;
+    public void setBackgroundSnapshotsSupported(final boolean backgroundSnapshotsSupported) {
+        this.backgroundSnapshotsSupported = backgroundSnapshotsSupported;
     }
 
-    public void setVsanSupported(Boolean vsanSupported) {
-        this.vsanSupported = vsanSupported;
+    public boolean isCloneFromSnapshotSupported() {
+        return cloneFromSnapshotSupported;
     }
 
-    public void setVFlashSupported(Boolean vFlashSupported) {
-        this.vFlashSupported = vFlashSupported;
+    public void setCloneFromSnapshotSupported(final boolean cloneFromSnapshotSupported) {
+        this.cloneFromSnapshotSupported = cloneFromSnapshotSupported;
     }
 
-    public Boolean isCpuHwMmuSupported() {
+    public Boolean getCpuHwMmuSupported() {
         return cpuHwMmuSupported;
     }
 
@@ -713,7 +313,15 @@ public class HostCapability extends DynamicData {
         this.cpuHwMmuSupported = cpuHwMmuSupported;
     }
 
-    public Boolean isCryptoSupported() {
+    public boolean isCpuMemoryResourceConfigurationSupported() {
+        return cpuMemoryResourceConfigurationSupported;
+    }
+
+    public void setCpuMemoryResourceConfigurationSupported(final boolean cpuMemoryResourceConfigurationSupported) {
+        this.cpuMemoryResourceConfigurationSupported = cpuMemoryResourceConfigurationSupported;
+    }
+
+    public Boolean getCryptoSupported() {
         return cryptoSupported;
     }
 
@@ -721,7 +329,31 @@ public class HostCapability extends DynamicData {
         this.cryptoSupported = cryptoSupported;
     }
 
-    public Boolean isEncryptedVMotionSupported() {
+    public boolean isDatastorePrincipalSupported() {
+        return datastorePrincipalSupported;
+    }
+
+    public void setDatastorePrincipalSupported(final boolean datastorePrincipalSupported) {
+        this.datastorePrincipalSupported = datastorePrincipalSupported;
+    }
+
+    public boolean isDeltaDiskBackingsSupported() {
+        return deltaDiskBackingsSupported;
+    }
+
+    public void setDeltaDiskBackingsSupported(final boolean deltaDiskBackingsSupported) {
+        this.deltaDiskBackingsSupported = deltaDiskBackingsSupported;
+    }
+
+    public boolean isEightPlusHostVmfsSharedAccessSupported() {
+        return eightPlusHostVmfsSharedAccessSupported;
+    }
+
+    public void setEightPlusHostVmfsSharedAccessSupported(final boolean eightPlusHostVmfsSharedAccessSupported) {
+        this.eightPlusHostVmfsSharedAccessSupported = eightPlusHostVmfsSharedAccessSupported;
+    }
+
+    public Boolean getEncryptedVMotionSupported() {
         return encryptedVMotionSupported;
     }
 
@@ -729,7 +361,7 @@ public class HostCapability extends DynamicData {
         this.encryptedVMotionSupported = encryptedVMotionSupported;
     }
 
-    public Boolean isEncryptionCBRCSupported() {
+    public Boolean getEncryptionCBRCSupported() {
         return encryptionCBRCSupported;
     }
 
@@ -737,7 +369,7 @@ public class HostCapability extends DynamicData {
         this.encryptionCBRCSupported = encryptionCBRCSupported;
     }
 
-    public Boolean isEncryptionChangeOnAddRemoveSupported() {
+    public Boolean getEncryptionChangeOnAddRemoveSupported() {
         return encryptionChangeOnAddRemoveSupported;
     }
 
@@ -745,7 +377,7 @@ public class HostCapability extends DynamicData {
         this.encryptionChangeOnAddRemoveSupported = encryptionChangeOnAddRemoveSupported;
     }
 
-    public Boolean isEncryptionFaultToleranceSupported() {
+    public Boolean getEncryptionFaultToleranceSupported() {
         return encryptionFaultToleranceSupported;
     }
 
@@ -753,7 +385,7 @@ public class HostCapability extends DynamicData {
         this.encryptionFaultToleranceSupported = encryptionFaultToleranceSupported;
     }
 
-    public Boolean isEncryptionHBRSupported() {
+    public Boolean getEncryptionHBRSupported() {
         return encryptionHBRSupported;
     }
 
@@ -761,7 +393,7 @@ public class HostCapability extends DynamicData {
         this.encryptionHBRSupported = encryptionHBRSupported;
     }
 
-    public Boolean isEncryptionHotOperationSupported() {
+    public Boolean getEncryptionHotOperationSupported() {
         return encryptionHotOperationSupported;
     }
 
@@ -769,7 +401,7 @@ public class HostCapability extends DynamicData {
         this.encryptionHotOperationSupported = encryptionHotOperationSupported;
     }
 
-    public Boolean isEncryptionMemorySaveSupported() {
+    public Boolean getEncryptionMemorySaveSupported() {
         return encryptionMemorySaveSupported;
     }
 
@@ -777,7 +409,7 @@ public class HostCapability extends DynamicData {
         this.encryptionMemorySaveSupported = encryptionMemorySaveSupported;
     }
 
-    public Boolean isEncryptionRDMSupported() {
+    public Boolean getEncryptionRDMSupported() {
         return encryptionRDMSupported;
     }
 
@@ -785,7 +417,7 @@ public class HostCapability extends DynamicData {
         this.encryptionRDMSupported = encryptionRDMSupported;
     }
 
-    public Boolean isEncryptionVFlashSupported() {
+    public Boolean getEncryptionVFlashSupported() {
         return encryptionVFlashSupported;
     }
 
@@ -793,7 +425,7 @@ public class HostCapability extends DynamicData {
         this.encryptionVFlashSupported = encryptionVFlashSupported;
     }
 
-    public Boolean isEncryptionWithSnapshotsSupported() {
+    public Boolean getEncryptionWithSnapshotsSupported() {
         return encryptionWithSnapshotsSupported;
     }
 
@@ -801,7 +433,55 @@ public class HostCapability extends DynamicData {
         this.encryptionWithSnapshotsSupported = encryptionWithSnapshotsSupported;
     }
 
-    public Boolean isGatewayOnNicSupported() {
+    public boolean isFeatureCapabilitiesSupported() {
+        return featureCapabilitiesSupported;
+    }
+
+    public void setFeatureCapabilitiesSupported(final boolean featureCapabilitiesSupported) {
+        this.featureCapabilitiesSupported = featureCapabilitiesSupported;
+    }
+
+    public Boolean getFirewallIpRulesSupported() {
+        return firewallIpRulesSupported;
+    }
+
+    public void setFirewallIpRulesSupported(final Boolean firewallIpRulesSupported) {
+        this.firewallIpRulesSupported = firewallIpRulesSupported;
+    }
+
+    public String[] getFtCompatibilityIssues() {
+        return ftCompatibilityIssues;
+    }
+
+    public void setFtCompatibilityIssues(final String[] ftCompatibilityIssues) {
+        this.ftCompatibilityIssues = ftCompatibilityIssues;
+    }
+
+    public Boolean getFtEfiSupported() {
+        return ftEfiSupported;
+    }
+
+    public void setFtEfiSupported(final Boolean ftEfiSupported) {
+        this.ftEfiSupported = ftEfiSupported;
+    }
+
+    public boolean isFtSupported() {
+        return ftSupported;
+    }
+
+    public void setFtSupported(final boolean ftSupported) {
+        this.ftSupported = ftSupported;
+    }
+
+    public Boolean getFtVmcpSupported() {
+        return ftVmcpSupported;
+    }
+
+    public void setFtVmcpSupported(final Boolean ftVmcpSupported) {
+        this.ftVmcpSupported = ftVmcpSupported;
+    }
+
+    public Boolean getGatewayOnNicSupported() {
         return gatewayOnNicSupported;
     }
 
@@ -809,7 +489,23 @@ public class HostCapability extends DynamicData {
         this.gatewayOnNicSupported = gatewayOnNicSupported;
     }
 
-    public Boolean isHostAccessManagerSupported() {
+    public boolean isHbrNicSelectionSupported() {
+        return hbrNicSelectionSupported;
+    }
+
+    public void setHbrNicSelectionSupported(final boolean hbrNicSelectionSupported) {
+        this.hbrNicSelectionSupported = hbrNicSelectionSupported;
+    }
+
+    public boolean isHighGuestMemSupported() {
+        return highGuestMemSupported;
+    }
+
+    public void setHighGuestMemSupported(final boolean highGuestMemSupported) {
+        this.highGuestMemSupported = highGuestMemSupported;
+    }
+
+    public Boolean getHostAccessManagerSupported() {
         return hostAccessManagerSupported;
     }
 
@@ -817,7 +513,63 @@ public class HostCapability extends DynamicData {
         this.hostAccessManagerSupported = hostAccessManagerSupported;
     }
 
-    public Boolean isMarkAsLocalSupported() {
+    public boolean isInterVMCommunicationThroughVMCISupported() {
+        return interVMCommunicationThroughVMCISupported;
+    }
+
+    public void setInterVMCommunicationThroughVMCISupported(final boolean interVMCommunicationThroughVMCISupported) {
+        this.interVMCommunicationThroughVMCISupported = interVMCommunicationThroughVMCISupported;
+    }
+
+    public Boolean getIpmiSupported() {
+        return ipmiSupported;
+    }
+
+    public void setIpmiSupported(final Boolean ipmiSupported) {
+        this.ipmiSupported = ipmiSupported;
+    }
+
+    public boolean isIscsiSupported() {
+        return iscsiSupported;
+    }
+
+    public void setIscsiSupported(final boolean iscsiSupported) {
+        this.iscsiSupported = iscsiSupported;
+    }
+
+    public boolean isLatencySensitivitySupported() {
+        return latencySensitivitySupported;
+    }
+
+    public void setLatencySensitivitySupported(final boolean latencySensitivitySupported) {
+        this.latencySensitivitySupported = latencySensitivitySupported;
+    }
+
+    public boolean isLocalSwapDatastoreSupported() {
+        return localSwapDatastoreSupported;
+    }
+
+    public void setLocalSwapDatastoreSupported(final boolean localSwapDatastoreSupported) {
+        this.localSwapDatastoreSupported = localSwapDatastoreSupported;
+    }
+
+    public Boolean getLoginBySSLThumbprintSupported() {
+        return loginBySSLThumbprintSupported;
+    }
+
+    public void setLoginBySSLThumbprintSupported(final Boolean loginBySSLThumbprintSupported) {
+        this.loginBySSLThumbprintSupported = loginBySSLThumbprintSupported;
+    }
+
+    public boolean isMaintenanceModeSupported() {
+        return maintenanceModeSupported;
+    }
+
+    public void setMaintenanceModeSupported(final boolean maintenanceModeSupported) {
+        this.maintenanceModeSupported = maintenanceModeSupported;
+    }
+
+    public Boolean getMarkAsLocalSupported() {
         return markAsLocalSupported;
     }
 
@@ -825,12 +577,36 @@ public class HostCapability extends DynamicData {
         this.markAsLocalSupported = markAsLocalSupported;
     }
 
-    public Boolean isMarkAsSsdSupported() {
+    public Boolean getMarkAsSsdSupported() {
         return markAsSsdSupported;
     }
 
     public void setMarkAsSsdSupported(final Boolean markAsSsdSupported) {
         this.markAsSsdSupported = markAsSsdSupported;
+    }
+
+    public Integer getMaxHostRunningVms() {
+        return maxHostRunningVms;
+    }
+
+    public void setMaxHostRunningVms(final Integer maxHostRunningVms) {
+        this.maxHostRunningVms = maxHostRunningVms;
+    }
+
+    public Integer getMaxHostSupportedVcpus() {
+        return maxHostSupportedVcpus;
+    }
+
+    public void setMaxHostSupportedVcpus(final Integer maxHostSupportedVcpus) {
+        this.maxHostSupportedVcpus = maxHostSupportedVcpus;
+    }
+
+    public Integer getMaxMemMBPerFtVm() {
+        return maxMemMBPerFtVm;
+    }
+
+    public void setMaxMemMBPerFtVm(final Integer maxMemMBPerFtVm) {
+        this.maxMemMBPerFtVm = maxMemMBPerFtVm;
     }
 
     public Integer getMaxNumDisksSVMotion() {
@@ -841,6 +617,38 @@ public class HostCapability extends DynamicData {
         this.maxNumDisksSVMotion = maxNumDisksSVMotion;
     }
 
+    public Integer getMaxRegisteredVMs() {
+        return maxRegisteredVMs;
+    }
+
+    public void setMaxRegisteredVMs(final Integer maxRegisteredVMs) {
+        this.maxRegisteredVMs = maxRegisteredVMs;
+    }
+
+    public Integer getMaxRunningVMs() {
+        return maxRunningVMs;
+    }
+
+    public void setMaxRunningVMs(final Integer maxRunningVMs) {
+        this.maxRunningVMs = maxRunningVMs;
+    }
+
+    public Integer getMaxSupportedVcpus() {
+        return maxSupportedVcpus;
+    }
+
+    public void setMaxSupportedVcpus(final Integer maxSupportedVcpus) {
+        this.maxSupportedVcpus = maxSupportedVcpus;
+    }
+
+    public Integer getMaxSupportedVMs() {
+        return maxSupportedVMs;
+    }
+
+    public void setMaxSupportedVMs(final Integer maxSupportedVMs) {
+        this.maxSupportedVMs = maxSupportedVMs;
+    }
+
     public Integer getMaxVcpusPerFtVm() {
         return maxVcpusPerFtVm;
     }
@@ -849,7 +657,7 @@ public class HostCapability extends DynamicData {
         this.maxVcpusPerFtVm = maxVcpusPerFtVm;
     }
 
-    public Boolean isMessageBusProxySupported() {
+    public Boolean getMessageBusProxySupported() {
         return messageBusProxySupported;
     }
 
@@ -857,7 +665,23 @@ public class HostCapability extends DynamicData {
         this.messageBusProxySupported = messageBusProxySupported;
     }
 
-    public Boolean isNfs41Krb5iSupported() {
+    public Boolean getMultipleNetworkStackInstanceSupported() {
+        return multipleNetworkStackInstanceSupported;
+    }
+
+    public void setMultipleNetworkStackInstanceSupported(final Boolean multipleNetworkStackInstanceSupported) {
+        this.multipleNetworkStackInstanceSupported = multipleNetworkStackInstanceSupported;
+    }
+
+    public boolean isNestedHVSupported() {
+        return nestedHVSupported;
+    }
+
+    public void setNestedHVSupported(final boolean nestedHVSupported) {
+        this.nestedHVSupported = nestedHVSupported;
+    }
+
+    public Boolean getNfs41Krb5iSupported() {
         return nfs41Krb5iSupported;
     }
 
@@ -865,7 +689,7 @@ public class HostCapability extends DynamicData {
         this.nfs41Krb5iSupported = nfs41Krb5iSupported;
     }
 
-    public Boolean isNfs41Supported() {
+    public Boolean getNfs41Supported() {
         return nfs41Supported;
     }
 
@@ -873,7 +697,23 @@ public class HostCapability extends DynamicData {
         this.nfs41Supported = nfs41Supported;
     }
 
-    public Boolean isOneKVolumeAPIsSupported() {
+    public boolean isNfsSupported() {
+        return nfsSupported;
+    }
+
+    public void setNfsSupported(final boolean nfsSupported) {
+        this.nfsSupported = nfsSupported;
+    }
+
+    public boolean isNicTeamingSupported() {
+        return nicTeamingSupported;
+    }
+
+    public void setNicTeamingSupported(final boolean nicTeamingSupported) {
+        this.nicTeamingSupported = nicTeamingSupported;
+    }
+
+    public Boolean getOneKVolumeAPIsSupported() {
         return oneKVolumeAPIsSupported;
     }
 
@@ -881,15 +721,159 @@ public class HostCapability extends DynamicData {
         this.oneKVolumeAPIsSupported = oneKVolumeAPIsSupported;
     }
 
-    public Boolean isProvisioningNicSelectionSupported() {
+    public boolean isPerVMNetworkTrafficShapingSupported() {
+        return perVMNetworkTrafficShapingSupported;
+    }
+
+    public void setPerVMNetworkTrafficShapingSupported(final boolean perVMNetworkTrafficShapingSupported) {
+        this.perVMNetworkTrafficShapingSupported = perVMNetworkTrafficShapingSupported;
+    }
+
+    public boolean isPerVmSwapFiles() {
+        return perVmSwapFiles;
+    }
+
+    public void setPerVmSwapFiles(final boolean perVmSwapFiles) {
+        this.perVmSwapFiles = perVmSwapFiles;
+    }
+
+    public Boolean getpMemSnapshotSupported() {
+        return pMemSnapshotSupported;
+    }
+
+    public void setpMemSnapshotSupported(final Boolean pMemSnapshotSupported) {
+        this.pMemSnapshotSupported = pMemSnapshotSupported;
+    }
+
+    public Boolean getpMemSupported() {
+        return pMemSupported;
+    }
+
+    public void setpMemSupported(final Boolean pMemSupported) {
+        this.pMemSupported = pMemSupported;
+    }
+
+    public boolean isPreAssignedPCIUnitNumbersSupported() {
+        return preAssignedPCIUnitNumbersSupported;
+    }
+
+    public void setPreAssignedPCIUnitNumbersSupported(final boolean preAssignedPCIUnitNumbersSupported) {
+        this.preAssignedPCIUnitNumbersSupported = preAssignedPCIUnitNumbersSupported;
+    }
+
+    public boolean isProvisioningNicSelectionSupported() {
         return provisioningNicSelectionSupported;
     }
 
-    public void setProvisioningNicSelectionSupported(final Boolean provisioningNicSelectionSupported) {
+    public void setProvisioningNicSelectionSupported(final boolean provisioningNicSelectionSupported) {
         this.provisioningNicSelectionSupported = provisioningNicSelectionSupported;
     }
 
-    public Boolean isSmartCardAuthenticationSupported() {
+    public boolean isRebootSupported() {
+        return rebootSupported;
+    }
+
+    public void setRebootSupported(final boolean rebootSupported) {
+        this.rebootSupported = rebootSupported;
+    }
+
+    public boolean isRecordReplaySupported() {
+        return recordReplaySupported;
+    }
+
+    public void setRecordReplaySupported(final boolean recordReplaySupported) {
+        this.recordReplaySupported = recordReplaySupported;
+    }
+
+    public boolean isRecursiveResourcePoolsSupported() {
+        return recursiveResourcePoolsSupported;
+    }
+
+    public void setRecursiveResourcePoolsSupported(final boolean recursiveResourcePoolsSupported) {
+        this.recursiveResourcePoolsSupported = recursiveResourcePoolsSupported;
+    }
+
+    public Boolean getReliableMemoryAware() {
+        return reliableMemoryAware;
+    }
+
+    public void setReliableMemoryAware(final Boolean reliableMemoryAware) {
+        this.reliableMemoryAware = reliableMemoryAware;
+    }
+
+    public String[] getReplayCompatibilityIssues() {
+        return replayCompatibilityIssues;
+    }
+
+    public void setReplayCompatibilityIssues(final String[] replayCompatibilityIssues) {
+        this.replayCompatibilityIssues = replayCompatibilityIssues;
+    }
+
+    public String getReplayUnsupportedReason() {
+        return replayUnsupportedReason;
+    }
+
+    public void setReplayUnsupportedReason(final String replayUnsupportedReason) {
+        this.replayUnsupportedReason = replayUnsupportedReason;
+    }
+
+    public boolean isRestrictedSnapshotRelocateSupported() {
+        return restrictedSnapshotRelocateSupported;
+    }
+
+    public void setRestrictedSnapshotRelocateSupported(final boolean restrictedSnapshotRelocateSupported) {
+        this.restrictedSnapshotRelocateSupported = restrictedSnapshotRelocateSupported;
+    }
+
+    public boolean isSanSupported() {
+        return sanSupported;
+    }
+
+    public void setSanSupported(final boolean sanSupported) {
+        this.sanSupported = sanSupported;
+    }
+
+    public boolean isScaledScreenshotSupported() {
+        return scaledScreenshotSupported;
+    }
+
+    public void setScaledScreenshotSupported(final boolean scaledScreenshotSupported) {
+        this.scaledScreenshotSupported = scaledScreenshotSupported;
+    }
+
+    public Boolean getScheduledHardwareUpgradeSupported() {
+        return scheduledHardwareUpgradeSupported;
+    }
+
+    public void setScheduledHardwareUpgradeSupported(final Boolean scheduledHardwareUpgradeSupported) {
+        this.scheduledHardwareUpgradeSupported = scheduledHardwareUpgradeSupported;
+    }
+
+    public boolean isScreenshotSupported() {
+        return screenshotSupported;
+    }
+
+    public void setScreenshotSupported(final boolean screenshotSupported) {
+        this.screenshotSupported = screenshotSupported;
+    }
+
+    public Boolean getServicePackageInfoSupported() {
+        return servicePackageInfoSupported;
+    }
+
+    public void setServicePackageInfoSupported(final Boolean servicePackageInfoSupported) {
+        this.servicePackageInfoSupported = servicePackageInfoSupported;
+    }
+
+    public boolean isShutdownSupported() {
+        return shutdownSupported;
+    }
+
+    public void setShutdownSupported(final boolean shutdownSupported) {
+        this.shutdownSupported = shutdownSupported;
+    }
+
+    public Boolean getSmartCardAuthenticationSupported() {
         return smartCardAuthenticationSupported;
     }
 
@@ -905,15 +889,95 @@ public class HostCapability extends DynamicData {
         this.smpFtCompatibilityIssues = smpFtCompatibilityIssues;
     }
 
-    public Boolean isSmpFtSupported() {
+    public boolean isSmpFtSupported() {
         return smpFtSupported;
     }
 
-    public void setSmpFtSupported(final Boolean smpFtSupported) {
+    public void setSmpFtSupported(final boolean smpFtSupported) {
         this.smpFtSupported = smpFtSupported;
     }
 
-    public Boolean isTurnDiskLocatorLedSupported() {
+    public boolean isSnapshotRelayoutSupported() {
+        return snapshotRelayoutSupported;
+    }
+
+    public void setSnapshotRelayoutSupported(final boolean snapshotRelayoutSupported) {
+        this.snapshotRelayoutSupported = snapshotRelayoutSupported;
+    }
+
+    public boolean isStandbySupported() {
+        return standbySupported;
+    }
+
+    public void setStandbySupported(final boolean standbySupported) {
+        this.standbySupported = standbySupported;
+    }
+
+    public boolean isStorageIORMSupported() {
+        return storageIORMSupported;
+    }
+
+    public void setStorageIORMSupported(final boolean storageIORMSupported) {
+        this.storageIORMSupported = storageIORMSupported;
+    }
+
+    public Boolean getStoragePolicySupported() {
+        return storagePolicySupported;
+    }
+
+    public void setStoragePolicySupported(final Boolean storagePolicySupported) {
+        this.storagePolicySupported = storagePolicySupported;
+    }
+
+    public boolean isStorageVMotionSupported() {
+        return storageVMotionSupported;
+    }
+
+    public void setStorageVMotionSupported(final boolean storageVMotionSupported) {
+        this.storageVMotionSupported = storageVMotionSupported;
+    }
+
+    public HostCpuIdInfo[] getSupportedCpuFeature() {
+        return supportedCpuFeature;
+    }
+
+    public void setSupportedCpuFeature(final HostCpuIdInfo[] supportedCpuFeature) {
+        this.supportedCpuFeature = supportedCpuFeature;
+    }
+
+    public int[] getSupportedVmfsMajorVersion() {
+        return supportedVmfsMajorVersion;
+    }
+
+    public void setSupportedVmfsMajorVersion(final int[] supportedVmfsMajorVersion) {
+        this.supportedVmfsMajorVersion = supportedVmfsMajorVersion;
+    }
+
+    public boolean isSuspendedRelocateSupported() {
+        return suspendedRelocateSupported;
+    }
+
+    public void setSuspendedRelocateSupported(final boolean suspendedRelocateSupported) {
+        this.suspendedRelocateSupported = suspendedRelocateSupported;
+    }
+
+    public boolean isTpmSupported() {
+        return tpmSupported;
+    }
+
+    public void setTpmSupported(final boolean tpmSupported) {
+        this.tpmSupported = tpmSupported;
+    }
+
+    public String getTpmVersion() {
+        return tpmVersion;
+    }
+
+    public void setTpmVersion(final String tpmVersion) {
+        this.tpmVersion = tpmVersion;
+    }
+
+    public Boolean getTurnDiskLocatorLedSupported() {
         return turnDiskLocatorLedSupported;
     }
 
@@ -921,7 +985,31 @@ public class HostCapability extends DynamicData {
         this.turnDiskLocatorLedSupported = turnDiskLocatorLedSupported;
     }
 
-    public Boolean isUpitSupported() {
+    public Boolean getTxtEnabled() {
+        return txtEnabled;
+    }
+
+    public void setTxtEnabled(final Boolean txtEnabled) {
+        this.txtEnabled = txtEnabled;
+    }
+
+    public String getUnmapMethodSupported() {
+        return unmapMethodSupported;
+    }
+
+    public void setUnmapMethodSupported(final String unmapMethodSupported) {
+        this.unmapMethodSupported = unmapMethodSupported;
+    }
+
+    public boolean isUnsharedSwapVMotionSupported() {
+        return unsharedSwapVMotionSupported;
+    }
+
+    public void setUnsharedSwapVMotionSupported(final boolean unsharedSwapVMotionSupported) {
+        this.unsharedSwapVMotionSupported = unsharedSwapVMotionSupported;
+    }
+
+    public Boolean getUpitSupported() {
         return upitSupported;
     }
 
@@ -929,7 +1017,39 @@ public class HostCapability extends DynamicData {
         this.upitSupported = upitSupported;
     }
 
-    public Boolean isVirtualVolumeDatastoreSupported() {
+    public Boolean getvFlashSupported() {
+        return vFlashSupported;
+    }
+
+    public void setvFlashSupported(final Boolean vFlashSupported) {
+        this.vFlashSupported = vFlashSupported;
+    }
+
+    public Boolean getVirtualExecUsageIgnored() {
+        return virtualExecUsageIgnored;
+    }
+
+    public void setVirtualExecUsageIgnored(final Boolean virtualExecUsageIgnored) {
+        this.virtualExecUsageIgnored = virtualExecUsageIgnored;
+    }
+
+    public boolean isVirtualExecUsageSupported() {
+        return virtualExecUsageSupported;
+    }
+
+    public void setVirtualExecUsageSupported(final boolean virtualExecUsageSupported) {
+        this.virtualExecUsageSupported = virtualExecUsageSupported;
+    }
+
+    public Boolean getVirtualMmuUsageIgnored() {
+        return virtualMmuUsageIgnored;
+    }
+
+    public void setVirtualMmuUsageIgnored(final Boolean virtualMmuUsageIgnored) {
+        this.virtualMmuUsageIgnored = virtualMmuUsageIgnored;
+    }
+
+    public Boolean getVirtualVolumeDatastoreSupported() {
         return virtualVolumeDatastoreSupported;
     }
 
@@ -937,11 +1057,131 @@ public class HostCapability extends DynamicData {
         this.virtualVolumeDatastoreSupported = virtualVolumeDatastoreSupported;
     }
 
-    public Boolean isVrNfcNicSelectionSupported() {
+    public boolean isVlanTaggingSupported() {
+        return vlanTaggingSupported;
+    }
+
+    public void setVlanTaggingSupported(final boolean vlanTaggingSupported) {
+        this.vlanTaggingSupported = vlanTaggingSupported;
+    }
+
+    public Boolean getVmCreateDateSupported() {
+        return vmCreateDateSupported;
+    }
+
+    public void setVmCreateDateSupported(final Boolean vmCreateDateSupported) {
+        this.vmCreateDateSupported = vmCreateDateSupported;
+    }
+
+    public boolean isVmDirectPathGen2Supported() {
+        return vmDirectPathGen2Supported;
+    }
+
+    public void setVmDirectPathGen2Supported(final boolean vmDirectPathGen2Supported) {
+        this.vmDirectPathGen2Supported = vmDirectPathGen2Supported;
+    }
+
+    public String[] getVmDirectPathGen2UnsupportedReason() {
+        return vmDirectPathGen2UnsupportedReason;
+    }
+
+    public void setVmDirectPathGen2UnsupportedReason(final String[] vmDirectPathGen2UnsupportedReason) {
+        this.vmDirectPathGen2UnsupportedReason = vmDirectPathGen2UnsupportedReason;
+    }
+
+    public String getVmDirectPathGen2UnsupportedReasonExtended() {
+        return vmDirectPathGen2UnsupportedReasonExtended;
+    }
+
+    public void setVmDirectPathGen2UnsupportedReasonExtended(final String vmDirectPathGen2UnsupportedReasonExtended) {
+        this.vmDirectPathGen2UnsupportedReasonExtended = vmDirectPathGen2UnsupportedReasonExtended;
+    }
+
+    public Boolean getVmfs3EOLSupported() {
+        return vmfs3EOLSupported;
+    }
+
+    public void setVmfs3EOLSupported(final Boolean vmfs3EOLSupported) {
+        this.vmfs3EOLSupported = vmfs3EOLSupported;
+    }
+
+    public boolean isVmfsDatastoreMountCapable() {
+        return vmfsDatastoreMountCapable;
+    }
+
+    public void setVmfsDatastoreMountCapable(final boolean vmfsDatastoreMountCapable) {
+        this.vmfsDatastoreMountCapable = vmfsDatastoreMountCapable;
+    }
+
+    public Boolean getVmotionAcrossNetworkSupported() {
+        return vmotionAcrossNetworkSupported;
+    }
+
+    public void setVmotionAcrossNetworkSupported(final Boolean vmotionAcrossNetworkSupported) {
+        this.vmotionAcrossNetworkSupported = vmotionAcrossNetworkSupported;
+    }
+
+    public boolean isVmotionSupported() {
+        return vmotionSupported;
+    }
+
+    public void setVmotionSupported(final boolean vmotionSupported) {
+        this.vmotionSupported = vmotionSupported;
+    }
+
+    public boolean isVmotionWithStorageVMotionSupported() {
+        return vmotionWithStorageVMotionSupported;
+    }
+
+    public void setVmotionWithStorageVMotionSupported(final boolean vmotionWithStorageVMotionSupported) {
+        this.vmotionWithStorageVMotionSupported = vmotionWithStorageVMotionSupported;
+    }
+
+    public boolean isvPMCSupported() {
+        return vPMCSupported;
+    }
+
+    public void setvPMCSupported(final boolean vPMCSupported) {
+        this.vPMCSupported = vPMCSupported;
+    }
+
+    public boolean isVrNfcNicSelectionSupported() {
         return vrNfcNicSelectionSupported;
     }
 
-    public void setVrNfcNicSelectionSupported(final Boolean vrNfcNicSelectionSupported) {
+    public void setVrNfcNicSelectionSupported(final boolean vrNfcNicSelectionSupported) {
         this.vrNfcNicSelectionSupported = vrNfcNicSelectionSupported;
+    }
+
+    public Boolean getVsanSupported() {
+        return vsanSupported;
+    }
+
+    public void setVsanSupported(final Boolean vsanSupported) {
+        this.vsanSupported = vsanSupported;
+    }
+
+    public boolean isvStorageCapable() {
+        return vStorageCapable;
+    }
+
+    public void setvStorageCapable(final boolean vStorageCapable) {
+        this.vStorageCapable = vStorageCapable;
+    }
+
+    public Boolean getMarkPerenniallyReservedSupported() {
+        return markPerenniallyReservedSupported;
+    }
+
+    public void setMarkPerenniallyReservedSupported(final Boolean markPerenniallyReservedSupported) {
+        this.markPerenniallyReservedSupported = markPerenniallyReservedSupported;
+    }
+
+    public Boolean getQuickBootSupported() {
+        return quickBootSupported;
+    }
+
+    public void setQuickBootSupported(final Boolean quickBootSupported) {
+        this.quickBootSupported = quickBootSupported;
     }
 }
