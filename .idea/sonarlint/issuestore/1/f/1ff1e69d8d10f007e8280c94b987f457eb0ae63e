@@ -1,0 +1,61 @@
+
+I
+java:S1133"5Do not forget to remove this deprecated code someday.(öò‰
+A
+java:S1123"(Add the missing @deprecated Javadoc tag.(¶ö®¯øÿÿÿÿ
+T
+java:S1874"ARemove this use of "replayCompatibilityIssues"; it is deprecated.(åµÓ
+L
+java:S1874"3Remove this use of "ftSupported"; it is deprecated.(»ç¿Úüÿÿÿÿ
+N
+java:S1133"5Do not forget to remove this deprecated code someday.(¶ö®¯øÿÿÿÿ
+L
+java:S1874"3Remove this use of "ftSupported"; it is deprecated.(ˆß¨Ìúÿÿÿÿ
+O
+java:S1874";Remove this use of "supportedCpuFeature"; it is deprecated.(ÜİêÏ
+I
+java:S1133"5Do not forget to remove this deprecated code someday.(Ş˜Œò
+V
+java:S1874"=Remove this use of "recordReplaySupported"; it is deprecated.(Û–™ãüÿÿÿÿ
+<
+java:S1123"(Add the missing @deprecated Javadoc tag.(öò‰
+X
+java:S1874"?Remove this use of "replayUnsupportedReason"; it is deprecated.(ÌÂæÅøÿÿÿÿ
+N
+java:S1133"5Do not forget to remove this deprecated code someday.(Í§Ù¿ÿÿÿÿÿ
+A
+java:S1123"(Add the missing @deprecated Javadoc tag.(ã‰¦úøÿÿÿÿ
+<
+java:S1123"(Add the missing @deprecated Javadoc tag.(Ş˜Œò
+I
+java:S1133"5Do not forget to remove this deprecated code someday.(·Ì¦ö
+V
+java:S1874"=Remove this use of "ftCompatibilityIssues"; it is deprecated.(ïÜÒÏÿÿÿÿÿ
+X
+java:S1874"?Remove this use of "replayUnsupportedReason"; it is deprecated.(ì„è§ıÿÿÿÿ
+V
+java:S1874"=Remove this use of "recordReplaySupported"; it is deprecated.(ŒŸªúÿÿÿÿ
+N
+java:S1133"5Do not forget to remove this deprecated code someday.(ã‰¦úøÿÿÿÿ
+A
+java:S1123"(Add the missing @deprecated Javadoc tag.(Í§Ù¿ÿÿÿÿÿ
+O
+java:S1874";Remove this use of "supportedCpuFeature"; it is deprecated.(œåÚë
+V
+java:S1874"=Remove this use of "ftCompatibilityIssues"; it is deprecated.(±­ÁĞùÿÿÿÿ
+<
+java:S1123"(Add the missing @deprecated Javadoc tag.(·Ì¦ö
+U
+java:S1874"ARemove this use of "replayCompatibilityIssues"; it is deprecated.(ù“ÅÚ
+]
+java:S1874"=Remove this use of "ftCompatibilityIssues"; it is deprecated.(×…ª‚øÿÿÿÿ8¯‚ùí.
+S
+java:S1874"3Remove this use of "ftSupported"; it is deprecated.(÷ÁŞ‡üÿÿÿÿ8¯‚ùí.
+]
+java:S1874"=Remove this use of "recordReplaySupported"; it is deprecated.(ıÃ‘ëşÿÿÿÿ8¯‚ùí.
+a
+java:S1874"ARemove this use of "replayCompatibilityIssues"; it is deprecated.(¬Ë”øÿÿÿÿ8¯‚ùí.
+_
+java:S1874"?Remove this use of "replayUnsupportedReason"; it is deprecated.(‰åƒãÿÿÿÿÿ8¯‚ùí.
+U
+java:S1874";Remove this use of "supportedCpuFeature"; it is deprecated.(éûİ8¯‚ùí.

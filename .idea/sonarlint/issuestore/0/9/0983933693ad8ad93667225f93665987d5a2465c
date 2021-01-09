@@ -1,0 +1,11 @@
+
+§
+java:S1598"This file "VMDeviceMgmt.java" should be located in "com/vmware/vim25/mo/samples/vm" directory, not in "/Users/stefandilk/git/vijava/samples/vm".(ƒ±öË
+Z
+java:S1105)"?Move this left curly brace to the end of previous line of code.(ÒÌâ–øÿÿÿÿ
+Z
+java:S1105+"?Move this left curly brace to the end of previous line of code.(ÒÌâ–øÿÿÿÿ
+V	java:S1255"<This block of commented-out lines of code should be removed.(ËÌ¿öıÿÿÿÿ
+Q	java:S1259"<This block of commented-out lines of code should be removed.(şºÈ€
+V	java:S125<"<This block of commented-out lines of code should be removed.(Šıš°ıÿÿÿÿ
+V	java:S125C"<This block of commented-out lines of code should be removed.(æã¢šùÿÿÿÿ

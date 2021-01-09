@@ -39,13 +39,26 @@ import java.util.Calendar;
 @SuppressWarnings("all")
 public class HostBIOSInfo extends DynamicData {
 
-    public String biosVersion;
-    public Integer firmwareMajorRelease;
-    public Integer firmwareMinorRelease;
-    public Integer majorRelease;
-    public Integer minorRelease;
-    public Calendar releaseDate;
-    public String vendor;
+    private String biosVersion;
+    private Integer firmwareMajorRelease;
+    private Integer firmwareMinorRelease;
+    private Integer majorRelease;
+    private Integer minorRelease;
+    private Calendar releaseDate;
+    private String vendor;
+
+    @Override
+    public String toString() {
+        return "HostBIOSInfo{" +
+                "biosVersion='" + biosVersion + '\'' +
+                ", firmwareMajorRelease=" + firmwareMajorRelease +
+                ", firmwareMinorRelease=" + firmwareMinorRelease +
+                ", majorRelease=" + majorRelease +
+                ", minorRelease=" + minorRelease +
+                ", releaseDate=" + releaseDate +
+                ", vendor='" + vendor + '\'' +
+                "} " + super.toString();
+    }
 
     public Integer getMajorRelease() {
         return majorRelease;

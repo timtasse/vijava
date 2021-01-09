@@ -1,0 +1,31 @@
+
+^
+AWFyBUqhHcBHgFSiDLgR
+java:S1168"&Return an empty array instead of null.(¥¹ï2sdilk8¸¤¬…—,
+e
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(ÁÅ«¾øÿÿÿÿ8¸àÖÏì.
+›
+java:S1130"€Remove the declaration of thrown exception 'com.vmware.vim25.InvalidProperty' which is a subclass of 'java.rmi.RemoteException'.(¶«Ùw8¸àÖÏì.
+—
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(¶«Ùw8¸àÖÏì.
+¡
+java:S1130"€Remove the declaration of thrown exception 'com.vmware.vim25.InvalidProperty' which is a subclass of 'java.rmi.RemoteException'.(Ì·®ıÿÿÿÿ8¸àÖÏì.
+
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(Ì·®ıÿÿÿÿ8¸àÖÏì.
+œ
+java:S1130"€Remove the declaration of thrown exception 'com.vmware.vim25.InvalidProperty' which is a subclass of 'java.rmi.RemoteException'.(ÉŒæ•8¸àÖÏì.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ÉŒæ•8¸àÖÏì.
+¡
+java:S1130"€Remove the declaration of thrown exception 'com.vmware.vim25.InvalidProperty' which is a subclass of 'java.rmi.RemoteException'.(–‡À‹üÿÿÿÿ8¸àÖÏì.
+
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(–‡À‹üÿÿÿÿ8¸àÖÏì.
+›
+java:S1130"€Remove the declaration of thrown exception 'com.vmware.vim25.InvalidProperty' which is a subclass of 'java.rmi.RemoteException'.(ä¸ 8¸àÖÏì.
+—
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ä¸ 8¸àÖÏì.
+J
+java:S1068"*Remove this unused "LOGGER" private field.(ÁÅ«¾øÿÿÿÿ8¸àÖÏì.
+V	java:S125"<This block of commented-out lines of code should be removed.(Ä€²³8¸àÖÏì.
+V	java:S125"<This block of commented-out lines of code should be removed.(ôùó8¸àÖÏì.
+[	java:S125"<This block of commented-out lines of code should be removed.(Ô´Íßøÿÿÿÿ8¸àÖÏì.

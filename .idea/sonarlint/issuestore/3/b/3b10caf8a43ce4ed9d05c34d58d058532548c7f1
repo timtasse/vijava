@@ -1,0 +1,15 @@
+
+ 
+java:S1130"„Remove the declaration of thrown exception 'com.vmware.vim25.ProfileUpdateFailed' which is a subclass of 'java.rmi.RemoteException'.(…æ¿›8ƒµ´Æí.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ùÉ8ƒµ´Æí.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(üÎ»³8ƒµ´Æí.
+R
+java:S1128"2Remove this unused import 'java.util.Collections'.(¢³ïÓşÿÿÿÿ8ƒµ´Æí.
+™
+java:S1130"~Remove the declaration of thrown exception 'com.vmware.vim25.DuplicateName' which is a subclass of 'java.rmi.RemoteException'.(…æ¿›8ƒµ´Æí.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(…æ¿›8ƒµ´Æí.
+
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(Îìı–şÿÿÿÿ8ƒµ´Æí.

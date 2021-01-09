@@ -1,7 +1,6 @@
 package com.vmware.vim25;
 
 import com.vmware.vim25.mo.*;
-import com.vmware.vim25.ws.WSClient;
 import org.doublecloud.ws.util.ReflectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -60,14 +59,21 @@ public class HostBIOSInfoTest {
     }
 
     @Test
+    public void testCapability() throws Exception {
+        final Capability capability = this.instance.getCapability();
+        LOGGER.debug(capability.toString());
+    }
+
+
+    @Test
     public void testEvcManager() throws Exception {
         final ClusterComputeResource cluster = (ClusterComputeResource) new InventoryNavigator(this.instance.getRootFolder())
-                .searchManagedEntity(ClusterComputeResource.class.getSimpleName(), "ct-esx-1");
+                .searchManagedEntity(ClusterComputeResource.class.getSimpleName(), "pi-esx-1");
         final ClusterEVCManager evcManager = cluster.getEvcManager();
         LOGGER.debug("EvcManager is from Cluster: {}", evcManager.getManagedCluster().getName());
         LOGGER.debug("EVCModeKey: {}", evcManager.getEvcState().currentEVCModeKey);
         Arrays.stream(evcManager.getEvcState().getSupportedEVCMode())
-                .map(val -> val.key + "-" + val.vendor + ":" + val.vendorTier + "  " + val.label)
+                .map(val -> val.getKey() + "-" + val.getVendor() + ":" + val.getVendorTier() + "  " + val.getLabel())
                 .forEach(LOGGER::debug);
         assertNotNull(evcManager);
         assertNotNull(evcManager.getManagedCluster());
@@ -91,17 +97,18 @@ public class HostBIOSInfoTest {
     @Test
     public void testGuestIntegrity() throws Exception {
         final VirtualMachine vm = this.getVirtualMachine();
+        LOGGER.debug("{}", vm);
         final VirtualMachineConfigInfo config = vm.getConfig();
         final VirtualMachineGuestIntegrityInfo integrityInfo = config.getGuestIntegrityInfo();
         LOGGER.debug("IntegrityInfo enabled={}", integrityInfo.isEnabled());
         LOGGER.debug("vmxConfigChecksum={}", config.getVmxConfigChecksum());
         LOGGER.debug("forkConfigInfo={}", config.getForkConfigInfo());
-        LOGGER.debug("messageBusTunnelEnabled={}", config.isMessageBusTunnelEnabled());
+        LOGGER.debug("messageBusTunnelEnabled={}", config.getMessageBusTunnelEnabled());
         LOGGER.debug("migrateEncryption={}", config.getMigrateEncryption());
         //LOGGER.debug("vmxConfigChecksum={}", Base64.getDecoder().decode(config.getVmxConfigChecksum()));
     }
 
-    @Test
+    @Test(enabled = false)
     public void testGuestInteraction() throws Exception {
         final VirtualMachine vm = this.getVirtualMachine();
         final NamePasswordAuthentication auth = new NamePasswordAuthentication();
@@ -140,16 +147,22 @@ public class HostBIOSInfoTest {
     public void testLogEvent() throws Exception {
         final VirtualMachine vm = this.getVirtualMachine();
         final EventManager eventManager = this.instance.getEventManager();
-        final Event event = new VmEvent();
+        for (EventDescriptionEventDetail detail : eventManager.getDescription().getEventInfo()) {
+            if (detail.getKey().toLowerCase().contains("freenet")) {
+                LOGGER.debug(detail.toString());
+            }
+        }
+        LOGGER.debug(Arrays.toString(eventManager.retrieveArgumentDescription("de.freenet.test")));
+        final EventEx event = new EventEx();
         final VmEventArgument argument = new VmEventArgument();
         argument.setVm(vm.getMOR());
         argument.setName(vm.getName());
         event.setVm(argument);
         event.setUserName("testuser");
-        event.setKey(1);
         event.setCreatedTime(GregorianCalendar.getInstance());
-        event.setChainId(1);
         event.setFullFormattedMessage("Dies ist eine Test Nachricht");
+        event.setEventTypeId("de.freenet.test");
+        event.setSeverity(EventEventSeverity.warning.name());
         eventManager.logUserEvent(vm, "noch ein test");
         LOGGER.debug(event.toString());
         final Event latestEvent = eventManager.getLatestEvent();
@@ -168,6 +181,26 @@ public class HostBIOSInfoTest {
             }
         }*/
 
+    }
+
+    @Test(enabled = false)
+    public void testRegisterExtension() throws Exception {
+        final Extension ext = new Extension();
+        final Description description = new Description();
+        description.setLabel("de.freenet");
+        description.setSummary("Custom Freenet Events");
+        ext.setDescription(description);
+        ext.setKey("de.freenet");
+        ext.setLastHeartbeatTime(GregorianCalendar.getInstance());
+        ext.setVersion("1.0.0");
+        final ExtensionEventTypeInfo eventTypeInfo = new ExtensionEventTypeInfo();
+        eventTypeInfo.setEventID("de.freenet.test");
+        eventTypeInfo.setEventTypeSchema("<EventType>" +
+                "<eventTypeID>de.freenet.test</eventTypeID>" +
+                "<description>Test Event</description>" +
+                "</EventType>");
+        ext.setEventList(new ExtensionEventTypeInfo[]{eventTypeInfo});
+        this.instance.getExtensionManager().updateExtension(ext);
     }
 
     @Test
@@ -240,63 +273,42 @@ public class HostBIOSInfoTest {
         final HostAccessManager accessManager = host.getHostAccessManager();
         LOGGER.debug("LockdownMode={}", accessManager.getLockdownMode());
         final HostCapability capability = host.getCapability();
-        LOGGER.debug("cpuHwMmuSupported={}", capability.isCpuHwMmuSupported());
-        LOGGER.debug("cryptoSupported={}", capability.isCryptoSupported());
-        LOGGER.debug("encryptedVMotionSupported={}", capability.isEncryptedVMotionSupported());
-        LOGGER.debug("gatewayOnNicSupported={}", capability.isGatewayOnNicSupported());
-        LOGGER.debug("hostAccessManagerSupported={}", capability.isHostAccessManagerSupported());
+        LOGGER.debug("cpuHwMmuSupported={}", capability.getCpuHwMmuSupported());
+        LOGGER.debug("cryptoSupported={}", capability.getCryptoSupported());
+        LOGGER.debug("encryptedVMotionSupported={}", capability.getEncryptedVMotionSupported());
+        LOGGER.debug("gatewayOnNicSupported={}", capability.getGatewayOnNicSupported());
+        LOGGER.debug("hostAccessManagerSupported={}", capability.getHostAccessManagerSupported());
         LOGGER.debug("maxNumDisksSVMotion={}", capability.getMaxNumDisksSVMotion());
-        LOGGER.debug("nfs41Supported={}", capability.isNfs41Supported());
+        LOGGER.debug("nfs41Supported={}", capability.getNfs41Supported());
         LOGGER.debug("provisioningNicSelectionSupported={}", capability.isProvisioningNicSelectionSupported());
-        LOGGER.debug("turnDiskLocatorLedSupported={}", capability.isTurnDiskLocatorLedSupported());
-        LOGGER.debug("virtualVolumeDatastoreSupported={}", capability.isVirtualVolumeDatastoreSupported());
+        LOGGER.debug("turnDiskLocatorLedSupported={}", capability.getTurnDiskLocatorLedSupported());
+        LOGGER.debug("virtualVolumeDatastoreSupported={}", capability.getVirtualVolumeDatastoreSupported());
         final HostBIOSInfo biosInfo = host.getHardware().getBiosInfo();
-        LOGGER.debug("Vendor: {}", biosInfo.vendor);
-        LOGGER.debug("BIOS releasedate: {}", biosInfo.releaseDate.getTime());
-        LOGGER.debug("BIOS Version: {}", biosInfo.biosVersion);
-        LOGGER.debug("BIOS Release: {}.{}", biosInfo.majorRelease, biosInfo.minorRelease);
-        LOGGER.debug("BIOS firmwareRelease: {}.{}", biosInfo.firmwareMajorRelease, biosInfo.firmwareMinorRelease);
+        LOGGER.debug("Vendor: {}", biosInfo.getVendor());
+        LOGGER.debug("BIOS releasedate: {}", biosInfo.getReleaseDate().getTime());
+        LOGGER.debug("BIOS Version: {}", biosInfo.getBiosVersion());
+        LOGGER.debug("BIOS Release: {}.{}", biosInfo.getMajorRelease(), biosInfo.getMinorRelease());
+        LOGGER.debug("BIOS firmwareRelease: {}.{}", biosInfo.getFirmwareMajorRelease(), biosInfo.getFirmwareMinorRelease());
         assertNotNull(biosInfo, "HostBIOSInfo is null");
         assertNotNull(biosInfo.getBiosVersion(), "BIOSVersion is null");
         assertNotNull(biosInfo.getReleaseDate());
-        //assertNotNull(biosInfo.getVendor());
-        //assertNotNull(biosInfo.getMajorRelease());
-        //assertNotNull(biosInfo.getMinorRelease());
-        //assertNotNull(biosInfo.getFirmwareMajorRelease());
-        //assertNotNull(biosInfo.getFirmwareMinorRelease());
-
         try {
             accessManager.changeAccessMode("test", false, HostAccessMode.accessAdmin);
         } catch (Exception e) {
             LOGGER.debug("Error in changeAccessMode", e);
         }
         LOGGER.debug(accessManager.querySystemUsers().toString());
-        //accessManager.retrieveAccessEntries().stream().forEach(val -> LOGGER.debug("{} -> {}", val.getPrincipal(), val.getAccessMode()));
-
-        for (int i = 0; i < 20; i++) {
-            accessManager.test();
-            accessManager.testNew();
-        }
-
-        //if (accessManager.testNew() > 0)
-        //  return;
-        LOGGER.debug(int.class.getCanonicalName() + " -> " + int.class.getPackage());
-        final LongSummaryStatistics statsOld = Stream.generate(accessManager::test).limit(100).mapToLong(val -> val).summaryStatistics();
-        final LongSummaryStatistics statsNew = Stream.generate(accessManager::testNew).limit(100).mapToLong(val -> val).summaryStatistics();
-        LOGGER.debug(statsOld.toString());
-        LOGGER.debug(statsNew.toString());
-        WSClient.COUNT_OLD.clear();
-        WSClient.COUNT_NEW.clear();
-        this.testSpeed(true, accessManager);
-        this.testSpeed(false, accessManager);
-        this.testSpeed(true, accessManager);
-        this.testSpeed(false, accessManager);
-        this.testSpeed(true, accessManager);
-        this.testSpeed(false, accessManager);
-        this.testSpeed(true, accessManager);
-        this.testSpeed(false, accessManager);
-        LOGGER.debug("Old Method: {}", WSClient.COUNT_OLD.stream().mapToLong(val -> val).summaryStatistics());
-        LOGGER.debug("New Method: {}", WSClient.COUNT_NEW.stream().mapToLong(val -> val).summaryStatistics());
+//        for (int i = 0; i < 20; i++) {
+//            accessManager.test();
+//            accessManager.testNew();
+//        }
+//        LOGGER.debug(int.class.getCanonicalName() + " -> " + int.class.getPackage());
+//        final LongSummaryStatistics statsOld = Stream.generate(accessManager::test).limit(100).mapToLong(val -> val).summaryStatistics();
+//        final LongSummaryStatistics statsNew = Stream.generate(accessManager::testNew).limit(100).mapToLong(val -> val).summaryStatistics();
+//        LOGGER.debug(statsOld.toString());
+//        LOGGER.debug(statsNew.toString());
+//        this.testSpeed(true, accessManager);
+//        this.testSpeed(false, accessManager);
     }
 
     private void testSpeed(final boolean old, final HostAccessManager accessManager) {
@@ -317,7 +329,7 @@ public class HostBIOSInfoTest {
         //LOGGER.debug(new String(decode, StandardCharsets.UTF_16));
     }
 
-    @Test
+    @Test(enabled = false)
     public void testNicChange() throws Exception {
         final VirtualMachine vm = this.getVirtualMachine();
         final VirtualDevice[] devices = vm.getConfig().getHardware().getDevice();
@@ -361,21 +373,4 @@ public class HostBIOSInfoTest {
         task2.waitForTask();
     }
 
-    /*@Test
-    public void testReflection() throws Exception {
-        final TestClass testClass = TestClass.class.newInstance();
-        LOGGER.debug(Arrays.toString(TestClass.class.getDeclaredFields()));
-        LOGGER.debug(Arrays.toString(TestClass.class.getFields()));
-        final Field bla = TestClass.class.getDeclaredField("bla");
-        LOGGER.debug("bla isAccessable: {}", bla.isAccessible());
-        LOGGER.debug("bla Modifiers: {}", bla.getModifiers());
-        LOGGER.debug("is Final: {}", Modifier.isFinal(bla.getModifiers()));
-        bla.setAccessible(true);
-        bla.set(testClass, "test");
-        final Field muh = TestClass.class.getDeclaredField("muh");
-        LOGGER.debug("muh isAccessable: {}", muh.isAccessible());
-        muh.setAccessible(true);
-        muh.set(testClass, 123);
-        LOGGER.debug(testClass.toString());
-    }*/
 }

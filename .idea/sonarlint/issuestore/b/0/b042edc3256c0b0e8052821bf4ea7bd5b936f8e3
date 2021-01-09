@@ -1,0 +1,38 @@
+
+‚
+AWFyBUmFHcBHgFSiDLL1	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ2sdilk8¸¤¬…—,
+¾
+AWJvaDmOHcBHgFSiDNyf
+java:S1130"€Remove the declaration of thrown exception 'com.vmware.vim25.InvalidProperty' which is a subclass of 'java.rmi.RemoteException'.(ø¨²Æıÿÿÿÿ2sdilk8 €œû¦,
+
+AWFyBUmGHcBHgFSiDLL7
+java:S1149"VReplace the synchronized class "Hashtable" by an unsynchronized one such as "HashMap".(Ÿ˜ìÿ2sdilk8¸¤¬…—,
+t
+AWFyBUl-HcBHgFSiDLKq
+java:S1117"7Rename "mor" which hides the field declared at line 68.(ÇîÚøÿÿÿÿ2sdilk8¸¤¬…—,
+Š
+AWr_oE2YgtWgmFcdTQ3a
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 32 to the 15 allowed.(ÏÌ¬Ô2sdilk8èÎ€ù¦,
+s
+AWr_oE2YgtWgmFcdTQ3b
+java:S1874"6Remove this use of "waitForUpdates"; it is deprecated.(’ßõ¾şÿÿÿÿ2sdilk8¸¤¬…—,
+§
+AWFyBUmGHcBHgFSiDLL8
+java:S1319"oThe return type of this method should be an interface such as "Map" rather than the implementation "Hashtable".(Ÿ˜ìÿ2sdilk8¸¤¬…—,
+º
+AWFyBUl-HcBHgFSiDLKr
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ø¨²Æıÿÿÿÿ2sdilk8¸¤¬…—,
+—
+AWr_oE2YgtWgmFcdTQ3U
+java:S3008"ZRename this field "MO_PACKAGE_NAME" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ù¯®ÿÿÿÿÿ2sdilk8èÎ€ù¦,
+¹
+AWFyBUl-HcBHgFSiDLKt
+java:S1130"€Remove the declaration of thrown exception 'com.vmware.vim25.InvalidProperty' which is a subclass of 'java.rmi.RemoteException'.(ÏÌ¬Ô2sdilk8¸¤¬…—,
+•
+AWr_oE2XgtWgmFcdTQ3T	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(Áÿã¹ûÿÿÿÿ2sdilk8èÎ€ù¦,
+‚
+AWFyBUl-HcBHgFSiDLKv
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(Å¿¿Äúÿÿÿÿ2sdilk8¸¤¬…—,
+µ
+AWJvaDmOHcBHgFSiDNyg
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ÏÌ¬Ô2sdilk8 €œû¦,

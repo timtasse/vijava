@@ -1,0 +1,28 @@
+
+O
+java:S1066"/Merge this if statement with the enclosing one.(öíñÀøÿÿÿÿ8Èƒ¢î.
+w	java:S127"XRefactor the code in order to not assign to this loop counter from within the loop body.(Õ´„¿ùÿÿÿÿ8Èƒ¢î.
+w	java:S127"XRefactor the code in order to not assign to this loop counter from within the loop body.(Õ´„¿ùÿÿÿÿ8Èƒ¢î.
+w	java:S127"XRefactor the code in order to not assign to this loop counter from within the loop body.(Õ´„¿ùÿÿÿÿ8Èƒ¢î.
+w	java:S127"XRefactor the code in order to not assign to this loop counter from within the loop body.(Õ´„¿ùÿÿÿÿ8Èƒ¢î.
+h	java:S134"NRefactor this code to not nest more than 4 if/for/while/switch/try statements.(âé8Èƒ¢î.
+b
+java:S2259"BA "NullPointerException" could be thrown; "body" is nullable here.(€å¸ìûÿÿÿÿ8Èƒ¢î.
+^
+java:S1596">Replace "Collections.EMPTY_LIST" by "Collections.emptyList()".(÷ƒ¨öúÿÿÿÿ8Èƒ¢î.
+W
+java:S2589"7Remove this expression which always evaluates to "true"(„ÜîÔıÿÿÿÿ8Èƒ¢î.
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.( ØÜß8Èƒ¢î.
+E
+java:S1172"+Remove this unused method parameter "type".(ÿ¹‘.8Èƒ¢î.
+C	java:S108")Either remove or fill this block of code.(”ı¾8Èƒ¢î.
+m
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 34 to the 15 allowed.(Äá®ò8Èƒ¢î.
+r
+java:S3776"RRefactor this method to reduce its Cognitive Complexity from 63 to the 15 allowed.(²µĞêıÿÿÿÿ8Èƒ¢î.
+M
+java:S1874"3Remove this use of "newInstance"; it is deprecated.(¥†¢E8Èƒ¢î.
+T
+java:S1874"4Remove this use of "isAccessible"; it is deprecated.(ù¬æìüÿÿÿÿ8Èƒ¢î.
+U	java:S125"<This block of commented-out lines of code should be removed.(ü“¨x8Èƒ¢î.

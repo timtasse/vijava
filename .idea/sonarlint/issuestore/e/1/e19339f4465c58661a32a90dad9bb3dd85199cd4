@@ -1,0 +1,25 @@
+
+`
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(Õ«üê8ø€¢î.
+_
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(˜Å8ø€¢î.
+
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(¥ÂÏ›şÿÿÿÿ8ø€¢î.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ÅëË8ø€¢î.
+P
+java:S1133"5Do not forget to remove this deprecated code someday.(ÅëË8ø€¢î.
+C
+java:S1123"(Add the missing @deprecated Javadoc tag.(ÅëË8ø€¢î.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ã‰ÁØ8ø€¢î.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(œ¬8ø€¢î.
+
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.InvalidState' which is a subclass of 'java.rmi.RemoteException'.(íÄË¶ùÿÿÿÿ8ø€¢î.
+
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(íÄË¶ùÿÿÿÿ8ø€¢î.
+U
+java:S1133"5Do not forget to remove this deprecated code someday.(À¹äßıÿÿÿÿ8ø€¢î.
+H
+java:S1123"(Add the missing @deprecated Javadoc tag.(À¹äßıÿÿÿÿ8ø€¢î.

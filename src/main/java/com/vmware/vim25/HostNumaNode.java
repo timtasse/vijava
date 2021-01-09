@@ -29,47 +29,78 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * Information about a single NUMA node.
+ *
+ * NOTE: This data object is not modeled correctly if the NUMA node contains multiple disjoint memory ranges.
+ * If there are multiple memory ranges, the client will see one memory ranges from this NumaNode object,
+ * and the memory range may or may not belong to this NUMA node.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.7
+ */
 
 @SuppressWarnings("all")
 public class HostNumaNode extends DynamicData {
-  public byte typeId;
-  public short[] cpuID;
-  public long memoryRangeBegin;
-  public long memoryRangeLength;
 
-  public byte getTypeId() {
-    return this.typeId;
-  }
+    private short[] cpuID;
+    private long memoryRangeBegin;
+    private long memoryRangeLength;
+    private String[] pciId;
+    private byte typeId;
 
-  public short[] getCpuID() {
-    return this.cpuID;
-  }
+    @Override
+    public String toString() {
+        return "HostNumaNode{" +
+                "cpuID=" + Arrays.toString(cpuID) +
+                ", memoryRangeBegin=" + memoryRangeBegin +
+                ", memoryRangeLength=" + memoryRangeLength +
+                ", pciId=" + Arrays.toString(pciId) +
+                ", typeId=" + typeId +
+                "} " + super.toString();
+    }
 
-  public long getMemoryRangeBegin() {
-    return this.memoryRangeBegin;
-  }
+    public byte getTypeId() {
+        return this.typeId;
+    }
 
-  public long getMemoryRangeLength() {
-    return this.memoryRangeLength;
-  }
+    public void setTypeId(byte typeId) {
+        this.typeId = typeId;
+    }
 
-  public void setTypeId(byte typeId) {
-    this.typeId=typeId;
-  }
+    public short[] getCpuID() {
+        return this.cpuID;
+    }
 
-  public void setCpuID(short[] cpuID) {
-    this.cpuID=cpuID;
-  }
+    public void setCpuID(short[] cpuID) {
+        this.cpuID = cpuID;
+    }
 
-  public void setMemoryRangeBegin(long memoryRangeBegin) {
-    this.memoryRangeBegin=memoryRangeBegin;
-  }
+    public long getMemoryRangeBegin() {
+        return this.memoryRangeBegin;
+    }
 
-  public void setMemoryRangeLength(long memoryRangeLength) {
-    this.memoryRangeLength=memoryRangeLength;
-  }
+    public void setMemoryRangeBegin(long memoryRangeBegin) {
+        this.memoryRangeBegin = memoryRangeBegin;
+    }
+
+    public long getMemoryRangeLength() {
+        return this.memoryRangeLength;
+    }
+
+    public void setMemoryRangeLength(long memoryRangeLength) {
+        this.memoryRangeLength = memoryRangeLength;
+    }
+
+    public String[] getPciId() {
+        return pciId;
+    }
+
+    public void setPciId(final String[] pciId) {
+        this.pciId = pciId;
+    }
+
 }

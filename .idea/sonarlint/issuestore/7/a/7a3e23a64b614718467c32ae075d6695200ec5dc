@@ -1,0 +1,78 @@
+
+º
+AWFyBUpSHcBHgFSiDLbv
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ÍŒõìıÿÿÿÿ2sdilk8¸¤¬…—,
+µ
+AWFyBUpSHcBHgFSiDLbq
+java:S1130"~Remove the declaration of thrown exception 'com.vmware.vim25.AlreadyExists' which is a subclass of 'java.rmi.RemoteException'.(ğÑ52sdilk8¸¤¬…—,
+»
+AWFyBUpSHcBHgFSiDLbn
+java:S1130"~Remove the declaration of thrown exception 'com.vmware.vim25.AlreadyExists' which is a subclass of 'java.rmi.RemoteException'.(¯òü…øÿÿÿÿ2sdilk8¸¤¬…—,
+C
+java:S1123"(Add the missing @deprecated Javadoc tag.(ğÂö±8ÿúÙî.
+
+java:S1130"‚Remove the declaration of thrown exception 'com.vmware.vim25.NoPermission' which is a subclass of 'com.vmware.vim25.RuntimeFault'.(ğÂö±8¤æî.
+º
+AWFyBUpSHcBHgFSiDLbu
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.UserNotFound' which is a subclass of 'java.rmi.RemoteException'.(ÍŒõìıÿÿÿÿ2sdilk8¸¤¬…—,
+º
+AWFyBUpSHcBHgFSiDLbp
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(¯òü…øÿÿÿÿ2sdilk8¸¤¬…—,
+
+java:S1130"~Remove the declaration of thrown exception 'com.vmware.vim25.AlreadyExists' which is a subclass of 'java.rmi.RemoteException'.(óş°«üÿÿÿÿ8ÿúÙî.
+»
+AWFyBUpSHcBHgFSiDLbs
+java:S1130"~Remove the declaration of thrown exception 'com.vmware.vim25.AlreadyExists' which is a subclass of 'java.rmi.RemoteException'.(„šÆîÿÿÿÿÿ2sdilk8¸¤¬…—,
+º
+AWFyBUpSHcBHgFSiDLbo
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.UserNotFound' which is a subclass of 'java.rmi.RemoteException'.(¯òü…øÿÿÿÿ2sdilk8¸¤¬…—,
+H
+java:S1123"(Add the missing @deprecated Javadoc tag.(¯òü…øÿÿÿÿ8ë‰Œî.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(—À®Û8ëéî.
+ 
+java:S1130"…Remove the declaration of thrown exception 'com.vmware.vim25.InvalidArgument' which is a subclass of 'com.vmware.vim25.RuntimeFault'.(ğÑ58µ™·î.
+O
+java:S1133"5Do not forget to remove this deprecated code someday.(ğÑ58ôîî.
+U
+java:S1133"5Do not forget to remove this deprecated code someday.(ÍŒõìıÿÿÿÿ8Èùî.
+º
+AWFyBUpSHcBHgFSiDLbt
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(„šÆîÿÿÿÿÿ2sdilk8¸¤¬…—,
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.InvalidLogin' which is a subclass of 'java.rmi.RemoteException'.(—À®Û8ëéî.
+º
+AWFyBUpTHcBHgFSiDLbx
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(àèÌÔøÿÿÿÿ2sdilk8¸¤¬…—,
+B
+java:S1123"(Add the missing @deprecated Javadoc tag.(ğÑ58ôîî.
+
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(óş°«üÿÿÿÿ8ÿúÙî.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ğÂö±8ÿúÙî.
+U
+java:S1133"5Do not forget to remove this deprecated code someday.(¯òü…øÿÿÿÿ8ë‰Œî.
+¦
+java:S1130"…Remove the declaration of thrown exception 'com.vmware.vim25.InvalidArgument' which is a subclass of 'com.vmware.vim25.RuntimeFault'.(„šÆîÿÿÿÿÿ8¹½·î.
+¤
+java:S1130"ƒRemove the declaration of thrown exception 'com.vmware.vim25.SecurityError' which is a subclass of 'com.vmware.vim25.RuntimeFault'.(àèÌÔøÿÿÿÿ8äéÙî.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.UserNotFound' which is a subclass of 'java.rmi.RemoteException'.(ğÂö±8ÿúÙî.
+P
+java:S1133"5Do not forget to remove this deprecated code someday.(ğÂö±8ÿúÙî.
+H
+java:S1123"(Add the missing @deprecated Javadoc tag.(ÍŒõìıÿÿÿÿ8Èùî.
+a
+java:S1192"FDefine a constant instead of duplicating this literal "group" 3 times.(íä‹Ç8òÚàî.
+
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.UserNotFound' which is a subclass of 'java.rmi.RemoteException'.(óş°«üÿÿÿÿ8½ïçî.
+¡
+java:S1130"…Remove the declaration of thrown exception 'com.vmware.vim25.InvalidArgument' which is a subclass of 'com.vmware.vim25.RuntimeFault'.(—À®Û8ëéî.
+¦
+java:S1130"…Remove the declaration of thrown exception 'com.vmware.vim25.InvalidArgument' which is a subclass of 'com.vmware.vim25.RuntimeFault'.(óş°«üÿÿÿÿ8½ïçî.
+º
+AWFyBUpSHcBHgFSiDLbw
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.UserNotFound' which is a subclass of 'java.rmi.RemoteException'.(àèÌÔøÿÿÿÿ2sdilk8¸¤¬…—,
+´
+AWFyBUpSHcBHgFSiDLbr
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ğÑ52sdilk8¸¤¬…—,

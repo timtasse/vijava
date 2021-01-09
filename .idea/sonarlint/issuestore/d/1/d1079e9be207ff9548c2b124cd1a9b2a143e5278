@@ -1,0 +1,25 @@
+
+
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(†³åûÿÿÿÿ8ã²¬Æí.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ÍÃÉĞ8ã²¬Æí.
+
+java:S1130"~Remove the declaration of thrown exception 'com.vmware.vim25.DuplicateName' which is a subclass of 'java.rmi.RemoteException'.(İ­ºîøÿÿÿÿ8ã²¬Æí.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(íÛ•º8ã²¬Æí.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ÄÿÂ–8ã²¬Æí.
+
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(İ­ºîøÿÿÿÿ8ã²¬Æí.
+˜
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(å»¢½8ã²¬Æí.
+œ
+java:S1130"|Remove the declaration of thrown exception 'com.vmware.vim25.InvalidName' which is a subclass of 'java.rmi.RemoteException'.(İ­ºîøÿÿÿÿ8ã²¬Æí.
+b
+java:S1192"GDefine a constant instead of duplicating this literal "entity" 6 times.(Ä¥†8ã²¬Æí.
+`
+java:S1192"FDefine a constant instead of duplicating this literal "_this" 7 times.(§ô¶Z8ã²¬Æí.
+—
+java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ÿ—ğ 8ã²¬Æí.
+r
+java:S1192"XDefine a constant instead of duplicating this literal "ManagedObjectReference" 15 times.(§ô¶Z8ã²¬Æí.
