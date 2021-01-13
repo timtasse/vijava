@@ -9,11 +9,11 @@ package com.vmware.vim25;
  */
 public class NvdimmNamespaceCreateSpec extends DynamicData {
 
-    private long blockCount;
-    private long blockSize;
     private String friendlyName;
-    private int locationID;
+    private long blockSize;
+    private long blockCount;
     private String type;
+    private int locationID;
 
     @Override
     public String toString() {

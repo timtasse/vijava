@@ -10,9 +10,9 @@ package com.vmware.vim25;
 public class VirtualNVDIMMOption extends VirtualDeviceOption {
 
     private LongOption capacityInMB;
-    private long granularityInMB;
     private boolean growable;
     private boolean hotGrowable;
+    private long granularityInMB;
 
     @Override
     public String toString() {

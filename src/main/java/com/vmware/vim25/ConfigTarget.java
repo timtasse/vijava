@@ -41,33 +41,33 @@ import java.util.Arrays;
 
 public class ConfigTarget extends DynamicData {
 
-    private Boolean autoVmotion;
-    private Long availablePersistentMemoryReservationMB;
-    private VirtualMachineCdromInfo[] cdRom;
+    private int numCpus;
+    private int numCpuCores;
+    private int numNumaNodes;
+    private Boolean smcPresent;
     private VirtualMachineDatastoreInfo[] datastore;
+    private VirtualMachineNetworkInfo[] network;
+    private OpaqueNetworkTargetInfo[] opaqueNetwork;
     private DistributedVirtualPortgroupInfo[] distributedVirtualPortgroup;
     private DistributedVirtualSwitchInfo[] distributedVirtualSwitch;
-    private VirtualMachineFloppyInfo[] floppy;
-    private VirtualMachineIdeDiskDeviceInfo[] ideDisk;
-    private VirtualMachineLegacyNetworkSwitchInfo[] legacyNetworkInfo;
-    private int maxMemMBOptimalPerf;
-    private VirtualMachineNetworkInfo[] network;
-    private int numCpuCores;
-    private int numCpus;
-    private int numNumaNodes;
-    private OpaqueNetworkTargetInfo[] opaqueNetwork;
-    private VirtualMachineParallelInfo[] parallel;
-    private VirtualMachinePciPassthroughInfo[] pciPassthrough;
-    private ResourcePoolRuntimeInfo resourcePool;
-    private VirtualMachineScsiDiskDeviceInfo[] scsiDisk;
-    private VirtualMachineScsiPassthroughInfo[] scsiPassthrough;
+    private VirtualMachineCdromInfo[] cdRom;
     private VirtualMachineSerialInfo[] serial;
-    private VirtualMachinePciSharedGpuPassthroughInfo[] sharedGpuPassthroughTypes;
-    private Boolean smcPresent;
+    private VirtualMachineParallelInfo[] parallel;
     private VirtualMachineSoundInfo[] sound;
-    private VirtualMachineSriovInfo[] sriov;
     private VirtualMachineUsbInfo[] usb;
+    private VirtualMachineFloppyInfo[] floppy;
+    private VirtualMachineLegacyNetworkSwitchInfo[] legacyNetworkInfo;
+    private VirtualMachineScsiPassthroughInfo[] scsiPassthrough;
+    private VirtualMachineScsiDiskDeviceInfo[] scsiDisk;
+    private VirtualMachineIdeDiskDeviceInfo[] ideDisk;
+    private int maxMemMBOptimalPerf;
+    private ResourcePoolRuntimeInfo resourcePool;
+    private Boolean autoVmotion;
+    private VirtualMachinePciPassthroughInfo[] pciPassthrough;
+    private VirtualMachineSriovInfo[] sriov;
     private VirtualMachineVFlashModuleInfo[] vFlashModule;
+    private VirtualMachinePciSharedGpuPassthroughInfo[] sharedGpuPassthroughTypes;
+    private Long availablePersistentMemoryReservationMB;
 
     @Override
     public String toString() {

@@ -11,10 +11,10 @@ import java.util.Arrays;
  */
 public class VirtualMachineInstantCloneSpec extends DynamicData {
 
-    private String biosUuid;
-    private OptionValue[] config;
-    private VirtualMachineRelocateSpec location;
     private String name;
+    private VirtualMachineRelocateSpec location;
+    private OptionValue[] config;
+    private String biosUuid;
 
     @Override
     public String toString() {

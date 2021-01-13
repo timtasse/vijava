@@ -10,11 +10,11 @@ import java.util.Arrays;
 public class VmfsConfigOption extends DynamicData {
 
     private int blockSizeOption;
-    private LongOption unmapBandwidthDynamicMax;
-    private LongOption unmapBandwidthDynamicMin;
-    private LongOption unmapBandwidthFixedValue;
-    private Long unmapBandwidthIncrement;
     private int[] unmapGranularityOption;
+    private LongOption unmapBandwidthFixedValue;
+    private LongOption unmapBandwidthDynamicMin;
+    private LongOption unmapBandwidthDynamicMax;
+    private Long unmapBandwidthIncrement;
 
     @Override
     public String toString() {

@@ -45,19 +45,19 @@ public class ClusterConfigSpecEx extends ComputeResourceConfigSpec {
 
     private ClusterDasConfigInfo dasConfig;
     private ClusterDasVmConfigSpec[] dasVmConfigSpec;
-    private ClusterDpmConfigInfo dpmConfig;
-    private ClusterDpmHostConfigSpec[] dpmHostConfigSpec;
     private ClusterDrsConfigInfo drsConfig;
     private ClusterDrsVmConfigSpec[] drsVmConfigSpec;
-    private ClusterGroupSpec[] groupSpec;
-    private ClusterInfraUpdateHaConfigInfo infraUpdateHaConfig;
-    private Boolean inHciWorkflow;
-    private ClusterOrchestrationInfo orchestration;
-    private ClusterProactiveDrsConfigInfo proactiveDrsConfig;
     private ClusterRuleSpec[] rulesSpec;
+    private ClusterOrchestrationInfo orchestration;
     private ClusterVmOrchestrationSpec[] vmOrchestrationSpec;
+    private ClusterDpmConfigInfo dpmConfig;
+    private ClusterDpmHostConfigSpec[] dpmHostConfigSpec;
     private VsanClusterConfigInfo vsanConfig;
     private VsanHostConfigInfo[] vsanHostConfigSpec;
+    private ClusterGroupSpec[] groupSpec;
+    private ClusterInfraUpdateHaConfigInfo infraUpdateHaConfig;
+    private ClusterProactiveDrsConfigInfo proactiveDrsConfig;
+    private Boolean inHciWorkflow;
 
     @Override
     public String toString() {

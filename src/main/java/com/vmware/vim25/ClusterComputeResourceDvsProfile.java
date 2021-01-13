@@ -11,10 +11,10 @@ import java.util.Arrays;
  */
 public class ClusterComputeResourceDvsProfile extends DynamicData {
 
-    private ClusterComputeResourceDvsProfileDVPortgroupSpecToServiceMapping[] dvPortgroupMapping;
     private String dvsName;
     private ManagedObjectReference dvSwitch;
     private String[] pnicDevices;
+    private ClusterComputeResourceDvsProfileDVPortgroupSpecToServiceMapping[] dvPortgroupMapping;
 
     @Override
     public String toString() {

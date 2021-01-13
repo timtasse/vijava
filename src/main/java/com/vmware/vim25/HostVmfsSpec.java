@@ -40,15 +40,15 @@ package com.vmware.vim25;
 @SuppressWarnings("all")
 public class HostVmfsSpec extends DynamicData {
 
-    private Integer blockSize;
+    private HostScsiDiskPartition extent;
     @Deprecated
     private Integer blockSizeMb;
-    private HostScsiDiskPartition extent;
     private int majorVersion;
-    private VmfsUnmapBandwidthSpec unmapBandwidthSpec;
+    private String volumeName;
+    private Integer blockSize;
     private Integer unmapGranularity;
     private String unmapPriority;
-    private String volumeName;
+    private VmfsUnmapBandwidthSpec unmapBandwidthSpec;
 
     @Override
     public String toString() {

@@ -9,8 +9,8 @@ package com.vmware.vim25;
 public class NvdimmPMemNamespaceCreateSpec extends DynamicData {
 
     private String friendlyName;
-    private int interleavesetID;
     private long size;
+    private int interleavesetID;
 
     @Override
     public String toString() {

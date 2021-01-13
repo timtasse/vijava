@@ -43,19 +43,19 @@ import java.util.Arrays;
 @SuppressWarnings("all")
 public class NetworkProfile extends ApplyProfile {
 
-    private IpRouteProfile consoleIpRouteConfig;
-    private NetworkProfileDnsConfigProfile dnsConfig;
-    private DvsHostVNicProfile[] dvsHostNic;
-    private DvsServiceConsoleVNicProfile[] dvsServiceConsoleNic;
-    private DvsProfile[] dvswitch;
-    private HostPortGroupProfile[] hostPortGroup;
-    private IpRouteProfile ipRouteConfig;
-    private NetStackInstanceProfile[] netStackInstance;
-    private NsxHostVNicProfile[] nsxHostNic;
-    private PhysicalNicProfile[] pnic;
-    private ServiceConsolePortGroupProfile[] serviceConsolePortGroup;
-    private VmPortGroupProfile[] vmPortGroup;
     private VirtualSwitchProfile[] vswitch;
+    private VmPortGroupProfile[] vmPortGroup;
+    private HostPortGroupProfile[] hostPortGroup;
+    private ServiceConsolePortGroupProfile[] serviceConsolePortGroup;
+    private NetworkProfileDnsConfigProfile dnsConfig;
+    private IpRouteProfile ipRouteConfig;
+    private IpRouteProfile consoleIpRouteConfig;
+    private PhysicalNicProfile[] pnic;
+    private DvsProfile[] dvswitch;
+    private DvsServiceConsoleVNicProfile[] dvsServiceConsoleNic;
+    private DvsHostVNicProfile[] dvsHostNic;
+    private NsxHostVNicProfile[] nsxHostNic;
+    private NetStackInstanceProfile[] netStackInstance;
 
     @Override
     public String toString() {

@@ -6,8 +6,8 @@ package com.vmware.vim25;
  */
 public class FolderNewHostSpec extends DynamicData {
 
-    private String esxLicense;
     private HostConnectSpec hostCnxSpec;
+    private String esxLicense;
 
     @Override
     public String toString() {

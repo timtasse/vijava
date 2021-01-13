@@ -46,11 +46,11 @@ import java.util.Arrays;
 @SuppressWarnings("all")
 public class HostNumaNode extends DynamicData {
 
+    private byte typeId;
     private short[] cpuID;
     private long memoryRangeBegin;
     private long memoryRangeLength;
     private String[] pciId;
-    private byte typeId;
 
     @Override
     public String toString() {

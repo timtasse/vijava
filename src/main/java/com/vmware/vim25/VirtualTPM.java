@@ -9,8 +9,8 @@ package com.vmware.vim25;
  */
 public class VirtualTPM extends VirtualDevice {
 
-    private byte[] endorsementKeyCertificate;
     private byte[] endorsementKeyCertificateSigningRequest;
+    private byte[] endorsementKeyCertificate;
 
     public byte[] getEndorsementKeyCertificate() {
         return endorsementKeyCertificate;

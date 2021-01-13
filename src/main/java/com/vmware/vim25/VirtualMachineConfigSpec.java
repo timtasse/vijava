@@ -45,44 +45,12 @@ import java.util.Calendar;
 @SuppressWarnings("all")
 public class VirtualMachineConfigSpec extends DynamicData {
 
-    private String alternateGuestName;
-    private String annotation;
-    private VirtualMachineBootOptions bootOptions;
-    private Boolean changeTrackingEnabled;
     private String changeVersion;
-    private VirtualMachineConsolePreferences consolePreferences;
-    private VirtualMachineAffinityInfo cpuAffinity;
-    private ResourceAllocationInfo cpuAllocation;
-    private VirtualMachineCpuIdInfoSpec[] cpuFeatureMask;
-    private Boolean cpuHotAddEnabled;
-    private Boolean cpuHotRemoveEnabled;
-    private Calendar createDate;
-    private CryptoSpec crypto;
-    private VirtualDeviceConfigSpec[] deviceChange;
-    private OptionValue[] extraConfig;
-    private VirtualMachineFileInfo files;
-    private String firmware;
-    private VirtualMachineFlagInfo flags;
-    private FaultToleranceConfigInfo ftInfo;
-    private Boolean guestAutoLockEnabled;
-    private String guestId;
-    private String instanceUuid;
-    private LatencySensitivity latencySensitivity;
-    private String locationId;
-    private ManagedByInfo managedBy;
-    private Integer maxMksConnections;
-    @Deprecated
-    private VirtualMachineAffinityInfo memoryAffinity;
-    private ResourceAllocationInfo memoryAllocation;
-    private Boolean memoryHotAddEnabled;
-    private Long memoryMB;
-    private Boolean memoryReservationLockedToMax;
-    private Boolean messageBusTunnelEnabled;
-    private String migrateEncryption;
     private String name;
-    private Boolean nestedHVEnabled;
-    @Deprecated
-    private VirtualMachineNetworkShaperInfo networkShaper;
+    private String version;
+    private Calendar createDate;
+    private String uuid;
+    private String instanceUuid;
     private Short npivDesiredNodeWwns;
     private Short npivDesiredPortWwns;
     private Long[] npivNodeWorldWideName;
@@ -91,22 +59,54 @@ public class VirtualMachineConfigSpec extends DynamicData {
     private Boolean npivTemporaryDisabled;
     private String npivWorldWideNameOp;
     private String npivWorldWideNameType;
-    private Integer numCoresPerSocket;
-    private Integer numCPUs;
-    private VirtualMachineDefaultPowerOpInfo powerOpInfo;
-    private ReplicationConfigSpec repConfig;
-    private ScheduledHardwareUpgradeInfo scheduledHardwareUpgradeInfo;
-    private String swapPlacement;
+    private String locationId;
+    private String guestId;
+    private String alternateGuestName;
+    private String annotation;
+    private VirtualMachineFileInfo files;
     private ToolsConfigInfo tools;
-    private String uuid;
-    private VmConfigSpec vAppConfig;
-    private Boolean vAppConfigRemoved;
-    private Boolean vAssertsEnabled;
-    private String version;
+    private VirtualMachineFlagInfo flags;
+    private VirtualMachineConsolePreferences consolePreferences;
+    private VirtualMachineDefaultPowerOpInfo powerOpInfo;
+    private Integer numCPUs;
+    private Integer numCoresPerSocket;
+    private Long memoryMB;
+    private Boolean memoryHotAddEnabled;
+    private Boolean cpuHotAddEnabled;
+    private Boolean cpuHotRemoveEnabled;
     private Boolean virtualICH7MPresent;
     private Boolean virtualSMCPresent;
-    private VirtualMachineProfileSpec[] vmProfile;
+    private VirtualDeviceConfigSpec[] deviceChange;
+    private ResourceAllocationInfo cpuAllocation;
+    private ResourceAllocationInfo memoryAllocation;
+    private LatencySensitivity latencySensitivity;
+    private VirtualMachineAffinityInfo cpuAffinity;
+    private VirtualMachineAffinityInfo memoryAffinity;
+    @Deprecated
+    private VirtualMachineNetworkShaperInfo networkShaper;
+    private VirtualMachineCpuIdInfoSpec[] cpuFeatureMask;
+    private OptionValue[] extraConfig;
+    private String swapPlacement;
+    private VirtualMachineBootOptions bootOptions;
+    private VmConfigSpec vAppConfig;
+    private FaultToleranceConfigInfo ftInfo;
+    private ReplicationConfigSpec repConfig;
+    private Boolean vAppConfigRemoved;
+    private Boolean vAssertsEnabled;
+    private Boolean changeTrackingEnabled;
+    private String firmware;
+    private Integer maxMksConnections;
+    private Boolean guestAutoLockEnabled;
+    private ManagedByInfo managedBy;
+    @Deprecated
+    private Boolean memoryReservationLockedToMax;
+    private Boolean nestedHVEnabled;
     private Boolean vPMCEnabled;
+    private ScheduledHardwareUpgradeInfo scheduledHardwareUpgradeInfo;
+    private VirtualMachineProfileSpec[] vmProfile;
+    private Boolean messageBusTunnelEnabled;
+    private CryptoSpec crypto;
+    private String migrateEncryption;
 
     @Override
     public String toString() {

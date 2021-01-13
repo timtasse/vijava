@@ -45,10 +45,10 @@ import java.util.Arrays;
 @SuppressWarnings("all")
 public class VirtualMachineDefinedProfileSpec extends VirtualMachineProfileSpec {
 
-    private VirtualMachineProfileRawData profileData;
     private String profileId;
-    private KeyValue[] profileParams;
     private ReplicationSpec replicationSpec;
+    private VirtualMachineProfileRawData profileData;
+    private KeyValue[] profileParams;
 
     @Override
     public String toString() {

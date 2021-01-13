@@ -48,11 +48,6 @@ public class ReflectUtil {
     public static List<Field> getAllFields(Class<?> c) {
         List<Field> listOfFields = new ArrayList<>();
         getAllFields(c, listOfFields);
-        //LOGGER.debug(listOfFields.stream().map(Field::getName).collect(Collectors.joining(",")));
-        //LOGGER.debug("-----------");
-        listOfFields.sort(ReflectUtil::compare);
-        //LOGGER.debug(listOfFields.stream().map(Field::getName).collect(Collectors.joining(",")));
-        //LOGGER.debug("!!!-----------");
         return listOfFields;
     }
 
@@ -273,13 +268,4 @@ public class ReflectUtil {
         }
     }
 
-    private static int compare(Field o1, Field o2) {
-        if (o1.getName().equals("name") || o1.getName().equals("propSet")) {
-            return -1;
-        }
-        if (o2.getName().equals("name") || o2.getName().equals("propSet")) {
-            return 1;
-        }
-        return 1;
-    }
 }

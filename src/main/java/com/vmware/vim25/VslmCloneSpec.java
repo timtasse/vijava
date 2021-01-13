@@ -11,9 +11,9 @@ import java.util.Arrays;
  */
 public class VslmCloneSpec extends VslmMigrateSpec {
 
+    private String name;
     private Boolean keepAfterDeleteVm;
     private KeyValue[] metadata;
-    private String name;
 
     @Override
     public String toString() {

@@ -11,12 +11,12 @@ import java.util.Arrays;
  */
 public class VslmCreateSpec extends DynamicData {
 
+    private String name;
+    private Boolean keepAfterDeleteVm;
     private VslmCreateSpecBackingSpec backingSpec;
     private long capacityInMB;
-    private Boolean keepAfterDeleteVm;
-    private KeyValue[] metadata;
-    private String name;
     private VirtualMachineProfileSpec[] profile;
+    private KeyValue[] metadata;
 
     @Override
     public String toString() {

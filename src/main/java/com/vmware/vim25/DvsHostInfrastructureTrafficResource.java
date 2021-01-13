@@ -1,16 +1,25 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 31.03.2018
+ * This class defines the resource allocation for a host infrastructure traffic class on a physical NIC
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.0
  */
 public class DvsHostInfrastructureTrafficResource extends DynamicData {
 
-    public DvsHostInfrastructureTrafficResourceAllocation allocationInfo;
-    public String description;
-    public String key;
+    private String key;
+    private String description;
+    private DvsHostInfrastructureTrafficResourceAllocation allocationInfo;
+
+    @Override
+    public String toString() {
+        return "DvsHostInfrastructureTrafficResource{" +
+                "key='" + key + '\'' +
+                ", description='" + description + '\'' +
+                ", allocationInfo=" + allocationInfo +
+                "} " + super.toString();
+    }
 
     public DvsHostInfrastructureTrafficResourceAllocation getAllocationInfo() {
         return allocationInfo;

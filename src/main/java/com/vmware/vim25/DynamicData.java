@@ -29,44 +29,17 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
-
 /**
  * DynamicData is a builtin object model data object type for manipulating data properties dynamically.
  * The primary usage is as a base class for types that may be extended with subtypes in the future,
  * where new properties should be sent to old clients as a set of dynamic properties.
+ *
+ * Currently no properties in WSDL
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @version 5.1
  */
 
 public class DynamicData {
-
-    private String dynamicType;
-    private DynamicProperty[] dynamicProperty;
-
-    @Override
-    public String toString() {
-        return "DynamicData{" +
-                "dynamicType='" + dynamicType + '\'' +
-                ", dynamicProperty=" + Arrays.toString(dynamicProperty) +
-                '}';
-    }
-
-    public String getDynamicType() {
-        return dynamicType;
-    }
-
-    public void setDynamicType(final String dynamicType) {
-        this.dynamicType = dynamicType;
-    }
-
-    public DynamicProperty[] getDynamicProperty() {
-        return dynamicProperty;
-    }
-
-    public void setDynamicProperty(final DynamicProperty[] dynamicProperty) {
-        this.dynamicProperty = dynamicProperty;
-    }
 
 }

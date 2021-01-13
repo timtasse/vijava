@@ -40,12 +40,12 @@ import java.util.Calendar;
 public class HostBIOSInfo extends DynamicData {
 
     private String biosVersion;
-    private Integer firmwareMajorRelease;
-    private Integer firmwareMinorRelease;
-    private Integer majorRelease;
-    private Integer minorRelease;
     private Calendar releaseDate;
     private String vendor;
+    private Integer majorRelease;
+    private Integer minorRelease;
+    private Integer firmwareMajorRelease;
+    private Integer firmwareMinorRelease;
 
     @Override
     public String toString() {

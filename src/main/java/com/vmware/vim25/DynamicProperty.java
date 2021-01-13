@@ -38,8 +38,8 @@ package com.vmware.vim25;
 
 public class DynamicProperty {
 
-    public String name;
-    public Object val;
+    private String name;
+    private Object val;
 
     @Override
     public String toString() {

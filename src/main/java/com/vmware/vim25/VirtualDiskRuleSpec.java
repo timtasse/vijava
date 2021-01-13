@@ -11,8 +11,8 @@ import java.util.Arrays;
  */
 public class VirtualDiskRuleSpec extends ClusterRuleInfo {
 
-    private int[] diskId;
     private String diskRuleType;
+    private int[] diskId;
 
     @Override
     public String toString() {

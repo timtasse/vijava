@@ -39,18 +39,18 @@ package com.vmware.vim25;
 @SuppressWarnings("all")
 public class VirtualPCIControllerOption extends VirtualControllerOption {
 
+    private IntOption numSCSIControllers;
     private IntOption numEthernetCards;
-    private IntOption numNVMEControllers;
-    private IntOption numParaVirtualSCSIControllers;
+    private IntOption numVideoCards;
+    private IntOption numSoundCards;
+    private IntOption numVmiRoms;
+    private IntOption numVmciDevices;
     private IntOption numPCIPassthroughDevices;
     private IntOption numSasSCSIControllers;
-    private IntOption numSATAControllers;
-    private IntOption numSCSIControllers;
-    private IntOption numSoundCards;
-    private IntOption numVideoCards;
-    private IntOption numVmciDevices;
-    private IntOption numVmiRoms;
     private IntOption numVmxnet3EthernetCards;
+    private IntOption numParaVirtualSCSIControllers;
+    private IntOption numSATAControllers;
+    private IntOption numNVMEControllers;
     private IntOption numVmxnet3VrdmaEthernetCards;
 
     @Override

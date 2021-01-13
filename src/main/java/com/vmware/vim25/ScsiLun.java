@@ -61,26 +61,26 @@ import java.util.Arrays;
 @SuppressWarnings("all")
 public class ScsiLun extends HostDevice {
 
-    private ScsiLunDurableName[] alternateName;
-    private String canonicalName;
-    private ScsiLunCapabilities capabilities;
-    private ScsiLunDescriptor[] descriptor;
-    private String displayName;
-    private ScsiLunDurableName durableName;
     private String key;
+    private String uuid;
+    private ScsiLunDescriptor[] descriptor;
+    private String canonicalName;
+    private String displayName;
     private String lunType;
+    private String vendor;
     private String model;
-    private String[] operationalState;
-    private Boolean perenniallyReserved;
-    private Boolean protocolEndpoint;
-    private Integer queueDepth;
     private String revision;
     private Integer scsiLevel;
     private String serialNumber;
+    private ScsiLunDurableName durableName;
+    private ScsiLunDurableName[] alternateName;
     private byte[] standardInquiry;
-    private String uuid;
-    private String vendor;
+    private Integer queueDepth;
+    private String[] operationalState;
+    private ScsiLunCapabilities capabilities;
     private String vStorageSupport;
+    private Boolean protocolEndpoint;
+    private Boolean perenniallyReserved;
 
     @Override
     public String toString() {

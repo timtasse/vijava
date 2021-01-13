@@ -10,8 +10,8 @@ package com.vmware.vim25;
  */
 public class NsxHostVNicProfile extends ApplyProfile {
 
-    private IpAddressProfile ipConfig;
     private String key;
+    private IpAddressProfile ipConfig;
 
     @Override
     public String toString() {

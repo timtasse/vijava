@@ -9,8 +9,8 @@ package com.vmware.vim25;
  */
 public class DVSMacLearningPolicy extends InheritablePolicy {
 
-    private Boolean allowUnicastFlooding;
     private boolean enabled;
+    private Boolean allowUnicastFlooding;
     private Integer limit;
     private String  limitPolicy;
 

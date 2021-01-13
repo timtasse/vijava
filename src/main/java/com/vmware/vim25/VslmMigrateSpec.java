@@ -12,8 +12,8 @@ import java.util.Arrays;
 public class VslmMigrateSpec extends DynamicData {
 
     private VslmCreateSpecBackingSpec backingSpec;
-    private Boolean consolidate;
     private VirtualMachineProfileSpec[] profile;
+    private Boolean consolidate;
 
     @Override
     public String toString() {

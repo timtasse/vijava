@@ -9,10 +9,10 @@ package com.vmware.vim25;
  */
 public class VmfsUnmapBandwidthSpec extends DynamicData {
 
-    private long dynamicMax;
-    private long dynamicMin;
-    private long fixedValue;
     private String policy;
+    private long fixedValue;
+    private long dynamicMin;
+    private long dynamicMax;
 
     @Override
     public String toString() {

@@ -40,9 +40,9 @@ package com.vmware.vim25;
 @SuppressWarnings("all")
 public class PhysicalNicSpec extends DynamicData {
 
-    private Boolean enableEnhancedNetworkingStack;
     private HostIpConfig ip;
     private PhysicalNicLinkInfo linkSpeed;
+    private Boolean enableEnhancedNetworkingStack;
 
     @Override
     public String toString() {

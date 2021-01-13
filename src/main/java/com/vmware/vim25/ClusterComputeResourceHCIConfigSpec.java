@@ -12,8 +12,8 @@ public class ClusterComputeResourceHCIConfigSpec extends DynamicData {
 
     private ClusterComputeResourceDvsProfile[] dvsProf;
     private ClusterComputeResourceHostConfigurationProfile hostConfigProfile;
-    private ClusterComputeResourceVCProfile vcProf;
     private SDDCBase vSanConfigSpec;
+    private ClusterComputeResourceVCProfile vcProf;
 
     @Override
     public String toString() {

@@ -40,12 +40,12 @@ package com.vmware.vim25;
 @SuppressWarnings("all")
 public class VMwareDVSPortgroupPolicy extends DVPortgroupPolicy {
 
-    private Boolean ipfixOverrideAllowed;
-    private Boolean macManagementOverrideAllowed;
+    private boolean vlanOverrideAllowed;
+    private boolean uplinkTeamingOverrideAllowed;
     @Deprecated(since = "6.7.1")
     private boolean securityPolicyOverrideAllowed;
-    private boolean uplinkTeamingOverrideAllowed;
-    private boolean vlanOverrideAllowed;
+    private Boolean ipfixOverrideAllowed;
+    private Boolean macManagementOverrideAllowed;
 
     @Override
     public String toString() {

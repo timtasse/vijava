@@ -40,10 +40,10 @@ package com.vmware.vim25;
 @SuppressWarnings("all")
 public class VirtualDeviceConnectInfo extends DynamicData {
 
-    private boolean allowGuestControl;
-    private boolean connected;
     private String migrateConnect;
     private boolean startConnected;
+    private boolean allowGuestControl;
+    private boolean connected;
     private String status;
 
     @Override

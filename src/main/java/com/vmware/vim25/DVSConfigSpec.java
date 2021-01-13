@@ -43,23 +43,23 @@ import java.util.Arrays;
 public class DVSConfigSpec extends DynamicData {
 
     private String configVersion;
-    private DVSContactInfo contact;
-    private DVPortSetting defaultPortConfig;
-    private Integer defaultProxySwitchMaxNumPorts;
-    private String description;
-    private String extensionKey;
-    private DistributedVirtualSwitchHostMemberConfigSpec[] host;
-    private DvsHostInfrastructureTrafficResource[] infrastructureTrafficResourceConfig;
-    private Integer maxPorts;
     private String name;
+    private Integer numStandalonePorts;
+    private Integer maxPorts;
+    private DVSUplinkPortPolicy uplinkPortPolicy;
+    private ManagedObjectReference[] uplinkPortgroup;
+    private DVPortSetting defaultPortConfig;
+    private DistributedVirtualSwitchHostMemberConfigSpec[] host;
+    private String extensionKey;
+    private String description;
+    private DVSPolicy policy;
+    private DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
+    private DVSContactInfo contact;
+    private String switchIpAddress;
+    private Integer defaultProxySwitchMaxNumPorts;
+    private DvsHostInfrastructureTrafficResource[] infrastructureTrafficResourceConfig;
     private DvsHostInfrastructureTrafficResource[] netResourcePoolTrafficResourceConfig;
     private String networkResourceControlVersion;
-    private Integer numStandalonePorts;
-    private DVSPolicy policy;
-    private String switchIpAddress;
-    private ManagedObjectReference[] uplinkPortgroup;
-    private DVSUplinkPortPolicy uplinkPortPolicy;
-    private DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
 
     @Override
     public String toString() {

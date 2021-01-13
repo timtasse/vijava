@@ -41,17 +41,17 @@ package com.vmware.vim25;
 
 public class ApplyProfile extends DynamicData {
 
-    private Boolean copyEnableStatus;
     private boolean enabled;
-    private Boolean favorite;
-    private Boolean hidden;
     private ProfilePolicy[] policy;
     private String profileTypeName;
     private String profileVersion;
     private ProfileApplyProfileProperty[] property;
-    private Boolean toBeDeleted;
+    private Boolean favorite;
     private Boolean toBeMerged;
     private Boolean toReplaceWith;
+    private Boolean toBeDeleted;
+    private Boolean copyEnableStatus;
+    private Boolean hidden;
 
     public Boolean getCopyEnableStatus() {
         return copyEnableStatus;

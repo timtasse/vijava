@@ -56,19 +56,19 @@ import java.util.Arrays;
 @SuppressWarnings("all")
 public class VirtualDisk extends VirtualDevice {
 
-    private Long capacityInBytes;
     @Deprecated
     private Long capacityInKB;
-    @Deprecated
-    private String diskObjectId;
-    private String[] iofilter;
-    private Boolean nativeUnmanagedLinkedClone;
+    private Long capacityInBytes;
     @Deprecated
     private SharesInfo shares;
     @Deprecated
     private StorageIOAllocationInfo storageIOAllocation;
-    private ID vDiskId;
+    @Deprecated
+    private String diskObjectId;
     private VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo;
+    private String[] iofilter;
+    private ID vDiskId;
+    private Boolean nativeUnmanagedLinkedClone;
 
     @Override
     public String toString() {
@@ -91,14 +91,7 @@ public class VirtualDisk extends VirtualDevice {
 
     public void setCapacityInBytes(final Long capacityInBytes) {
         this.capacityInBytes = capacityInBytes;
-    }
-
-    public Long getCapacityInKB() {
-        return capacityInKB;
-    }
-
-    public void setCapacityInKB(final Long capacityInKB) {
-        this.capacityInKB = capacityInKB;
+        this.capacityInKB = (capacityInBytes/1024);
     }
 
     public String getDiskObjectId() {

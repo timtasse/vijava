@@ -9,10 +9,10 @@ package com.vmware.vim25;
  */
 public class VimVasaProvider extends DynamicData {
 
-    private String name;
-    private String selfSignedCertificate;
     private String uid;
     private String url;
+    private String name;
+    private String selfSignedCertificate;
 
     @Override
     public String toString() {

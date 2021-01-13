@@ -6,8 +6,8 @@ package com.vmware.vim25;
  */
 public class ClusterComputeResourceDvsProfileDVPortgroupSpecToServiceMapping extends DynamicData {
 
-    private ManagedObjectReference dvPortgroup;
     private DVPortgroupConfigSpec dvPortgroupSpec;
+    private ManagedObjectReference dvPortgroup;
     private String service;
 
     @Override

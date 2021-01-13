@@ -44,24 +44,24 @@ package com.vmware.vim25;
 @SuppressWarnings("all")
 public class VMwareVspanSession extends DynamicData {
 
+    private String key;
+    private String name;
     private String description;
-    private VMwareVspanPort destinationPort;
     private boolean enabled;
+    private VMwareVspanPort sourcePortTransmitted;
+    private VMwareVspanPort sourcePortReceived;
+    private VMwareVspanPort destinationPort;
     private Integer encapsulationVlanId;
+    private boolean stripOriginalVlan;
+    private Integer mirroredPacketLength;
+    private boolean normalTrafficAllowed;
+    private String sessionType;
+    private Integer samplingRate;
     private String encapType;
+    private Integer erspanId;
     private Integer erspanCOS;
     private Boolean erspanGraNanosec;
-    private Integer erspanId;
-    private String key;
-    private Integer mirroredPacketLength;
-    private String name;
     private String netstack;
-    private boolean normalTrafficAllowed;
-    private Integer samplingRate;
-    private String sessionType;
-    private VMwareVspanPort sourcePortReceived;
-    private VMwareVspanPort sourcePortTransmitted;
-    private boolean stripOriginalVlan;
 
     @Override
     public String toString() {

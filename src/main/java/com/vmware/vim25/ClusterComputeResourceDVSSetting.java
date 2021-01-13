@@ -11,9 +11,9 @@ import java.util.Arrays;
  */
 public class ClusterComputeResourceDVSSetting extends DynamicData {
 
-    private ClusterComputeResourceDVSSettingDVPortgroupToServiceMapping[] dvPortgroupSetting;
     private ManagedObjectReference dvSwitch;
     private String[] pnicDevices;
+    private ClusterComputeResourceDVSSettingDVPortgroupToServiceMapping[] dvPortgroupSetting;
 
     @Override
     public String toString() {

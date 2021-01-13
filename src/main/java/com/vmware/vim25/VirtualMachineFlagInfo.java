@@ -40,27 +40,27 @@ package com.vmware.vim25;
 @SuppressWarnings("all")
 public class VirtualMachineFlagInfo extends DynamicData {
 
-    private Boolean cbrcCacheEnabled;
     private Boolean disableAcceleration;
-    private Boolean diskUuidEnabled;
     private Boolean enableLogging;
-    private String faultToleranceType;
-    @Deprecated
-    private String htSharing;
-    private String monitorType;
-    @Deprecated
-    private Boolean recordReplayEnabled;
+    private Boolean useToe;
     @Deprecated
     private Boolean runWithDebugInfo;
+    private String monitorType;
+    @Deprecated
+    private String htSharing;
     @Deprecated
     private Boolean snapshotDisabled;
     private Boolean snapshotLocked;
-    private String snapshotPowerOffBehavior;
-    private Boolean useToe;
-    private Boolean vbsEnabled;
-    private String virtualExecUsage;
+    private Boolean diskUuidEnabled;
     private String virtualMmuUsage;
+    private String virtualExecUsage;
+    private String snapshotPowerOffBehavior;
+    @Deprecated
+    private Boolean recordReplayEnabled;
+    private String faultToleranceType;
+    private Boolean cbrcCacheEnabled;
     private Boolean vvtdEnabled;
+    private Boolean vbsEnabled;
 
     @Override
     public String toString() {

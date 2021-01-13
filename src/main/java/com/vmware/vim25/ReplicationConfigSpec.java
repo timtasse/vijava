@@ -15,20 +15,20 @@ import java.util.Arrays;
  */
 public class ReplicationConfigSpec extends DynamicData {
 
-    private String destination;
-    private ReplicationInfoDiskSettings[] disk;
-    private String encryptionDestination;
-    private Integer encryptionPort;
     private long generation;
+    private String vmReplicationId;
+    private String destination;
+    private int port;
+    private long rpo;
+    private boolean quiesceGuestEnabled;
+    private boolean paused;
+    private boolean oppUpdatesEnabled;
     private Boolean netCompressionEnabled;
     private Boolean netEncryptionEnabled;
-    private boolean oppUpdatesEnabled;
-    private boolean paused;
-    private int port;
-    private boolean quiesceGuestEnabled;
+    private String encryptionDestination;
+    private Integer encryptionPort;
     private String remoteCertificateThumbprint;
-    private long rpo;
-    private String vmReplicationId;
+    private ReplicationInfoDiskSettings[] disk;
 
     @Override
     public String toString() {

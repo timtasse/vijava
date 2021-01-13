@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="vijava" target="9" />
+      <module name="vijava" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>

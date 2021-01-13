@@ -41,14 +41,14 @@ package com.vmware.vim25;
 @SuppressWarnings("all")
 public class VMwareDVSPortSetting extends DVPortSetting {
 
+    private VmwareDistributedVirtualSwitchVlanSpec vlan;
+    private IntPolicy qosTag;
+    private VmwareUplinkPortTeamingPolicy uplinkTeamingPolicy;
+    private DVSSecurityPolicy securityPolicy;
     private BoolPolicy ipfixEnabled;
+    private BoolPolicy txUplink;
     private VMwareUplinkLacpPolicy lacpPolicy;
     private DVSMacManagementPolicy macManagementPolicy;
-    private IntPolicy qosTag;
-    private DVSSecurityPolicy securityPolicy;
-    private BoolPolicy txUplink;
-    private VmwareUplinkPortTeamingPolicy uplinkTeamingPolicy;
-    private VmwareDistributedVirtualSwitchVlanSpec vlan;
 
     @Override
     public String toString() {

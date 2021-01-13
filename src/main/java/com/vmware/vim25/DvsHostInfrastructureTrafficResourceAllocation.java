@@ -1,16 +1,25 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 31.03.2018
+ * Resource allocation information for a host infrastructure traffic class.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.0
  */
 public class DvsHostInfrastructureTrafficResourceAllocation extends DynamicData {
 
-    public Long limit;
-    public Long reservation;
-    public SharesInfo shares;
+    private Long limit;
+    private SharesInfo shares;
+    private Long reservation;
+
+    @Override
+    public String toString() {
+        return "DvsHostInfrastructureTrafficResourceAllocation{" +
+                "limit=" + limit +
+                ", shares=" + shares +
+                ", reservation=" + reservation +
+                "} " + super.toString();
+    }
 
     public long getLimit() {
         return limit;

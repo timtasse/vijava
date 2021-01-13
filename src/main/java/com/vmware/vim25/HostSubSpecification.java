@@ -21,10 +21,10 @@ import java.util.Calendar;
  */
 public class HostSubSpecification extends DynamicData {
 
-    private byte[] binaryData;
+    private String name;
     private Calendar createdTime;
     private byte[] data;
-    private String name;
+    private byte[] binaryData;
 
     @Override
     public String toString() {

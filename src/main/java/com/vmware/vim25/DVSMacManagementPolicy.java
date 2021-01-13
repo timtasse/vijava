@@ -10,8 +10,8 @@ package com.vmware.vim25;
 public class DVSMacManagementPolicy extends InheritablePolicy {
 
     private Boolean allowPromiscuous;
-    private Boolean forgedTransmits;
     private Boolean macChanges;
+    private Boolean forgedTransmits;
     private DVSMacLearningPolicy macLearningPolicy;
 
     @Override
