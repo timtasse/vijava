@@ -38,40 +38,34 @@ import java.rmi.RemoteException;
 
 /**
  * The managed object class corresponding to the one defined in VI SDK API reference.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
  */
 
-public class Network extends ManagedEntity 
-{
+public class Network extends ManagedEntity {
 
-	public Network(ServerConnection serverConnection, ManagedObjectReference mor) 
-	{
-		super(serverConnection, mor);
-	}
-	
-	public HostSystem[] getHosts()
-	{
-		return getHosts("host");
-	}
+    public Network(ServerConnection serverConnection, ManagedObjectReference mor) {
+        super(serverConnection, mor);
+    }
 
-	public String getName()
-	{
-		return (String) getCurrentProperty("name");
-	}
-	
-	public NetworkSummary getSummary()
-	{
-		return (NetworkSummary) getCurrentProperty("summary");
-	}
-	
-	public VirtualMachine[] getVms()
-	{
-		return getVms("vm");
-	}
-	
-	public void destroyNetwork() throws ResourceInUse, RuntimeFault, RemoteException 
-	{
-		getVimService().destroyNetwork(getMOR());
-	}
+    public HostSystem[] getHosts() {
+        return getHosts("host");
+    }
+
+    public String getName() {
+        return (String) getCurrentProperty("name");
+    }
+
+    public NetworkSummary getSummary() {
+        return (NetworkSummary) getCurrentProperty("summary");
+    }
+
+    public VirtualMachine[] getVms() {
+        return getVms("vm");
+    }
+
+    public void destroyNetwork() throws ResourceInUse, RuntimeFault, RemoteException {
+        getVimService().destroyNetwork(getMOR());
+    }
 
 }

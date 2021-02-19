@@ -30,37 +30,48 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * Configuration of the compute resource; applies to both standalone hosts and clusters.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 public class ComputeResourceConfigInfo extends DynamicData {
-  public String vmSwapPlacement;
-  public Boolean spbmEnabled;
-  public String defaultHardwareVersionKey;
 
-  public String getVmSwapPlacement() {
-    return this.vmSwapPlacement;
-  }
+    private String vmSwapPlacement;
+    private Boolean spbmEnabled;
+    private String defaultHardwareVersionKey;
 
-  public Boolean getSpbmEnabled() {
-    return this.spbmEnabled;
-  }
+    @Override
+    public String toString() {
+        return "ComputeResourceConfigInfo{" +
+                "vmSwapPlacement='" + vmSwapPlacement + '\'' +
+                ", spbmEnabled=" + spbmEnabled +
+                ", defaultHardwareVersionKey='" + defaultHardwareVersionKey + '\'' +
+                "} " + super.toString();
+    }
 
-  public String getDefaultHardwareVersionKey() {
-    return this.defaultHardwareVersionKey;
-  }
+    public String getVmSwapPlacement() {
+        return this.vmSwapPlacement;
+    }
 
-  public void setVmSwapPlacement(String vmSwapPlacement) {
-    this.vmSwapPlacement=vmSwapPlacement;
-  }
+    public void setVmSwapPlacement(String vmSwapPlacement) {
+        this.vmSwapPlacement = vmSwapPlacement;
+    }
 
-  public void setSpbmEnabled(Boolean spbmEnabled) {
-    this.spbmEnabled=spbmEnabled;
-  }
+    public Boolean getSpbmEnabled() {
+        return this.spbmEnabled;
+    }
 
-  public void setDefaultHardwareVersionKey(String defaultHardwareVersionKey) {
-    this.defaultHardwareVersionKey=defaultHardwareVersionKey;
-  }
+    public void setSpbmEnabled(Boolean spbmEnabled) {
+        this.spbmEnabled = spbmEnabled;
+    }
+
+    public String getDefaultHardwareVersionKey() {
+        return this.defaultHardwareVersionKey;
+    }
+
+    public void setDefaultHardwareVersionKey(String defaultHardwareVersionKey) {
+        this.defaultHardwareVersionKey = defaultHardwareVersionKey;
+    }
+
 }

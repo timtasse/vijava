@@ -29,23 +29,48 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-/**
- * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
- */
+import java.util.Arrays;
 
-@SuppressWarnings("all")
+/**
+ * The ClusterComputeResourceSummary data object encapsulates runtime properties of a ClusterComputeResource.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.1
+ */
 public class ClusterComputeResourceSummary extends ComputeResourceSummary {
 
-    public int currentFailoverLevel;
-    public ClusterDasAdmissionControlInfo admissionControlInfo;
-    public int numVmotions;
-    public Integer targetBalance;
-    public Integer currentBalance;
-    public String currentEVCModeKey;
-    public ClusterDasData dasData;
-    public ClusterUsageSummary usageSummary;
+    @Deprecated
+    private int currentFailoverLevel;
+    private ClusterDasAdmissionControlInfo admissionControlInfo;
+    private int numVmotions;
+    private Integer targetBalance;
+    private Integer currentBalance;
+    private Integer drsScore;
+    private int[] numVmsPerDrsScoreBucket;
+    private ClusterUsageSummary usageSummary;
+    private String currentEVCModeKey;
+    private String currentEVCGraphicsModeKey;
+    private ClusterDasData dasData;
+    private String clusterMaintenanceModeStatus;
+
+    @Override
+    public String toString() {
+        return "ClusterComputeResourceSummary{" +
+                "currentFailoverLevel=" + currentFailoverLevel +
+                ", admissionControlInfo=" + admissionControlInfo +
+                ", numVmotions=" + numVmotions +
+                ", targetBalance=" + targetBalance +
+                ", currentBalance=" + currentBalance +
+                ", drsScore=" + drsScore +
+                ", numVmsPerDrsScoreBucket=" + Arrays.toString(numVmsPerDrsScoreBucket) +
+                ", usageSummary=" + usageSummary +
+                ", currentEVCModeKey='" + currentEVCModeKey + '\'' +
+                ", currentEVCGraphicsModeKey='" + currentEVCGraphicsModeKey + '\'' +
+                ", dasData=" + dasData +
+                ", clusterMaintenanceModeStatus='" + clusterMaintenanceModeStatus + '\'' +
+                "} " + super.toString();
+    }
 
     @Deprecated
     public int getCurrentFailoverLevel() {
@@ -112,4 +137,37 @@ public class ClusterComputeResourceSummary extends ComputeResourceSummary {
     public void setUsageSummary(final ClusterUsageSummary usageSummary) {
         this.usageSummary = usageSummary;
     }
+
+    public Integer getDrsScore() {
+        return drsScore;
+    }
+
+    public void setDrsScore(final Integer drsScore) {
+        this.drsScore = drsScore;
+    }
+
+    public int[] getNumVmsPerDrsScoreBucket() {
+        return numVmsPerDrsScoreBucket;
+    }
+
+    public void setNumVmsPerDrsScoreBucket(final int[] numVmsPerDrsScoreBucket) {
+        this.numVmsPerDrsScoreBucket = numVmsPerDrsScoreBucket;
+    }
+
+    public String getCurrentEVCGraphicsModeKey() {
+        return currentEVCGraphicsModeKey;
+    }
+
+    public void setCurrentEVCGraphicsModeKey(final String currentEVCGraphicsModeKey) {
+        this.currentEVCGraphicsModeKey = currentEVCGraphicsModeKey;
+    }
+
+    public String getClusterMaintenanceModeStatus() {
+        return clusterMaintenanceModeStatus;
+    }
+
+    public void setClusterMaintenanceModeStatus(final String clusterMaintenanceModeStatus) {
+        this.clusterMaintenanceModeStatus = clusterMaintenanceModeStatus;
+    }
+
 }

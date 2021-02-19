@@ -29,128 +29,162 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * Capability vector indicating the available product features.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.1
+ */
 public class HostNetCapabilities extends DynamicData {
-  public boolean canSetPhysicalNicLinkSpeed;
-  public boolean supportsNicTeaming;
-  public String[] nicTeamingPolicy;
-  public boolean supportsVlan;
-  public boolean usesServiceConsoleNic;
-  public boolean supportsNetworkHints;
-  public Integer maxPortGroupsPerVswitch;
-  public boolean vswitchConfigSupported;
-  public boolean vnicConfigSupported;
-  public boolean ipRouteConfigSupported;
-  public boolean dnsConfigSupported;
-  public boolean dhcpOnVnicSupported;
-  public Boolean ipV6Supported;
 
-  public boolean isCanSetPhysicalNicLinkSpeed() {
-    return this.canSetPhysicalNicLinkSpeed;
-  }
+    private boolean canSetPhysicalNicLinkSpeed;
+    private boolean supportsNicTeaming;
+    private String[] nicTeamingPolicy;
+    private boolean supportsVlan;
+    private boolean usesServiceConsoleNic;
+    private boolean supportsNetworkHints;
+    private Integer maxPortGroupsPerVswitch;
+    private boolean vswitchConfigSupported;
+    private boolean vnicConfigSupported;
+    private boolean ipRouteConfigSupported;
+    private boolean dnsConfigSupported;
+    private boolean dhcpOnVnicSupported;
+    private Boolean ipV6Supported;
+    private Boolean backupNfcNiocSupported;
 
-  public boolean isSupportsNicTeaming() {
-    return this.supportsNicTeaming;
-  }
+    @Override
+    public String toString() {
+        return "HostNetCapabilities{" +
+                "canSetPhysicalNicLinkSpeed=" + canSetPhysicalNicLinkSpeed +
+                ", supportsNicTeaming=" + supportsNicTeaming +
+                ", nicTeamingPolicy=" + Arrays.toString(nicTeamingPolicy) +
+                ", supportsVlan=" + supportsVlan +
+                ", usesServiceConsoleNic=" + usesServiceConsoleNic +
+                ", supportsNetworkHints=" + supportsNetworkHints +
+                ", maxPortGroupsPerVswitch=" + maxPortGroupsPerVswitch +
+                ", vswitchConfigSupported=" + vswitchConfigSupported +
+                ", vnicConfigSupported=" + vnicConfigSupported +
+                ", ipRouteConfigSupported=" + ipRouteConfigSupported +
+                ", dnsConfigSupported=" + dnsConfigSupported +
+                ", dhcpOnVnicSupported=" + dhcpOnVnicSupported +
+                ", ipV6Supported=" + ipV6Supported +
+                ", backupNfcNiocSupported=" + backupNfcNiocSupported +
+                "} " + super.toString();
+    }
 
-  public String[] getNicTeamingPolicy() {
-    return this.nicTeamingPolicy;
-  }
+    public boolean isCanSetPhysicalNicLinkSpeed() {
+        return this.canSetPhysicalNicLinkSpeed;
+    }
 
-  public boolean isSupportsVlan() {
-    return this.supportsVlan;
-  }
+    public void setCanSetPhysicalNicLinkSpeed(boolean canSetPhysicalNicLinkSpeed) {
+        this.canSetPhysicalNicLinkSpeed = canSetPhysicalNicLinkSpeed;
+    }
 
-  public boolean isUsesServiceConsoleNic() {
-    return this.usesServiceConsoleNic;
-  }
+    public boolean isSupportsNicTeaming() {
+        return this.supportsNicTeaming;
+    }
 
-  public boolean isSupportsNetworkHints() {
-    return this.supportsNetworkHints;
-  }
+    public void setSupportsNicTeaming(boolean supportsNicTeaming) {
+        this.supportsNicTeaming = supportsNicTeaming;
+    }
 
-  public Integer getMaxPortGroupsPerVswitch() {
-    return this.maxPortGroupsPerVswitch;
-  }
+    public String[] getNicTeamingPolicy() {
+        return this.nicTeamingPolicy;
+    }
 
-  public boolean isVswitchConfigSupported() {
-    return this.vswitchConfigSupported;
-  }
+    public void setNicTeamingPolicy(String[] nicTeamingPolicy) {
+        this.nicTeamingPolicy = nicTeamingPolicy;
+    }
 
-  public boolean isVnicConfigSupported() {
-    return this.vnicConfigSupported;
-  }
+    public boolean isSupportsVlan() {
+        return this.supportsVlan;
+    }
 
-  public boolean isIpRouteConfigSupported() {
-    return this.ipRouteConfigSupported;
-  }
+    public void setSupportsVlan(boolean supportsVlan) {
+        this.supportsVlan = supportsVlan;
+    }
 
-  public boolean isDnsConfigSupported() {
-    return this.dnsConfigSupported;
-  }
+    public boolean isUsesServiceConsoleNic() {
+        return this.usesServiceConsoleNic;
+    }
 
-  public boolean isDhcpOnVnicSupported() {
-    return this.dhcpOnVnicSupported;
-  }
+    public void setUsesServiceConsoleNic(boolean usesServiceConsoleNic) {
+        this.usesServiceConsoleNic = usesServiceConsoleNic;
+    }
 
-  public Boolean getIpV6Supported() {
-    return this.ipV6Supported;
-  }
+    public boolean isSupportsNetworkHints() {
+        return this.supportsNetworkHints;
+    }
 
-  public void setCanSetPhysicalNicLinkSpeed(boolean canSetPhysicalNicLinkSpeed) {
-    this.canSetPhysicalNicLinkSpeed=canSetPhysicalNicLinkSpeed;
-  }
+    public void setSupportsNetworkHints(boolean supportsNetworkHints) {
+        this.supportsNetworkHints = supportsNetworkHints;
+    }
 
-  public void setSupportsNicTeaming(boolean supportsNicTeaming) {
-    this.supportsNicTeaming=supportsNicTeaming;
-  }
+    public Integer getMaxPortGroupsPerVswitch() {
+        return this.maxPortGroupsPerVswitch;
+    }
 
-  public void setNicTeamingPolicy(String[] nicTeamingPolicy) {
-    this.nicTeamingPolicy=nicTeamingPolicy;
-  }
+    public void setMaxPortGroupsPerVswitch(Integer maxPortGroupsPerVswitch) {
+        this.maxPortGroupsPerVswitch = maxPortGroupsPerVswitch;
+    }
 
-  public void setSupportsVlan(boolean supportsVlan) {
-    this.supportsVlan=supportsVlan;
-  }
+    public boolean isVswitchConfigSupported() {
+        return this.vswitchConfigSupported;
+    }
 
-  public void setUsesServiceConsoleNic(boolean usesServiceConsoleNic) {
-    this.usesServiceConsoleNic=usesServiceConsoleNic;
-  }
+    public void setVswitchConfigSupported(boolean vswitchConfigSupported) {
+        this.vswitchConfigSupported = vswitchConfigSupported;
+    }
 
-  public void setSupportsNetworkHints(boolean supportsNetworkHints) {
-    this.supportsNetworkHints=supportsNetworkHints;
-  }
+    public boolean isVnicConfigSupported() {
+        return this.vnicConfigSupported;
+    }
 
-  public void setMaxPortGroupsPerVswitch(Integer maxPortGroupsPerVswitch) {
-    this.maxPortGroupsPerVswitch=maxPortGroupsPerVswitch;
-  }
+    public void setVnicConfigSupported(boolean vnicConfigSupported) {
+        this.vnicConfigSupported = vnicConfigSupported;
+    }
 
-  public void setVswitchConfigSupported(boolean vswitchConfigSupported) {
-    this.vswitchConfigSupported=vswitchConfigSupported;
-  }
+    public boolean isIpRouteConfigSupported() {
+        return this.ipRouteConfigSupported;
+    }
 
-  public void setVnicConfigSupported(boolean vnicConfigSupported) {
-    this.vnicConfigSupported=vnicConfigSupported;
-  }
+    public void setIpRouteConfigSupported(boolean ipRouteConfigSupported) {
+        this.ipRouteConfigSupported = ipRouteConfigSupported;
+    }
 
-  public void setIpRouteConfigSupported(boolean ipRouteConfigSupported) {
-    this.ipRouteConfigSupported=ipRouteConfigSupported;
-  }
+    public boolean isDnsConfigSupported() {
+        return this.dnsConfigSupported;
+    }
 
-  public void setDnsConfigSupported(boolean dnsConfigSupported) {
-    this.dnsConfigSupported=dnsConfigSupported;
-  }
+    public void setDnsConfigSupported(boolean dnsConfigSupported) {
+        this.dnsConfigSupported = dnsConfigSupported;
+    }
 
-  public void setDhcpOnVnicSupported(boolean dhcpOnVnicSupported) {
-    this.dhcpOnVnicSupported=dhcpOnVnicSupported;
-  }
+    public boolean isDhcpOnVnicSupported() {
+        return this.dhcpOnVnicSupported;
+    }
 
-  public void setIpV6Supported(Boolean ipV6Supported) {
-    this.ipV6Supported=ipV6Supported;
-  }
+    public void setDhcpOnVnicSupported(boolean dhcpOnVnicSupported) {
+        this.dhcpOnVnicSupported = dhcpOnVnicSupported;
+    }
+
+    public Boolean getIpV6Supported() {
+        return this.ipV6Supported;
+    }
+
+    public void setIpV6Supported(Boolean ipV6Supported) {
+        this.ipV6Supported = ipV6Supported;
+    }
+
+    public Boolean getBackupNfcNiocSupported() {
+        return backupNfcNiocSupported;
+    }
+
+    public void setBackupNfcNiocSupported(final Boolean backupNfcNiocSupported) {
+        this.backupNfcNiocSupported = backupNfcNiocSupported;
+    }
+
 }

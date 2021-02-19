@@ -29,65 +29,91 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object type describes the storage subsystem configuration.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class HostStorageDeviceInfo extends DynamicData {
-  public HostHostBusAdapter[] hostBusAdapter;
-  public ScsiLun[] scsiLun;
-  public HostScsiTopology scsiTopology;
-  public HostMultipathInfo multipathInfo;
-  public HostPlugStoreTopology plugStoreTopology;
-  public boolean softwareInternetScsiEnabled;
 
-  public HostHostBusAdapter[] getHostBusAdapter() {
-    return this.hostBusAdapter;
-  }
+    private HostHostBusAdapter[] hostBusAdapter;
+    private ScsiLun[] scsiLun;
+    private HostScsiTopology scsiTopology;
+    private HostNvmeTopology nvmeTopology;
+    private HostMultipathInfo multipathInfo;
+    private HostPlugStoreTopology plugStoreTopology;
+    private boolean softwareInternetScsiEnabled;
 
-  public ScsiLun[] getScsiLun() {
-    return this.scsiLun;
-  }
+    @Override
+    public String toString() {
+        return "HostStorageDeviceInfo{" +
+                "hostBusAdapter=" + Arrays.toString(hostBusAdapter) +
+                ", scsiLun=" + Arrays.toString(scsiLun) +
+                ", scsiTopology=" + scsiTopology +
+                ", nvmeTopology=" + nvmeTopology +
+                ", multipathInfo=" + multipathInfo +
+                ", plugStoreTopology=" + plugStoreTopology +
+                ", softwareInternetScsiEnabled=" + softwareInternetScsiEnabled +
+                "} " + super.toString();
+    }
 
-  public HostScsiTopology getScsiTopology() {
-    return this.scsiTopology;
-  }
+    public HostHostBusAdapter[] getHostBusAdapter() {
+        return this.hostBusAdapter;
+    }
 
-  public HostMultipathInfo getMultipathInfo() {
-    return this.multipathInfo;
-  }
+    public void setHostBusAdapter(HostHostBusAdapter[] hostBusAdapter) {
+        this.hostBusAdapter = hostBusAdapter;
+    }
 
-  public HostPlugStoreTopology getPlugStoreTopology() {
-    return this.plugStoreTopology;
-  }
+    public ScsiLun[] getScsiLun() {
+        return this.scsiLun;
+    }
 
-  public boolean isSoftwareInternetScsiEnabled() {
-    return this.softwareInternetScsiEnabled;
-  }
+    public void setScsiLun(ScsiLun[] scsiLun) {
+        this.scsiLun = scsiLun;
+    }
 
-  public void setHostBusAdapter(HostHostBusAdapter[] hostBusAdapter) {
-    this.hostBusAdapter=hostBusAdapter;
-  }
+    public HostScsiTopology getScsiTopology() {
+        return this.scsiTopology;
+    }
 
-  public void setScsiLun(ScsiLun[] scsiLun) {
-    this.scsiLun=scsiLun;
-  }
+    public void setScsiTopology(HostScsiTopology scsiTopology) {
+        this.scsiTopology = scsiTopology;
+    }
 
-  public void setScsiTopology(HostScsiTopology scsiTopology) {
-    this.scsiTopology=scsiTopology;
-  }
+    public HostMultipathInfo getMultipathInfo() {
+        return this.multipathInfo;
+    }
 
-  public void setMultipathInfo(HostMultipathInfo multipathInfo) {
-    this.multipathInfo=multipathInfo;
-  }
+    public void setMultipathInfo(HostMultipathInfo multipathInfo) {
+        this.multipathInfo = multipathInfo;
+    }
 
-  public void setPlugStoreTopology(HostPlugStoreTopology plugStoreTopology) {
-    this.plugStoreTopology=plugStoreTopology;
-  }
+    public HostPlugStoreTopology getPlugStoreTopology() {
+        return this.plugStoreTopology;
+    }
 
-  public void setSoftwareInternetScsiEnabled(boolean softwareInternetScsiEnabled) {
-    this.softwareInternetScsiEnabled=softwareInternetScsiEnabled;
-  }
+    public void setPlugStoreTopology(HostPlugStoreTopology plugStoreTopology) {
+        this.plugStoreTopology = plugStoreTopology;
+    }
+
+    public boolean isSoftwareInternetScsiEnabled() {
+        return this.softwareInternetScsiEnabled;
+    }
+
+    public void setSoftwareInternetScsiEnabled(boolean softwareInternetScsiEnabled) {
+        this.softwareInternetScsiEnabled = softwareInternetScsiEnabled;
+    }
+
+    public HostNvmeTopology getNvmeTopology() {
+        return nvmeTopology;
+    }
+
+    public void setNvmeTopology(final HostNvmeTopology nvmeTopology) {
+        this.nvmeTopology = nvmeTopology;
+    }
 }

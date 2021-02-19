@@ -30,10 +30,29 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The customization sequence in the guest failed.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class CustomizationFailed extends CustomizationEvent {
+
+    private String reason;
+
+    @Override
+    public String toString() {
+        return "CustomizationFailed{" +
+                "reason='" + reason + '\'' +
+                "} " + super.toString();
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(final String reason) {
+        this.reason = reason;
+    }
+
 }

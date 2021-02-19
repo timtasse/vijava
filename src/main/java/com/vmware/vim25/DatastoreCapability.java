@@ -33,37 +33,39 @@ package com.vmware.vim25;
  * Information about the capabilities of this datastore.
  *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.7
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
  */
 public class DatastoreCapability extends DynamicData {
 
     private boolean directoryHierarchySupported;
-    private boolean nativeSnapshotSupported;
-    private boolean perFileThinProvisioningSupported;
     private boolean rawDiskMappingsSupported;
-    private Boolean seSparseSupported;
+    private boolean perFileThinProvisioningSupported;
     private boolean storageIORMSupported;
+    private boolean nativeSnapshotSupported;
     private Boolean topLevelDirectoryCreateSupported;
-    private Boolean upitSupported;
-    private Boolean vmdkExpandSupported;
+    private Boolean seSparseSupported;
     private Boolean vmfsSparseSupported;
     private Boolean vsanSparseSupported;
+    private Boolean upitSupported;
+    private Boolean vmdkExpandSupported;
+    private Boolean clusteredVmdkSupported;
 
     @Override
     public String toString() {
         return "DatastoreCapability{" +
                 "directoryHierarchySupported=" + directoryHierarchySupported +
-                ", nativeSnapshotSupported=" + nativeSnapshotSupported +
-                ", perFileThinProvisioningSupported=" + perFileThinProvisioningSupported +
                 ", rawDiskMappingsSupported=" + rawDiskMappingsSupported +
-                ", seSparseSupported=" + seSparseSupported +
+                ", perFileThinProvisioningSupported=" + perFileThinProvisioningSupported +
                 ", storageIORMSupported=" + storageIORMSupported +
+                ", nativeSnapshotSupported=" + nativeSnapshotSupported +
                 ", topLevelDirectoryCreateSupported=" + topLevelDirectoryCreateSupported +
-                ", upitSupported=" + upitSupported +
-                ", vmdkExpandSupported=" + vmdkExpandSupported +
+                ", seSparseSupported=" + seSparseSupported +
                 ", vmfsSparseSupported=" + vmfsSparseSupported +
                 ", vsanSparseSupported=" + vsanSparseSupported +
+                ", upitSupported=" + upitSupported +
+                ", vmdkExpandSupported=" + vmdkExpandSupported +
+                ", clusteredVmdkSupported=" + clusteredVmdkSupported +
                 "} " + super.toString();
     }
 
@@ -153,6 +155,14 @@ public class DatastoreCapability extends DynamicData {
 
     public void setVsanSparseSupported(final Boolean vsanSparseSupported) {
         this.vsanSparseSupported = vsanSparseSupported;
+    }
+
+    public Boolean getClusteredVmdkSupported() {
+        return clusteredVmdkSupported;
+    }
+
+    public void setClusteredVmdkSupported(final Boolean clusteredVmdkSupported) {
+        this.clusteredVmdkSupported = clusteredVmdkSupported;
     }
 
 }

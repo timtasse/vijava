@@ -30,19 +30,25 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 public class InheritablePolicy extends DynamicData {
-  public boolean inherited;
 
-  public boolean isInherited() {
-    return this.inherited;
-  }
+    private boolean inherited;
 
-  public void setInherited(boolean inherited) {
-    this.inherited=inherited;
-  }
+    @Override
+    public String toString() {
+        return "InheritablePolicy{" +
+                "inherited=" + inherited +
+                "} " + super.toString();
+    }
+
+    public boolean isInherited() {
+        return this.inherited;
+    }
+
+    public void setInherited(boolean inherited) {
+        this.inherited = inherited;
+    }
 }

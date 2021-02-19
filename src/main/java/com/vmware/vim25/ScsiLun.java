@@ -54,8 +54,8 @@ import java.util.Arrays;
  *         scsi-unknown
  *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.7.2
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
  */
 
 @SuppressWarnings("all")
@@ -81,30 +81,32 @@ public class ScsiLun extends HostDevice {
     private String vStorageSupport;
     private Boolean protocolEndpoint;
     private Boolean perenniallyReserved;
+    private Boolean clusteredVmdkSupported;
 
     @Override
     public String toString() {
         return "ScsiLun{" +
-                "alternateName=" + Arrays.toString(alternateName) +
-                ", canonicalName='" + canonicalName + '\'' +
-                ", capabilities=" + capabilities +
+                "key='" + key + '\'' +
+                ", uuid='" + uuid + '\'' +
                 ", descriptor=" + Arrays.toString(descriptor) +
+                ", canonicalName='" + canonicalName + '\'' +
                 ", displayName='" + displayName + '\'' +
-                ", durableName=" + durableName +
-                ", key='" + key + '\'' +
                 ", lunType='" + lunType + '\'' +
+                ", vendor='" + vendor + '\'' +
                 ", model='" + model + '\'' +
-                ", operationalState=" + Arrays.toString(operationalState) +
-                ", perenniallyReserved=" + perenniallyReserved +
-                ", protocolEndpoint=" + protocolEndpoint +
-                ", queueDepth=" + queueDepth +
                 ", revision='" + revision + '\'' +
                 ", scsiLevel=" + scsiLevel +
                 ", serialNumber='" + serialNumber + '\'' +
+                ", durableName=" + durableName +
+                ", alternateName=" + Arrays.toString(alternateName) +
                 ", standardInquiry=" + Arrays.toString(standardInquiry) +
-                ", uuid='" + uuid + '\'' +
-                ", vendor='" + vendor + '\'' +
+                ", queueDepth=" + queueDepth +
+                ", operationalState=" + Arrays.toString(operationalState) +
+                ", capabilities=" + capabilities +
                 ", vStorageSupport='" + vStorageSupport + '\'' +
+                ", protocolEndpoint=" + protocolEndpoint +
+                ", perenniallyReserved=" + perenniallyReserved +
+                ", clusteredVmdkSupported=" + clusteredVmdkSupported +
                 "} " + super.toString();
     }
 
@@ -267,4 +269,13 @@ public class ScsiLun extends HostDevice {
     public void setvStorageSupport(final String vStorageSupport) {
         this.vStorageSupport = vStorageSupport;
     }
+
+    public Boolean getClusteredVmdkSupported() {
+        return clusteredVmdkSupported;
+    }
+
+    public void setClusteredVmdkSupported(final Boolean clusteredVmdkSupported) {
+        this.clusteredVmdkSupported = clusteredVmdkSupported;
+    }
+
 }

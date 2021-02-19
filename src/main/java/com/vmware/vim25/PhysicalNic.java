@@ -36,48 +36,50 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0
  */
-
-@SuppressWarnings("all")
 public class PhysicalNic extends DynamicData {
 
-    public Boolean autoNegotiateSupported;
-    public String device;
-    public String driver;
+    private String key;
+    private String device;
+    private String pci;
+    private String driver;
+    private PhysicalNicLinkInfo linkSpeed;
+    private PhysicalNicLinkInfo[] validLinkSpecification;
+    private PhysicalNicSpec spec;
+    private boolean wakeOnLanSupported;
+    private String mac;
+    private FcoeConfig fcoeConfiguration;
+    private Boolean vmDirectPathGen2Supported;
+    private String vmDirectPathGen2SupportedMode;
+    private Boolean resourcePoolSchedulerAllowed;
+    private String[] resourcePoolSchedulerDisallowedReason;
+    private Boolean autoNegotiateSupported;
     private Boolean enhancedNetworkingStackSupported;
-    public FcoeConfig fcoeConfiguration;
-    public String key;
-    public PhysicalNicLinkInfo linkSpeed;
-    public String mac;
-    public String pci;
-    public Boolean resourcePoolSchedulerAllowed;
-    public String[] resourcePoolSchedulerDisallowedReason;
-    public PhysicalNicSpec spec;
-    public PhysicalNicLinkInfo[] validLinkSpecification;
-    public Boolean vmDirectPathGen2Supported;
-    public String vmDirectPathGen2SupportedMode;
-    public boolean wakeOnLanSupported;
+    private Boolean ensInterruptSupported;
+    private String rdmaDevice;
 
     @Override
     public String toString() {
         return "PhysicalNic{" +
-                "autoNegotiateSupported=" + autoNegotiateSupported +
+                "key='" + key + '\'' +
                 ", device='" + device + '\'' +
-                ", driver='" + driver + '\'' +
-                ", enhancedNetworkingStackSupported=" + enhancedNetworkingStackSupported +
-                ", fcoeConfiguration=" + fcoeConfiguration +
-                ", key='" + key + '\'' +
-                ", linkSpeed=" + linkSpeed +
-                ", mac='" + mac + '\'' +
                 ", pci='" + pci + '\'' +
-                ", resourcePoolSchedulerAllowed=" + resourcePoolSchedulerAllowed +
-                ", resourcePoolSchedulerDisallowedReason=" + Arrays.toString(resourcePoolSchedulerDisallowedReason) +
-                ", spec=" + spec +
+                ", driver='" + driver + '\'' +
+                ", linkSpeed=" + linkSpeed +
                 ", validLinkSpecification=" + Arrays.toString(validLinkSpecification) +
+                ", spec=" + spec +
+                ", wakeOnLanSupported=" + wakeOnLanSupported +
+                ", mac='" + mac + '\'' +
+                ", fcoeConfiguration=" + fcoeConfiguration +
                 ", vmDirectPathGen2Supported=" + vmDirectPathGen2Supported +
                 ", vmDirectPathGen2SupportedMode='" + vmDirectPathGen2SupportedMode + '\'' +
-                ", wakeOnLanSupported=" + wakeOnLanSupported +
+                ", resourcePoolSchedulerAllowed=" + resourcePoolSchedulerAllowed +
+                ", resourcePoolSchedulerDisallowedReason=" + Arrays.toString(resourcePoolSchedulerDisallowedReason) +
+                ", autoNegotiateSupported=" + autoNegotiateSupported +
+                ", enhancedNetworkingStackSupported=" + enhancedNetworkingStackSupported +
+                ", ensInterruptSupported=" + ensInterruptSupported +
+                ", rdmaDevice='" + rdmaDevice + '\'' +
                 "} " + super.toString();
     }
 
@@ -207,6 +209,22 @@ public class PhysicalNic extends DynamicData {
 
     public void setEnhancedNetworkingStackSupported(final Boolean enhancedNetworkingStackSupported) {
         this.enhancedNetworkingStackSupported = enhancedNetworkingStackSupported;
+    }
+
+    public Boolean getEnsInterruptSupported() {
+        return ensInterruptSupported;
+    }
+
+    public void setEnsInterruptSupported(final Boolean ensInterruptSupported) {
+        this.ensInterruptSupported = ensInterruptSupported;
+    }
+
+    public String getRdmaDevice() {
+        return rdmaDevice;
+    }
+
+    public void setRdmaDevice(final String rdmaDevice) {
+        this.rdmaDevice = rdmaDevice;
     }
 
 }

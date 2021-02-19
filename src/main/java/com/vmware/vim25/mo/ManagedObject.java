@@ -33,6 +33,7 @@ import com.vmware.vim25.*;
 import com.vmware.vim25.mo.util.MorUtil;
 import com.vmware.vim25.mo.util.PropertyCollectorUtil;
 import com.vmware.vim25.ws.Argument;
+import com.vmware.vim25.ws.VimStub;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -52,11 +53,12 @@ import java.util.List;
  *
  * @author Steve JIN (http://www.doublecloud.org)
  */
-abstract public class ManagedObject {
+public abstract class ManagedObject {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ManagedObject.class);
+    public static final String EXCEPTION_NOT_KNOWN = "Exception not known";
 
-    private static String MO_PACKAGE_NAME = ManagedObject.class.getPackage().getName();
+    private static final String MO_PACKAGE_NAME = ManagedObject.class.getPackage().getName();
 
     /**
      * holds the ServerConnection instance
@@ -77,7 +79,7 @@ abstract public class ManagedObject {
      * @param serverConnection
      * @param mor
      */
-    public ManagedObject(ServerConnection serverConnection, ManagedObjectReference mor) {
+    public ManagedObject(final ServerConnection serverConnection, final ManagedObjectReference mor) {
         this.serverConnection = serverConnection;
         this.mor = mor;
     }
@@ -86,7 +88,7 @@ abstract public class ManagedObject {
     /**
      * Set the ManagedObjectReference object pointing to the managed object
      */
-    protected void setMOR(ManagedObjectReference mor) {
+    protected void setMOR(final ManagedObjectReference mor) {
         this.mor = mor;
     }
 
@@ -104,8 +106,13 @@ abstract public class ManagedObject {
      *
      * @return
      */
-    protected VimPortType getVimService() {
+    protected VimStub getVimService() {
         return serverConnection.getVimService();
+    }
+
+    protected Task invokeWithTaskReturn(final String methodName, final List<Argument> paras) throws RemoteException {
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke(methodName, paras, ManagedObjectReference.class);
+        return new Task(this.serverConnection, mor);
     }
 
     public ServerConnection getServerConnection() {
@@ -117,31 +124,31 @@ abstract public class ManagedObject {
      *
      * @param sc
      */
-    protected void setServerConnection(ServerConnection sc) {
+    protected void setServerConnection(final ServerConnection sc) {
         if (this.serverConnection == null) {
             this.serverConnection = sc;
         }
     }
 
-    protected ObjectContent retrieveObjectProperties(String[] properties) {
-        ObjectSpec oSpec = PropertyCollectorUtil.creatObjectSpec(
+    protected ObjectContent retrieveObjectProperties(final String[] properties) {
+        final ObjectSpec oSpec = PropertyCollectorUtil.creatObjectSpec(
                 getMOR(), Boolean.FALSE, null);
 
-        PropertySpec pSpec = PropertyCollectorUtil.createPropertySpec(
+        final PropertySpec pSpec = PropertyCollectorUtil.createPropertySpec(
                 getMOR().getType(),
                 properties == null || properties.length == 0, //if true, all props of this obj are to be read regardless of propName
                 properties);
 
-        PropertyFilterSpec pfSpec = new PropertyFilterSpec();
+        final PropertyFilterSpec pfSpec = new PropertyFilterSpec();
         pfSpec.setObjectSet(new ObjectSpec[]{oSpec});
         pfSpec.setPropSet(new PropertySpec[]{pSpec});
 
-        PropertyCollector pc = getServerConnection().getServiceInstance().getPropertyCollector();
+        final PropertyCollector pc = getServerConnection().getServiceInstance().getPropertyCollector();
 
-        ObjectContent[] objs;
+        final ObjectContent[] objs;
         try {
             objs = pc.retrievePropertiesEx(new PropertyFilterSpec[]{pfSpec}, null).getObjects();
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -160,13 +167,12 @@ abstract public class ManagedObject {
      * @throws InvalidProperty
      * @
      */
-    protected Object getCurrentProperty(String propertyName) {
-        ObjectContent objContent = retrieveObjectProperties(new String[]{propertyName});
-
+    protected Object getCurrentProperty(final String propertyName) {
+        final ObjectContent objContent = retrieveObjectProperties(new String[]{propertyName});
         Object propertyValue = null;
 
         if (objContent != null) {
-            DynamicProperty[] dynaProps = objContent.getPropSet();
+            final DynamicProperty[] dynaProps = objContent.getPropSet();
 
             if ((dynaProps != null) && (dynaProps[0] != null)) {
                 propertyValue = PropertyCollectorUtil.convertProperty(dynaProps[0].getVal());
@@ -175,31 +181,17 @@ abstract public class ManagedObject {
         return propertyValue;
     }
 
-    public Object getPropertyByPath(String propPath) {
+    public Object getPropertyByPath(final String propPath) {
         return getCurrentProperty(propPath);
     }
 
-    /**
-     * Get multiple properties by their paths
-     *
-     * @param propPaths an array of strings for property path
-     * @return a Hashtable holding with the property path as key, and the value.
-     * @throws InvalidProperty
-     * @throws RuntimeFault
-     * @throws RemoteException
-     */
-    public Hashtable getPropertiesByPaths(String[] propPaths)
-            throws InvalidProperty, RuntimeFault, RemoteException {
-        Hashtable[] pht = PropertyCollectorUtil.retrieveProperties(
-                new ManagedObject[]{this}, getMOR().getType(), propPaths);
-        if (pht.length != 0)
-            return pht[0];
-        else
-            return null;
+    @SuppressWarnings("unchecked")
+    protected <T> T getCurrentProperty(final String propertyName, final Class<T> clazz) {
+        return (T) this.getCurrentProperty(propertyName);
     }
 
-    protected ManagedObject[] getManagedObjects(String propName, boolean mixedType) {
-        Object object = getCurrentProperty(propName);
+    protected ManagedObject[] getManagedObjects(final String propName, final boolean mixedType) {
+        final Object object = getCurrentProperty(propName);
         ManagedObjectReference[] mors = null;
         if (object instanceof ManagedObjectReference[]) {
             mors = (ManagedObjectReference[]) object;
@@ -223,11 +215,11 @@ abstract public class ManagedObject {
                 if (mixedType) {
                     moClass = Class.forName(MO_PACKAGE_NAME + "." + mors[i].getType());
                 }
-                Constructor<?> constructor = moClass.getConstructor(ServerConnection.class, ManagedObjectReference.class);
+                final Constructor<?> constructor = moClass.getConstructor(ServerConnection.class, ManagedObjectReference.class);
 
                 Array.set(mos, i, constructor.newInstance(getServerConnection(), mors[i]));
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             LOGGER.error("ReflectionError during getManagedObjects", e);
         }
 
@@ -235,89 +227,89 @@ abstract public class ManagedObject {
     }
 
 
-    protected ManagedObject[] getManagedObjects(String propName) {
+    protected ManagedObject[] getManagedObjects(final String propName) {
         return getManagedObjects(propName, false);
     }
 
-    protected Datastore[] getDatastores(String propName) {
-        Object[] objs = getManagedObjects(propName);
+    protected Datastore[] getDatastores(final String propName) {
+        final Object[] objs = getManagedObjects(propName);
         if (objs.length == 0) {
             return new Datastore[]{};
         }
         return (Datastore[]) objs;
     }
 
-    protected Network[] getNetworks(String propName) {
-        Object[] objs = getManagedObjects(propName, true);
+    protected Network[] getNetworks(final String propName) {
+        final Object[] objs = getManagedObjects(propName, true);
         if (objs.length == 0) {
             return new Network[]{};
         }
-        Network[] nets = new Network[objs.length];
+        final Network[] nets = new Network[objs.length];
         for (int i = 0; i < objs.length; i++) {
             nets[i] = (Network) objs[i];
         }
         return nets;
     }
 
-    protected VirtualMachine[] getVms(String propName) {
-        ManagedObject[] objs = getManagedObjects(propName);
+    protected VirtualMachine[] getVms(final String propName) {
+        final ManagedObject[] objs = getManagedObjects(propName);
         if (objs.length == 0) {
             return new VirtualMachine[]{};
         }
         return (VirtualMachine[]) objs;
     }
 
-    protected PropertyFilter[] getFilter(String propName) {
-        Object[] objs = getManagedObjects(propName);
+    protected PropertyFilter[] getFilter(final String propName) {
+        final Object[] objs = getManagedObjects(propName);
         if (objs.length == 0) {
             return new PropertyFilter[]{};
         }
         return (PropertyFilter[]) objs;
     }
 
-    protected ResourcePool[] getResourcePools(String propName) {
-        Object[] objs = getManagedObjects(propName, true);
-        ResourcePool[] rps = new ResourcePool[objs.length];
+    protected ResourcePool[] getResourcePools(final String propName) {
+        final Object[] objs = getManagedObjects(propName, true);
+        final ResourcePool[] rps = new ResourcePool[objs.length];
         for (int i = 0; i < rps.length; i++) {
             rps[i] = (ResourcePool) objs[i];
         }
         return rps;
     }
 
-    protected Task[] getTasks(String propName) {
-        Object[] objs = getManagedObjects(propName);
+    protected Task[] getTasks(final String propName) {
+        final Object[] objs = getManagedObjects(propName);
         if (objs.length == 0) {
             return new Task[]{};
         }
         return (Task[]) objs;
     }
 
-    protected ScheduledTask[] getScheduledTasks(String propName) {
-        Object[] objs = getManagedObjects(propName);
+    protected ScheduledTask[] getScheduledTasks(final String propName) {
+        final Object[] objs = getManagedObjects(propName);
         if (objs.length == 0) {
             return new ScheduledTask[]{};
         }
         return (ScheduledTask[]) objs;
     }
 
-    protected View[] getViews(String propName) {
-        Object[] objs = getManagedObjects(propName);
+    protected View[] getViews(final String propName) {
+        final Object[] objs = getManagedObjects(propName);
         if (objs.length == 0) {
             return new View[]{};
         }
         return (View[]) objs;
     }
 
-    protected HostSystem[] getHosts(String propName) {
-        Object[] objs = getManagedObjects(propName);
+    protected HostSystem[] getHosts(final String propName) {
+        final Object[] objs = getManagedObjects(propName);
         if (objs.length == 0) {
             return new HostSystem[]{};
         }
         return (HostSystem[]) objs;
     }
 
-    protected ManagedObject getManagedObject(String propName) {
-        ManagedObjectReference mor = (ManagedObjectReference) getCurrentProperty(propName);
+    protected ManagedObject getManagedObject(final String propName) {
+        final ManagedObjectReference mor = getCurrentProperty(propName, ManagedObjectReference.class);
         return MorUtil.createExactManagedObject(getServerConnection(), mor);
     }
 
@@ -335,54 +327,53 @@ abstract public class ManagedObject {
      * @throws RuntimeFault
      * @throws InvalidProperty
      */
-    protected Object[] waitForValues(String[] filterProps, String[] endWaitProps, Object[][] expectedVals) throws InvalidProperty, RuntimeFault, RemoteException {
+    protected Object[] waitForValues(final String[] filterProps, final String[] endWaitProps, final Object[][] expectedVals) throws InvalidProperty, RuntimeFault, RemoteException {
         String version = "";
-        Object[] endVals = new Object[endWaitProps.length];
-        Object[] filterVals = new Object[filterProps.length];
+        final Object[] endVals = new Object[endWaitProps.length];
+        final Object[] filterVals = new Object[filterProps.length];
 
-        ObjectSpec oSpec = PropertyCollectorUtil.creatObjectSpec(
+        final ObjectSpec oSpec = PropertyCollectorUtil.creatObjectSpec(
                 getMOR(), Boolean.FALSE, null);
 
-        PropertySpec pSpec = PropertyCollectorUtil.createPropertySpec(
+        final PropertySpec pSpec = PropertyCollectorUtil.createPropertySpec(
                 getMOR().getType(),
-                filterProps == null || filterProps.length == 0, //if true, all props of this obj are to be read regardless of propName
+                filterProps.length == 0, //if true, all props of this obj are to be read regardless of propName
                 filterProps);
 
-        PropertyFilterSpec spec = new PropertyFilterSpec();
+        final PropertyFilterSpec spec = new PropertyFilterSpec();
         spec.setObjectSet(new ObjectSpec[]{oSpec});
         spec.setPropSet(new PropertySpec[]{pSpec});
 
-        PropertyCollector pc = serverConnection.getServiceInstance().getPropertyCollector();
-        PropertyFilter pf = pc.createFilter(spec, true);
+        final PropertyCollector pc = serverConnection.getServiceInstance().getPropertyCollector();
+        final PropertyFilter pf = pc.createFilter(spec, true);
 
         boolean reached = false;
 
         while (!reached) {
-            UpdateSet updateset = pc.waitForUpdates(version);
+            final UpdateSet updateset = pc.waitForUpdates(version);
             if (updateset == null) {
                 continue;
             }
             version = updateset.getVersion();
-            PropertyFilterUpdate[] filtupary = updateset.getFilterSet();
+            final PropertyFilterUpdate[] filtupary = updateset.getFilterSet();
             if (filtupary == null) {
                 continue;
             }
 
             // Make this code more general purpose when PropCol changes later.
-            for (int i = 0; i < filtupary.length; i++) {
-                PropertyFilterUpdate filtup = filtupary[i];
+            for (final PropertyFilterUpdate filtup : filtupary) {
                 if (filtup == null) {
                     continue;
                 }
-                ObjectUpdate[] objupary = filtup.getObjectSet();
+                final ObjectUpdate[] objupary = filtup.getObjectSet();
                 for (int j = 0; objupary != null && j < objupary.length; j++) {
-                    ObjectUpdate objup = objupary[j];
+                    final ObjectUpdate objup = objupary[j];
                     if (objup == null) {
                         continue;
                     }
-                    PropertyChange[] propchgary = objup.getChangeSet();
+                    final PropertyChange[] propchgary = objup.getChangeSet();
                     for (int k = 0; propchgary != null && k < propchgary.length; k++) {
-                        PropertyChange propchg = propchgary[k];
+                        final PropertyChange propchg = propchgary[k];
                         updateValues(endWaitProps, endVals, propchg);
                         updateValues(filterProps, filterVals, propchg);
                     }
@@ -393,8 +384,8 @@ abstract public class ManagedObject {
             // Also exit the WaitForUpdates loop if this is the case.
             for (int chgi = 0; chgi < endVals.length && !reached; chgi++) {
                 for (int vali = 0; vali < expectedVals[chgi].length && !reached; vali++) {
-                    Object expctdval = expectedVals[chgi][vali];
-                    reached = expctdval.equals(endVals[chgi]) || reached;
+                    final Object expctdval = expectedVals[chgi][vali];
+                    reached = expctdval.equals(endVals[chgi]);
                 }
             }
         }
@@ -404,7 +395,7 @@ abstract public class ManagedObject {
         return filterVals;
     }
 
-    private void updateValues(String[] props, Object[] vals, PropertyChange propchg) {
+    private void updateValues(final String[] props, final Object[] vals, final PropertyChange propchg) {
         for (int i = 0; i < props.length; i++) {
             if (propchg.getName().lastIndexOf(props[i]) >= 0) {
                 if (propchg.getOp() == PropertyChangeOp.remove) {
@@ -420,7 +411,7 @@ abstract public class ManagedObject {
         return mor.getType() + ":" + mor.getVal() + " @ " + getServerConnection().getUrl();
     }
 
-    protected ManagedObjectReference[] convertMors(ManagedObject[] mos) {
+    protected ManagedObjectReference[] convertMors(final ManagedObject[] mos) {
         ManagedObjectReference[] mors = null;
         if (mos != null) {
             mors = MorUtil.createMORs(mos);
@@ -429,7 +420,7 @@ abstract public class ManagedObject {
     }
 
     protected Argument getSelfArgument() {
-        return new Argument("_this", ManagedObjectReference.class.getSimpleName(), this.getMOR());
+        return new Argument("_this", ManagedObjectReference.class, this.getMOR());
     }
 
     protected List<Argument> getSingleSelfArgumentList() {

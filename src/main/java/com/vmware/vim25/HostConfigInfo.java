@@ -37,126 +37,132 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.7
+ * @version 7.0
  */
 public class HostConfigInfo extends DynamicData {
 
-    private HostDiagnosticPartition activeDiagnosticPartition;
-    @Deprecated
-    private Boolean adminDisabled;
-    private HostAuthenticationManagerInfo authenticationManagerInfo;
-    private HostAutoStartManagerConfig autoStart;
-    private HostCacheConfigurationInfo[] cacheConfigurationInfo;
-    private HostNetCapabilities capabilities;
-    private byte[] certificate;
-    private ServiceConsoleReservationInfo consoleReservation;
-    private HostDatastoreSystemCapabilities datastoreCapabilities;
-    private String datastorePrincipal;
-    private HostDateTimeInfo dateTimeInfo;
-    private HostDeploymentInfo deploymentInfo;
-    private String[] domainList;
-    private HostFeatureCapability[] featureCapability;
-    private HostFeatureVersionInfo[] featureVersion;
-    private HostFileSystemVolumeInfo fileSystemVolume;
-    private HostFirewallInfo firewall;
-    private HostFlagInfo flags;
-    private HostGraphicsConfig graphicsConfig;
-    private HostGraphicsInfo[] graphicsInfo;
     private ManagedObjectReference host;
-    private byte[] hostConfigCheckSum;
+    private AboutInfo product;
+    private HostDeploymentInfo deploymentInfo;
     private HostHyperThreadScheduleInfo hyperThread;
-    private HostIoFilterInfo[] ioFilterInfo;
-    private HostIpmiInfo ipmi;
-    private ManagedObjectReference localSwapDatastore;
-    private HostLockdownMode lockdownMode;
-    private HostFeatureCapability[] maskedFeatureCapability;
+    private ServiceConsoleReservationInfo consoleReservation;
+    private VirtualMachineMemoryReservationInfo virtualMachineReservation;
+    private HostStorageDeviceInfo storageDevice;
     private HostMultipathStateInfo multipathState;
+    private HostFileSystemVolumeInfo fileSystemVolume;
+    private String[] systemFile;
     private HostNetworkInfo network;
     @Deprecated
+    private HostVMotionInfo vmotion;
+    private HostVirtualNicManagerInfo virtualNicManagerInfo;
+    private HostNetCapabilities capabilities;
+    private HostDatastoreSystemCapabilities datastoreCapabilities;
+    @Deprecated
     private HostNetOffloadCapabilities offloadCapabilities;
+    private HostServiceInfo service;
+    private HostFirewallInfo firewall;
+    private HostAutoStartManagerConfig autoStart;
+    private HostDiagnosticPartition activeDiagnosticPartition;
     private OptionValue[] option;
     private OptionDef[] optionDef;
-    private HostPciPassthruInfo[] pciPassthruInfo;
-    private PowerSystemCapability powerSystemCapability;
-    private PowerSystemInfo powerSystemInfo;
-    private AboutInfo product;
-    private byte[] scriptCheckSum;
-    private HostServiceInfo service;
-    private HostSharedGpuCapabilities[] sharedGpuCapabilities;
-    private String[] sharedPassthruGpuTypes;
-    private HostSriovDevicePoolInfo[] sriovDevicePool;
-    private HostSslThumbprintInfo[] sslThumbprintData;
+    private String datastorePrincipal;
+    private ManagedObjectReference localSwapDatastore;
+    private HostSystemSwapConfiguration systemSwapConfiguration;
+    private HostSystemResourceInfo systemResources;
+    private HostDateTimeInfo dateTimeInfo;
+    private HostFlagInfo flags;
+    @Deprecated
+    private Boolean adminDisabled;
+    private HostLockdownMode lockdownMode;
+    private HostIpmiInfo ipmi;
     @Deprecated
     private HostSslThumbprintInfo sslThumbprintInfo;
-    private HostStorageDeviceInfo storageDevice;
-    private String[] systemFile;
-    private HostSystemResourceInfo systemResources;
-    private HostSystemSwapConfiguration systemSwapConfiguration;
-    private HostVFlashManagerVFlashConfigInfo vFlashConfigInfo;
-    private VirtualMachineMemoryReservationInfo virtualMachineReservation;
-    private HostVirtualNicManagerInfo virtualNicManagerInfo;
-    @Deprecated
-    private HostVMotionInfo vmotion;
-    private VsanHostConfigInfo vsanHostConfig;
+    private HostSslThumbprintInfo[] sslThumbprintData;
+    private byte[] certificate;
+    private HostPciPassthruInfo[] pciPassthruInfo;
+    private HostAuthenticationManagerInfo authenticationManagerInfo;
+    private HostFeatureVersionInfo[] featureVersion;
+    private PowerSystemCapability powerSystemCapability;
+    private PowerSystemInfo powerSystemInfo;
+    private HostCacheConfigurationInfo[] cacheConfigurationInfo;
     private Boolean wakeOnLanCapable;
+    private HostFeatureCapability[] featureCapability;
+    private HostFeatureCapability[] maskedFeatureCapability;
+    private HostVFlashManagerVFlashConfigInfo vFlashConfigInfo;
+    private VsanHostConfigInfo vsanHostConfig;
+    private String[] domainList;
+    private byte[] scriptCheckSum;
+    private byte[] hostConfigCheckSum;
+    private byte[] descriptionTreeCheckSum;
+    private HostGraphicsInfo[] graphicsInfo;
+    private String[] sharedPassthruGpuTypes;
+    private HostGraphicsConfig graphicsConfig;
+    private HostSharedGpuCapabilities[] sharedGpuCapabilities;
+    private HostIoFilterInfo[] ioFilterInfo;
+    private HostSriovDevicePoolInfo[] sriovDevicePool;
+    private HostAssignableHardwareBinding assignableHardwareBinding;
+    private HostAssignableHardwareConfig assignableHardwareConfig;
 
     @Override
     public String toString() {
         return "HostConfigInfo{" +
-                "activeDiagnosticPartition=" + activeDiagnosticPartition +
-                ", adminDisabled=" + adminDisabled +
-                ", authenticationManagerInfo=" + authenticationManagerInfo +
-                ", autoStart=" + autoStart +
-                ", cacheConfigurationInfo=" + Arrays.toString(cacheConfigurationInfo) +
-                ", capabilities=" + capabilities +
-                ", certificate=" + Arrays.toString(certificate) +
-                ", consoleReservation=" + consoleReservation +
-                ", datastoreCapabilities=" + datastoreCapabilities +
-                ", datastorePrincipal='" + datastorePrincipal + '\'' +
-                ", dateTimeInfo=" + dateTimeInfo +
+                "host=" + host +
+                ", product=" + product +
                 ", deploymentInfo=" + deploymentInfo +
-                ", domainList=" + Arrays.toString(domainList) +
-                ", featureCapability=" + Arrays.toString(featureCapability) +
-                ", featureVersion=" + Arrays.toString(featureVersion) +
-                ", fileSystemVolume=" + fileSystemVolume +
-                ", firewall=" + firewall +
-                ", flags=" + flags +
-                ", graphicsConfig=" + graphicsConfig +
-                ", graphicsInfo=" + Arrays.toString(graphicsInfo) +
-                ", host=" + host +
-                ", hostConfigCheckSum=" + Arrays.toString(hostConfigCheckSum) +
                 ", hyperThread=" + hyperThread +
-                ", ioFilterInfo=" + Arrays.toString(ioFilterInfo) +
-                ", ipmi=" + ipmi +
-                ", localSwapDatastore=" + localSwapDatastore +
-                ", lockdownMode=" + lockdownMode +
-                ", maskedFeatureCapability=" + Arrays.toString(maskedFeatureCapability) +
+                ", consoleReservation=" + consoleReservation +
+                ", virtualMachineReservation=" + virtualMachineReservation +
+                ", storageDevice=" + storageDevice +
                 ", multipathState=" + multipathState +
+                ", fileSystemVolume=" + fileSystemVolume +
+                ", systemFile=" + Arrays.toString(systemFile) +
                 ", network=" + network +
+                ", vmotion=" + vmotion +
+                ", virtualNicManagerInfo=" + virtualNicManagerInfo +
+                ", capabilities=" + capabilities +
+                ", datastoreCapabilities=" + datastoreCapabilities +
                 ", offloadCapabilities=" + offloadCapabilities +
+                ", service=" + service +
+                ", firewall=" + firewall +
+                ", autoStart=" + autoStart +
+                ", activeDiagnosticPartition=" + activeDiagnosticPartition +
                 ", option=" + Arrays.toString(option) +
                 ", optionDef=" + Arrays.toString(optionDef) +
+                ", datastorePrincipal='" + datastorePrincipal + '\'' +
+                ", localSwapDatastore=" + localSwapDatastore +
+                ", systemSwapConfiguration=" + systemSwapConfiguration +
+                ", systemResources=" + systemResources +
+                ", dateTimeInfo=" + dateTimeInfo +
+                ", flags=" + flags +
+                ", adminDisabled=" + adminDisabled +
+                ", lockdownMode=" + lockdownMode +
+                ", ipmi=" + ipmi +
+                ", sslThumbprintInfo=" + sslThumbprintInfo +
+                ", sslThumbprintData=" + Arrays.toString(sslThumbprintData) +
+                ", certificate=" + Arrays.toString(certificate) +
                 ", pciPassthruInfo=" + Arrays.toString(pciPassthruInfo) +
+                ", authenticationManagerInfo=" + authenticationManagerInfo +
+                ", featureVersion=" + Arrays.toString(featureVersion) +
                 ", powerSystemCapability=" + powerSystemCapability +
                 ", powerSystemInfo=" + powerSystemInfo +
-                ", product=" + product +
-                ", scriptCheckSum=" + Arrays.toString(scriptCheckSum) +
-                ", service=" + service +
-                ", sharedGpuCapabilities=" + Arrays.toString(sharedGpuCapabilities) +
-                ", sharedPassthruGpuTypes=" + Arrays.toString(sharedPassthruGpuTypes) +
-                ", sriovDevicePool=" + Arrays.toString(sriovDevicePool) +
-                ", sslThumbprintData=" + Arrays.toString(sslThumbprintData) +
-                ", sslThumbprintInfo=" + sslThumbprintInfo +
-                ", storageDevice=" + storageDevice +
-                ", systemFile=" + Arrays.toString(systemFile) +
-                ", systemResources=" + systemResources +
-                ", systemSwapConfiguration=" + systemSwapConfiguration +
-                ", vFlashConfigInfo=" + vFlashConfigInfo +
-                ", virtualMachineReservation=" + virtualMachineReservation +
-                ", virtualNicManagerInfo=" + virtualNicManagerInfo +
-                ", vmotion=" + vmotion +
-                ", vsanHostConfig=" + vsanHostConfig +
+                ", cacheConfigurationInfo=" + Arrays.toString(cacheConfigurationInfo) +
                 ", wakeOnLanCapable=" + wakeOnLanCapable +
+                ", featureCapability=" + Arrays.toString(featureCapability) +
+                ", maskedFeatureCapability=" + Arrays.toString(maskedFeatureCapability) +
+                ", vFlashConfigInfo=" + vFlashConfigInfo +
+                ", vsanHostConfig=" + vsanHostConfig +
+                ", domainList=" + Arrays.toString(domainList) +
+                ", scriptCheckSum=" + Arrays.toString(scriptCheckSum) +
+                ", hostConfigCheckSum=" + Arrays.toString(hostConfigCheckSum) +
+                ", descriptionTreeCheckSum=" + Arrays.toString(descriptionTreeCheckSum) +
+                ", graphicsInfo=" + Arrays.toString(graphicsInfo) +
+                ", sharedPassthruGpuTypes=" + Arrays.toString(sharedPassthruGpuTypes) +
+                ", graphicsConfig=" + graphicsConfig +
+                ", sharedGpuCapabilities=" + Arrays.toString(sharedGpuCapabilities) +
+                ", ioFilterInfo=" + Arrays.toString(ioFilterInfo) +
+                ", sriovDevicePool=" + Arrays.toString(sriovDevicePool) +
+                ", assignableHardwareBinding=" + assignableHardwareBinding +
+                ", assignableHardwareConfig=" + assignableHardwareConfig +
                 "} " + super.toString();
     }
 
@@ -592,4 +598,27 @@ public class HostConfigInfo extends DynamicData {
         this.wakeOnLanCapable = wakeOnLanCapable;
     }
 
+    public byte[] getDescriptionTreeCheckSum() {
+        return descriptionTreeCheckSum;
+    }
+
+    public void setDescriptionTreeCheckSum(final byte[] descriptionTreeCheckSum) {
+        this.descriptionTreeCheckSum = descriptionTreeCheckSum;
+    }
+
+    public HostAssignableHardwareBinding getAssignableHardwareBinding() {
+        return assignableHardwareBinding;
+    }
+
+    public void setAssignableHardwareBinding(final HostAssignableHardwareBinding assignableHardwareBinding) {
+        this.assignableHardwareBinding = assignableHardwareBinding;
+    }
+
+    public HostAssignableHardwareConfig getAssignableHardwareConfig() {
+        return assignableHardwareConfig;
+    }
+
+    public void setAssignableHardwareConfig(final HostAssignableHardwareConfig assignableHardwareConfig) {
+        this.assignableHardwareConfig = assignableHardwareConfig;
+    }
 }

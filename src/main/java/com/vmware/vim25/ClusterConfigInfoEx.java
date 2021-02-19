@@ -29,28 +29,54 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-/**
- * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
- */
+import java.util.Arrays;
 
-@SuppressWarnings("all")
+/**
+ * The ClusterConfigInfoEx data object describes a complete cluster configuration.
+ * For information about configuring a cluster, see ClusterConfigSpecEx.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class ClusterConfigInfoEx extends ComputeResourceConfigInfo {
 
-    public ClusterDasConfigInfo dasConfig;
-    public ClusterDasVmConfigInfo[] dasVmConfig;
-    public ClusterDpmConfigInfo dpmConfigInfo;
-    public ClusterDpmHostConfigInfo[] dpmHostConfig;
-    public ClusterDrsConfigInfo drsConfig;
-    public ClusterDrsVmConfigInfo[] drsVmConfig;
-    public ClusterGroupInfo[] group;
-    public ClusterInfraUpdateHaConfigInfo infraUpdateHaConfig;
-    public ClusterOrchestrationInfo orchestration;
-    public ClusterProactiveDrsConfigInfo proactiveDrsConfig;
-    public ClusterRuleInfo[] rule;
-    public VsanClusterConfigInfo vsanConfigInfo;
-    public VsanHostConfigInfo[] vsanHostConfig;
+    private ClusterDasConfigInfo dasConfig;
+    private ClusterDasVmConfigInfo[] dasVmConfig;
+    private ClusterDrsConfigInfo drsConfig;
+    private ClusterDrsVmConfigInfo[] drsVmConfig;
+    private ClusterRuleInfo[] rule;
+    private ClusterOrchestrationInfo orchestration;
+    private ClusterVmOrchestrationInfo[] vmOrchestration;
+    private ClusterDpmConfigInfo dpmConfigInfo;
+    private ClusterDpmHostConfigInfo[] dpmHostConfig;
+    private VsanClusterConfigInfo vsanConfigInfo;
+    private VsanHostConfigInfo[] vsanHostConfig;
+    private ClusterGroupInfo[] group;
+    private ClusterInfraUpdateHaConfigInfo infraUpdateHaConfig;
+    private ClusterProactiveDrsConfigInfo proactiveDrsConfig;
+    private ClusterCryptoConfigInfo cryptoConfig;
+
+    @Override
+    public String toString() {
+        return "ClusterConfigInfoEx{" +
+                "dasConfig=" + dasConfig +
+                ", dasVmConfig=" + Arrays.toString(dasVmConfig) +
+                ", drsConfig=" + drsConfig +
+                ", drsVmConfig=" + Arrays.toString(drsVmConfig) +
+                ", rule=" + Arrays.toString(rule) +
+                ", orchestration=" + orchestration +
+                ", vmOrchestration=" + Arrays.toString(vmOrchestration) +
+                ", dpmConfigInfo=" + dpmConfigInfo +
+                ", dpmHostConfig=" + Arrays.toString(dpmHostConfig) +
+                ", vsanConfigInfo=" + vsanConfigInfo +
+                ", vsanHostConfig=" + Arrays.toString(vsanHostConfig) +
+                ", group=" + Arrays.toString(group) +
+                ", infraUpdateHaConfig=" + infraUpdateHaConfig +
+                ", proactiveDrsConfig=" + proactiveDrsConfig +
+                ", cryptoConfig=" + cryptoConfig +
+                "} " + super.toString();
+    }
 
     public ClusterDasConfigInfo getDasConfig() {
         return this.dasConfig;
@@ -155,4 +181,21 @@ public class ClusterConfigInfoEx extends ComputeResourceConfigInfo {
     public void setProactiveDrsConfig(final ClusterProactiveDrsConfigInfo proactiveDrsConfig) {
         this.proactiveDrsConfig = proactiveDrsConfig;
     }
+
+    public ClusterVmOrchestrationInfo[] getVmOrchestration() {
+        return vmOrchestration;
+    }
+
+    public void setVmOrchestration(final ClusterVmOrchestrationInfo[] vmOrchestration) {
+        this.vmOrchestration = vmOrchestration;
+    }
+
+    public ClusterCryptoConfigInfo getCryptoConfig() {
+        return cryptoConfig;
+    }
+
+    public void setCryptoConfig(final ClusterCryptoConfigInfo cryptoConfig) {
+        this.cryptoConfig = cryptoConfig;
+    }
+
 }

@@ -36,9 +36,9 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7.2
+ * @version 7.0
  */
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class ServiceContent extends DynamicData {
 
     private AboutInfo about;
@@ -59,6 +59,7 @@ public class ServiceContent extends DynamicData {
     private ManagedObjectReference failoverClusterConfigurator;
     private ManagedObjectReference failoverClusterManager;
     private ManagedObjectReference fileManager;
+    private ManagedObjectReference guestCustomizationManager;
     private ManagedObjectReference guestOperationsManager;
     private ManagedObjectReference healthUpdateManager;
     private ManagedObjectReference hostProfileManager;
@@ -77,10 +78,12 @@ public class ServiceContent extends DynamicData {
     private ManagedObjectReference serviceManager;
     private ManagedObjectReference sessionManager;
     private ManagedObjectReference setting;
+    private ManagedObjectReference siteInfoManager;
     private ManagedObjectReference snmpSystem;
     private ManagedObjectReference storageQueryManager;
     private ManagedObjectReference storageResourceManager;
     private ManagedObjectReference taskManager;
+    private ManagedObjectReference tenantManager;
     private ManagedObjectReference userDirectory;
     private ManagedObjectReference viewManager;
     private ManagedObjectReference virtualDiskManager;
@@ -467,4 +470,29 @@ public class ServiceContent extends DynamicData {
     public void setStorageQueryManager(final ManagedObjectReference storageQueryManager) {
         this.storageQueryManager = storageQueryManager;
     }
+
+    public ManagedObjectReference getSiteInfoManager() {
+        return siteInfoManager;
+    }
+
+    public void setSiteInfoManager(final ManagedObjectReference siteInfoManager) {
+        this.siteInfoManager = siteInfoManager;
+    }
+
+    public ManagedObjectReference getGuestCustomizationManager() {
+        return guestCustomizationManager;
+    }
+
+    public void setGuestCustomizationManager(final ManagedObjectReference guestCustomizationManager) {
+        this.guestCustomizationManager = guestCustomizationManager;
+    }
+
+    public ManagedObjectReference getTenantManager() {
+        return tenantManager;
+    }
+
+    public void setTenantManager(final ManagedObjectReference tenantManager) {
+        this.tenantManager = tenantManager;
+    }
+
 }

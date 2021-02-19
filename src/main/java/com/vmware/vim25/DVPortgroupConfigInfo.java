@@ -29,30 +29,63 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-/**
- * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
- */
+import java.util.Arrays;
 
-@SuppressWarnings("all")
+/**
+ * The DVPortgroupConfigInfo data object defines the configuration of a DistributedVirtualPortgroup.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class DVPortgroupConfigInfo extends DynamicData {
 
-    public String key;
-    public String name;
-    public int numPorts;
-    public ManagedObjectReference distributedVirtualSwitch;
-    public DVPortSetting defaultPortConfig;
-    public String description;
-    public String type;
-    public DVPortgroupPolicy policy;
-    public String portNameFormat;
-    public ManagedObjectReference[] scope;
-    public DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
-    public String configVersion;
-    public Boolean autoExpand;
-    public Boolean uplink;
-    public String vmVnicNetworkResourcePoolKey;
+    private String key;
+    private String name;
+    private int numPorts;
+    private ManagedObjectReference distributedVirtualSwitch;
+    private DVPortSetting defaultPortConfig;
+    private String description;
+    private String type;
+    private String backingType;
+    private DVPortgroupPolicy policy;
+    private String portNameFormat;
+    private ManagedObjectReference[] scope;
+    private DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
+    private String configVersion;
+    private Boolean autoExpand;
+    private String vmVnicNetworkResourcePoolKey;
+    private Boolean uplink;
+    private String transportZoneUuid;
+    private String transportZoneName;
+    private String logicalSwitchUuid;
+    private String segmentId;
+
+    @Override
+    public String toString() {
+        return "DVPortgroupConfigInfo{" +
+                "key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", numPorts=" + numPorts +
+                ", distributedVirtualSwitch=" + distributedVirtualSwitch +
+                ", defaultPortConfig=" + defaultPortConfig +
+                ", description='" + description + '\'' +
+                ", type='" + type + '\'' +
+                ", backingType='" + backingType + '\'' +
+                ", policy=" + policy +
+                ", portNameFormat='" + portNameFormat + '\'' +
+                ", scope=" + Arrays.toString(scope) +
+                ", vendorSpecificConfig=" + Arrays.toString(vendorSpecificConfig) +
+                ", configVersion='" + configVersion + '\'' +
+                ", autoExpand=" + autoExpand +
+                ", vmVnicNetworkResourcePoolKey='" + vmVnicNetworkResourcePoolKey + '\'' +
+                ", uplink=" + uplink +
+                ", transportZoneUuid='" + transportZoneUuid + '\'' +
+                ", transportZoneName='" + transportZoneName + '\'' +
+                ", logicalSwitchUuid='" + logicalSwitchUuid + '\'' +
+                ", segmentId='" + segmentId + '\'' +
+                "} " + super.toString();
+    }
 
     public String getKey() {
         return this.key;
@@ -175,4 +208,49 @@ public class DVPortgroupConfigInfo extends DynamicData {
     public void setVmVnicNetworkResourcePoolKey(final String vmVnicNetworkResourcePoolKey) {
         this.vmVnicNetworkResourcePoolKey = vmVnicNetworkResourcePoolKey;
     }
+
+    public String getBackingType() {
+        return backingType;
+    }
+
+    public void setBackingType(final String backingType) {
+        this.backingType = backingType;
+    }
+
+    public Boolean getUplink() {
+        return uplink;
+    }
+
+    public String getTransportZoneUuid() {
+        return transportZoneUuid;
+    }
+
+    public void setTransportZoneUuid(final String transportZoneUuid) {
+        this.transportZoneUuid = transportZoneUuid;
+    }
+
+    public String getTransportZoneName() {
+        return transportZoneName;
+    }
+
+    public void setTransportZoneName(final String transportZoneName) {
+        this.transportZoneName = transportZoneName;
+    }
+
+    public String getLogicalSwitchUuid() {
+        return logicalSwitchUuid;
+    }
+
+    public void setLogicalSwitchUuid(final String logicalSwitchUuid) {
+        this.logicalSwitchUuid = logicalSwitchUuid;
+    }
+
+    public String getSegmentId() {
+        return segmentId;
+    }
+
+    public void setSegmentId(final String segmentId) {
+        this.segmentId = segmentId;
+    }
+
 }

@@ -28,121 +28,172 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
 package com.vmware.vim25;
+
 import java.util.Calendar;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The DistributedVirtualPort data object represents a port in a DistributedVirtualSwitch.
+ * Virtual ports are part of a distributed virtual portgroup.
+ * Servers create virtual ports according to the portgroup type (DistributedVirtualPortgroup.Config.type).
+ * @See DistributedVirtualPortgroupPortgroupType
+ *
+ * To configure host network access by port, set the distributed virtual port
+ * in the host virtual NIC specification (HostVirtualNicSpec.distributedVirtualPort.portKey).
+ *
+ * To configure virtual machine network access by port,
+ * set the port in the virtual Ethernet card backing (VirtualEthernetCard.backing.port.portKey).
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class DistributedVirtualPort extends DynamicData {
-  public String key;
-  public DVPortConfigInfo config;
-  public String dvsUuid;
-  public String portgroupKey;
-  public ManagedObjectReference proxyHost;
-  public DistributedVirtualSwitchPortConnectee connectee;
-  public boolean conflict;
-  public String conflictPortKey;
-  public DVPortState state;
-  public Integer connectionCookie;
-  public Calendar lastStatusChange;
-  public Boolean hostLocalPort;
 
-  public String getKey() {
-    return this.key;
-  }
+    private String key;
+    private DVPortConfigInfo config;
+    private String dvsUuid;
+    private String portgroupKey;
+    private ManagedObjectReference proxyHost;
+    private DistributedVirtualSwitchPortConnectee connectee;
+    private boolean conflict;
+    private String conflictPortKey;
+    private DVPortState state;
+    private Integer connectionCookie;
+    private Calendar lastStatusChange;
+    private Boolean hostLocalPort;
+    private String externalId;
+    private String segmentPortId;
 
-  public DVPortConfigInfo getConfig() {
-    return this.config;
-  }
+    @Override
+    public String toString() {
+        return "DistributedVirtualPort{" +
+                "key='" + key + '\'' +
+                ", config=" + config +
+                ", dvsUuid='" + dvsUuid + '\'' +
+                ", portgroupKey='" + portgroupKey + '\'' +
+                ", proxyHost=" + proxyHost +
+                ", connectee=" + connectee +
+                ", conflict=" + conflict +
+                ", conflictPortKey='" + conflictPortKey + '\'' +
+                ", state=" + state +
+                ", connectionCookie=" + connectionCookie +
+                ", lastStatusChange=" + lastStatusChange +
+                ", hostLocalPort=" + hostLocalPort +
+                ", externalId='" + externalId + '\'' +
+                ", segmentPortId='" + segmentPortId + '\'' +
+                "} " + super.toString();
+    }
 
-  public String getDvsUuid() {
-    return this.dvsUuid;
-  }
+    public String getKey() {
+        return this.key;
+    }
 
-  public String getPortgroupKey() {
-    return this.portgroupKey;
-  }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-  public ManagedObjectReference getProxyHost() {
-    return this.proxyHost;
-  }
+    public DVPortConfigInfo getConfig() {
+        return this.config;
+    }
 
-  public DistributedVirtualSwitchPortConnectee getConnectee() {
-    return this.connectee;
-  }
+    public void setConfig(DVPortConfigInfo config) {
+        this.config = config;
+    }
 
-  public boolean isConflict() {
-    return this.conflict;
-  }
+    public String getDvsUuid() {
+        return this.dvsUuid;
+    }
 
-  public String getConflictPortKey() {
-    return this.conflictPortKey;
-  }
+    public void setDvsUuid(String dvsUuid) {
+        this.dvsUuid = dvsUuid;
+    }
 
-  public DVPortState getState() {
-    return this.state;
-  }
+    public String getPortgroupKey() {
+        return this.portgroupKey;
+    }
 
-  public Integer getConnectionCookie() {
-    return this.connectionCookie;
-  }
+    public void setPortgroupKey(String portgroupKey) {
+        this.portgroupKey = portgroupKey;
+    }
 
-  public Calendar getLastStatusChange() {
-    return this.lastStatusChange;
-  }
+    public ManagedObjectReference getProxyHost() {
+        return this.proxyHost;
+    }
 
-  public Boolean getHostLocalPort() {
-    return this.hostLocalPort;
-  }
+    public void setProxyHost(ManagedObjectReference proxyHost) {
+        this.proxyHost = proxyHost;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public DistributedVirtualSwitchPortConnectee getConnectee() {
+        return this.connectee;
+    }
 
-  public void setConfig(DVPortConfigInfo config) {
-    this.config=config;
-  }
+    public void setConnectee(DistributedVirtualSwitchPortConnectee connectee) {
+        this.connectee = connectee;
+    }
 
-  public void setDvsUuid(String dvsUuid) {
-    this.dvsUuid=dvsUuid;
-  }
+    public boolean isConflict() {
+        return this.conflict;
+    }
 
-  public void setPortgroupKey(String portgroupKey) {
-    this.portgroupKey=portgroupKey;
-  }
+    public void setConflict(boolean conflict) {
+        this.conflict = conflict;
+    }
 
-  public void setProxyHost(ManagedObjectReference proxyHost) {
-    this.proxyHost=proxyHost;
-  }
+    public String getConflictPortKey() {
+        return this.conflictPortKey;
+    }
 
-  public void setConnectee(DistributedVirtualSwitchPortConnectee connectee) {
-    this.connectee=connectee;
-  }
+    public void setConflictPortKey(String conflictPortKey) {
+        this.conflictPortKey = conflictPortKey;
+    }
 
-  public void setConflict(boolean conflict) {
-    this.conflict=conflict;
-  }
+    public DVPortState getState() {
+        return this.state;
+    }
 
-  public void setConflictPortKey(String conflictPortKey) {
-    this.conflictPortKey=conflictPortKey;
-  }
+    public void setState(DVPortState state) {
+        this.state = state;
+    }
 
-  public void setState(DVPortState state) {
-    this.state=state;
-  }
+    public Integer getConnectionCookie() {
+        return this.connectionCookie;
+    }
 
-  public void setConnectionCookie(Integer connectionCookie) {
-    this.connectionCookie=connectionCookie;
-  }
+    public void setConnectionCookie(Integer connectionCookie) {
+        this.connectionCookie = connectionCookie;
+    }
 
-  public void setLastStatusChange(Calendar lastStatusChange) {
-    this.lastStatusChange=lastStatusChange;
-  }
+    public Calendar getLastStatusChange() {
+        return this.lastStatusChange;
+    }
 
-  public void setHostLocalPort(Boolean hostLocalPort) {
-    this.hostLocalPort=hostLocalPort;
-  }
+    public void setLastStatusChange(Calendar lastStatusChange) {
+        this.lastStatusChange = lastStatusChange;
+    }
+
+    public Boolean getHostLocalPort() {
+        return this.hostLocalPort;
+    }
+
+    public void setHostLocalPort(Boolean hostLocalPort) {
+        this.hostLocalPort = hostLocalPort;
+    }
+
+    public String getExternalId() {
+        return externalId;
+    }
+
+    public void setExternalId(final String externalId) {
+        this.externalId = externalId;
+    }
+
+    public String getSegmentPortId() {
+        return segmentPortId;
+    }
+
+    public void setSegmentPortId(final String segmentPortId) {
+        this.segmentPortId = segmentPortId;
+    }
+
 }

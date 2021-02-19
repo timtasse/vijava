@@ -28,58 +28,83 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
 package com.vmware.vim25;
+
 import java.util.Calendar;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object type is a specification for a set of resources allocated to a virtual machine or a resource pool.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class ResourceConfigSpec extends DynamicData {
-  public ManagedObjectReference entity;
-  public String changeVersion;
-  public Calendar lastModified;
-  public ResourceAllocationInfo cpuAllocation;
-  public ResourceAllocationInfo memoryAllocation;
 
-  public ManagedObjectReference getEntity() {
-    return this.entity;
-  }
+    private ManagedObjectReference entity;
+    private String changeVersion;
+    private Calendar lastModified;
+    private ResourceAllocationInfo cpuAllocation;
+    private ResourceAllocationInfo memoryAllocation;
+    private String scaleDescendantsShares;
 
-  public String getChangeVersion() {
-    return this.changeVersion;
-  }
+    @Override
+    public String toString() {
+        return "ResourceConfigSpec{" +
+                "entity=" + entity +
+                ", changeVersion='" + changeVersion + '\'' +
+                ", lastModified=" + lastModified +
+                ", cpuAllocation=" + cpuAllocation +
+                ", memoryAllocation=" + memoryAllocation +
+                ", scaleDescendantsShares='" + scaleDescendantsShares + '\'' +
+                "} " + super.toString();
+    }
 
-  public Calendar getLastModified() {
-    return this.lastModified;
-  }
+    public ManagedObjectReference getEntity() {
+        return this.entity;
+    }
 
-  public ResourceAllocationInfo getCpuAllocation() {
-    return this.cpuAllocation;
-  }
+    public void setEntity(ManagedObjectReference entity) {
+        this.entity = entity;
+    }
 
-  public ResourceAllocationInfo getMemoryAllocation() {
-    return this.memoryAllocation;
-  }
+    public String getChangeVersion() {
+        return this.changeVersion;
+    }
 
-  public void setEntity(ManagedObjectReference entity) {
-    this.entity=entity;
-  }
+    public void setChangeVersion(String changeVersion) {
+        this.changeVersion = changeVersion;
+    }
 
-  public void setChangeVersion(String changeVersion) {
-    this.changeVersion=changeVersion;
-  }
+    public Calendar getLastModified() {
+        return this.lastModified;
+    }
 
-  public void setLastModified(Calendar lastModified) {
-    this.lastModified=lastModified;
-  }
+    public void setLastModified(Calendar lastModified) {
+        this.lastModified = lastModified;
+    }
 
-  public void setCpuAllocation(ResourceAllocationInfo cpuAllocation) {
-    this.cpuAllocation=cpuAllocation;
-  }
+    public ResourceAllocationInfo getCpuAllocation() {
+        return this.cpuAllocation;
+    }
 
-  public void setMemoryAllocation(ResourceAllocationInfo memoryAllocation) {
-    this.memoryAllocation=memoryAllocation;
-  }
+    public void setCpuAllocation(ResourceAllocationInfo cpuAllocation) {
+        this.cpuAllocation = cpuAllocation;
+    }
+
+    public ResourceAllocationInfo getMemoryAllocation() {
+        return this.memoryAllocation;
+    }
+
+    public void setMemoryAllocation(ResourceAllocationInfo memoryAllocation) {
+        this.memoryAllocation = memoryAllocation;
+    }
+
+    public String getScaleDescendantsShares() {
+        return scaleDescendantsShares;
+    }
+
+    public void setScaleDescendantsShares(final String scaleDescendantsShares) {
+        this.scaleDescendantsShares = scaleDescendantsShares;
+    }
+
 }

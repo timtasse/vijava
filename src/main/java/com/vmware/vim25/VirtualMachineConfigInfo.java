@@ -38,147 +38,156 @@ import java.util.Calendar;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0
  */
-@SuppressWarnings("all")
 public class VirtualMachineConfigInfo extends DynamicData {
 
-    private String alternateGuestName;
-    private String annotation;
-    private VirtualMachineBootOptions bootOptions;
-    private Boolean changeTrackingEnabled;
     private String changeVersion;
-    private VirtualMachineConsolePreferences consolePreferences;
-    private VirtualMachineAffinityInfo cpuAffinity;
-    private ResourceAllocationInfo cpuAllocation;
-    private HostCpuIdInfo[] cpuFeatureMask;
-    private Boolean cpuHotAddEnabled;
-    private Boolean cpuHotRemoveEnabled;
-    private Calendar createDate;
-    private VirtualMachineConfigInfoDatastoreUrlPair[] datastoreUrl;
-    private VirtualMachineDefaultPowerOpInfo defaultPowerOps;
-    private OptionValue[] extraConfig;
-    private VirtualMachineFileInfo files;
-    private String firmware;
-    private VirtualMachineFlagInfo flags;
-    private VirtualMachineForkConfigInfo forkConfigInfo;
-    private FaultToleranceConfigInfo ftInfo;
-    private Boolean guestAutoLockEnabled;
-    private String guestFullName;
-    private String guestId;
-    private VirtualMachineGuestIntegrityInfo guestIntegrityInfo;
-    private VirtualHardware hardware;
-    private Long hotPlugMemoryIncrementSize;
-    private Long hotPlugMemoryLimit;
-    private VirtualMachineConfigInfoOverheadInfo initialOverhead;
-    private String instanceUuid;
-    private CryptoKeyId keyId;
-    private LatencySensitivity latencySensitivity;
-    private String locationId;
-    private ManagedByInfo managedBy;
-    private Integer maxMksConnections;
-    @Deprecated
-    private VirtualMachineAffinityInfo memoryAffinity;
-    private ResourceAllocationInfo memoryAllocation;
-    private Boolean memoryHotAddEnabled;
-    private Boolean memoryReservationLockedToMax;
-    private Boolean messageBusTunnelEnabled;
-    private String migrateEncryption;
     private Calendar modified;
     private String name;
-    private Boolean nestedHVEnabled;
-    @Deprecated
-    private VirtualMachineNetworkShaperInfo networkShaper;
+    private String guestFullName;
+    private String version;
+    private String uuid;
+    private Calendar createDate;
+    private String instanceUuid;
+    private long[] npivNodeWorldWideName;
+    private long[] npivPortWorldWideName;
+    private String npivWorldWideNameType;
     private Short npivDesiredNodeWwns;
     private Short npivDesiredPortWwns;
-    private long[] npivNodeWorldWideName;
-    private Boolean npivOnNonRdmDisks;
-    private long[] npivPortWorldWideName;
     private Boolean npivTemporaryDisabled;
-    private String npivWorldWideNameType;
-    private ReplicationConfigSpec repConfig;
-    private ScheduledHardwareUpgradeInfo scheduledHardwareUpgradeInfo;
-    private String swapPlacement;
-    private String swapStorageObjectId;
+    private Boolean npivOnNonRdmDisks;
+    private String locationId;
     private boolean template;
+    private String guestId;
+    private String alternateGuestName;
+    private String annotation;
+    private VirtualMachineFileInfo files;
     private ToolsConfigInfo tools;
-    private String uuid;
+    private VirtualMachineFlagInfo flags;
+    private VirtualMachineConsolePreferences consolePreferences;
+    private VirtualMachineDefaultPowerOpInfo defaultPowerOps;
+    private VirtualHardware hardware;
+    private VirtualMachineVcpuConfig[] vcpuConfig;
+    private ResourceAllocationInfo cpuAllocation;
+    private ResourceAllocationInfo memoryAllocation;
+    private LatencySensitivity latencySensitivity;
+    private Boolean memoryHotAddEnabled;
+    private Boolean cpuHotAddEnabled;
+    private Boolean cpuHotRemoveEnabled;
+    private Long hotPlugMemoryLimit;
+    private Long hotPlugMemoryIncrementSize;
+    private VirtualMachineAffinityInfo cpuAffinity;
+    @Deprecated
+    private VirtualMachineAffinityInfo memoryAffinity;
+    @Deprecated
+    private VirtualMachineNetworkShaperInfo networkShaper;
+    private OptionValue[] extraConfig;
+    private HostCpuIdInfo[] cpuFeatureMask;
+    private VirtualMachineConfigInfoDatastoreUrlPair[] datastoreUrl;
+    private String swapPlacement;
+    private VirtualMachineBootOptions bootOptions;
+    private FaultToleranceConfigInfo ftInfo;
+    private ReplicationConfigSpec repConfig;
     private VmConfigInfo vAppConfig;
     private Boolean vAssertsEnabled;
-    private String version;
-    private Long vFlashCacheReservation;
-    private String vmStorageObjectId;
-    private byte[] vmxConfigChecksum;
+    private Boolean changeTrackingEnabled;
+    private String firmware;
+    private Integer maxMksConnections;
+    private Boolean guestAutoLockEnabled;
+    private ManagedByInfo managedBy;
+    private Boolean memoryReservationLockedToMax;
+    private VirtualMachineConfigInfoOverheadInfo initialOverhead;
+    private Boolean nestedHVEnabled;
     private Boolean vPMCEnabled;
+    private ScheduledHardwareUpgradeInfo scheduledHardwareUpgradeInfo;
+    private VirtualMachineForkConfigInfo forkConfigInfo;
+    private Long vFlashCacheReservation;
+    private byte[] vmxConfigChecksum;
+    private Boolean messageBusTunnelEnabled;
+    private String vmStorageObjectId;
+    private String swapStorageObjectId;
+    private CryptoKeyId keyId;
+    private VirtualMachineGuestIntegrityInfo guestIntegrityInfo;
+    private String migrateEncryption;
+    private VirtualMachineSgxInfo sgxInfo;
+    private VirtualMachineContentLibraryItemInfo contentLibItemInfo;
+    private VirtualMachineGuestMonitoringModeInfo guestMonitoringModeInfo;
+    private Boolean sevEnabled;
 
     @Override
     public String toString() {
         return "VirtualMachineConfigInfo{" +
-                "alternateGuestName='" + alternateGuestName + '\'' +
-                ", annotation='" + annotation + '\'' +
-                ", bootOptions=" + bootOptions +
-                ", changeTrackingEnabled=" + changeTrackingEnabled +
-                ", changeVersion='" + changeVersion + '\'' +
-                ", consolePreferences=" + consolePreferences +
-                ", cpuAffinity=" + cpuAffinity +
-                ", cpuAllocation=" + cpuAllocation +
-                ", cpuFeatureMask=" + Arrays.toString(cpuFeatureMask) +
-                ", cpuHotAddEnabled=" + cpuHotAddEnabled +
-                ", cpuHotRemoveEnabled=" + cpuHotRemoveEnabled +
-                ", createDate=" + createDate +
-                ", datastoreUrl=" + Arrays.toString(datastoreUrl) +
-                ", defaultPowerOps=" + defaultPowerOps +
-                ", extraConfig=" + Arrays.toString(extraConfig) +
-                ", files=" + files +
-                ", firmware='" + firmware + '\'' +
-                ", flags=" + flags +
-                ", forkConfigInfo=" + forkConfigInfo +
-                ", ftInfo=" + ftInfo +
-                ", guestAutoLockEnabled=" + guestAutoLockEnabled +
-                ", guestFullName='" + guestFullName + '\'' +
-                ", guestId='" + guestId + '\'' +
-                ", guestIntegrityInfo=" + guestIntegrityInfo +
-                ", hardware=" + hardware +
-                ", hotPlugMemoryIncrementSize=" + hotPlugMemoryIncrementSize +
-                ", hotPlugMemoryLimit=" + hotPlugMemoryLimit +
-                ", initialOverhead=" + initialOverhead +
-                ", instanceUuid='" + instanceUuid + '\'' +
-                ", keyId=" + keyId +
-                ", latencySensitivity=" + latencySensitivity +
-                ", locationId='" + locationId + '\'' +
-                ", managedBy=" + managedBy +
-                ", maxMksConnections=" + maxMksConnections +
-                ", memoryAffinity=" + memoryAffinity +
-                ", memoryAllocation=" + memoryAllocation +
-                ", memoryHotAddEnabled=" + memoryHotAddEnabled +
-                ", memoryReservationLockedToMax=" + memoryReservationLockedToMax +
-                ", messageBusTunnelEnabled=" + messageBusTunnelEnabled +
-                ", migrateEncryption='" + migrateEncryption + '\'' +
+                "changeVersion='" + changeVersion + '\'' +
                 ", modified=" + modified +
                 ", name='" + name + '\'' +
-                ", nestedHVEnabled=" + nestedHVEnabled +
-                ", networkShaper=" + networkShaper +
+                ", guestFullName='" + guestFullName + '\'' +
+                ", version='" + version + '\'' +
+                ", uuid='" + uuid + '\'' +
+                ", createDate=" + createDate +
+                ", instanceUuid='" + instanceUuid + '\'' +
+                ", npivNodeWorldWideName=" + Arrays.toString(npivNodeWorldWideName) +
+                ", npivPortWorldWideName=" + Arrays.toString(npivPortWorldWideName) +
+                ", npivWorldWideNameType='" + npivWorldWideNameType + '\'' +
                 ", npivDesiredNodeWwns=" + npivDesiredNodeWwns +
                 ", npivDesiredPortWwns=" + npivDesiredPortWwns +
-                ", npivNodeWorldWideName=" + Arrays.toString(npivNodeWorldWideName) +
-                ", npivOnNonRdmDisks=" + npivOnNonRdmDisks +
-                ", npivPortWorldWideName=" + Arrays.toString(npivPortWorldWideName) +
                 ", npivTemporaryDisabled=" + npivTemporaryDisabled +
-                ", npivWorldWideNameType='" + npivWorldWideNameType + '\'' +
-                ", repConfig=" + repConfig +
-                ", scheduledHardwareUpgradeInfo=" + scheduledHardwareUpgradeInfo +
-                ", swapPlacement='" + swapPlacement + '\'' +
-                ", swapStorageObjectId='" + swapStorageObjectId + '\'' +
+                ", npivOnNonRdmDisks=" + npivOnNonRdmDisks +
+                ", locationId='" + locationId + '\'' +
                 ", template=" + template +
+                ", guestId='" + guestId + '\'' +
+                ", alternateGuestName='" + alternateGuestName + '\'' +
+                ", annotation='" + annotation + '\'' +
+                ", files=" + files +
                 ", tools=" + tools +
-                ", uuid='" + uuid + '\'' +
+                ", flags=" + flags +
+                ", consolePreferences=" + consolePreferences +
+                ", defaultPowerOps=" + defaultPowerOps +
+                ", hardware=" + hardware +
+                ", vcpuConfig=" + Arrays.toString(vcpuConfig) +
+                ", cpuAllocation=" + cpuAllocation +
+                ", memoryAllocation=" + memoryAllocation +
+                ", latencySensitivity=" + latencySensitivity +
+                ", memoryHotAddEnabled=" + memoryHotAddEnabled +
+                ", cpuHotAddEnabled=" + cpuHotAddEnabled +
+                ", cpuHotRemoveEnabled=" + cpuHotRemoveEnabled +
+                ", hotPlugMemoryLimit=" + hotPlugMemoryLimit +
+                ", hotPlugMemoryIncrementSize=" + hotPlugMemoryIncrementSize +
+                ", cpuAffinity=" + cpuAffinity +
+                ", memoryAffinity=" + memoryAffinity +
+                ", networkShaper=" + networkShaper +
+                ", extraConfig=" + Arrays.toString(extraConfig) +
+                ", cpuFeatureMask=" + Arrays.toString(cpuFeatureMask) +
+                ", datastoreUrl=" + Arrays.toString(datastoreUrl) +
+                ", swapPlacement='" + swapPlacement + '\'' +
+                ", bootOptions=" + bootOptions +
+                ", ftInfo=" + ftInfo +
+                ", repConfig=" + repConfig +
                 ", vAppConfig=" + vAppConfig +
                 ", vAssertsEnabled=" + vAssertsEnabled +
-                ", version='" + version + '\'' +
-                ", vFlashCacheReservation=" + vFlashCacheReservation +
-                ", vmStorageObjectId='" + vmStorageObjectId + '\'' +
-                ", vmxConfigChecksum=" + Arrays.toString(vmxConfigChecksum) +
+                ", changeTrackingEnabled=" + changeTrackingEnabled +
+                ", firmware='" + firmware + '\'' +
+                ", maxMksConnections=" + maxMksConnections +
+                ", guestAutoLockEnabled=" + guestAutoLockEnabled +
+                ", managedBy=" + managedBy +
+                ", memoryReservationLockedToMax=" + memoryReservationLockedToMax +
+                ", initialOverhead=" + initialOverhead +
+                ", nestedHVEnabled=" + nestedHVEnabled +
                 ", vPMCEnabled=" + vPMCEnabled +
+                ", scheduledHardwareUpgradeInfo=" + scheduledHardwareUpgradeInfo +
+                ", forkConfigInfo=" + forkConfigInfo +
+                ", vFlashCacheReservation=" + vFlashCacheReservation +
+                ", vmxConfigChecksum=" + Arrays.toString(vmxConfigChecksum) +
+                ", messageBusTunnelEnabled=" + messageBusTunnelEnabled +
+                ", vmStorageObjectId='" + vmStorageObjectId + '\'' +
+                ", swapStorageObjectId='" + swapStorageObjectId + '\'' +
+                ", keyId=" + keyId +
+                ", guestIntegrityInfo=" + guestIntegrityInfo +
+                ", migrateEncryption='" + migrateEncryption + '\'' +
+                ", sgxInfo=" + sgxInfo +
+                ", contentLibItemInfo=" + contentLibItemInfo +
+                ", guestMonitoringModeInfo=" + guestMonitoringModeInfo +
+                ", sevEnabled=" + sevEnabled +
                 "} " + super.toString();
     }
 
@@ -700,6 +709,46 @@ public class VirtualMachineConfigInfo extends DynamicData {
 
     public void setvPMCEnabled(final Boolean vPMCEnabled) {
         this.vPMCEnabled = vPMCEnabled;
+    }
+
+    public VirtualMachineVcpuConfig[] getVcpuConfig() {
+        return vcpuConfig;
+    }
+
+    public void setVcpuConfig(final VirtualMachineVcpuConfig[] vcpuConfig) {
+        this.vcpuConfig = vcpuConfig;
+    }
+
+    public VirtualMachineSgxInfo getSgxInfo() {
+        return sgxInfo;
+    }
+
+    public void setSgxInfo(final VirtualMachineSgxInfo sgxInfo) {
+        this.sgxInfo = sgxInfo;
+    }
+
+    public VirtualMachineContentLibraryItemInfo getContentLibItemInfo() {
+        return contentLibItemInfo;
+    }
+
+    public void setContentLibItemInfo(final VirtualMachineContentLibraryItemInfo contentLibItemInfo) {
+        this.contentLibItemInfo = contentLibItemInfo;
+    }
+
+    public VirtualMachineGuestMonitoringModeInfo getGuestMonitoringModeInfo() {
+        return guestMonitoringModeInfo;
+    }
+
+    public void setGuestMonitoringModeInfo(final VirtualMachineGuestMonitoringModeInfo guestMonitoringModeInfo) {
+        this.guestMonitoringModeInfo = guestMonitoringModeInfo;
+    }
+
+    public Boolean getSevEnabled() {
+        return sevEnabled;
+    }
+
+    public void setSevEnabled(final Boolean sevEnabled) {
+        this.sevEnabled = sevEnabled;
     }
 
 }

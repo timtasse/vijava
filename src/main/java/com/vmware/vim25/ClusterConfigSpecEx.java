@@ -36,8 +36,8 @@ import java.util.Arrays;
  * You can configure a cluster when you create a new cluster (the CreateClusterEx method) or when you reconfigure an existing cluster (the ReconfigureComputeResource_Task method).
  *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.7.1
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
  */
 
 @SuppressWarnings("all")
@@ -58,25 +58,27 @@ public class ClusterConfigSpecEx extends ComputeResourceConfigSpec {
     private ClusterInfraUpdateHaConfigInfo infraUpdateHaConfig;
     private ClusterProactiveDrsConfigInfo proactiveDrsConfig;
     private Boolean inHciWorkflow;
+    private ClusterCryptoConfigInfo cryptoConfig;
 
     @Override
     public String toString() {
         return "ClusterConfigSpecEx{" +
                 "dasConfig=" + dasConfig +
                 ", dasVmConfigSpec=" + Arrays.toString(dasVmConfigSpec) +
-                ", dpmConfig=" + dpmConfig +
-                ", dpmHostConfigSpec=" + Arrays.toString(dpmHostConfigSpec) +
                 ", drsConfig=" + drsConfig +
                 ", drsVmConfigSpec=" + Arrays.toString(drsVmConfigSpec) +
-                ", groupSpec=" + Arrays.toString(groupSpec) +
-                ", infraUpdateHaConfig=" + infraUpdateHaConfig +
-                ", inHciWorkflow=" + inHciWorkflow +
-                ", orchestration=" + orchestration +
-                ", proactiveDrsConfig=" + proactiveDrsConfig +
                 ", rulesSpec=" + Arrays.toString(rulesSpec) +
+                ", orchestration=" + orchestration +
                 ", vmOrchestrationSpec=" + Arrays.toString(vmOrchestrationSpec) +
+                ", dpmConfig=" + dpmConfig +
+                ", dpmHostConfigSpec=" + Arrays.toString(dpmHostConfigSpec) +
                 ", vsanConfig=" + vsanConfig +
                 ", vsanHostConfigSpec=" + Arrays.toString(vsanHostConfigSpec) +
+                ", groupSpec=" + Arrays.toString(groupSpec) +
+                ", infraUpdateHaConfig=" + infraUpdateHaConfig +
+                ", proactiveDrsConfig=" + proactiveDrsConfig +
+                ", inHciWorkflow=" + inHciWorkflow +
+                ", cryptoConfig=" + cryptoConfig +
                 "} " + super.toString();
     }
 
@@ -199,4 +201,13 @@ public class ClusterConfigSpecEx extends ComputeResourceConfigSpec {
     public void setVsanHostConfigSpec(final VsanHostConfigInfo[] vsanHostConfigSpec) {
         this.vsanHostConfigSpec = vsanHostConfigSpec;
     }
+
+    public ClusterCryptoConfigInfo getCryptoConfig() {
+        return cryptoConfig;
+    }
+
+    public void setCryptoConfig(final ClusterCryptoConfigInfo cryptoConfig) {
+        this.cryptoConfig = cryptoConfig;
+    }
+
 }

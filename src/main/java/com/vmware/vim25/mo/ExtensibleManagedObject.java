@@ -30,31 +30,53 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * ExtensibleManagedObject provides methods and properties that provide access to custom fields that may be associated with a managed object.
+ * Use the {@see CustomFieldsManager} to define custom fields. The CustomFieldsManager handles the entire list of custom fields on a server.
+ * You can can specify the object type to which a particular custom field applies by setting its managedObjectType.
+ * (If you do not set a managed object type for a custom field definition, the field applies to all managed objects.)
  *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
+@SuppressWarnings("unused")
+public abstract class ExtensibleManagedObject extends ManagedObject {
 
-abstract public class ExtensibleManagedObject extends ManagedObject {
-
-    public ExtensibleManagedObject(ServerConnection serverConnection, ManagedObjectReference mor) {
+    public ExtensibleManagedObject(final ServerConnection serverConnection, final ManagedObjectReference mor) {
         super(serverConnection, mor);
     }
 
-    public CustomFieldDef[] getAvailableField() throws InvalidProperty, RuntimeFault, RemoteException {
-        return (CustomFieldDef[]) getCurrentProperty("availableField");
+    public List<CustomFieldDef> getAvailableField() {
+        return Optional.ofNullable(this.getCurrentProperty("availableField", CustomFieldDef[].class))
+                .map(Arrays::asList).orElse(Collections.emptyList());
     }
 
-    public CustomFieldValue[] getValues() throws InvalidProperty, RuntimeFault, RemoteException {
-        return (CustomFieldValue[]) getCurrentProperty("value");
+    public List<CustomFieldValue> getValues() {
+        return Optional.ofNullable(this.getCurrentProperty("value", CustomFieldValue[].class))
+                .map(Arrays::asList).orElse(Collections.emptyList());
     }
 
-    public void setCustomValue(String key, String value) throws RuntimeFault, RemoteException {
-        getVimService().setCustomValue(getMOR(), key, value);
+    public void setCustomValue(final String key, final String value) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("key", String.class, key),
+                new Argument("value", String.class, value));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("setCustomValue", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
 }

@@ -4,6 +4,7 @@ import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.CookieManager;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -21,7 +22,7 @@ public class WSClientJava11 extends WSClient {
 
     private HttpClient client;
 
-    WSClientJava11(final String serverUrl, final boolean ignoreCert) {
+    WSClientJava11(final URL serverUrl, final boolean ignoreCert) {
         super(serverUrl, ignoreCert);
         final HttpClient.Builder builder = HttpClient.newBuilder()
                 .cookieHandler(new CookieManager());

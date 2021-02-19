@@ -30,126 +30,364 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
-import com.vmware.vim25.mo.util.MorUtil;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * Represents a set of physical resources: a single host, a subset of a host's resources, or resources spanning multiple hosts.
+ * Resource pools can be subdivided by creating child resource pools.
+ * In order to run, a virtual machine must be associated as a child of a resource pool.
+ * <p>
+ * In a parent/child hierarchy of resource pools and virtual machines,
+ * the single resource pool that has no parent pool is known as the root resource pool.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
  */
+@SuppressWarnings("unused")
+public class ResourcePool extends ManagedEntity {
 
-public class ResourcePool extends ManagedEntity
-{
-	public ResourcePool(ServerConnection serverConnection, ManagedObjectReference mor) 
-	{
-		super(serverConnection, mor);
-	}
+    public ResourcePool(final ServerConnection serverConnection, final ManagedObjectReference mor) {
+        super(serverConnection, mor);
+    }
 
-	public ResourceConfigSpec[] getChildConfiguration()
-	{
-		return (ResourceConfigSpec[]) this.getCurrentProperty("childConfiguration");
-	}
+    public List<ResourceConfigSpec> getChildConfiguration() {
+        return Optional.ofNullable(this.getCurrentProperty("childConfiguration", ResourceConfigSpec[].class))
+                .map(Arrays::asList)
+                .orElse(Collections.emptyList());
+    }
 
-	public ResourceConfigSpec getConfig()
-	{
-		return (ResourceConfigSpec) this.getCurrentProperty("config");
-	}
-	
-	public ComputeResource getOwner() throws InvalidProperty, RuntimeFault, RemoteException 
-	{
-		return (ComputeResource) this.getManagedObject("owner");
-	}
-	
- 	public ResourcePool[] getResourcePools() throws InvalidProperty, RuntimeFault, RemoteException 
-	{
- 		return getResourcePools("resourcePool");
-	}	                                         
+    public ResourceConfigSpec getConfig() {
+        return this.getCurrentProperty("config", ResourceConfigSpec.class);
+    }
 
-	public ResourcePoolRuntimeInfo getRuntime()
-	{
-		return (ResourcePoolRuntimeInfo) this.getCurrentProperty("runtime");
-	}
+    public String getNamespace() {
+        return this.getCurrentProperty("namespace", String.class);
+    }
 
-	public ResourcePoolSummary getSummary()
-	{
-		return (ResourcePoolSummary) this.getCurrentProperty("summary");
-	}
- 	
-	public VirtualMachine[] getVMs() throws InvalidProperty, RuntimeFault, RemoteException 
-	{
-		return getVms("vm");
-	}	                         
-	
-	/** @since SDK4.0 */
-	public Task createChildVM_Task(VirtualMachineConfigSpec config, HostSystem host) throws VmConfigFault, FileFault, OutOfBounds, InvalidName, InvalidDatastore, InsufficientResourcesFault, RuntimeFault, RemoteException
-	{
-		ManagedObjectReference taskMor = getVimService().createChildVM_Task(getMOR(), config, 
-				host==null? null : host.getMOR());
-		return new Task(getServerConnection(), taskMor);
-	}
-	
-	/** @since SDK4.0 */
-	public VirtualApp createVApp(String name, ResourceConfigSpec resSpec, VAppConfigSpec configSpec, Folder vmFolder) throws InvalidName, DuplicateName, InsufficientResourcesFault, InvalidState, VmConfigFault, RuntimeFault, RemoteException
-	{
-		ManagedObjectReference vaMor = getVimService().createVApp(getMOR(), name, resSpec, configSpec, vmFolder==null? null : vmFolder.getMOR());
-		return new VirtualApp(getServerConnection(), vaMor);
-	}
-	
-	/** @since SDK4.0 */
-	public HttpNfcLease importVApp(ImportSpec spec, Folder folder, HostSystem host) throws VmConfigFault, FileFault, OutOfBounds, DuplicateName, InvalidName, InvalidDatastore, InsufficientResourcesFault, RuntimeFault, RemoteException
-	{
-		ManagedObjectReference mor = getVimService().importVApp(getMOR(), spec, 
-				folder==null? null : folder.getMOR(), host==null? null : host.getMOR()); 
-		return new HttpNfcLease(getServerConnection(), mor);
-	}
-	
-	/** @since SDK4.1 */
-	public void refreshRuntime() throws RuntimeFault, RemoteException
-	{
-	  getVimService().refreshRuntime(getMOR());
-	}
-	
-	/** @since SDK4.0 */
-	public Task registerChildVM_Task(String path, String name, HostSystem host) throws OutOfBounds, AlreadyExists, InvalidDatastore, NotFound, InvalidName, VmConfigFault, InsufficientResourcesFault, FileFault, RuntimeFault, RemoteException
-	{
-		ManagedObjectReference mor = getVimService().registerChildVM_Task(getMOR(), path, name, host==null?null:host.getMOR());
-		return new Task(getServerConnection(), mor);
-	}
-	
-	public ResourcePool createResourcePool(String name, ResourceConfigSpec spec) throws InvalidName, DuplicateName, InsufficientResourcesFault, RuntimeFault, RemoteException 
-	{
-		ManagedObjectReference rpMor = getVimService().createResourcePool(getMOR(), name, spec);
-		return new ResourcePool(getServerConnection(), rpMor);
-	}
-	
-	public void destroyChildren() throws RuntimeFault, RemoteException 
-	{
-		getVimService().destroyChildren(getMOR());
-	}
-	
-	public void moveIntoResourcePool(ManagedEntity[] entities) throws DuplicateName, InsufficientResourcesFault, RuntimeFault, RemoteException 
-	{
-		if(entities==null)
-		{
-			throw new IllegalArgumentException("entities must not be null.");
-		}
-		getVimService().moveIntoResourcePool(getMOR(), MorUtil.createMORs(entities) );
-	}
-	
-	/** @since SDK4.1 */
-	public ResourceConfigOption queryResourceConfigOption() throws RuntimeFault, RemoteException
-	{
-    return getVimService().queryResourceConfigOption(getMOR());
-	}
-	
-	public void updateChildResourceConfiguration(ResourceConfigSpec[] spec) throws InvalidState, InsufficientResourcesFault, RuntimeFault, RemoteException 
-	{
-		getVimService().updateChildResourceConfiguration(getMOR(), spec);
-	}
-	
-	public void updateConfig(String name, ResourceConfigSpec spec) throws InvalidName, DuplicateName, ConcurrentAccess, InsufficientResourcesFault, RuntimeFault, RemoteException 
-	{
-		getVimService().updateConfig(getMOR(), name, spec);
-	}
+    public ComputeResource getOwner() {
+        return (ComputeResource) this.getManagedObject("owner");
+    }
+
+    public List<ResourcePool> getResourcePools() {
+        return Arrays.asList(getResourcePools("resourcePool"));
+    }
+
+    public ResourcePoolRuntimeInfo getRuntime() {
+        return this.getCurrentProperty("runtime", ResourcePoolRuntimeInfo.class);
+    }
+
+    public ResourcePoolSummary getSummary() {
+        return this.getCurrentProperty("summary", ResourcePoolSummary.class);
+    }
+
+    public List<VirtualMachine> getVMs() {
+        return Arrays.asList(getVms("vm"));
+    }
+
+    public Task createChildVM(final VirtualMachineConfigSpec config, final ManagedObjectReference host)
+            throws VmWwnConflict, VmConfigFault, InvalidDatastore, FileAlreadyExists, FileFault, OutOfBounds, InvalidName,
+            InvalidDatastore, InsufficientResourcesFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("config", VirtualMachineConfigSpec.class, config),
+                new Argument("host", ManagedObjectReference.class, host));
+        try {
+            return this.invokeWithTaskReturn("CreateChildVM_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof VmWwnConflict) {
+                throw (VmWwnConflict) cause;
+            }
+            if (cause instanceof InvalidDatastore) {
+                throw (InvalidDatastore) cause;
+            }
+            if (cause instanceof FileAlreadyExists) {
+                throw (FileAlreadyExists) cause;
+            }
+            if (cause instanceof FileFault) {
+                throw (FileFault) cause;
+            }
+            if (cause instanceof VmConfigFault) {
+                throw (VmConfigFault) cause;
+            }
+            if (cause instanceof OutOfBounds) {
+                throw (OutOfBounds) cause;
+            }
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public ResourcePool createResourcePool(final String name, final ResourceConfigSpec spec)
+            throws InvalidName, DuplicateName, InsufficientResourcesFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("name", String.class, name),
+                new Argument("spec", ResourceConfigSpec.class, spec));
+        try {
+            final ManagedObjectReference mor = this.getVimService().getWsc().invoke("CreateResourcePool", params, ManagedObjectReference.class);
+            return new ResourcePool(this.getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public VirtualApp createVApp(final String name, final ResourceConfigSpec resSpec, final VAppConfigSpec configSpec, final Folder vmFolder)
+            throws InvalidName, DuplicateName, InsufficientResourcesFault, InvalidState, VmConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("name", String.class, name),
+                new Argument("resSpec", ResourceConfigSpec.class, resSpec),
+                new Argument("configSpec", VAppConfigSpec.class, configSpec),
+                new Argument("vmFolder", ManagedObjectReference.class, vmFolder == null ? null : vmFolder.getMOR()));
+        try {
+            final ManagedObjectReference mor = this.getVimService().getWsc().invoke("CreateVApp", params, ManagedObjectReference.class);
+            return new VirtualApp(this.getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof VmConfigFault) {
+                throw (VmConfigFault) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void destroyChildren() throws RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("DestroyChildren", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public HttpNfcLease importVApp(final ImportSpec spec, final ManagedObjectReference folder, final ManagedObjectReference host)
+            throws VmWwnConflict, VmConfigFault, FileAlreadyExists, FileFault, OutOfBounds, DuplicateName, InvalidName,
+            InsufficientResourcesFault, InvalidDatastore, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", ImportSpec.class, spec),
+                new Argument("folder", ManagedObjectReference.class, folder),
+                new Argument("host", ManagedObjectReference.class, host));
+        try {
+            final ManagedObjectReference mor = this.getVimService().getWsc().invoke("ImportVApp", params, ManagedObjectReference.class);
+            return new HttpNfcLease(this.getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof VmWwnConflict) {
+                throw (VmWwnConflict) cause;
+            }
+            if (cause instanceof InvalidDatastore) {
+                throw (InvalidDatastore) cause;
+            }
+            if (cause instanceof FileAlreadyExists) {
+                throw (FileAlreadyExists) cause;
+            }
+            if (cause instanceof FileFault) {
+                throw (FileFault) cause;
+            }
+            if (cause instanceof VmConfigFault) {
+                throw (VmConfigFault) cause;
+            }
+            if (cause instanceof OutOfBounds) {
+                throw (OutOfBounds) cause;
+            }
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void moveIntoResourcePool(final List<ManagedEntity> entities)
+            throws DuplicateName, InsufficientResourcesFault, RuntimeFault {
+        if (entities == null) {
+            throw new IllegalArgumentException("entities must not be null.");
+        }
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("list", ManagedObjectReference[].class, entities.stream().map(ManagedObject::getMOR).toArray()));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("MoveIntoResourcePool", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @Deprecated(since = "6.5")
+    public ResourceConfigOption queryResourceConfigOption() throws RuntimeFault {
+        try {
+            return this.getVimService().getWsc().invoke("QueryResourceConfigOption", this.getSingleSelfArgumentList(), ResourceConfigOption.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void refreshRuntime() throws RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RefreshRuntime", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task registerChildVM(final String path, final String name, final ManagedObjectReference host)
+            throws OutOfBounds, AlreadyExists, InvalidDatastore, NotFound, InvalidName, VmConfigFault,
+            InsufficientResourcesFault, FileFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("path", String.class, path),
+                new Argument("name", String.class, name),
+                new Argument("host", ManagedObjectReference.class, host));
+        try {
+            return this.invokeWithTaskReturn("RegisterChildVM_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidDatastore) {
+                throw (InvalidDatastore) cause;
+            }
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof FileFault) {
+                throw (FileFault) cause;
+            }
+            if (cause instanceof VmConfigFault) {
+                throw (VmConfigFault) cause;
+            }
+            if (cause instanceof OutOfBounds) {
+                throw (OutOfBounds) cause;
+            }
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateChildResourceConfiguration(final List<ResourceConfigSpec> spec)
+            throws InvalidState, InsufficientResourcesFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", ResourceConfigSpec[].class, spec));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateChildResourceConfiguration", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateConfig(final String name, final ResourceConfigSpec config)
+            throws InvalidName, DuplicateName, ConcurrentAccess, InsufficientResourcesFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("name", String.class, name),
+                new Argument("config", ResourceConfigSpec.class, config));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateConfig", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ConcurrentAccess) {
+                throw (ConcurrentAccess) cause;
+            }
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
 }

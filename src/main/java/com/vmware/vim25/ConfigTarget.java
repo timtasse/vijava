@@ -36,14 +36,14 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0.1
  */
-
 public class ConfigTarget extends DynamicData {
 
     private int numCpus;
     private int numCpuCores;
     private int numNumaNodes;
+    private Integer maxCpusPerHost;
     private Boolean smcPresent;
     private VirtualMachineDatastoreInfo[] datastore;
     private VirtualMachineNetworkInfo[] network;
@@ -61,6 +61,7 @@ public class ConfigTarget extends DynamicData {
     private VirtualMachineScsiDiskDeviceInfo[] scsiDisk;
     private VirtualMachineIdeDiskDeviceInfo[] ideDisk;
     private int maxMemMBOptimalPerf;
+    private Integer supportedMaxMemMB;
     private ResourcePoolRuntimeInfo resourcePool;
     private Boolean autoVmotion;
     private VirtualMachinePciPassthroughInfo[] pciPassthrough;
@@ -68,37 +69,47 @@ public class ConfigTarget extends DynamicData {
     private VirtualMachineVFlashModuleInfo[] vFlashModule;
     private VirtualMachinePciSharedGpuPassthroughInfo[] sharedGpuPassthroughTypes;
     private Long availablePersistentMemoryReservationMB;
+    private VirtualMachineDynamicPassthroughInfo[] dynamicPassthrough;
+    private VirtualMachineSgxTargetInfo sgxTargetInfo;
+    private VirtualMachinePrecisionClockInfo[] precisionClockInfo;
+    private Boolean sevSupported;
 
     @Override
     public String toString() {
         return "ConfigTarget{" +
-                "autoVmotion=" + autoVmotion +
-                ", availablePersistentMemoryReservationMB=" + availablePersistentMemoryReservationMB +
-                ", cdRom=" + Arrays.toString(cdRom) +
+                "numCpus=" + numCpus +
+                ", numCpuCores=" + numCpuCores +
+                ", numNumaNodes=" + numNumaNodes +
+                ", maxCpusPerHost=" + maxCpusPerHost +
+                ", smcPresent=" + smcPresent +
                 ", datastore=" + Arrays.toString(datastore) +
+                ", network=" + Arrays.toString(network) +
+                ", opaqueNetwork=" + Arrays.toString(opaqueNetwork) +
                 ", distributedVirtualPortgroup=" + Arrays.toString(distributedVirtualPortgroup) +
                 ", distributedVirtualSwitch=" + Arrays.toString(distributedVirtualSwitch) +
-                ", floppy=" + Arrays.toString(floppy) +
-                ", ideDisk=" + Arrays.toString(ideDisk) +
-                ", legacyNetworkInfo=" + Arrays.toString(legacyNetworkInfo) +
-                ", maxMemMBOptimalPerf=" + maxMemMBOptimalPerf +
-                ", network=" + Arrays.toString(network) +
-                ", numCpuCores=" + numCpuCores +
-                ", numCpus=" + numCpus +
-                ", numNumaNodes=" + numNumaNodes +
-                ", opaqueNetwork=" + Arrays.toString(opaqueNetwork) +
-                ", parallel=" + Arrays.toString(parallel) +
-                ", pciPassthrough=" + Arrays.toString(pciPassthrough) +
-                ", resourcePool=" + resourcePool +
-                ", scsiDisk=" + Arrays.toString(scsiDisk) +
-                ", scsiPassthrough=" + Arrays.toString(scsiPassthrough) +
+                ", cdRom=" + Arrays.toString(cdRom) +
                 ", serial=" + Arrays.toString(serial) +
-                ", sharedGpuPassthroughTypes=" + Arrays.toString(sharedGpuPassthroughTypes) +
-                ", smcPresent=" + smcPresent +
+                ", parallel=" + Arrays.toString(parallel) +
                 ", sound=" + Arrays.toString(sound) +
-                ", sriov=" + Arrays.toString(sriov) +
                 ", usb=" + Arrays.toString(usb) +
+                ", floppy=" + Arrays.toString(floppy) +
+                ", legacyNetworkInfo=" + Arrays.toString(legacyNetworkInfo) +
+                ", scsiPassthrough=" + Arrays.toString(scsiPassthrough) +
+                ", scsiDisk=" + Arrays.toString(scsiDisk) +
+                ", ideDisk=" + Arrays.toString(ideDisk) +
+                ", maxMemMBOptimalPerf=" + maxMemMBOptimalPerf +
+                ", supportedMaxMemMB=" + supportedMaxMemMB +
+                ", resourcePool=" + resourcePool +
+                ", autoVmotion=" + autoVmotion +
+                ", pciPassthrough=" + Arrays.toString(pciPassthrough) +
+                ", sriov=" + Arrays.toString(sriov) +
                 ", vFlashModule=" + Arrays.toString(vFlashModule) +
+                ", sharedGpuPassthroughTypes=" + Arrays.toString(sharedGpuPassthroughTypes) +
+                ", availablePersistentMemoryReservationMB=" + availablePersistentMemoryReservationMB +
+                ", dynamicPassthrough=" + Arrays.toString(dynamicPassthrough) +
+                ", sgxTargetInfo=" + sgxTargetInfo +
+                ", precisionClockInfo=" + Arrays.toString(precisionClockInfo) +
+                ", sevSupported=" + sevSupported +
                 "} " + super.toString();
     }
 
@@ -316,6 +327,54 @@ public class ConfigTarget extends DynamicData {
 
     public void setvFlashModule(final VirtualMachineVFlashModuleInfo[] vFlashModule) {
         this.vFlashModule = vFlashModule;
+    }
+
+    public Integer getMaxCpusPerHost() {
+        return maxCpusPerHost;
+    }
+
+    public void setMaxCpusPerHost(final Integer maxCpusPerHost) {
+        this.maxCpusPerHost = maxCpusPerHost;
+    }
+
+    public Integer getSupportedMaxMemMB() {
+        return supportedMaxMemMB;
+    }
+
+    public void setSupportedMaxMemMB(final Integer supportedMaxMemMB) {
+        this.supportedMaxMemMB = supportedMaxMemMB;
+    }
+
+    public VirtualMachineDynamicPassthroughInfo[] getDynamicPassthrough() {
+        return dynamicPassthrough;
+    }
+
+    public void setDynamicPassthrough(final VirtualMachineDynamicPassthroughInfo[] dynamicPassthrough) {
+        this.dynamicPassthrough = dynamicPassthrough;
+    }
+
+    public VirtualMachineSgxTargetInfo getSgxTargetInfo() {
+        return sgxTargetInfo;
+    }
+
+    public void setSgxTargetInfo(final VirtualMachineSgxTargetInfo sgxTargetInfo) {
+        this.sgxTargetInfo = sgxTargetInfo;
+    }
+
+    public VirtualMachinePrecisionClockInfo[] getPrecisionClockInfo() {
+        return precisionClockInfo;
+    }
+
+    public void setPrecisionClockInfo(final VirtualMachinePrecisionClockInfo[] precisionClockInfo) {
+        this.precisionClockInfo = precisionClockInfo;
+    }
+
+    public Boolean getSevSupported() {
+        return sevSupported;
+    }
+
+    public void setSevSupported(final Boolean sevSupported) {
+        this.sevSupported = sevSupported;
     }
 
 }

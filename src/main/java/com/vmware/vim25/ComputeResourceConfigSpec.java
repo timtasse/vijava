@@ -30,37 +30,58 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * Changes to apply to the compute resource configuration.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class ComputeResourceConfigSpec extends DynamicData {
-  public String vmSwapPlacement;
-  public Boolean spbmEnabled;
-  public String defaultHardwareVersionKey;
 
-  public String getVmSwapPlacement() {
-    return this.vmSwapPlacement;
-  }
+    private String vmSwapPlacement;
+    private Boolean spbmEnabled;
+    private String defaultHardwareVersionKey;
+    private DesiredSoftwareSpec desiredSoftwareSpec;
 
-  public Boolean getSpbmEnabled() {
-    return this.spbmEnabled;
-  }
+    @Override
+    public String toString() {
+        return "ComputeResourceConfigSpec{" +
+                "vmSwapPlacement='" + vmSwapPlacement + '\'' +
+                ", spbmEnabled=" + spbmEnabled +
+                ", defaultHardwareVersionKey='" + defaultHardwareVersionKey + '\'' +
+                ", desiredSoftwareSpec=" + desiredSoftwareSpec +
+                "} " + super.toString();
+    }
 
-  public String getDefaultHardwareVersionKey() {
-    return this.defaultHardwareVersionKey;
-  }
+    public String getVmSwapPlacement() {
+        return this.vmSwapPlacement;
+    }
 
-  public void setVmSwapPlacement(String vmSwapPlacement) {
-    this.vmSwapPlacement=vmSwapPlacement;
-  }
+    public void setVmSwapPlacement(String vmSwapPlacement) {
+        this.vmSwapPlacement = vmSwapPlacement;
+    }
 
-  public void setSpbmEnabled(Boolean spbmEnabled) {
-    this.spbmEnabled=spbmEnabled;
-  }
+    public Boolean getSpbmEnabled() {
+        return this.spbmEnabled;
+    }
 
-  public void setDefaultHardwareVersionKey(String defaultHardwareVersionKey) {
-    this.defaultHardwareVersionKey=defaultHardwareVersionKey;
-  }
+    public void setSpbmEnabled(Boolean spbmEnabled) {
+        this.spbmEnabled = spbmEnabled;
+    }
+
+    public String getDefaultHardwareVersionKey() {
+        return this.defaultHardwareVersionKey;
+    }
+
+    public void setDefaultHardwareVersionKey(String defaultHardwareVersionKey) {
+        this.defaultHardwareVersionKey = defaultHardwareVersionKey;
+    }
+
+    public DesiredSoftwareSpec getDesiredSoftwareSpec() {
+        return desiredSoftwareSpec;
+    }
+
+    public void setDesiredSoftwareSpec(final DesiredSoftwareSpec desiredSoftwareSpec) {
+        this.desiredSoftwareSpec = desiredSoftwareSpec;
+    }
 }

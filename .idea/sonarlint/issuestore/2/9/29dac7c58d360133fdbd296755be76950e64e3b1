@@ -1,62 +1,34 @@
 
-—
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(Îœ8”ùí”î.
-
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(§’Ñµûÿÿÿÿ8øÔ×”î.
-˜
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(è«ëâ8˜¬á”î.
-˜
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(™ ó¯8’Ø”î.
-±
-java:S1130"Remove the declaration of thrown exception 'com.vmware.vim25.GatewayNotReachable' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(©È¤§øÿÿÿÿ8©¶õ”î.
-
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.InvalidLogin' which is a subclass of 'java.rmi.RemoteException'.(Ü„üôøÿÿÿÿ8©¶õ”î.
-¡
-java:S1130"€Remove the declaration of thrown exception 'com.vmware.vim25.InvalidProperty' which is a subclass of 'java.rmi.RemoteException'.(§’Ñµûÿÿÿÿ8øÔ×”î.
-œ
-java:S1130"€Remove the declaration of thrown exception 'com.vmware.vim25.InvalidProperty' which is a subclass of 'java.rmi.RemoteException'.(•ÙÏ±8øòÖ”î.
-´
-java:S1130"“Remove the declaration of thrown exception 'com.vmware.vim25.GatewayToHostAuthFault' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(Ü„üôøÿÿÿÿ8©¶õ”î.
-»
-java:S1130"šRemove the declaration of thrown exception 'com.vmware.vim25.GatewayToHostTrustVerifyFault' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(Ü„üôøÿÿÿÿ8©¶õ”î.
-®
-java:S1130"Remove the declaration of thrown exception 'com.vmware.vim25.GatewayConnectFault' which is a subclass of 'com.vmware.vim25.HostConnectFault'.(©È¤§øÿÿÿÿ8©¶õ”î.
-
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(Ü„üôøÿÿÿÿ8©¶õ”î.
-˜
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ìÎµ³8¸ş”î.
-Œ
-java:S1130"qRemove the declaration of thrown exception 'java.rmi.RemoteException', as it cannot be thrown from method's body.(ğşšò8’Ø”î.
-Œ
-java:S1130"qRemove the declaration of thrown exception 'java.rmi.RemoteException', as it cannot be thrown from method's body.(•ÙÏ±8øòÖ”î.
-˜
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ÔË¡Ê8’Ø”î.
-˜
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ğşšò8’Ø”î.
-œ
-java:S1130"€Remove the declaration of thrown exception 'com.vmware.vim25.InvalidProperty' which is a subclass of 'java.rmi.RemoteException'.(ğşšò8’Ø”î.
-
-java:S1130"‚Remove the declaration of thrown exception 'com.vmware.vim25.NotSupported' which is a subclass of 'com.vmware.vim25.RuntimeFault'.(è«ëâ8˜¬á”î.
-h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(™ ó¯8’Ø”î.
-—
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.InvalidLogin' which is a subclass of 'java.rmi.RemoteException'.(Îœ8”ùí”î.
 ¦
-java:S1130"…Remove the declaration of thrown exception 'com.vmware.vim25.InvalidArgument' which is a subclass of 'com.vmware.vim25.RuntimeFault'.(Ü„üôøÿÿÿÿ8©¶õ”î.
-h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(öüß‘8’Ø”î.
-­
-java:S1130"ŒRemove the declaration of thrown exception 'com.vmware.vim25.GatewayNotFound' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(©È¤§øÿÿÿÿ8©¶õ”î.
-¢
-java:S1130"Remove the declaration of thrown exception 'com.vmware.vim25.HostConnectFault' which is a subclass of 'java.rmi.RemoteException'.(Ü„üôøÿÿÿÿ8©¶õ”î.
-h	java:S100"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(ÔË¡Ê8’Ø”î.
-œ
-java:S1130"Remove the declaration of thrown exception 'com.vmware.vim25.HostConnectFault' which is a subclass of 'java.rmi.RemoteException'.(Îœ8”ùí”î.
-µ
-java:S1130"”Remove the declaration of thrown exception 'com.vmware.vim25.GatewayOperationRefused' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(©È¤§øÿÿÿÿ8©¶õ”î.
-˜
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(•ÙÏ±8øòÖ”î.
-˜
-java:S1130"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(öüß‘8’Ø”î.
-µ
-java:S1130"”Remove the declaration of thrown exception 'com.vmware.vim25.GatewayHostNotReachable' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(©È¤§øÿÿÿÿ8©¶õ”î.
-‘
-java:S1130"qRemove the declaration of thrown exception 'java.rmi.RemoteException', as it cannot be thrown from method's body.(§’Ñµûÿÿÿÿ8øÔ×”î.
+java:S1130{"ˆRemove the declaration of thrown exception 'com.vmware.vim25.SSLVerifyFault' which is a subclass of 'com.vmware.vim25.HostConnectFault'.(®¡²›8Œ¿¼öõ.
+
+java:S1130{"€Remove the declaration of thrown exception 'com.vmware.vim25.NoHost' which is a subclass of 'com.vmware.vim25.HostConnectFault'.(®¡²›8ãƒ»öõ.
+Î
+AXboGejAAQVsp0-ZHOlu
+java:S1130¤"Remove the declaration of thrown exception 'com.vmware.vim25.GatewayConnectFault' which is a subclass of 'com.vmware.vim25.HostConnectFault'.(©È¤§øÿÿÿÿ2sdilk8’º£î.
+Õ
+AXboGejAAQVsp0-ZHOlq
+java:S1130¤"”Remove the declaration of thrown exception 'com.vmware.vim25.GatewayHostNotReachable' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(©È¤§øÿÿÿÿ2sdilk8’º£î.
+o
+java:S3776y"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(âæ¥¾8¿µÅöõ.
+¨
+java:S1130{"ŠRemove the declaration of thrown exception 'com.vmware.vim25.AlreadyConnected' which is a subclass of 'com.vmware.vim25.HostConnectFault'.(®¡²›8¤¥ºöõ.
+¨
+java:S1130{"ŠRemove the declaration of thrown exception 'com.vmware.vim25.NotSupportedHost' which is a subclass of 'com.vmware.vim25.HostConnectFault'.(®¡²›8¾Á»öõ.
+Õ
+AXboGejAAQVsp0-ZHOlt
+java:S1130¤"”Remove the declaration of thrown exception 'com.vmware.vim25.GatewayOperationRefused' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(©È¤§øÿÿÿÿ2sdilk8’º£î.
+¨
+java:S1130{"ŠRemove the declaration of thrown exception 'com.vmware.vim25.SSLDisabledFault' which is a subclass of 'com.vmware.vim25.HostConnectFault'.(®¡²›8Œ¿¼öõ.
+Ñ
+AXboGejAAQVsp0-ZHOlr
+java:S1130¤"Remove the declaration of thrown exception 'com.vmware.vim25.GatewayNotReachable' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(©È¤§øÿÿÿÿ2sdilk8’º£î.
+²
+java:S1130¥"“Remove the declaration of thrown exception 'com.vmware.vim25.GatewayToHostAuthFault' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(ìîÍß8åÕ«öõ.
+¹
+java:S1130¥"šRemove the declaration of thrown exception 'com.vmware.vim25.GatewayToHostTrustVerifyFault' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(ìîÍß8åÕ«öõ.
+p
+java:S3776£"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(ŸÇÇ™8âæ÷õ.
+Í
+AXboGejAAQVsp0-ZHOls
+java:S1130¤"ŒRemove the declaration of thrown exception 'com.vmware.vim25.GatewayNotFound' which is a subclass of 'com.vmware.vim25.GatewayConnectFault'.(©È¤§øÿÿÿÿ2sdilk8’º£î.

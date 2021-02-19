@@ -35,7 +35,10 @@ import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * The Folder managed object is a container for storing and organizing inventory objects. Folders can contain folders and other objects.
@@ -56,121 +59,435 @@ import java.util.List;
  *
  * @author Steve JIN (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7.1
+ * @version 7.0
  */
-
+@SuppressWarnings("unused")
 public class Folder extends ManagedEntity {
 
-    public Folder(ServerConnection sc, ManagedObjectReference mor) {
+    public Folder(final ServerConnection sc, final ManagedObjectReference mor) {
         super(sc, mor);
     }
 
     // the array could have different real types, therefore cannot use getManagedObjects()
-    public ManagedEntity[] getChildEntity() throws InvalidProperty, RuntimeFault, RemoteException {
-        ManagedObjectReference[] mors = (ManagedObjectReference[]) getCurrentProperty("childEntity");
-        ;
+    public List<ManagedEntity> getChildEntity() {
+        return Optional.ofNullable(this.getCurrentProperty("childEntity", ManagedObjectReference[].class))
+                .stream()
+                .flatMap(Arrays::stream)
+                .map(val -> MorUtil.createExactManagedEntity(this.getServerConnection(), val, null))
+                .collect(Collectors.toList());
+    }
 
-        if (mors == null) {
-            return new ManagedEntity[]{};
+    public List<String> getChildType() {
+        return Optional.ofNullable(this.getCurrentProperty("childType", String[].class))
+                .map(Arrays::asList)
+                .orElse(Collections.emptyList());
+    }
+
+    public String getNamespace() {
+        return this.getCurrentProperty("namespace", String.class);
+    }
+
+    public Task addStandaloneHost(final HostConnectSpec spec, final ComputeResourceConfigSpec compResSpec,
+                                       final boolean addConnected, final String license)
+            throws AgentInstallFailed, AlreadyBeingManaged, AlreadyConnected, DuplicateName, GatewayToHostTrustVerifyFault,
+            GatewayToHostAuthFault, GatewayOperationRefused, GatewayNotReachable, GatewayNotFound, GatewayHostNotReachable,
+            GatewayConnectFault, NotSupportedHost, SSLVerifyFault, InvalidLogin, HostConnectFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", HostConnectSpec.class, spec),
+                new Argument("compResSpec", ComputeResourceConfigSpec.class, compResSpec),
+                Argument.fromBasicType("addConnected", addConnected),
+                new Argument("license", String.class, license));
+        try {
+            return this.invokeWithTaskReturn("AddStandaloneHost_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof AgentInstallFailed) {
+                throw (AgentInstallFailed) cause;
+            }
+            if (cause instanceof AlreadyBeingManaged) {
+                throw (AlreadyBeingManaged) cause;
+            }
+            if (cause instanceof AlreadyConnected) {
+                throw (AlreadyConnected) cause;
+            }
+            if (cause instanceof GatewayToHostTrustVerifyFault) {
+                throw (GatewayToHostTrustVerifyFault) cause;
+            }
+            if (cause instanceof GatewayToHostAuthFault) {
+                throw (GatewayToHostAuthFault) cause;
+            }
+            if (cause instanceof GatewayOperationRefused) {
+                throw (GatewayOperationRefused) cause;
+            }
+            if (cause instanceof GatewayNotReachable) {
+                throw (GatewayNotReachable) cause;
+            }
+            if (cause instanceof GatewayNotFound) {
+                throw (GatewayNotFound) cause;
+            }
+            if (cause instanceof GatewayHostNotReachable) {
+                throw (GatewayHostNotReachable) cause;
+            }
+            if (cause instanceof GatewayConnectFault) {
+                throw (GatewayConnectFault) cause;
+            }
+            if (cause instanceof NotSupportedHost) {
+                throw (NotSupportedHost) cause;
+            }
+            if (cause instanceof SSLVerifyFault) {
+                throw (SSLVerifyFault) cause;
+            }
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidLogin) {
+                throw (InvalidLogin) cause;
+            }
+            if (cause instanceof HostConnectFault) {
+                throw (HostConnectFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
-
-        ManagedEntity[] mes = new ManagedEntity[mors.length];
-        for (int i = 0; i < mors.length; i++) {
-            mes[i] = MorUtil.createExactManagedEntity(getServerConnection(), mors[i], null);
-        }
-        return mes;
     }
 
-    public String[] getChildType() {
-        return (String[]) getCurrentProperty("childType");
-    }
-
-    // SDK2.5 signature for back compatibility
-    public Task addStandaloneHost_Task(HostConnectSpec spec, ComputeResourceConfigSpec compResSpec, boolean addConnected) throws InvalidLogin, HostConnectFault, RuntimeFault, RemoteException {
-        return addStandaloneHost_Task(spec, compResSpec, addConnected, null);
-    }
-
-    // new 4.0 signature
-    public Task addStandaloneHost_Task(HostConnectSpec spec, ComputeResourceConfigSpec compResSpec, boolean addConnected, String license) throws InvalidLogin, HostConnectFault, RuntimeFault, RemoteException {
-        return new Task(getServerConnection(),
-                getVimService().addStandaloneHost_Task(getMOR(), spec, compResSpec, addConnected, license));
-    }
-
-    public Task batchAddHostsToCluster(final ManagedObjectReference cluster, final List<FolderNewHostSpec> newHosts,
-                                       final List<ManagedObjectReference> existingHosts, final ComputeResourceConfigSpec compResSpec, final String desiredState)
-            throws RuntimeFault, RemoteException {
+    public Task batchAddHostsToCluster(final ManagedObjectReference cluster,
+                                       final List<FolderNewHostSpec> newHosts,
+                                       final List<ManagedObjectReference> existingHosts,
+                                       final ComputeResourceConfigSpec compResSpec,
+                                       final String desiredState)
+            throws RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("cluster", ManagedObjectReference.class, cluster),
                 new Argument("newHosts", "FolderNewHostSpec[]", newHosts.toArray()),
                 new Argument("existingHosts", "ManagedObjectReference[]", existingHosts.toArray()),
                 new Argument("compResSpec", ComputeResourceConfigSpec.class, compResSpec),
                 new Argument("desiredState", "String", desiredState));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("BatchAddHostsToCluster_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+        try {
+            return this.invokeWithTaskReturn("BatchAddHostsToCluster_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task batchAddStandaloneHosts(final List<FolderNewHostSpec> newHosts, final ComputeResourceConfigSpec compResSpec, final boolean addConnected) throws RuntimeFault, RemoteException {
+    public Task batchAddStandaloneHosts(final List<FolderNewHostSpec> newHosts,
+                                        final ComputeResourceConfigSpec compResSpec,
+                                        final boolean addConnected)
+            throws RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("newHosts", "FolderNewHostSpec[]", newHosts.toArray()),
                 new Argument("compResSpec", ComputeResourceConfigSpec.class, compResSpec),
                 new Argument("addConnected", "boolean", addConnected));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("BatchAddStandaloneHosts_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+        try {
+            return this.invokeWithTaskReturn("BatchAddStandaloneHosts_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    @Deprecated
-    public ClusterComputeResource createCluster(String name, ClusterConfigSpec spec) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
-        return new ClusterComputeResource(getServerConnection(),
-                getVimService().createCluster(getMOR(), name, spec));
+    @Deprecated(since = "2.5")
+    public ClusterComputeResource createCluster(final String name, final ClusterConfigSpec spec)
+            throws InvalidName, DuplicateName, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("name", String.class, name),
+                new Argument("spec", ClusterConfigSpec.class, spec));
+        try {
+            final ManagedObjectReference mor = this.getVimService().getWsc()
+                    .invoke("CreateCluster", params, ManagedObjectReference.class);
+            return new ClusterComputeResource(this.getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public ClusterComputeResource createClusterEx(String name, ClusterConfigSpecEx spec) throws InvalidName, DuplicateName, InvalidArgument, NotSupported, RuntimeFault, RemoteException {
-        return new ClusterComputeResource(getServerConnection(),
-                getVimService().createClusterEx(getMOR(), name, spec));
+    public ClusterComputeResource createClusterEx(final String name, final ClusterConfigSpecEx spec)
+            throws InvalidName, DuplicateName, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("name", String.class, name),
+                new Argument("spec", ClusterConfigSpecEx.class, spec));
+        try {
+            final ManagedObjectReference mor = this.getVimService().getWsc()
+                    .invoke("CreateClusterEx", params, ManagedObjectReference.class);
+            return new ClusterComputeResource(this.getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Datacenter createDatacenter(String name) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
-        return new Datacenter(getServerConnection(),
-                getVimService().createDatacenter(getMOR(), name));
+    public Datacenter createDatacenter(final String name) throws InvalidName, DuplicateName, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("name", String.class, name));
+        try {
+            final ManagedObjectReference mor = this.getVimService().getWsc()
+                    .invoke("CreateDatacenter", params, ManagedObjectReference.class);
+            return new Datacenter(this.getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task createDVS_Task(DVSCreateSpec spec) throws DvsNotAuthorized, DvsFault, DuplicateName, InvalidName, NotFound, RuntimeFault, RemoteException {
-        ManagedObjectReference taskMor = getVimService().createDVS_Task(getMOR(), spec);
-        return new Task(getServerConnection(), taskMor);
+    public Task createDVS(final DVSCreateSpec spec)
+            throws DvsNotAuthorized, DvsFault, DuplicateName, InvalidName, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", DVSCreateSpec.class, spec));
+        try {
+            return this.invokeWithTaskReturn("CreateDVS_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DvsNotAuthorized) {
+                throw (DvsNotAuthorized) cause;
+            }
+            if (cause instanceof DvsFault) {
+                throw (DvsFault) cause;
+            }
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Folder createFolder(String name) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
-        return new Folder(getServerConnection(),
-                getVimService().createFolder(getMOR(), name));
+    public Folder createFolder(final String name) throws InvalidName, DuplicateName, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("name", String.class, name));
+        try {
+            final ManagedObjectReference mor = this.getVimService().getWsc()
+                    .invoke("CreateFolder", params, ManagedObjectReference.class);
+            return new Folder(this.getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public StoragePod createStoragePod(String name) throws DuplicateName, InvalidName, RuntimeFault, RemoteException {
-        ManagedObjectReference mor = getVimService().createStoragePod(getMOR(), name);
-        return new StoragePod(getServerConnection(), mor);
+    public StoragePod createStoragePod(final String name) throws DuplicateName, InvalidName, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("name", String.class, name));
+        try {
+            final ManagedObjectReference mor = this.getVimService().getWsc()
+                    .invoke("CreateStoragePod", params, ManagedObjectReference.class);
+            return new StoragePod(this.getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task createVM_Task(VirtualMachineConfigSpec config, ResourcePool pool, HostSystem host) throws InvalidName, VmConfigFault, DuplicateName, FileFault, OutOfBounds, InsufficientResourcesFault, InvalidDatastore, RuntimeFault, RemoteException {
-        return new Task(getServerConnection(),
-                getVimService().createVM_Task(getMOR(), config, pool.getMOR(), host == null ? null : host.getMOR()));
+    public Task createVM(final VirtualMachineConfigSpec config, final ResourcePool pool, final HostSystem host)
+            throws InvalidName, InvalidState, AlreadyExists, VmConfigFault, DuplicateName, FileFault, OutOfBounds,
+            InsufficientResourcesFault, InvalidDatastore, FileAlreadyExists, VmWwnConflict, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("config", VirtualMachineConfigSpec.class, config),
+                new Argument("pool", ManagedObjectReference.class, pool.getMOR()),
+                new Argument("host", ManagedObjectReference.class, host == null ? null : host.getMOR()));
+        try {
+            return this.invokeWithTaskReturn("CreateVM_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof FileAlreadyExists) {
+                throw (FileAlreadyExists) cause;
+            }
+            if (cause instanceof FileFault) {
+                throw (FileFault) cause;
+            }
+            if (cause instanceof VmWwnConflict) {
+                throw (VmWwnConflict) cause;
+            }
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof InvalidDatastore) {
+                throw (InvalidDatastore) cause;
+            }
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof OutOfBounds) {
+                throw (OutOfBounds) cause;
+            }
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof VmConfigFault) {
+                throw (VmConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task moveIntoFolder_Task(ManagedEntity[] entities) throws DuplicateName, InvalidState, InvalidFolder, RuntimeFault, RemoteException {
+    public Task moveIntoFolder(final List<ManagedEntity> entities)
+            throws VmAlreadyExistsInDatacenter, DuplicateName, InvalidState, InvalidFolder, RuntimeFault {
         if (entities == null) {
             throw new IllegalArgumentException("entities must not be null");
         }
-        return new Task(getServerConnection(),
-                getVimService().moveIntoFolder_Task(getMOR(), MorUtil.createMORs(entities)));
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("list", ManagedObjectReference[].class, entities.stream().map(ManagedObject::getMOR).toArray()));
+        try {
+            return this.invokeWithTaskReturn("MoveIntoFolder_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof VmAlreadyExistsInDatacenter) {
+                throw (VmAlreadyExistsInDatacenter) cause;
+            }
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof InvalidFolder) {
+                throw (InvalidFolder) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task registerVM_Task(String path, String name, boolean asTemplate, ResourcePool pool, HostSystem host) throws VmConfigFault, InvalidName, DuplicateName, FileFault, OutOfBounds, InsufficientResourcesFault, InvalidDatastore, AlreadyExists, NotFound, RuntimeFault, RemoteException {
-        return new Task(getServerConnection(),
-                getVimService().registerVM_Task(getMOR(), path, name, asTemplate,
-                        pool == null ? null : pool.getMOR(), host == null ? null : host.getMOR()));
+    public Task registerVM(final String path, final String name, final boolean asTemplate,
+                                final ResourcePool pool, final HostSystem host)
+            throws VmConfigFault, InvalidName, DuplicateName, FileFault, OutOfBounds, InsufficientResourcesFault,
+            InvalidDatastore, InvalidState, AlreadyExists, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("path", String.class, path),
+                new Argument("name", String.class, name),
+                Argument.fromBasicType("asTemplate", asTemplate),
+                new Argument("pool", ManagedObjectReference.class, pool == null ? null : pool.getMOR()),
+                new Argument("host", ManagedObjectReference.class, host == null ? null : host.getMOR()));
+        try {
+            return this.invokeWithTaskReturn("RegisterVM_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof FileFault) {
+                throw (FileFault) cause;
+            }
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof InvalidDatastore) {
+                throw (InvalidDatastore) cause;
+            }
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof OutOfBounds) {
+                throw (OutOfBounds) cause;
+            }
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof VmConfigFault) {
+                throw (VmConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task unregisterAndDestroy_Task() throws InvalidState, ConcurrentAccess, RuntimeFault, RemoteException {
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("UnregisterAndDestroy_Task", this.getSingleSelfArgumentList(), ManagedObjectReference.class);
-        return new Task(getServerConnection(), mor);
+    public Task unregisterAndDestroy() throws InvalidState, ConcurrentAccess, RuntimeFault {
+        try {
+            return this.invokeWithTaskReturn("UnregisterAndDestroy_Task", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ConcurrentAccess) {
+                throw (ConcurrentAccess) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
 }

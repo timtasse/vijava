@@ -30,46 +30,70 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This is the Linux counterpart to the Windows Sysprep object. LinuxPrep contains machine-wide settings that
+ * identify a Linux machine in the same way that the Sysprep type identifies a Windows machine.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class CustomizationLinuxPrep extends CustomizationIdentitySettings {
-  public CustomizationName hostName;
-  public String domain;
-  public String timeZone;
-  public Boolean hwClockUTC;
 
-  public CustomizationName getHostName() {
-    return this.hostName;
-  }
+    private CustomizationName hostName;
+    private String domain;
+    private String timeZone;
+    private Boolean hwClockUTC;
+    private String scriptText;
 
-  public String getDomain() {
-    return this.domain;
-  }
+    @Override
+    public String toString() {
+        return "CustomizationLinuxPrep{" +
+                "hostName=" + hostName +
+                ", domain='" + domain + '\'' +
+                ", timeZone='" + timeZone + '\'' +
+                ", hwClockUTC=" + hwClockUTC +
+                ", scriptText='" + scriptText + '\'' +
+                "} " + super.toString();
+    }
 
-  public String getTimeZone() {
-    return this.timeZone;
-  }
+    public CustomizationName getHostName() {
+        return this.hostName;
+    }
 
-  public Boolean getHwClockUTC() {
-    return this.hwClockUTC;
-  }
+    public void setHostName(CustomizationName hostName) {
+        this.hostName = hostName;
+    }
 
-  public void setHostName(CustomizationName hostName) {
-    this.hostName=hostName;
-  }
+    public String getDomain() {
+        return this.domain;
+    }
 
-  public void setDomain(String domain) {
-    this.domain=domain;
-  }
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 
-  public void setTimeZone(String timeZone) {
-    this.timeZone=timeZone;
-  }
+    public String getTimeZone() {
+        return this.timeZone;
+    }
 
-  public void setHwClockUTC(Boolean hwClockUTC) {
-    this.hwClockUTC=hwClockUTC;
-  }
+    public void setTimeZone(String timeZone) {
+        this.timeZone = timeZone;
+    }
+
+    public Boolean getHwClockUTC() {
+        return this.hwClockUTC;
+    }
+
+    public void setHwClockUTC(Boolean hwClockUTC) {
+        this.hwClockUTC = hwClockUTC;
+    }
+
+    public String getScriptText() {
+        return scriptText;
+    }
+
+    public void setScriptText(final String scriptText) {
+        this.scriptText = scriptText;
+    }
+
 }

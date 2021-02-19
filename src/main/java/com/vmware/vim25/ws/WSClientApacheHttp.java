@@ -15,24 +15,24 @@ import org.apache.http.ssl.SSLContextBuilder;
 import javax.net.ssl.SSLContext;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.rmi.RemoteException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 15.02.2020
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @since 6.5
  */
 public final class WSClientApacheHttp extends WSClient {
 
-    private CloseableHttpClient httpClient;
-    private BasicCookieStore cookieStore;
+    private final CloseableHttpClient httpClient;
+    private final BasicCookieStore cookieStore;
 
-    WSClientApacheHttp(final String serverUrl, final boolean ignoreCert) {
+    WSClientApacheHttp(final URL serverUrl, final boolean ignoreCert) {
         super(serverUrl, ignoreCert);
         this.cookieStore = new BasicCookieStore();
         final HttpClientBuilder httpClientBuilder = HttpClients.custom()
@@ -44,7 +44,7 @@ public final class WSClientApacheHttp extends WSClient {
                         .build();
                 httpClientBuilder.setSSLContext(sslContext)
                         .setSSLSocketFactory(new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE));
-            } catch (NoSuchAlgorithmException | KeyManagementException | KeyStoreException e) {
+            } catch (final NoSuchAlgorithmException | KeyManagementException | KeyStoreException e) {
                 LOGGER.error("Error in setting other SSLContext", e);
             }
         }
@@ -58,13 +58,15 @@ public final class WSClientApacheHttp extends WSClient {
         final StringEntity entity = new StringEntity(soapMsg, ContentType.TEXT_XML);
         httpPost.setEntity(entity);
         httpPost.addHeader(SOAP_ACTION_HEADER, this.getSoapAction());
+        //LOGGER.debug("Request-Header: {}", Arrays.toString(httpPost.getAllHeaders()));
         //LOGGER.debug(soapMsg);
         try (final CloseableHttpResponse response = this.httpClient.execute(httpPost);
              final InputStream is = response.getEntity().getContent()) {
+            //LOGGER.debug("Response-Header: {}", Arrays.toString(response.getAllHeaders()));
             return this.getXmlGen().fromXML(returnType, is);
-        } catch (IOException e) {
+        } catch (final IOException e) {
             throw new RemoteException("Network Error to VI SOAP Service:" + e.getMessage(), e);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new RemoteException("VI SDK invoke exception:" + e.getMessage(), e);
         }
     }

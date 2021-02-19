@@ -29,27 +29,58 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-/**
- * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
- */
+import java.util.Arrays;
 
-@SuppressWarnings("all")
+/**
+ * The DVPortgroupConfigSpec data object contains configuration data for a DistributedVirtualPortgroup.
+ * Use the ReconfigureDVPortgroup_Task method to apply the configuration to the portgroup.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class DVPortgroupConfigSpec extends DynamicData {
 
-    public String configVersion;
-    public String name;
-    public Integer numPorts;
-    public String portNameFormat;
-    public DVPortSetting defaultPortConfig;
-    public String description;
-    public String type;
-    public ManagedObjectReference[] scope;
-    public DVPortgroupPolicy policy;
-    public DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
-    public Boolean autoExpand;
-    public String vmVnicNetworkResourcePoolKey;
+    private String configVersion;
+    private String name;
+    private Integer numPorts;
+    private String portNameFormat;
+    private DVPortSetting defaultPortConfig;
+    private String description;
+    private String type;
+    private String backingType;
+    private ManagedObjectReference[] scope;
+    private DVPortgroupPolicy policy;
+    private DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
+    private Boolean autoExpand;
+    private String vmVnicNetworkResourcePoolKey;
+    private String transportZoneUuid;
+    private String transportZoneName;
+    private String logicalSwitchUuid;
+    private String segmentId;
+
+    @Override
+    public String toString() {
+        return "DVPortgroupConfigSpec{" +
+                "configVersion='" + configVersion + '\'' +
+                ", name='" + name + '\'' +
+                ", numPorts=" + numPorts +
+                ", portNameFormat='" + portNameFormat + '\'' +
+                ", defaultPortConfig=" + defaultPortConfig +
+                ", description='" + description + '\'' +
+                ", type='" + type + '\'' +
+                ", backingType='" + backingType + '\'' +
+                ", scope=" + Arrays.toString(scope) +
+                ", policy=" + policy +
+                ", vendorSpecificConfig=" + Arrays.toString(vendorSpecificConfig) +
+                ", autoExpand=" + autoExpand +
+                ", vmVnicNetworkResourcePoolKey='" + vmVnicNetworkResourcePoolKey + '\'' +
+                ", transportZoneUuid='" + transportZoneUuid + '\'' +
+                ", transportZoneName='" + transportZoneName + '\'' +
+                ", logicalSwitchUuid='" + logicalSwitchUuid + '\'' +
+                ", segmentId='" + segmentId + '\'' +
+                "} " + super.toString();
+    }
 
     public String getConfigVersion() {
         return this.configVersion;
@@ -148,4 +179,45 @@ public class DVPortgroupConfigSpec extends DynamicData {
     public void setVmVnicNetworkResourcePoolKey(final String vmVnicNetworkResourcePoolKey) {
         this.vmVnicNetworkResourcePoolKey = vmVnicNetworkResourcePoolKey;
     }
+
+    public String getBackingType() {
+        return backingType;
+    }
+
+    public void setBackingType(final String backingType) {
+        this.backingType = backingType;
+    }
+
+    public String getTransportZoneUuid() {
+        return transportZoneUuid;
+    }
+
+    public void setTransportZoneUuid(final String transportZoneUuid) {
+        this.transportZoneUuid = transportZoneUuid;
+    }
+
+    public String getTransportZoneName() {
+        return transportZoneName;
+    }
+
+    public void setTransportZoneName(final String transportZoneName) {
+        this.transportZoneName = transportZoneName;
+    }
+
+    public String getLogicalSwitchUuid() {
+        return logicalSwitchUuid;
+    }
+
+    public void setLogicalSwitchUuid(final String logicalSwitchUuid) {
+        this.logicalSwitchUuid = logicalSwitchUuid;
+    }
+
+    public String getSegmentId() {
+        return segmentId;
+    }
+
+    public void setSegmentId(final String segmentId) {
+        this.segmentId = segmentId;
+    }
+
 }

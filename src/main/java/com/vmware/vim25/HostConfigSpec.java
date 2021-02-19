@@ -29,32 +29,62 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
+ * The HostConfigSpec data object provides access to data objects that specify configuration changes
+ * to be applied to an ESX host.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 7.0
  */
-@SuppressWarnings("all")
 public class HostConfigSpec extends DynamicData {
 
-    public HostNasVolumeConfig[] nasDatastore;
-    public HostNetworkConfig network;
-    public HostVirtualNicManagerNicTypeSelection[] nicTypeSelection;
-    public HostServiceConfig[] service;
-    public HostFirewallConfig firewall;
-    public OptionValue[] option;
-    public String datastorePrincipal;
-    public String datastorePrincipalPasswd;
-    public HostDateTimeConfig datetime;
-    public HostStorageDeviceInfo storageDevice;
-    public HostLicenseSpec license;
-    public HostSecuritySpec security;
-    public HostAccountSpec[] userAccount;
-    public HostAccountSpec[] usergroupAccount;
-    public HostMemorySpec memory;
-    public HostActiveDirectory[] activeDirectory;
-    public KeyAnyValue[] genericConfig;
-    public HostGraphicsConfig graphicsConfig;
+    private HostNasVolumeConfig[] nasDatastore;
+    private HostNetworkConfig network;
+    private HostVirtualNicManagerNicTypeSelection[] nicTypeSelection;
+    private HostServiceConfig[] service;
+    private HostFirewallConfig firewall;
+    private OptionValue[] option;
+    private String datastorePrincipal;
+    private String datastorePrincipalPasswd;
+    private HostDateTimeConfig datetime;
+    private HostStorageDeviceInfo storageDevice;
+    private HostLicenseSpec license;
+    private HostSecuritySpec security;
+    private HostAccountSpec[] userAccount;
+    private HostAccountSpec[] usergroupAccount;
+    private HostMemorySpec memory;
+    private HostActiveDirectory[] activeDirectory;
+    private KeyAnyValue[] genericConfig;
+    private HostGraphicsConfig graphicsConfig;
+    private HostAssignableHardwareConfig assignableHardwareConfig;
+
+    @Override
+    public String toString() {
+        return "HostConfigSpec{" +
+                "nasDatastore=" + Arrays.toString(nasDatastore) +
+                ", network=" + network +
+                ", nicTypeSelection=" + Arrays.toString(nicTypeSelection) +
+                ", service=" + Arrays.toString(service) +
+                ", firewall=" + firewall +
+                ", option=" + Arrays.toString(option) +
+                ", datastorePrincipal='" + datastorePrincipal + '\'' +
+                ", datastorePrincipalPasswd='" + datastorePrincipalPasswd + '\'' +
+                ", datetime=" + datetime +
+                ", storageDevice=" + storageDevice +
+                ", license=" + license +
+                ", security=" + security +
+                ", userAccount=" + Arrays.toString(userAccount) +
+                ", usergroupAccount=" + Arrays.toString(usergroupAccount) +
+                ", memory=" + memory +
+                ", activeDirectory=" + Arrays.toString(activeDirectory) +
+                ", genericConfig=" + Arrays.toString(genericConfig) +
+                ", graphicsConfig=" + graphicsConfig +
+                ", assignableHardwareConfig=" + assignableHardwareConfig +
+                "} " + super.toString();
+    }
 
     public HostNasVolumeConfig[] getNasDatastore() {
         return this.nasDatastore;
@@ -198,5 +228,13 @@ public class HostConfigSpec extends DynamicData {
 
     public void setGraphicsConfig(final HostGraphicsConfig graphicsConfig) {
         this.graphicsConfig = graphicsConfig;
+    }
+
+    public HostAssignableHardwareConfig getAssignableHardwareConfig() {
+        return assignableHardwareConfig;
+    }
+
+    public void setAssignableHardwareConfig(final HostAssignableHardwareConfig assignableHardwareConfig) {
+        this.assignableHardwareConfig = assignableHardwareConfig;
     }
 }

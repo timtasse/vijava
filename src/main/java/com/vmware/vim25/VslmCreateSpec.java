@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Specification to create a virtual storage object.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0
  * @since 6.5
  */
 public class VslmCreateSpec extends DynamicData {
@@ -16,17 +16,19 @@ public class VslmCreateSpec extends DynamicData {
     private VslmCreateSpecBackingSpec backingSpec;
     private long capacityInMB;
     private VirtualMachineProfileSpec[] profile;
+    private CryptoSpec crypto;
     private KeyValue[] metadata;
 
     @Override
     public String toString() {
         return "VslmCreateSpec{" +
-                "backingSpec=" + backingSpec +
-                ", capacityInMB=" + capacityInMB +
+                "name='" + name + '\'' +
                 ", keepAfterDeleteVm=" + keepAfterDeleteVm +
-                ", metadata=" + Arrays.toString(metadata) +
-                ", name='" + name + '\'' +
+                ", backingSpec=" + backingSpec +
+                ", capacityInMB=" + capacityInMB +
                 ", profile=" + Arrays.toString(profile) +
+                ", crypto=" + crypto +
+                ", metadata=" + Arrays.toString(metadata) +
                 "} " + super.toString();
     }
 
@@ -77,4 +79,13 @@ public class VslmCreateSpec extends DynamicData {
     public void setMetadata(final KeyValue[] metadata) {
         this.metadata = metadata;
     }
+
+    public CryptoSpec getCrypto() {
+        return crypto;
+    }
+
+    public void setCrypto(final CryptoSpec crypto) {
+        this.crypto = crypto;
+    }
+
 }

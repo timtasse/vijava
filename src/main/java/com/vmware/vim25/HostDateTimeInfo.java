@@ -30,28 +30,31 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object represents the dateTime configuration of the host.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class HostDateTimeInfo extends DynamicData {
-  public HostDateTimeSystemTimeZone timeZone;
-  public HostNtpConfig ntpConfig;
 
-  public HostDateTimeSystemTimeZone getTimeZone() {
-    return this.timeZone;
-  }
+    private HostDateTimeSystemTimeZone timeZone;
+    private String systemClockProtocol;
+    private HostNtpConfig ntpConfig;
 
-  public HostNtpConfig getNtpConfig() {
-    return this.ntpConfig;
-  }
+    public HostDateTimeSystemTimeZone getTimeZone() {
+        return this.timeZone;
+    }
 
-  public void setTimeZone(HostDateTimeSystemTimeZone timeZone) {
-    this.timeZone=timeZone;
-  }
+    public void setTimeZone(HostDateTimeSystemTimeZone timeZone) {
+        this.timeZone = timeZone;
+    }
 
-  public void setNtpConfig(HostNtpConfig ntpConfig) {
-    this.ntpConfig=ntpConfig;
-  }
+    public HostNtpConfig getNtpConfig() {
+        return this.ntpConfig;
+    }
+
+    public void setNtpConfig(HostNtpConfig ntpConfig) {
+        this.ntpConfig = ntpConfig;
+    }
 }

@@ -44,8 +44,6 @@ import java.util.Arrays;
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @version 6.7
  */
-
-@SuppressWarnings("all")
 public class VirtualMachineConfigOption extends DynamicData {
 
     private VirtualMachineCapability capabilities;

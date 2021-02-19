@@ -29,164 +29,214 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object type describes networking host configuration data objects.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class HostNetworkInfo extends DynamicData {
-  public HostVirtualSwitch[] vswitch;
-  public HostProxySwitch[] proxySwitch;
-  public HostPortGroup[] portgroup;
-  public PhysicalNic[] pnic;
-  public HostVirtualNic[] vnic;
-  public HostVirtualNic[] consoleVnic;
-  public HostDnsConfig dnsConfig;
-  public HostIpRouteConfig ipRouteConfig;
-  public HostIpRouteConfig consoleIpRouteConfig;
-  public HostIpRouteTableInfo routeTableInfo;
-  public HostDhcpService[] dhcp;
-  public HostNatService[] nat;
-  public Boolean ipV6Enabled;
-  public Boolean atBootIpV6Enabled;
-  public HostNetStackInstance[] netStackInstance;
-  public HostOpaqueSwitch[] opaqueSwitch;
-  public HostOpaqueNetworkInfo[] opaqueNetwork;
 
-  public HostVirtualSwitch[] getVswitch() {
-    return this.vswitch;
-  }
+    private HostVirtualSwitch[] vswitch;
+    private HostProxySwitch[] proxySwitch;
+    private HostPortGroup[] portgroup;
+    private PhysicalNic[] pnic;
+    private HostRdmaDevice[] rdmaDevice;
+    private HostVirtualNic[] vnic;
+    private HostVirtualNic[] consoleVnic;
+    @Deprecated(since = "5.5")
+    private HostDnsConfig dnsConfig;
+    @Deprecated(since = "5.5")
+    private HostIpRouteConfig ipRouteConfig;
+    private HostIpRouteConfig consoleIpRouteConfig;
+    @Deprecated(since = "5.5")
+    private HostIpRouteTableInfo routeTableInfo;
+    private HostDhcpService[] dhcp;
+    private HostNatService[] nat;
+    private Boolean ipV6Enabled;
+    private Boolean atBootIpV6Enabled;
+    private HostNetStackInstance[] netStackInstance;
+    private HostOpaqueSwitch[] opaqueSwitch;
+    private HostOpaqueNetworkInfo[] opaqueNetwork;
+    private String nsxTransportNodeId;
 
-  public HostProxySwitch[] getProxySwitch() {
-    return this.proxySwitch;
-  }
+    @Override
+    public String toString() {
+        return "HostNetworkInfo{" +
+                "vswitch=" + Arrays.toString(vswitch) +
+                ", proxySwitch=" + Arrays.toString(proxySwitch) +
+                ", portgroup=" + Arrays.toString(portgroup) +
+                ", pnic=" + Arrays.toString(pnic) +
+                ", rdmaDevice=" + Arrays.toString(rdmaDevice) +
+                ", vnic=" + Arrays.toString(vnic) +
+                ", consoleVnic=" + Arrays.toString(consoleVnic) +
+                ", dnsConfig=" + dnsConfig +
+                ", ipRouteConfig=" + ipRouteConfig +
+                ", consoleIpRouteConfig=" + consoleIpRouteConfig +
+                ", routeTableInfo=" + routeTableInfo +
+                ", dhcp=" + Arrays.toString(dhcp) +
+                ", nat=" + Arrays.toString(nat) +
+                ", ipV6Enabled=" + ipV6Enabled +
+                ", atBootIpV6Enabled=" + atBootIpV6Enabled +
+                ", netStackInstance=" + Arrays.toString(netStackInstance) +
+                ", opaqueSwitch=" + Arrays.toString(opaqueSwitch) +
+                ", opaqueNetwork=" + Arrays.toString(opaqueNetwork) +
+                ", nsxTransportNodeId='" + nsxTransportNodeId + '\'' +
+                "} " + super.toString();
+    }
 
-  public HostPortGroup[] getPortgroup() {
-    return this.portgroup;
-  }
+    public HostVirtualSwitch[] getVswitch() {
+        return this.vswitch;
+    }
 
-  public PhysicalNic[] getPnic() {
-    return this.pnic;
-  }
+    public void setVswitch(HostVirtualSwitch[] vswitch) {
+        this.vswitch = vswitch;
+    }
 
-  public HostVirtualNic[] getVnic() {
-    return this.vnic;
-  }
+    public HostProxySwitch[] getProxySwitch() {
+        return this.proxySwitch;
+    }
 
-  public HostVirtualNic[] getConsoleVnic() {
-    return this.consoleVnic;
-  }
+    public void setProxySwitch(HostProxySwitch[] proxySwitch) {
+        this.proxySwitch = proxySwitch;
+    }
 
-  public HostDnsConfig getDnsConfig() {
-    return this.dnsConfig;
-  }
+    public HostPortGroup[] getPortgroup() {
+        return this.portgroup;
+    }
 
-  public HostIpRouteConfig getIpRouteConfig() {
-    return this.ipRouteConfig;
-  }
+    public void setPortgroup(HostPortGroup[] portgroup) {
+        this.portgroup = portgroup;
+    }
 
-  public HostIpRouteConfig getConsoleIpRouteConfig() {
-    return this.consoleIpRouteConfig;
-  }
+    public PhysicalNic[] getPnic() {
+        return this.pnic;
+    }
 
-  public HostIpRouteTableInfo getRouteTableInfo() {
-    return this.routeTableInfo;
-  }
+    public void setPnic(PhysicalNic[] pnic) {
+        this.pnic = pnic;
+    }
 
-  public HostDhcpService[] getDhcp() {
-    return this.dhcp;
-  }
+    public HostVirtualNic[] getVnic() {
+        return this.vnic;
+    }
 
-  public HostNatService[] getNat() {
-    return this.nat;
-  }
+    public void setVnic(HostVirtualNic[] vnic) {
+        this.vnic = vnic;
+    }
 
-  public Boolean getIpV6Enabled() {
-    return this.ipV6Enabled;
-  }
+    public HostVirtualNic[] getConsoleVnic() {
+        return this.consoleVnic;
+    }
 
-  public Boolean getAtBootIpV6Enabled() {
-    return this.atBootIpV6Enabled;
-  }
+    public void setConsoleVnic(HostVirtualNic[] consoleVnic) {
+        this.consoleVnic = consoleVnic;
+    }
 
-  public HostNetStackInstance[] getNetStackInstance() {
-    return this.netStackInstance;
-  }
+    public HostDnsConfig getDnsConfig() {
+        return this.dnsConfig;
+    }
 
-  public HostOpaqueSwitch[] getOpaqueSwitch() {
-    return this.opaqueSwitch;
-  }
+    public void setDnsConfig(HostDnsConfig dnsConfig) {
+        this.dnsConfig = dnsConfig;
+    }
 
-  public HostOpaqueNetworkInfo[] getOpaqueNetwork() {
-    return this.opaqueNetwork;
-  }
+    public HostIpRouteConfig getIpRouteConfig() {
+        return this.ipRouteConfig;
+    }
 
-  public void setVswitch(HostVirtualSwitch[] vswitch) {
-    this.vswitch=vswitch;
-  }
+    public void setIpRouteConfig(HostIpRouteConfig ipRouteConfig) {
+        this.ipRouteConfig = ipRouteConfig;
+    }
 
-  public void setProxySwitch(HostProxySwitch[] proxySwitch) {
-    this.proxySwitch=proxySwitch;
-  }
+    public HostIpRouteConfig getConsoleIpRouteConfig() {
+        return this.consoleIpRouteConfig;
+    }
 
-  public void setPortgroup(HostPortGroup[] portgroup) {
-    this.portgroup=portgroup;
-  }
+    public void setConsoleIpRouteConfig(HostIpRouteConfig consoleIpRouteConfig) {
+        this.consoleIpRouteConfig = consoleIpRouteConfig;
+    }
 
-  public void setPnic(PhysicalNic[] pnic) {
-    this.pnic=pnic;
-  }
+    public HostIpRouteTableInfo getRouteTableInfo() {
+        return this.routeTableInfo;
+    }
 
-  public void setVnic(HostVirtualNic[] vnic) {
-    this.vnic=vnic;
-  }
+    public void setRouteTableInfo(HostIpRouteTableInfo routeTableInfo) {
+        this.routeTableInfo = routeTableInfo;
+    }
 
-  public void setConsoleVnic(HostVirtualNic[] consoleVnic) {
-    this.consoleVnic=consoleVnic;
-  }
+    public HostDhcpService[] getDhcp() {
+        return this.dhcp;
+    }
 
-  public void setDnsConfig(HostDnsConfig dnsConfig) {
-    this.dnsConfig=dnsConfig;
-  }
+    public void setDhcp(HostDhcpService[] dhcp) {
+        this.dhcp = dhcp;
+    }
 
-  public void setIpRouteConfig(HostIpRouteConfig ipRouteConfig) {
-    this.ipRouteConfig=ipRouteConfig;
-  }
+    public HostNatService[] getNat() {
+        return this.nat;
+    }
 
-  public void setConsoleIpRouteConfig(HostIpRouteConfig consoleIpRouteConfig) {
-    this.consoleIpRouteConfig=consoleIpRouteConfig;
-  }
+    public void setNat(HostNatService[] nat) {
+        this.nat = nat;
+    }
 
-  public void setRouteTableInfo(HostIpRouteTableInfo routeTableInfo) {
-    this.routeTableInfo=routeTableInfo;
-  }
+    public Boolean getIpV6Enabled() {
+        return this.ipV6Enabled;
+    }
 
-  public void setDhcp(HostDhcpService[] dhcp) {
-    this.dhcp=dhcp;
-  }
+    public void setIpV6Enabled(Boolean ipV6Enabled) {
+        this.ipV6Enabled = ipV6Enabled;
+    }
 
-  public void setNat(HostNatService[] nat) {
-    this.nat=nat;
-  }
+    public Boolean getAtBootIpV6Enabled() {
+        return this.atBootIpV6Enabled;
+    }
 
-  public void setIpV6Enabled(Boolean ipV6Enabled) {
-    this.ipV6Enabled=ipV6Enabled;
-  }
+    public void setAtBootIpV6Enabled(Boolean atBootIpV6Enabled) {
+        this.atBootIpV6Enabled = atBootIpV6Enabled;
+    }
 
-  public void setAtBootIpV6Enabled(Boolean atBootIpV6Enabled) {
-    this.atBootIpV6Enabled=atBootIpV6Enabled;
-  }
+    public HostNetStackInstance[] getNetStackInstance() {
+        return this.netStackInstance;
+    }
 
-  public void setNetStackInstance(HostNetStackInstance[] netStackInstance) {
-    this.netStackInstance=netStackInstance;
-  }
+    public void setNetStackInstance(HostNetStackInstance[] netStackInstance) {
+        this.netStackInstance = netStackInstance;
+    }
 
-  public void setOpaqueSwitch(HostOpaqueSwitch[] opaqueSwitch) {
-    this.opaqueSwitch=opaqueSwitch;
-  }
+    public HostOpaqueSwitch[] getOpaqueSwitch() {
+        return this.opaqueSwitch;
+    }
 
-  public void setOpaqueNetwork(HostOpaqueNetworkInfo[] opaqueNetwork) {
-    this.opaqueNetwork=opaqueNetwork;
-  }
+    public void setOpaqueSwitch(HostOpaqueSwitch[] opaqueSwitch) {
+        this.opaqueSwitch = opaqueSwitch;
+    }
+
+    public HostOpaqueNetworkInfo[] getOpaqueNetwork() {
+        return this.opaqueNetwork;
+    }
+
+    public void setOpaqueNetwork(HostOpaqueNetworkInfo[] opaqueNetwork) {
+        this.opaqueNetwork = opaqueNetwork;
+    }
+
+    public HostRdmaDevice[] getRdmaDevice() {
+        return rdmaDevice;
+    }
+
+    public void setRdmaDevice(final HostRdmaDevice[] rdmaDevice) {
+        this.rdmaDevice = rdmaDevice;
+    }
+
+    public String getNsxTransportNodeId() {
+        return nsxTransportNodeId;
+    }
+
+    public void setNsxTransportNodeId(final String nsxTransportNodeId) {
+        this.nsxTransportNodeId = nsxTransportNodeId;
+    }
 }

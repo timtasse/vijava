@@ -83,7 +83,7 @@ final class XmlGenDom extends XmlGen {
         } finally {
             try {
                 is.close();
-            } catch (IOException e) {
+            } catch (final IOException e) {
                 // NOTHING
             }
         }
@@ -204,7 +204,7 @@ final class XmlGenDom extends XmlGen {
      */
     @SuppressWarnings({"unchecked", "rawtypes"})
     private Object parseVimClassFromElement(final Class<?> clazz, final Element node) throws Exception {
-        final Object obj = clazz.newInstance();
+        final Object obj = clazz.getDeclaredConstructor().newInstance();
 
         final List<Element> subNodes = node.elements();
         final int sizeOfSubNodes = subNodes.size();

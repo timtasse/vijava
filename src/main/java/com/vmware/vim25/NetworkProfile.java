@@ -36,11 +36,9 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0
  * @since 4.0
  */
-
-@SuppressWarnings("all")
 public class NetworkProfile extends ApplyProfile {
 
     private VirtualSwitchProfile[] vswitch;
@@ -56,23 +54,25 @@ public class NetworkProfile extends ApplyProfile {
     private DvsHostVNicProfile[] dvsHostNic;
     private NsxHostVNicProfile[] nsxHostNic;
     private NetStackInstanceProfile[] netStackInstance;
+    private OpaqueSwitchProfile opaqueSwitch;
 
     @Override
     public String toString() {
         return "NetworkProfile{" +
-                "consoleIpRouteConfig=" + consoleIpRouteConfig +
-                ", dnsConfig=" + dnsConfig +
-                ", dvsHostNic=" + Arrays.toString(dvsHostNic) +
-                ", dvsServiceConsoleNic=" + Arrays.toString(dvsServiceConsoleNic) +
-                ", dvswitch=" + Arrays.toString(dvswitch) +
-                ", hostPortGroup=" + Arrays.toString(hostPortGroup) +
-                ", ipRouteConfig=" + ipRouteConfig +
-                ", netStackInstance=" + Arrays.toString(netStackInstance) +
-                ", nsxHostNic=" + Arrays.toString(nsxHostNic) +
-                ", pnic=" + Arrays.toString(pnic) +
-                ", serviceConsolePortGroup=" + Arrays.toString(serviceConsolePortGroup) +
+                "vswitch=" + Arrays.toString(vswitch) +
                 ", vmPortGroup=" + Arrays.toString(vmPortGroup) +
-                ", vswitch=" + Arrays.toString(vswitch) +
+                ", hostPortGroup=" + Arrays.toString(hostPortGroup) +
+                ", serviceConsolePortGroup=" + Arrays.toString(serviceConsolePortGroup) +
+                ", dnsConfig=" + dnsConfig +
+                ", ipRouteConfig=" + ipRouteConfig +
+                ", consoleIpRouteConfig=" + consoleIpRouteConfig +
+                ", pnic=" + Arrays.toString(pnic) +
+                ", dvswitch=" + Arrays.toString(dvswitch) +
+                ", dvsServiceConsoleNic=" + Arrays.toString(dvsServiceConsoleNic) +
+                ", dvsHostNic=" + Arrays.toString(dvsHostNic) +
+                ", nsxHostNic=" + Arrays.toString(nsxHostNic) +
+                ", netStackInstance=" + Arrays.toString(netStackInstance) +
+                ", opaqueSwitch=" + opaqueSwitch +
                 "} " + super.toString();
     }
 
@@ -178,6 +178,14 @@ public class NetworkProfile extends ApplyProfile {
 
     public void setNsxHostNic(final NsxHostVNicProfile[] nsxHostNic) {
         this.nsxHostNic = nsxHostNic;
+    }
+
+    public OpaqueSwitchProfile getOpaqueSwitch() {
+        return opaqueSwitch;
+    }
+
+    public void setOpaqueSwitch(final OpaqueSwitchProfile opaqueSwitch) {
+        this.opaqueSwitch = opaqueSwitch;
     }
 
 }

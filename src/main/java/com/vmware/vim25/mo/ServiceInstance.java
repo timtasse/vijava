@@ -31,6 +31,7 @@ package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.util.MorUtil;
+import com.vmware.vim25.ws.VimStub;
 import com.vmware.vim25.ws.WSClient;
 
 import java.net.MalformedURLException;
@@ -49,28 +50,22 @@ import java.util.Calendar;
 
 public class ServiceInstance extends ManagedObject {
 
-    public final static String VIM25_NAMESPACE = " xmlns=\"urn:vim25\">";
-    final static ManagedObjectReference SERVICE_INSTANCE_MOR;
-
-    static {
-        SERVICE_INSTANCE_MOR = new ManagedObjectReference();
-        SERVICE_INSTANCE_MOR.setVal("ServiceInstance");
-        SERVICE_INSTANCE_MOR.setType("ServiceInstance");
-    }
+    public static final String VIM25_NAMESPACE = " xmlns=\"urn:vim25\">";
+    static final ManagedObjectReference SERVICE_INSTANCE_MOR = ManagedObjectReference.create("ServiceInstance", "ServiceInstance");
 
     private ServiceContent serviceContent = null;
 
-    public ServiceInstance(URL url, String username, String password)
+    public ServiceInstance(final URL url, final String username, final String password)
             throws RemoteException, MalformedURLException {
         this(url, username, password, false);
     }
 
-    public ServiceInstance(URL url, String username, String password, boolean ignoreCert)
+    public ServiceInstance(final URL url, final String username, final String password, final boolean ignoreCert)
             throws RemoteException, MalformedURLException {
         this(url, username, password, ignoreCert, VIM25_NAMESPACE);
     }
 
-    public ServiceInstance(URL url, String username, String password, boolean ignoreCert, String namespace)
+    public ServiceInstance(final URL url, final String username, final String password, final boolean ignoreCert, final String namespace)
             throws RemoteException, MalformedURLException {
         if (url == null || username == null) {
             throw new NullPointerException("None of url, username can be null.");
@@ -78,7 +73,7 @@ public class ServiceInstance extends ManagedObject {
 
         setMOR(SERVICE_INSTANCE_MOR);
 
-        VimPortType vimService = new VimPortType(url.toString(), ignoreCert);
+        final VimStub vimService = new VimStub(url, ignoreCert);
         vimService.getWsc().setVimNameSpace(namespace);
 
         serviceContent = vimService.retrieveServiceContent(SERVICE_INSTANCE_MOR);
@@ -86,17 +81,18 @@ public class ServiceInstance extends ManagedObject {
         serviceContent = vimService.retrieveServiceContent(SERVICE_INSTANCE_MOR); //with new SOAP_ACTION
         setServerConnection(new ServerConnection(url, vimService, this));
 
-        UserSession userSession = getSessionManager().login(username, password, null);
-        getServerConnection().setUserSession(userSession);
+        getSessionManager().login(username, password, null);
+        //final UserSession userSession = getSessionManager().login(username, password, null);
+        //getServerConnection().setUserSession(userSession);
     }
 
-    public ServiceInstance(URL url, String sessionStr, boolean ignoreCert)
+    public ServiceInstance(final URL url, final String sessionStr, final boolean ignoreCert)
             throws RemoteException, MalformedURLException {
         this(url, sessionStr, ignoreCert, VIM25_NAMESPACE);
     }
 
     // sessionStr format: "vmware_soap_session=\"B3240D15-34DF-4BB8-B902-A844FDF42E85\""
-    public ServiceInstance(URL url, String sessionStr, boolean ignoreCert, String namespace)
+    public ServiceInstance(final URL url, final String sessionStr, final boolean ignoreCert, final String namespace)
             throws RemoteException, MalformedURLException {
         if (url == null || sessionStr == null) {
             throw new NullPointerException("None of url, session string can be null.");
@@ -104,8 +100,8 @@ public class ServiceInstance extends ManagedObject {
 
         setMOR(SERVICE_INSTANCE_MOR);
 
-        VimPortType vimService = new VimPortType(url.toString(), ignoreCert);
-        WSClient wsc = vimService.getWsc();
+        final VimStub vimService = new VimStub(url, ignoreCert);
+        final WSClient wsc = vimService.getWsc();
         wsc.setCookie(sessionStr);
         wsc.setVimNameSpace(namespace);
 
@@ -113,15 +109,15 @@ public class ServiceInstance extends ManagedObject {
         wsc.setSoapActionOnApiVersion(serviceContent.getAbout().getApiVersion());
         setServerConnection(new ServerConnection(url, vimService, this));
         serviceContent = vimService.retrieveServiceContent(SERVICE_INSTANCE_MOR); //with new SOAP_ACTION
-        UserSession userSession = (UserSession) getSessionManager().getCurrentProperty("currentSession");
-        getServerConnection().setUserSession(userSession);
+        //final UserSession userSession = (UserSession) getSessionManager().getCurrentProperty("currentSession");
+        //getServerConnection().setUserSession(userSession);
     }
 
-    public ServiceInstance(ServerConnection sc) {
+    public ServiceInstance(final ServerConnection sc) {
         super(sc, SERVICE_INSTANCE_MOR);
     }
 
-    private ManagedObject createMO(ManagedObjectReference mor) {
+    private ManagedObject createMO(final ManagedObjectReference mor) {
         return MorUtil.createExactManagedObject(getServerConnection(), mor);
     }
 
@@ -133,7 +129,7 @@ public class ServiceInstance extends ManagedObject {
         if (serviceContent == null) {
             try {
                 serviceContent = retrieveServiceContent();
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 throw new IllegalStateException("Cannot retrieve ServiceContent", e);
             }
         }
@@ -149,7 +145,7 @@ public class ServiceInstance extends ManagedObject {
     }
 
     @Deprecated
-    public HostVMotionCompatibility[] queryVMotionCompatibility(VirtualMachine vm, HostSystem[] hosts, String[] compatibility) throws RuntimeFault, RemoteException {
+    public HostVMotionCompatibility[] queryVMotionCompatibility(final VirtualMachine vm, final HostSystem[] hosts, final String[] compatibility) throws RuntimeFault, RemoteException {
         if (vm == null || hosts == null) {
             throw new IllegalArgumentException("Neither vm or hosts can be null.");
         }
@@ -165,8 +161,8 @@ public class ServiceInstance extends ManagedObject {
     }
 
     @Deprecated
-    public Event[] validateMigration(VirtualMachine[] vms, VirtualMachinePowerState state, String[] testType
-            , ResourcePool pool, HostSystem host) throws InvalidState, RuntimeFault, RemoteException {
+    public Event[] validateMigration(final VirtualMachine[] vms, final VirtualMachinePowerState state, final String[] testType
+            , final ResourcePool pool, final HostSystem host) throws InvalidState, RuntimeFault, RemoteException {
         if (vms == null) {
             throw new IllegalArgumentException("vms must not be null.");
         }
@@ -319,6 +315,10 @@ public class ServiceInstance extends ManagedObject {
         return (OptionManager) createMO(getServiceContent().getSetting());
     }
 
+    public SiteInfoManager getSiteInfoManager() {
+        return new SiteInfoManager(this.getServerConnection(), this.serviceContent.getSiteInfoManager());
+    }
+
     public HostSnmpSystem getSnmpSystem() {
         return (HostSnmpSystem) createMO(getServiceContent().getSnmpSystem());
     }
@@ -333,6 +333,10 @@ public class ServiceInstance extends ManagedObject {
 
     public TaskManager getTaskManager() {
         return (TaskManager) createMO(getServiceContent().getTaskManager());
+    }
+
+    public TenantTenantManager getTenantManager() {
+        return new TenantTenantManager(this.getServerConnection(), this.getServiceContent().getTenantManager());
     }
 
     public UserDirectory getUserDirectory() {

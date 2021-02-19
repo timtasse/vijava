@@ -30,37 +30,59 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * Current runtime resource usage and state of the resource pool
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class ResourcePoolRuntimeInfo extends DynamicData {
-  public ResourcePoolResourceUsage memory;
-  public ResourcePoolResourceUsage cpu;
-  public ManagedEntityStatus overallStatus;
 
-  public ResourcePoolResourceUsage getMemory() {
-    return this.memory;
-  }
+    private ResourcePoolResourceUsage memory;
+    private ResourcePoolResourceUsage cpu;
+    private ManagedEntityStatus overallStatus;
+    private String sharesScalable;
 
-  public ResourcePoolResourceUsage getCpu() {
-    return this.cpu;
-  }
+    @Override
+    public String toString() {
+        return "ResourcePoolRuntimeInfo{" +
+                "memory=" + memory +
+                ", cpu=" + cpu +
+                ", overallStatus=" + overallStatus +
+                ", sharesScalable='" + sharesScalable + '\'' +
+                "} " + super.toString();
+    }
 
-  public ManagedEntityStatus getOverallStatus() {
-    return this.overallStatus;
-  }
+    public ResourcePoolResourceUsage getMemory() {
+        return this.memory;
+    }
 
-  public void setMemory(ResourcePoolResourceUsage memory) {
-    this.memory=memory;
-  }
+    public void setMemory(ResourcePoolResourceUsage memory) {
+        this.memory = memory;
+    }
 
-  public void setCpu(ResourcePoolResourceUsage cpu) {
-    this.cpu=cpu;
-  }
+    public ResourcePoolResourceUsage getCpu() {
+        return this.cpu;
+    }
 
-  public void setOverallStatus(ManagedEntityStatus overallStatus) {
-    this.overallStatus=overallStatus;
-  }
+    public void setCpu(ResourcePoolResourceUsage cpu) {
+        this.cpu = cpu;
+    }
+
+    public ManagedEntityStatus getOverallStatus() {
+        return this.overallStatus;
+    }
+
+    public void setOverallStatus(ManagedEntityStatus overallStatus) {
+        this.overallStatus = overallStatus;
+    }
+
+    public String getSharesScalable() {
+        return sharesScalable;
+    }
+
+    public void setSharesScalable(final String sharesScalable) {
+        this.sharesScalable = sharesScalable;
+    }
+
 }

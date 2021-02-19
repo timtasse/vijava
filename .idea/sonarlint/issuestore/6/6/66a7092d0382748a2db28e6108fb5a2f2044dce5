@@ -1,17 +1,26 @@
 
-r
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 42 to the 15 allowed.(¬¤Û»ùÿÿÿÿ8òõ¡î.
-H
-java:S2885"(Make "DATE_FORMAT" an instance variable.(›îø­ùÿÿÿÿ8òõ¡î.
-h
-java:S1107"HMove this "else" on the same line that the previous closing curly brace.(ş¦Æ­ÿÿÿÿÿ8òõ¡î.
-
-java:S1149"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(ÊŒ¯Šşÿÿÿÿ8òõ¡î.
-H
-java:S1312".Make the "LOGGER" logger private static final.(–À¥W8òõ¡î.
-e	java:S112"FDefine and throw a dedicated exception instead of using a generic one.(áüø‚øÿÿÿÿ8òõ¡î.
-
-java:S1149"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(¬¤Û»ùÿÿÿÿ8òõ¡î.
-x	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(Ù¾´ºûÿÿÿÿ8ñ„¢î.
-r
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 31 to the 15 allowed.(Ô¦§¿úÿÿÿÿ8ñ„¢î.
+g
+AWr_oFHugtWgmFcdTQ36
+java:S28855"(Make "DATE_FORMAT" an instance variable.(›îø­ùÿÿÿÿ2sdilk8ˆšçß,
+’
+AWr_oFHugtWgmFcdTQ38
+java:S3776ê"RRefactor this method to reduce its Cognitive Complexity from 42 to the 15 allowed.(¬¤Û»ùÿÿÿÿ2sdilk8 Œ¦ü¯-
+‘
+AWr_oFHugtWgmFcdTQ37
+java:S3776{"RRefactor this method to reduce its Cognitive Complexity from 31 to the 15 allowed.(Ô¦§¿úÿÿÿÿ2sdilk8 Œ¦ü¯-
+g
+AWLGpBi7HcBHgFSiDOkn
+java:S13124".Make the "LOGGER" logger private static final.(–À¥W2sdilk8¨½Šµ¬,
+˜
+AWr_oFHtgtWgmFcdTQ35	java:S135¯"YReduce the total number of break and continue statements in this loop to use at most one.(Ù¾´ºûÿÿÿÿ2sdilk8 Œ¦ü¯-
+
+AWJuZQXDHcBHgFSiDNyL
+java:S1149q"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(ÊŒ¯Šşÿÿÿÿ2sdilk8ˆúó¦,
+…
+AWFyBUxJHcBHgFSiDL6U	java:S112Å"FDefine and throw a dedicated exception instead of using a generic one.(áüø‚øÿÿÿÿ2sdilk8¸¤¬…—,
+Ÿ
+AWLGpBi6HcBHgFSiDOkm
+java:S1149ê"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(¬¤Û»ùÿÿÿÿ2sdilk8¨½Šµ¬,
+ˆ
+AWFyBUxDHcBHgFSiDL5g
+java:S1107Œ"HMove this "else" on the same line that the previous closing curly brace.(ş¦Æ­ÿÿÿÿÿ2sdilk8¸¤¬…—,

@@ -30,73 +30,99 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object type describes the bus adapter for the host.
+ * A host bus adapter (HBA) is a hardware or software adapter that connects the host to storage devices.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class HostHostBusAdapter extends DynamicData {
-  public String key;
-  public String device;
-  public int bus;
-  public String status;
-  public String model;
-  public String driver;
-  public String pci;
 
-  public String getKey() {
-    return this.key;
-  }
+    private String key;
+    private String device;
+    private int bus;
+    private String status;
+    private String model;
+    private String driver;
+    private String pci;
+    private String storageProtocol;
 
-  public String getDevice() {
-    return this.device;
-  }
+    @Override
+    public String toString() {
+        return "HostHostBusAdapter{" +
+                "key='" + key + '\'' +
+                ", device='" + device + '\'' +
+                ", bus=" + bus +
+                ", status='" + status + '\'' +
+                ", model='" + model + '\'' +
+                ", driver='" + driver + '\'' +
+                ", pci='" + pci + '\'' +
+                ", storageProtocol='" + storageProtocol + '\'' +
+                "} " + super.toString();
+    }
 
-  public int getBus() {
-    return this.bus;
-  }
+    public String getKey() {
+        return this.key;
+    }
 
-  public String getStatus() {
-    return this.status;
-  }
+    public void setKey(String key) {
+        this.key = key;
+    }
 
-  public String getModel() {
-    return this.model;
-  }
+    public String getDevice() {
+        return this.device;
+    }
 
-  public String getDriver() {
-    return this.driver;
-  }
+    public void setDevice(String device) {
+        this.device = device;
+    }
 
-  public String getPci() {
-    return this.pci;
-  }
+    public int getBus() {
+        return this.bus;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public void setBus(int bus) {
+        this.bus = bus;
+    }
 
-  public void setDevice(String device) {
-    this.device=device;
-  }
+    public String getStatus() {
+        return this.status;
+    }
 
-  public void setBus(int bus) {
-    this.bus=bus;
-  }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-  public void setStatus(String status) {
-    this.status=status;
-  }
+    public String getModel() {
+        return this.model;
+    }
 
-  public void setModel(String model) {
-    this.model=model;
-  }
+    public void setModel(String model) {
+        this.model = model;
+    }
 
-  public void setDriver(String driver) {
-    this.driver=driver;
-  }
+    public String getDriver() {
+        return this.driver;
+    }
 
-  public void setPci(String pci) {
-    this.pci=pci;
-  }
+    public void setDriver(String driver) {
+        this.driver = driver;
+    }
+
+    public String getPci() {
+        return this.pci;
+    }
+
+    public void setPci(String pci) {
+        this.pci = pci;
+    }
+
+    public String getStorageProtocol() {
+        return storageProtocol;
+    }
+
+    public void setStorageProtocol(final String storageProtocol) {
+        this.storageProtocol = storageProtocol;
+    }
 }

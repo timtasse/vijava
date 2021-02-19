@@ -30,19 +30,43 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The HostMaintenanceSpec data object may be used to specify actions to be taken by a host upon entering maintenance mode.
+ * If the HostMaintenanceSpec or any of its fields are omitted in a call to EnterMaintenanceMode_Task,
+ * default actions will be chosen as documented for each field's type.
+ *
+ * @See EnterMaintenanceMode_Task
+ * @See VsanHostDecommissionMode
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class HostMaintenanceSpec extends DynamicData {
-  public VsanHostDecommissionMode vsanMode;
 
-  public VsanHostDecommissionMode getVsanMode() {
-    return this.vsanMode;
-  }
+    private VsanHostDecommissionMode vsanMode;
+    private String purpose;
 
-  public void setVsanMode(VsanHostDecommissionMode vsanMode) {
-    this.vsanMode=vsanMode;
-  }
+    @Override
+    public String toString() {
+        return "HostMaintenanceSpec{" +
+                "vsanMode=" + vsanMode +
+                ", purpose='" + purpose + '\'' +
+                "} " + super.toString();
+    }
+
+    public VsanHostDecommissionMode getVsanMode() {
+        return this.vsanMode;
+    }
+
+    public void setVsanMode(VsanHostDecommissionMode vsanMode) {
+        this.vsanMode = vsanMode;
+    }
+
+    public String getPurpose() {
+        return purpose;
+    }
+
+    public void setPurpose(final String purpose) {
+        this.purpose = purpose;
+    }
 }

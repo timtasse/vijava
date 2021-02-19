@@ -29,38 +29,72 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * Information about each local virtual disk configured in the guest operating system.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class GuestDiskInfo extends DynamicData {
-  public String diskPath;
-  public Long capacity;
-  public Long freeSpace;
 
-  public String getDiskPath() {
-    return this.diskPath;
-  }
+    private String diskPath;
+    private Long capacity;
+    private Long freeSpace;
+    private String filesystemType;
+    private GuestInfoVirtualDiskMapping[] mappings;
 
-  public Long getCapacity() {
-    return this.capacity;
-  }
+    @Override
+    public String toString() {
+        return "GuestDiskInfo{" +
+                "diskPath='" + diskPath + '\'' +
+                ", capacity=" + capacity +
+                ", freeSpace=" + freeSpace +
+                ", filesystemType='" + filesystemType + '\'' +
+                ", mappings=" + Arrays.toString(mappings) +
+                "} " + super.toString();
+    }
 
-  public Long getFreeSpace() {
-    return this.freeSpace;
-  }
+    public String getDiskPath() {
+        return this.diskPath;
+    }
 
-  public void setDiskPath(String diskPath) {
-    this.diskPath=diskPath;
-  }
+    public void setDiskPath(String diskPath) {
+        this.diskPath = diskPath;
+    }
 
-  public void setCapacity(Long capacity) {
-    this.capacity=capacity;
-  }
+    public Long getCapacity() {
+        return this.capacity;
+    }
 
-  public void setFreeSpace(Long freeSpace) {
-    this.freeSpace=freeSpace;
-  }
+    public void setCapacity(Long capacity) {
+        this.capacity = capacity;
+    }
+
+    public Long getFreeSpace() {
+        return this.freeSpace;
+    }
+
+    public void setFreeSpace(Long freeSpace) {
+        this.freeSpace = freeSpace;
+    }
+
+    public String getFilesystemType() {
+        return filesystemType;
+    }
+
+    public void setFilesystemType(final String filesystemType) {
+        this.filesystemType = filesystemType;
+    }
+
+    public GuestInfoVirtualDiskMapping[] getMappings() {
+        return mappings;
+    }
+
+    public void setMappings(final GuestInfoVirtualDiskMapping[] mappings) {
+        this.mappings = mappings;
+    }
+
 }

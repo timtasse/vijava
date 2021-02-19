@@ -34,11 +34,9 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0
  * @since 4.0
  */
-
-@SuppressWarnings("all")
 public class VMwareDVSPortSetting extends DVPortSetting {
 
     private VmwareDistributedVirtualSwitchVlanSpec vlan;
@@ -49,18 +47,20 @@ public class VMwareDVSPortSetting extends DVPortSetting {
     private BoolPolicy txUplink;
     private VMwareUplinkLacpPolicy lacpPolicy;
     private DVSMacManagementPolicy macManagementPolicy;
+    private IntPolicy VNI;
 
     @Override
     public String toString() {
         return "VMwareDVSPortSetting{" +
-                "ipfixEnabled=" + ipfixEnabled +
+                "vlan=" + vlan +
+                ", qosTag=" + qosTag +
+                ", uplinkTeamingPolicy=" + uplinkTeamingPolicy +
+                ", securityPolicy=" + securityPolicy +
+                ", ipfixEnabled=" + ipfixEnabled +
+                ", txUplink=" + txUplink +
                 ", lacpPolicy=" + lacpPolicy +
                 ", macManagementPolicy=" + macManagementPolicy +
-                ", qosTag=" + qosTag +
-                ", securityPolicy=" + securityPolicy +
-                ", txUplink=" + txUplink +
-                ", uplinkTeamingPolicy=" + uplinkTeamingPolicy +
-                ", vlan=" + vlan +
+                ", VNI=" + VNI +
                 "} " + super.toString();
     }
 
@@ -126,6 +126,14 @@ public class VMwareDVSPortSetting extends DVPortSetting {
 
     public void setMacManagementPolicy(final DVSMacManagementPolicy macManagementPolicy) {
         this.macManagementPolicy = macManagementPolicy;
+    }
+
+    public IntPolicy getVNI() {
+        return VNI;
+    }
+
+    public void setVNI(final IntPolicy VNI) {
+        this.VNI = VNI;
     }
 
 }

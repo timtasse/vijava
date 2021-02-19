@@ -37,20 +37,10 @@ package com.vmware.vim25;
  */
 public enum VirtualMachineTicketType {
 
-    device("device"),
-    guestControl("guestControl"),
-    guestIntegrity("guestIntegrity"),
-    mks("mks"),
-    webmks("webmks");
+    device,
+    guestControl,
+    guestIntegrity,
+    mks,
+    webmks
 
-    @SuppressWarnings("unused")
-    private final String val;
-
-    VirtualMachineTicketType(String val) {
-        this.val = val;
-    }
-
-    public String getVal() {
-        return val;
-    }
 }

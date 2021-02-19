@@ -39,16 +39,17 @@ import java.rmi.RemoteException;
  * @author Steve JIN (http://www.doublecloud.org)
  * @author Stefan Dilk
  */
+@SuppressWarnings("unused")
 public class ManagedEntity extends ExtensibleManagedObject {
 
     private String name;
 
-    public ManagedEntity(ServerConnection sc, ManagedObjectReference mor) {
+    public ManagedEntity(final ServerConnection sc, final ManagedObjectReference mor) {
         super(sc, mor);
     }
 
     public String getRealName() {
-        return (String) getCurrentProperty("name");
+        return getCurrentProperty("name", String.class);
     }
 
     /* =========================Accessors=================================*/
@@ -57,8 +58,8 @@ public class ManagedEntity extends ExtensibleManagedObject {
      * @since SDK4.0
      */
     public boolean getAlarmActionEabled() {
-        Boolean aae = (Boolean) getCurrentProperty("alarmActionsEnabled");
-        return aae == null ? false : aae.booleanValue();
+        final Boolean aae = getCurrentProperty("alarmActionsEnabled", Boolean.class);
+        return aae != null && aae;
     }
 
     public Event[] getConfigIssue() {
@@ -126,7 +127,7 @@ public class ManagedEntity extends ExtensibleManagedObject {
     /* =========================Methods=================================*/
 
     public Task destroy_Task() throws VimFault, RuntimeFault, RemoteException {
-        ManagedObjectReference taskMor = getVimService().destroy_Task(getMOR());
+        final ManagedObjectReference taskMor = getVimService().destroy_Task(getMOR());
         return new Task(getServerConnection(), taskMor);
     }
 
@@ -134,8 +135,8 @@ public class ManagedEntity extends ExtensibleManagedObject {
         getVimService().reload(getMOR());
     }
 
-    public Task rename_Task(String name) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
-        ManagedObjectReference taskMor = getVimService().rename_Task(getMOR(), name);
+    public Task rename_Task(final String name) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
+        final ManagedObjectReference taskMor = getVimService().rename_Task(getMOR(), name);
         return new Task(getServerConnection(), taskMor);
     }
 

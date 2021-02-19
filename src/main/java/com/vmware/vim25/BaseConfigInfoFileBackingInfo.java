@@ -1,17 +1,30 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * Information for file backing of a virtual storage object. File backing is mainly used for virtual disks.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
  * @since 6.5
  */
 public class BaseConfigInfoFileBackingInfo extends BaseConfigInfoBackingInfo {
 
-    public String backingObjectId;
-    public Long deltaSizeInMB;
-    public String filePath;
-    public BaseConfigInfoFileBackingInfo parent;
+    private String filePath;
+    private String backingObjectId;
+    private BaseConfigInfoFileBackingInfo parent;
+    private Long deltaSizeInMB;
+    private CryptoKeyId keyId;
+
+    @Override
+    public String toString() {
+        return "BaseConfigInfoFileBackingInfo{" +
+                "filePath='" + filePath + '\'' +
+                ", backingObjectId='" + backingObjectId + '\'' +
+                ", parent=" + parent +
+                ", deltaSizeInMB=" + deltaSizeInMB +
+                ", keyId=" + keyId +
+                "} " + super.toString();
+    }
 
     public String getBackingObjectId() {
         return backingObjectId;
@@ -44,4 +57,13 @@ public class BaseConfigInfoFileBackingInfo extends BaseConfigInfoBackingInfo {
     public void setParent(final BaseConfigInfoFileBackingInfo parent) {
         this.parent = parent;
     }
+
+    public CryptoKeyId getKeyId() {
+        return keyId;
+    }
+
+    public void setKeyId(final CryptoKeyId keyId) {
+        this.keyId = keyId;
+    }
+
 }

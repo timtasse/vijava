@@ -3,22 +3,37 @@ package com.vmware.vim25;
 import java.util.Calendar;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * Basic information of a certificate.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.5
  */
 public class CryptoManagerKmipCertificateInfo extends DynamicData {
 
-    public Calendar checkTime;
-    public String fingerprInteger;
-    public String issuer;
-    public Calendar notAfter;
-    public Calendar notBefore;
-    public Integer secondsBeforeExpire;
-    public Integer secondsSinceValid;
-    public String serialNumber;
-    public String subject;
+    private String subject;
+    private String issuer;
+    private String serialNumber;
+    private Calendar notBefore;
+    private Calendar notAfter;
+    private String fingerprInteger;
+    private Calendar checkTime;
+    private Integer secondsSinceValid;
+    private Integer secondsBeforeExpire;
+
+    @Override
+    public String toString() {
+        return "CryptoManagerKmipCertificateInfo{" +
+                "subject='" + subject + '\'' +
+                ", issuer='" + issuer + '\'' +
+                ", serialNumber='" + serialNumber + '\'' +
+                ", notBefore=" + notBefore +
+                ", notAfter=" + notAfter +
+                ", fingerprInteger='" + fingerprInteger + '\'' +
+                ", checkTime=" + checkTime +
+                ", secondsSinceValid=" + secondsSinceValid +
+                ", secondsBeforeExpire=" + secondsBeforeExpire +
+                "} " + super.toString();
+    }
 
     public Calendar getCheckTime() {
         return checkTime;

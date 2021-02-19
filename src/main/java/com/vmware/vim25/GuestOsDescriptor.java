@@ -35,135 +35,139 @@ import java.util.Arrays;
  * This data object type contains information to describe a particular guest operating system.
  *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.7
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
  */
 public class GuestOsDescriptor extends DynamicData {
 
-    private HostCpuIdInfo[] cpuFeatureMask;
-    private Boolean defaultSecureBoot;
-    private boolean diskUuidEnabled;
+    private String id;
     private String family;
     private String fullName;
-    private Boolean ich7mRecommended;
-    private String id;
-    private Integer numRecommendedCoresPerSocket;
-    private Integer numRecommendedPhysicalSockets;
-    private int numSupportedCoresPerSocket;
-    private int numSupportedFloppyDevices;
-    private int numSupportedPhysicalSockets;
-    private Long persistentMemoryColdGrowthGranularityMB;
-    private Boolean persistentMemoryColdGrowthSupported;
-    private Boolean persistentMemoryHotAddSupported;
-    private Long persistentMemoryHotGrowthGranularityMB;
-    private Boolean persistentMemoryHotGrowthSupported;
-    private Boolean persistentMemoryHotRemoveSupported;
-    private Boolean persistentMemorySupported;
-    private boolean recommended3D;
-    private String recommendedCdromController;
-    private int recommendedColorDepth;
-    private String recommendedDiskController;
-    private int recommendedDiskSizeMB;
-    private String recommendedEthernetCard;
-    private String recommendedFirmware;
-    private int recommendedMemMB;
-    private Long recommendedPersistentMemoryMB;
-    private String recommendedSCSIController;
-    private String recommendedUSBController;
-    private boolean smcRecommended;
-    private boolean smcRequired;
-    private String[] supportedDiskControllerList;
-    private String[] supportedEthernetCard;
-    private String[] supportedFirmware;
-    private boolean supportedForCreate;
     private int supportedMaxCPUs;
-    private int supportedMaxMemMB;
-    private Long supportedMaxPersistentMemoryMB;
+    private int numSupportedPhysicalSockets;
+    private int numSupportedCoresPerSocket;
     private int supportedMinMemMB;
-    private Long supportedMinPersistentMemoryMB;
+    private int supportedMaxMemMB;
+    private int recommendedMemMB;
+    private int recommendedColorDepth;
+    private String[] supportedDiskControllerList;
+    private String recommendedSCSIController;
+    private String recommendedDiskController;
     private int supportedNumDisks;
-    private String[] supportedUSBControllerList;
-    private String supportLevel;
-    private boolean supports3D;
+    private int recommendedDiskSizeMB;
+    private String recommendedCdromController;
+    private String[] supportedEthernetCard;
+    private String recommendedEthernetCard;
+    private Boolean supportsSlaveDisk;
+    private HostCpuIdInfo[] cpuFeatureMask;
+    private boolean smcRequired;
+    private boolean supportsWakeOnLan;
+    private boolean supportsVMI;
+    private boolean supportsMemoryHotAdd;
     private boolean supportsCpuHotAdd;
     private boolean supportsCpuHotRemove;
-    private boolean supportsHotPlugPCI;
-    private boolean supportsMemoryHotAdd;
-    private boolean supportsPvscsiControllerForBoot;
-    private Boolean supportsSecureBoot;
-    private Boolean supportsSlaveDisk;
-    private Boolean supportsTPM20;
-    private boolean supportsVMI;
-    private boolean supportsWakeOnLan;
+    private String[] supportedFirmware;
+    private String recommendedFirmware;
+    private String[] supportedUSBControllerList;
+    private String recommendedUSBController;
+    private boolean supports3D;
+    private boolean recommended3D;
+    private boolean smcRecommended;
+    private Boolean ich7mRecommended;
     private boolean usbRecommended;
-    private BoolOption vbsSupported;
+    private String supportLevel;
+    private boolean supportedForCreate;
     private IntOption vRAMSizeInKB;
-    private BoolOption vvtdSupported;
+    private int numSupportedFloppyDevices;
     private String[] wakeOnLanEthernetCard;
+    private boolean supportsPvscsiControllerForBoot;
+    private boolean diskUuidEnabled;
+    private boolean supportsHotPlugPCI;
+    private Boolean supportsSecureBoot;
+    private Boolean defaultSecureBoot;
+    private Boolean persistentMemorySupported;
+    private Long supportedMinPersistentMemoryMB;
+    private Long supportedMaxPersistentMemoryMB;
+    private Long recommendedPersistentMemoryMB;
+    private Boolean persistentMemoryHotAddSupported;
+    private Boolean persistentMemoryHotRemoveSupported;
+    private Boolean persistentMemoryColdGrowthSupported;
+    private Long persistentMemoryColdGrowthGranularityMB;
+    private Boolean persistentMemoryHotGrowthSupported;
+    private Long persistentMemoryHotGrowthGranularityMB;
+    private Integer numRecommendedPhysicalSockets;
+    private Integer numRecommendedCoresPerSocket;
+    private BoolOption vvtdSupported;
+    private BoolOption vbsSupported;
+    private BoolOption vsgxSupported;
+    private Boolean supportsTPM20;
+    private Boolean vwdtSupported;
 
     @Override
     public String toString() {
         return "GuestOsDescriptor{" +
-                "cpuFeatureMask=" + Arrays.toString(cpuFeatureMask) +
-                ", defaultSecureBoot=" + defaultSecureBoot +
-                ", diskUuidEnabled=" + diskUuidEnabled +
+                "id='" + id + '\'' +
                 ", family='" + family + '\'' +
                 ", fullName='" + fullName + '\'' +
-                ", ich7mRecommended=" + ich7mRecommended +
-                ", id='" + id + '\'' +
-                ", numRecommendedCoresPerSocket=" + numRecommendedCoresPerSocket +
-                ", numRecommendedPhysicalSockets=" + numRecommendedPhysicalSockets +
-                ", numSupportedCoresPerSocket=" + numSupportedCoresPerSocket +
-                ", numSupportedFloppyDevices=" + numSupportedFloppyDevices +
-                ", numSupportedPhysicalSockets=" + numSupportedPhysicalSockets +
-                ", persistentMemoryColdGrowthGranularityMB=" + persistentMemoryColdGrowthGranularityMB +
-                ", persistentMemoryColdGrowthSupported=" + persistentMemoryColdGrowthSupported +
-                ", persistentMemoryHotAddSupported=" + persistentMemoryHotAddSupported +
-                ", persistentMemoryHotGrowthGranularityMB=" + persistentMemoryHotGrowthGranularityMB +
-                ", persistentMemoryHotGrowthSupported=" + persistentMemoryHotGrowthSupported +
-                ", persistentMemoryHotRemoveSupported=" + persistentMemoryHotRemoveSupported +
-                ", persistentMemorySupported=" + persistentMemorySupported +
-                ", recommended3D=" + recommended3D +
-                ", recommendedCdromController='" + recommendedCdromController + '\'' +
-                ", recommendedColorDepth=" + recommendedColorDepth +
-                ", recommendedDiskController='" + recommendedDiskController + '\'' +
-                ", recommendedDiskSizeMB=" + recommendedDiskSizeMB +
-                ", recommendedEthernetCard='" + recommendedEthernetCard + '\'' +
-                ", recommendedFirmware='" + recommendedFirmware + '\'' +
-                ", recommendedMemMB=" + recommendedMemMB +
-                ", recommendedPersistentMemoryMB=" + recommendedPersistentMemoryMB +
-                ", recommendedSCSIController='" + recommendedSCSIController + '\'' +
-                ", recommendedUSBController='" + recommendedUSBController + '\'' +
-                ", smcRecommended=" + smcRecommended +
-                ", smcRequired=" + smcRequired +
-                ", supportedDiskControllerList=" + Arrays.toString(supportedDiskControllerList) +
-                ", supportedEthernetCard=" + Arrays.toString(supportedEthernetCard) +
-                ", supportedFirmware=" + Arrays.toString(supportedFirmware) +
-                ", supportedForCreate=" + supportedForCreate +
                 ", supportedMaxCPUs=" + supportedMaxCPUs +
-                ", supportedMaxMemMB=" + supportedMaxMemMB +
-                ", supportedMaxPersistentMemoryMB=" + supportedMaxPersistentMemoryMB +
+                ", numSupportedPhysicalSockets=" + numSupportedPhysicalSockets +
+                ", numSupportedCoresPerSocket=" + numSupportedCoresPerSocket +
                 ", supportedMinMemMB=" + supportedMinMemMB +
-                ", supportedMinPersistentMemoryMB=" + supportedMinPersistentMemoryMB +
+                ", supportedMaxMemMB=" + supportedMaxMemMB +
+                ", recommendedMemMB=" + recommendedMemMB +
+                ", recommendedColorDepth=" + recommendedColorDepth +
+                ", supportedDiskControllerList=" + Arrays.toString(supportedDiskControllerList) +
+                ", recommendedSCSIController='" + recommendedSCSIController + '\'' +
+                ", recommendedDiskController='" + recommendedDiskController + '\'' +
                 ", supportedNumDisks=" + supportedNumDisks +
-                ", supportedUSBControllerList=" + Arrays.toString(supportedUSBControllerList) +
-                ", supportLevel='" + supportLevel + '\'' +
-                ", supports3D=" + supports3D +
+                ", recommendedDiskSizeMB=" + recommendedDiskSizeMB +
+                ", recommendedCdromController='" + recommendedCdromController + '\'' +
+                ", supportedEthernetCard=" + Arrays.toString(supportedEthernetCard) +
+                ", recommendedEthernetCard='" + recommendedEthernetCard + '\'' +
+                ", supportsSlaveDisk=" + supportsSlaveDisk +
+                ", cpuFeatureMask=" + Arrays.toString(cpuFeatureMask) +
+                ", smcRequired=" + smcRequired +
+                ", supportsWakeOnLan=" + supportsWakeOnLan +
+                ", supportsVMI=" + supportsVMI +
+                ", supportsMemoryHotAdd=" + supportsMemoryHotAdd +
                 ", supportsCpuHotAdd=" + supportsCpuHotAdd +
                 ", supportsCpuHotRemove=" + supportsCpuHotRemove +
-                ", supportsHotPlugPCI=" + supportsHotPlugPCI +
-                ", supportsMemoryHotAdd=" + supportsMemoryHotAdd +
-                ", supportsPvscsiControllerForBoot=" + supportsPvscsiControllerForBoot +
-                ", supportsSecureBoot=" + supportsSecureBoot +
-                ", supportsSlaveDisk=" + supportsSlaveDisk +
-                ", supportsTPM20=" + supportsTPM20 +
-                ", supportsVMI=" + supportsVMI +
-                ", supportsWakeOnLan=" + supportsWakeOnLan +
+                ", supportedFirmware=" + Arrays.toString(supportedFirmware) +
+                ", recommendedFirmware='" + recommendedFirmware + '\'' +
+                ", supportedUSBControllerList=" + Arrays.toString(supportedUSBControllerList) +
+                ", recommendedUSBController='" + recommendedUSBController + '\'' +
+                ", supports3D=" + supports3D +
+                ", recommended3D=" + recommended3D +
+                ", smcRecommended=" + smcRecommended +
+                ", ich7mRecommended=" + ich7mRecommended +
                 ", usbRecommended=" + usbRecommended +
-                ", vbsSupported=" + vbsSupported +
+                ", supportLevel='" + supportLevel + '\'' +
+                ", supportedForCreate=" + supportedForCreate +
                 ", vRAMSizeInKB=" + vRAMSizeInKB +
-                ", vvtdSupported=" + vvtdSupported +
+                ", numSupportedFloppyDevices=" + numSupportedFloppyDevices +
                 ", wakeOnLanEthernetCard=" + Arrays.toString(wakeOnLanEthernetCard) +
+                ", supportsPvscsiControllerForBoot=" + supportsPvscsiControllerForBoot +
+                ", diskUuidEnabled=" + diskUuidEnabled +
+                ", supportsHotPlugPCI=" + supportsHotPlugPCI +
+                ", supportsSecureBoot=" + supportsSecureBoot +
+                ", defaultSecureBoot=" + defaultSecureBoot +
+                ", persistentMemorySupported=" + persistentMemorySupported +
+                ", supportedMinPersistentMemoryMB=" + supportedMinPersistentMemoryMB +
+                ", supportedMaxPersistentMemoryMB=" + supportedMaxPersistentMemoryMB +
+                ", recommendedPersistentMemoryMB=" + recommendedPersistentMemoryMB +
+                ", persistentMemoryHotAddSupported=" + persistentMemoryHotAddSupported +
+                ", persistentMemoryHotRemoveSupported=" + persistentMemoryHotRemoveSupported +
+                ", persistentMemoryColdGrowthSupported=" + persistentMemoryColdGrowthSupported +
+                ", persistentMemoryColdGrowthGranularityMB=" + persistentMemoryColdGrowthGranularityMB +
+                ", persistentMemoryHotGrowthSupported=" + persistentMemoryHotGrowthSupported +
+                ", persistentMemoryHotGrowthGranularityMB=" + persistentMemoryHotGrowthGranularityMB +
+                ", numRecommendedPhysicalSockets=" + numRecommendedPhysicalSockets +
+                ", numRecommendedCoresPerSocket=" + numRecommendedCoresPerSocket +
+                ", vvtdSupported=" + vvtdSupported +
+                ", vbsSupported=" + vbsSupported +
+                ", vsgxSupported=" + vsgxSupported +
+                ", supportsTPM20=" + supportsTPM20 +
+                ", vwdtSupported=" + vwdtSupported +
                 "} " + super.toString();
     }
 
@@ -645,6 +649,22 @@ public class GuestOsDescriptor extends DynamicData {
 
     public void setWakeOnLanEthernetCard(final String[] wakeOnLanEthernetCard) {
         this.wakeOnLanEthernetCard = wakeOnLanEthernetCard;
+    }
+
+    public BoolOption getVsgxSupported() {
+        return vsgxSupported;
+    }
+
+    public void setVsgxSupported(final BoolOption vsgxSupported) {
+        this.vsgxSupported = vsgxSupported;
+    }
+
+    public Boolean getVwdtSupported() {
+        return vwdtSupported;
+    }
+
+    public void setVwdtSupported(final Boolean vwdtSupported) {
+        this.vwdtSupported = vwdtSupported;
     }
 
 }

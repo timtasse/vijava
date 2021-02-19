@@ -30,22 +30,42 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * This class describes a DistributedVirtualPortgroup that a device backing can be attached to.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 7.0
  */
-
-@SuppressWarnings("all")
 public class DistributedVirtualPortgroupInfo extends DynamicData {
 
-    public String switchName;
-    public String switchUuid;
-    public String portgroupName;
-    public String portgroupKey;
-    public String portgroupType;
-    public boolean uplinkPortgroup;
-    public ManagedObjectReference portgroup;
-    public Boolean networkReservationSupported;
+    private String switchName;
+    private String switchUuid;
+    private String portgroupName;
+    private String portgroupKey;
+    private String portgroupType;
+    private boolean uplinkPortgroup;
+    private ManagedObjectReference portgroup;
+    private Boolean networkReservationSupported;
+    private String backingType;
+    private String logicalSwitchUuid;
+    private String segmentId;
+
+    @Override
+    public String toString() {
+        return "DistributedVirtualPortgroupInfo{" +
+                "switchName='" + switchName + '\'' +
+                ", switchUuid='" + switchUuid + '\'' +
+                ", portgroupName='" + portgroupName + '\'' +
+                ", portgroupKey='" + portgroupKey + '\'' +
+                ", portgroupType='" + portgroupType + '\'' +
+                ", uplinkPortgroup=" + uplinkPortgroup +
+                ", portgroup=" + portgroup +
+                ", networkReservationSupported=" + networkReservationSupported +
+                ", backingType='" + backingType + '\'' +
+                ", logicalSwitchUuid='" + logicalSwitchUuid + '\'' +
+                ", segmentId='" + segmentId + '\'' +
+                "} " + super.toString();
+    }
 
     public String getSwitchName() {
         return this.switchName;
@@ -103,11 +123,36 @@ public class DistributedVirtualPortgroupInfo extends DynamicData {
         this.portgroup = portgroup;
     }
 
-    public boolean isNetworkReservationSupported() {
+    public Boolean getNetworkReservationSupported() {
         return networkReservationSupported;
     }
 
-    public void setNetworkReservationSupported(final boolean networkReservationSupported) {
+    public void setNetworkReservationSupported(final Boolean networkReservationSupported) {
         this.networkReservationSupported = networkReservationSupported;
     }
+
+    public String getBackingType() {
+        return backingType;
+    }
+
+    public void setBackingType(final String backingType) {
+        this.backingType = backingType;
+    }
+
+    public String getLogicalSwitchUuid() {
+        return logicalSwitchUuid;
+    }
+
+    public void setLogicalSwitchUuid(final String logicalSwitchUuid) {
+        this.logicalSwitchUuid = logicalSwitchUuid;
+    }
+
+    public String getSegmentId() {
+        return segmentId;
+    }
+
+    public void setSegmentId(final String segmentId) {
+        this.segmentId = segmentId;
+    }
+
 }

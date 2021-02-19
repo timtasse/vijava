@@ -1,27 +1,26 @@
 
-A
-java:S1168"&Return an empty array instead of null.(¥¹ï8Óıô¡î.
-E
-java:S4424"+Change this method so it throws exceptions.(†šì#8Óıô¡î.
-K
-java:S4424"+Change this method so it throws exceptions.(×ÓËùÿÿÿÿ8Óıô¡î.
-›
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(†šì#8Óıô¡î.
-¡
-java:S1186"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(×ÓËùÿÿÿÿ8Óıô¡î.
-N
-java:S1312".Make the "LOGGER" logger private static final.(¼ÙÔ¼ùÿÿÿÿ8õõ€¢î.
-p	java:S117"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“§¯©øÿÿÿÿ8õõ€¢î.
-
-java:S1149"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(÷†ƒøÿÿÿÿ8õõ€¢î.
-
-java:S1149"_Replace the synchronized class "StringBuffer" by an unsynchronized one such as "StringBuilder".(ÊŒ¯Šşÿÿÿÿ8õõ€¢î.
-L
-java:S1172"1Remove this unused method parameter "ignoreCert".(õìú8õõ€¢î.
-s
-java:S2139"XEither log this exception and handle it, or rethrow it with some contextual information.(à®¿­8õõ€¢î.
-L
-java:S4423",Change this code to use a stronger protocol.(Ñåó¨ùÿÿÿÿ8õõ€¢î.
-V	java:S125"<This block of commented-out lines of code should be removed.(Ëº®Ğ8õõ€¢î.
-O
-java:S1144"/Remove this unused private "readStream" method.(÷†ƒøÿÿÿÿ8õõ€¢î.
+
+AXboGeuyAQVsp0-ZHOvr	java:S117p"QRename this local variable to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(“§¯©øÿÿÿÿ2sdilk8’º£î.
+e
+AWr_oFIcgtWgmFcdTQ4V
+java:S4424ë"+Change this method so it throws exceptions.(†šì#2sdilk8ˆšçß,
+m
+AXboGeuyAQVsp0-ZHOvq
+java:S1312;".Make the "LOGGER" logger private static final.(¼ÙÔ¼ùÿÿÿÿ2sdilk8’º£î.
+k
+AWr_oFIcgtWgmFcdTQ4T
+java:S4423c",Change this code to use a stronger protocol.(Ñåó¨ùÿÿÿÿ2sdilk8ˆšçß,
+Á
+AWFyBUwyHcBHgFSiDL3r
+java:S1186ï"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(×ÓËùÿÿÿÿ2sdilk8¸¤¬…—,
+k
+AWr_oFIcgtWgmFcdTQ4W
+java:S4424ï"+Change this method so it throws exceptions.(×ÓËùÿÿÿÿ2sdilk8ˆšçß,
+»
+AWFyBUwyHcBHgFSiDL3q
+java:S1186ë"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(†šì#2sdilk8¸¤¬…—,
+a
+AWFyBUwyHcBHgFSiDL3l
+java:S1168ç"&Return an empty array instead of null.(¥¹ï2sdilk8¸¤¬…—,
+S
+java:S1172S"1Remove this unused method parameter "ignoreCert".(˜Øï£ÿÿÿÿÿ8ô€¡½û.

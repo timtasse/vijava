@@ -30,177 +30,456 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
-import com.vmware.vim25.mo.util.MorUtil;
 import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
- * The ClusterComputeResource data object aggregates the compute resources of associated HostSystem objects into a single compute resource for use by virtual machines.
- * The cluster services such as HA (High Availability), DRS (Distributed Resource Scheduling), and EVC (Enhanced vMotion Compatibility), enhance the utility of this single compute resource.
+ * The ClusterComputeResource data object aggregates the compute resources of
+ * associated HostSystem objects into a single compute resource for use by virtual machines.
+ * The cluster services such as HA (High Availability), DRS (Distributed Resource Scheduling),
+ * and EVC (Enhanced vMotion Compatibility), enhance the utility of this single compute resource.
  * Use the Folder.CreateClusterEx method to create an instance of this object.
  *
  * @author Steve JIN (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7.2
+ * @version 7.0
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("unused")
 public class ClusterComputeResource extends ComputeResource {
 
-    public ClusterComputeResource(ServerConnection sc, ManagedObjectReference mor) {
+    public ClusterComputeResource(final ServerConnection sc, final ManagedObjectReference mor) {
         super(sc, mor);
     }
 
-    public ClusterActionHistory[] getActionHistory() {
-        return (ClusterActionHistory[]) this.getCurrentProperty("actionHistory");
+    public List<ClusterActionHistory> getActionHistory() {
+        return Optional.ofNullable(this.getCurrentProperty("actionHistory", ClusterActionHistory[].class))
+                .map(Arrays::asList)
+                .orElse(Collections.emptyList());
     }
 
     @Deprecated
     public ClusterConfigInfo getConfiguration() {
-        return (ClusterConfigInfo) getCurrentProperty("configuration");
+        return getCurrentProperty("configuration", ClusterConfigInfo.class);
     }
 
-    public ClusterDrsFaults[] getDrsFault() {
-        return (ClusterDrsFaults[]) getCurrentProperty("drsFault");
+    public List<ClusterDrsFaults> getDrsFault() {
+        return Optional.ofNullable(getCurrentProperty("drsFault", ClusterDrsFaults[].class))
+                .map(Arrays::asList)
+                .orElse(Collections.emptyList());
     }
 
     @Deprecated
-    public ClusterDrsRecommendation[] getDrsRecommendation() {
-        return (ClusterDrsRecommendation[]) getCurrentProperty("drsRecommendation");
+    public List<ClusterDrsRecommendation> getDrsRecommendation() {
+        return Optional.ofNullable(getCurrentProperty("drsRecommendation", ClusterDrsRecommendation[].class))
+                .map(Arrays::asList)
+                .orElse(Collections.emptyList());
     }
 
     public ClusterComputeResourceHCIConfigInfo getClusterComputeResourceHCIConfigInfo() {
-        return (ClusterComputeResourceHCIConfigInfo) this.getCurrentProperty("hciConfig");
+        return this.getCurrentProperty("hciConfig", ClusterComputeResourceHCIConfigInfo.class);
     }
 
-    public ClusterDrsMigration[] getMigrationHistory() {
-        return (ClusterDrsMigration[]) getCurrentProperty("migrationHistory");
+    public List<ClusterDrsMigration> getMigrationHistory() {
+        return Optional.ofNullable(getCurrentProperty("migrationHistory", ClusterDrsMigration[].class))
+                .map(Arrays::asList)
+                .orElse(Collections.emptyList());
     }
 
-    public ClusterRecommendation[] getRecommendation() {
-        return (ClusterRecommendation[]) getCurrentProperty("recommendation");
+    public List<ClusterRecommendation> getRecommendation() {
+        return Optional.ofNullable(getCurrentProperty("recommendation", ClusterRecommendation[].class))
+                .map(Arrays::asList)
+                .orElse(Collections.emptyList());
     }
 
-    public void abandonHciWorkflow() throws InvalidState, RuntimeFault, RemoteException {
-        this.getVimService().getWsc().invokeWithoutReturn("AbandonHciWorkflow", this.getSingleSelfArgumentList());
+    public void abandonHciWorkflow() throws InvalidState, RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("AbandonHciWorkflow", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    // SDK 2.5 signature for back compatibility
-    public Task addHost_Task(HostConnectSpec spec, boolean asConnected, ResourcePool resourcePool) throws InvalidLogin, HostConnectFault, RuntimeFault, RemoteException {
-        return addHost_Task(spec, asConnected, resourcePool, null);
+    public Task addHost(final HostConnectSpec spec, final boolean asConnected, final ManagedObjectReference resourcePool, final String license)
+            throws AgentInstallFailed, AlreadyBeingManaged, AlreadyConnected, DuplicateName, GatewayConnectFault, GatewayHostNotReachable,
+            GatewayNotFound, GatewayNotReachable, GatewayOperationRefused, GatewayToHostAuthFault, GatewayToHostTrustVerifyFault,
+            HostConnectFault, InvalidLogin, NoHost, NotSupportedHost, RuntimeFault, SSLVerifyFault, TooManyHosts {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", HostConnectSpec.class, spec),
+                Argument.fromBasicType("asConnected", asConnected),
+                new Argument("resourcePool", ManagedObjectReference.class, resourcePool),
+                new Argument("license", String.class, license));
+        try {
+            return this.invokeWithTaskReturn("AddHost_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof AgentInstallFailed) {
+                throw (AgentInstallFailed) cause;
+            }
+            if (cause instanceof AlreadyBeingManaged) {
+                throw (AlreadyBeingManaged) cause;
+            }
+            if (cause instanceof AlreadyConnected) {
+                throw (AlreadyConnected) cause;
+            }
+            if (cause instanceof GatewayHostNotReachable) {
+                throw (GatewayHostNotReachable) cause;
+            }
+            if (cause instanceof GatewayNotFound) {
+                throw (GatewayNotFound) cause;
+            }
+            if (cause instanceof GatewayNotReachable) {
+                throw (GatewayNotReachable) cause;
+            }
+            if (cause instanceof GatewayOperationRefused) {
+                throw (GatewayOperationRefused) cause;
+            }
+            if (cause instanceof GatewayToHostAuthFault) {
+                throw (GatewayToHostAuthFault) cause;
+            }
+            if (cause instanceof GatewayToHostTrustVerifyFault) {
+                throw (GatewayToHostTrustVerifyFault) cause;
+            }
+            if (cause instanceof NoHost) {
+                throw (NoHost) cause;
+            }
+            if (cause instanceof NotSupportedHost) {
+                throw (NotSupportedHost) cause;
+            }
+            if (cause instanceof SSLVerifyFault) {
+                throw (SSLVerifyFault) cause;
+            }
+            if (cause instanceof TooManyHosts) {
+                throw (TooManyHosts) cause;
+            }
+            if (cause instanceof GatewayConnectFault) {
+                throw (GatewayConnectFault) cause;
+            }
+            if (cause instanceof HostConnectFault) {
+                throw (HostConnectFault) cause;
+            }
+            if (cause instanceof InvalidLogin) {
+                throw (InvalidLogin) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    // new SDK 4.0 signature
-    public Task addHost_Task(HostConnectSpec spec, boolean asConnected, ResourcePool resourcePool, String license) throws InvalidLogin, HostConnectFault, RuntimeFault, RemoteException {
-        ManagedObjectReference taskMOR = getVimService().addHost_Task(getMOR(), spec, asConnected, resourcePool == null ? null : resourcePool.getMOR(), license);
-        return new Task(getServerConnection(), taskMOR);
+    public void applyRecommendation(final String key) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("key", String.class, key));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("ApplyRecommendation", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void applyRecommendation(String key) throws RuntimeFault, RemoteException {
-        getVimService().applyRecommendation(getMOR(), key);
+    public void cancelRecommendation(final String key) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("key", String.class, key));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("CancelRecommendation", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void cancelRecommendation(String key) throws RuntimeFault, RemoteException {
-        getVimService().cancelRecommendation(getMOR(), key);
-    }
-
-    public ClusterEnterMaintenanceResult clusterEnterMaintenanceMode(HostSystem[] hosts, OptionValue[] option) throws RuntimeFault, RemoteException {
-        ManagedObjectReference[] hostMors = MorUtil.createMORs(hosts);
-        return getVimService().clusterEnterMaintenanceMode(getMOR(), hostMors, option);
+    public ClusterEnterMaintenanceResult enterMaintenanceMode(final List<ManagedObjectReference> host, final List<OptionValue> option)
+            throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("host", ManagedObjectReference[].class, host.toArray()),
+                new Argument("option", OptionValue[].class, option.toArray()));
+        try {
+            return this.getVimService().getWsc().invoke("ClusterEnterMaintenanceMode", params, ClusterEnterMaintenanceResult.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
     public Task configureHCI(final ClusterComputeResourceHCIConfigSpec clusterSpec, final List<ClusterComputeResourceHostConfigurationInput> hostInputs)
-            throws RuntimeFault, RemoteException {
+            throws RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("clusterSpec", ClusterComputeResourceHCIConfigSpec.class, clusterSpec),
                 new Argument("hostInputs", "ClusterComputeResourceHostConfigurationInput[]", hostInputs.toArray()));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("ConfigureHCI_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
-    }
-
-    public ClusterEVCManager getEvcManager() throws RemoteException {
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("EvcManager", this.getSingleSelfArgumentList(), ManagedObjectReference.class);
-        if (mor == null) {
-            return null;
+        try {
+            return this.invokeWithTaskReturn("ConfigureHCI_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
-        return new ClusterEVCManager(this.getServerConnection(), mor);
     }
 
-    public Task extendHCI(final List<ClusterComputeResourceHostConfigurationInput> hostInputs, final SDDCBase vSanConfigSpec) throws RuntimeFault, RemoteException {
+    public ClusterEVCManager getEvcManager() throws RuntimeFault {
+        try {
+            final ManagedObjectReference mor = this.getVimService().getWsc()
+                    .invoke("EvcManager", this.getSingleSelfArgumentList(), ManagedObjectReference.class);
+            if (mor == null) {
+                return null;
+            }
+            return new ClusterEVCManager(this.getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task extendHCI(final List<ClusterComputeResourceHostConfigurationInput> hostInputs, final SDDCBase vSanConfigSpec)
+            throws RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("hostInputs", "ClusterComputeResourceHostConfigurationInput[]", hostInputs),
                 new Argument("vSanConfigSpec", SDDCBase.class, vSanConfigSpec));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("ExtendHCI_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+        try {
+            return this.invokeWithTaskReturn("ExtendHCI_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public List<ClusterRuleInfo> findRulesForVm(final ManagedObjectReference vm) throws RuntimeFault, RemoteException {
+    @SuppressWarnings("unchecked")
+    public List<ClusterRuleInfo> findRulesForVm(final ManagedObjectReference vm) throws RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("vm", ManagedObjectReference.class, vm));
-        return (List<ClusterRuleInfo>) this.getVimService().getWsc().invoke("FindRulesForVm", params, "List.ClusterRuleInfo");
-    }
-
-    public ClusterResourceUsageSummary getResourceUsage() throws RuntimeFault, RemoteException {
-        return this.getVimService().getWsc().invoke("GetResourceUsage", this.getSingleSelfArgumentList(), ClusterResourceUsageSummary.class);
-    }
-
-    public Task moveHostInto_Task(HostSystem host, ResourcePool resourcePool) throws TooManyHosts, InvalidState, RuntimeFault, RemoteException {
-        if (host == null) {
-            throw new IllegalArgumentException("host must not be null.");
+        try {
+            return (List<ClusterRuleInfo>) this.getVimService().getWsc().invoke("FindRulesForVm", params, "List.ClusterRuleInfo");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
-        ManagedObjectReference taskMOR = getVimService().moveHostInto_Task(getMOR(), host.getMOR(), resourcePool == null ? null : resourcePool.getMOR());
-        return new Task(getServerConnection(), taskMOR);
     }
 
-    public Task moveInto_Task(HostSystem[] hosts) throws TooManyHosts, DuplicateName, InvalidState, RuntimeFault, RemoteException {
-        if (hosts == null) {
-            throw new IllegalArgumentException("hosts must not be null.");
+    public ClusterResourceUsageSummary getResourceUsage() throws RuntimeFault {
+        try {
+            return this.getVimService().getWsc()
+                    .invoke("GetResourceUsage", this.getSingleSelfArgumentList(), ClusterResourceUsageSummary.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
-        ManagedObjectReference taskMOR = getVimService().moveInto_Task(getMOR(), MorUtil.createMORs(hosts));
-        return new Task(getServerConnection(), taskMOR);
     }
 
-    public PlacementResult placeVm(final PlacementSpec placementSpec) throws InvalidArgument, InvalidState, RuntimeFault, RemoteException {
+    public Task moveHostInto(final ManagedObjectReference host, final ManagedObjectReference resourcePool)
+            throws InvalidState, RuntimeFault, TooManyHosts {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("host", ManagedObjectReference.class, host),
+                new Argument("resourcePool", ManagedObjectReference.class, resourcePool));
+        try {
+            return this.invokeWithTaskReturn("MoveHostInto_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof TooManyHosts) {
+                throw (TooManyHosts) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task moveInto(final List<ManagedObjectReference> host) throws DuplicateName, InvalidState, RuntimeFault, TooManyHosts {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("host", ManagedObjectReference[].class, host.toArray()));
+        try {
+            return this.invokeWithTaskReturn("MoveInto_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof TooManyHosts) {
+                throw (TooManyHosts) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public PlacementResult placeVm(final PlacementSpec placementSpec) throws InvalidState, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("placementSpec", PlacementSpec.class, placementSpec));
-        return this.getVimService().getWsc().invoke("PlaceVm", params, PlacementResult.class);
+        try {
+            return this.getVimService().getWsc().invoke("PlaceVm", params, PlacementResult.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
     @Deprecated
-    public ClusterHostRecommendation[] recommendHostsForVm(VirtualMachine vm, ResourcePool pool) throws RuntimeFault, RemoteException {
+    @SuppressWarnings("unchecked")
+    public List<ClusterHostRecommendation> recommendHostsForVm(final VirtualMachine vm, final ResourcePool pool)
+            throws RuntimeFault {
         if (vm == null) {
             throw new IllegalArgumentException("vm must not be null.");
         }
-        return getVimService().recommendHostsForVm(getMOR(), vm.getMOR(), pool == null ? null : pool.getMOR());
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vm", ManagedObjectReference.class, vm.getMOR()),
+                new Argument("pool", ManagedObjectReference.class, pool == null ? null : pool.getMOR()));
+        try {
+            return (List<ClusterHostRecommendation>) this.getVimService().getWsc()
+                    .invoke("RecommendHostsForVm", params, "List.ClusterHostRecommendation");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
     @Deprecated
-    public Task reconfigureCluster_Task(ClusterConfigSpec spec, boolean modify) throws RuntimeFault, RemoteException {
-        ManagedObjectReference taskMOR = getVimService().reconfigureCluster_Task(getMOR(), spec, modify);
-        return new Task(getServerConnection(), taskMOR);
+    public Task reconfigureCluster(final ClusterConfigSpec spec, final boolean modify) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", ClusterConfigSpec.class, spec),
+                new Argument("modify", "boolean", modify));
+        try {
+            return this.invokeWithTaskReturn("ReconfigureCluster_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void refreshRecommendation() throws RuntimeFault, RemoteException {
-        getVimService().getWsc().invokeWithoutReturn("RefreshRecommendation", this.getSingleSelfArgumentList());
+    public void refreshRecommendation() throws RuntimeFault {
+        try {
+            getVimService().getWsc().invokeWithoutReturn("RefreshRecommendation", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public ClusterDasAdvancedRuntimeInfo retrieveDasAdvancedRuntimeInfo() throws RuntimeFault, RemoteException {
-        return this.getVimService().getWsc().invoke("RetrieveDasAdvancedRuntimeInfo", this.getSingleSelfArgumentList(), ClusterDasAdvancedRuntimeInfo.class);
+    public ClusterDasAdvancedRuntimeInfo retrieveDasAdvancedRuntimeInfo() throws RuntimeFault {
+        try {
+            return this.getVimService().getWsc()
+                    .invoke("RetrieveDasAdvancedRuntimeInfo", this.getSingleSelfArgumentList(), ClusterDasAdvancedRuntimeInfo.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task stampAllRulesWithUuid() throws RuntimeFault, RemoteException {
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("StampAllRulesWithUuid_Task", this.getSingleSelfArgumentList(), ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+    public void setCryptoMode(final String cryptoMode) throws InvalidArgument, InvalidRequest, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("cryptoMode", String.class, cryptoMode));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("SetCryptoMode", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidArgument) {
+                throw (InvalidArgument) cause;
+            }
+            if (cause instanceof InvalidRequest) {
+                throw (InvalidRequest) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public List<ClusterComputeResourceValidationResultBase> validateHCIConfiguration(final ClusterComputeResourceHCIConfigSpec hciConfigSpec, final List<ManagedObjectReference> hosts)
-            throws InvalidState, RuntimeFault, RemoteException {
+    public Task stampAllRulesWithUuid() throws RuntimeFault {
+        try {
+            return this.invokeWithTaskReturn("StampAllRulesWithUuid_Task", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<ClusterComputeResourceValidationResultBase> validateHCIConfiguration(
+            final ClusterComputeResourceHCIConfigSpec hciConfigSpec, final List<ManagedObjectReference> hosts)
+            throws InvalidState, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("hciConfigSpec", ClusterComputeResourceHCIConfigSpec.class, hciConfigSpec),
                 new Argument("hosts", "ManagedObjectReference[]", hosts));
-        return (List<ClusterComputeResourceValidationResultBase>) this.getVimService().getWsc().invoke("ValidateHCIConfiguration", params, "List.ClusterComputeResourceValidationResultBase");
+        try {
+            return (List<ClusterComputeResourceValidationResultBase>) this.getVimService().getWsc()
+                    .invoke("ValidateHCIConfiguration", params, "List.ClusterComputeResourceValidationResultBase");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
 }

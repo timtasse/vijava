@@ -10,11 +10,11 @@ import java.util.Arrays;
  */
 public class CryptoManagerKmipCryptoKeyStatus extends DynamicData {
 
-    private ManagedObjectReference[] affectedHosts;
-    private ManagedObjectReference[] encryptedVMs;
-    private Boolean keyAvailable;
     private CryptoKeyId keyId;
+    private Boolean keyAvailable;
     private String reason;
+    private ManagedObjectReference[] encryptedVMs;
+    private ManagedObjectReference[] affectedHosts;
     private String[] referencedByTags;
 
     @Override

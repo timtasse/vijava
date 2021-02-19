@@ -29,56 +29,82 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The DiskLocator data object type specifies a virtual disk device (by ID) and a datastore locator for the disk's storage.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class VirtualMachineRelocateSpecDiskLocator extends DynamicData {
-  public int diskId;
-  public ManagedObjectReference datastore;
-  public String diskMoveType;
-  public VirtualDeviceBackingInfo diskBackingInfo;
-  public VirtualMachineProfileSpec[] profile;
 
-  public int getDiskId() {
-    return this.diskId;
-  }
+    private int diskId;
+    private ManagedObjectReference datastore;
+    private String diskMoveType;
+    private VirtualDeviceBackingInfo diskBackingInfo;
+    private VirtualMachineProfileSpec[] profile;
+    private VirtualMachineRelocateSpecDiskLocatorBackingSpec backing;
 
-  public ManagedObjectReference getDatastore() {
-    return this.datastore;
-  }
+    @Override
+    public String toString() {
+        return "VirtualMachineRelocateSpecDiskLocator{" +
+                "diskId=" + diskId +
+                ", datastore=" + datastore +
+                ", diskMoveType='" + diskMoveType + '\'' +
+                ", diskBackingInfo=" + diskBackingInfo +
+                ", profile=" + Arrays.toString(profile) +
+                ", backing=" + backing +
+                "} " + super.toString();
+    }
 
-  public String getDiskMoveType() {
-    return this.diskMoveType;
-  }
+    public int getDiskId() {
+        return this.diskId;
+    }
 
-  public VirtualDeviceBackingInfo getDiskBackingInfo() {
-    return this.diskBackingInfo;
-  }
+    public void setDiskId(int diskId) {
+        this.diskId = diskId;
+    }
 
-  public VirtualMachineProfileSpec[] getProfile() {
-    return this.profile;
-  }
+    public ManagedObjectReference getDatastore() {
+        return this.datastore;
+    }
 
-  public void setDiskId(int diskId) {
-    this.diskId=diskId;
-  }
+    public void setDatastore(ManagedObjectReference datastore) {
+        this.datastore = datastore;
+    }
 
-  public void setDatastore(ManagedObjectReference datastore) {
-    this.datastore=datastore;
-  }
+    public String getDiskMoveType() {
+        return this.diskMoveType;
+    }
 
-  public void setDiskMoveType(String diskMoveType) {
-    this.diskMoveType=diskMoveType;
-  }
+    public void setDiskMoveType(String diskMoveType) {
+        this.diskMoveType = diskMoveType;
+    }
 
-  public void setDiskBackingInfo(VirtualDeviceBackingInfo diskBackingInfo) {
-    this.diskBackingInfo=diskBackingInfo;
-  }
+    public VirtualDeviceBackingInfo getDiskBackingInfo() {
+        return this.diskBackingInfo;
+    }
 
-  public void setProfile(VirtualMachineProfileSpec[] profile) {
-    this.profile=profile;
-  }
+    public void setDiskBackingInfo(VirtualDeviceBackingInfo diskBackingInfo) {
+        this.diskBackingInfo = diskBackingInfo;
+    }
+
+    public VirtualMachineProfileSpec[] getProfile() {
+        return this.profile;
+    }
+
+    public void setProfile(VirtualMachineProfileSpec[] profile) {
+        this.profile = profile;
+    }
+
+    public VirtualMachineRelocateSpecDiskLocatorBackingSpec getBacking() {
+        return backing;
+    }
+
+    public void setBacking(final VirtualMachineRelocateSpecDiskLocatorBackingSpec backing) {
+        this.backing = backing;
+    }
+
 }

@@ -36,22 +36,34 @@ package com.vmware.vim25.ws;
  * @author Steve Jin (sjin@vmware.com)
  */
 
-final public class Argument {
+public final class Argument {
 
     private String name;
     private String type;
     private Object value;
 
-    public Argument(String name, String type, Object value) {
+    public Argument(final String name, final String type, final Object value) {
         this.name = name;
         this.type = type;
         this.value = value;
     }
 
-    public Argument(String name, Class<?> type, Object value) {
+    public Argument(final String name, final Class<?> type, final Object value) {
         this.name = name;
         this.type = type.getSimpleName();
         this.value = value;
+    }
+
+    public static Argument fromBasicType(final String name, final boolean value) {
+        return new Argument(name, "boolean", value);
+    }
+
+    public static Argument fromBasicType(final String name, final int value) {
+        return new Argument(name, "int", value);
+    }
+
+    public static Argument fromBasicType(final String name, final long value) {
+        return new Argument(name, "long", value);
     }
 
     public String getName() {

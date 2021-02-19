@@ -30,25 +30,45 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * The HostVirtualNicSpec data object describes the HostVirtualNic configuration containing both
+ * the configured properties on a virtual NIC and identification information.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
  */
-
-@SuppressWarnings("all")
 public class HostVirtualNicSpec extends DynamicData {
 
-    public HostIpConfig ip;
-    public String mac;
-    public DistributedVirtualSwitchPortConnection distributedVirtualPort;
-    public String portgroup;
-    public Integer mtu;
-    public Boolean tsoEnabled;
-    public String netStackInstanceKey;
-    public HostVirtualNicOpaqueNetworkSpec opaqueNetwork;
-    public String externalId;
-    public String pinnedPnic;
-    public HostVirtualNicIpRouteSpec ipRouteSpec;
+    private HostIpConfig ip;
+    private String mac;
+    private DistributedVirtualSwitchPortConnection distributedVirtualPort;
+    private String portgroup;
+    private Integer mtu;
+    private Boolean tsoEnabled;
+    private String netStackInstanceKey;
+    private HostVirtualNicOpaqueNetworkSpec opaqueNetwork;
+    private String externalId;
+    private String pinnedPnic;
+    private HostVirtualNicIpRouteSpec ipRouteSpec;
+    private Boolean systemOwned;
+
+    @Override
+    public String toString() {
+        return "HostVirtualNicSpec{" +
+                "ip=" + ip +
+                ", mac='" + mac + '\'' +
+                ", distributedVirtualPort=" + distributedVirtualPort +
+                ", portgroup='" + portgroup + '\'' +
+                ", mtu=" + mtu +
+                ", tsoEnabled=" + tsoEnabled +
+                ", netStackInstanceKey='" + netStackInstanceKey + '\'' +
+                ", opaqueNetwork=" + opaqueNetwork +
+                ", externalId='" + externalId + '\'' +
+                ", pinnedPnic='" + pinnedPnic + '\'' +
+                ", ipRouteSpec=" + ipRouteSpec +
+                ", systemOwned=" + systemOwned +
+                "} " + super.toString();
+    }
 
     public HostIpConfig getIp() {
         return this.ip;
@@ -136,5 +156,13 @@ public class HostVirtualNicSpec extends DynamicData {
 
     public void setPinnedPnic(final String pinnedPnic) {
         this.pinnedPnic = pinnedPnic;
+    }
+
+    public Boolean getSystemOwned() {
+        return systemOwned;
+    }
+
+    public void setSystemOwned(final Boolean systemOwned) {
+        this.systemOwned = systemOwned;
     }
 }

@@ -30,91 +30,94 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object type encapsulates a typical set of ComputeResource information
+ * that is useful for list views and summary pages.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 public class ComputeResourceSummary extends DynamicData {
-  public int totalCpu;
-  public long totalMemory;
-  public short numCpuCores;
-  public short numCpuThreads;
-  public int effectiveCpu;
-  public long effectiveMemory;
-  public int numHosts;
-  public int numEffectiveHosts;
-  public ManagedEntityStatus overallStatus;
 
-  public int getTotalCpu() {
-    return this.totalCpu;
-  }
+    private int totalCpu;
+    private long totalMemory;
+    private short numCpuCores;
+    private short numCpuThreads;
+    private int effectiveCpu;
+    private long effectiveMemory;
+    private int numHosts;
+    private int numEffectiveHosts;
+    private ManagedEntityStatus overallStatus;
 
-  public long getTotalMemory() {
-    return this.totalMemory;
-  }
+    public int getTotalCpu() {
+        return this.totalCpu;
+    }
 
-  public short getNumCpuCores() {
-    return this.numCpuCores;
-  }
+    public void setTotalCpu(int totalCpu) {
+        this.totalCpu = totalCpu;
+    }
 
-  public short getNumCpuThreads() {
-    return this.numCpuThreads;
-  }
+    public long getTotalMemory() {
+        return this.totalMemory;
+    }
 
-  public int getEffectiveCpu() {
-    return this.effectiveCpu;
-  }
+    public void setTotalMemory(long totalMemory) {
+        this.totalMemory = totalMemory;
+    }
 
-  public long getEffectiveMemory() {
-    return this.effectiveMemory;
-  }
+    public short getNumCpuCores() {
+        return this.numCpuCores;
+    }
 
-  public int getNumHosts() {
-    return this.numHosts;
-  }
+    public void setNumCpuCores(short numCpuCores) {
+        this.numCpuCores = numCpuCores;
+    }
 
-  public int getNumEffectiveHosts() {
-    return this.numEffectiveHosts;
-  }
+    public short getNumCpuThreads() {
+        return this.numCpuThreads;
+    }
 
-  public ManagedEntityStatus getOverallStatus() {
-    return this.overallStatus;
-  }
+    public void setNumCpuThreads(short numCpuThreads) {
+        this.numCpuThreads = numCpuThreads;
+    }
 
-  public void setTotalCpu(int totalCpu) {
-    this.totalCpu=totalCpu;
-  }
+    public int getEffectiveCpu() {
+        return this.effectiveCpu;
+    }
 
-  public void setTotalMemory(long totalMemory) {
-    this.totalMemory=totalMemory;
-  }
+    public void setEffectiveCpu(int effectiveCpu) {
+        this.effectiveCpu = effectiveCpu;
+    }
 
-  public void setNumCpuCores(short numCpuCores) {
-    this.numCpuCores=numCpuCores;
-  }
+    public long getEffectiveMemory() {
+        return this.effectiveMemory;
+    }
 
-  public void setNumCpuThreads(short numCpuThreads) {
-    this.numCpuThreads=numCpuThreads;
-  }
+    public void setEffectiveMemory(long effectiveMemory) {
+        this.effectiveMemory = effectiveMemory;
+    }
 
-  public void setEffectiveCpu(int effectiveCpu) {
-    this.effectiveCpu=effectiveCpu;
-  }
+    public int getNumHosts() {
+        return this.numHosts;
+    }
 
-  public void setEffectiveMemory(long effectiveMemory) {
-    this.effectiveMemory=effectiveMemory;
-  }
+    public void setNumHosts(int numHosts) {
+        this.numHosts = numHosts;
+    }
 
-  public void setNumHosts(int numHosts) {
-    this.numHosts=numHosts;
-  }
+    public int getNumEffectiveHosts() {
+        return this.numEffectiveHosts;
+    }
 
-  public void setNumEffectiveHosts(int numEffectiveHosts) {
-    this.numEffectiveHosts=numEffectiveHosts;
-  }
+    public void setNumEffectiveHosts(int numEffectiveHosts) {
+        this.numEffectiveHosts = numEffectiveHosts;
+    }
 
-  public void setOverallStatus(ManagedEntityStatus overallStatus) {
-    this.overallStatus=overallStatus;
-  }
+    public ManagedEntityStatus getOverallStatus() {
+        return this.overallStatus;
+    }
+
+    public void setOverallStatus(ManagedEntityStatus overallStatus) {
+        this.overallStatus = overallStatus;
+    }
+
 }

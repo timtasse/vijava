@@ -31,7 +31,6 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
-import com.vmware.vim25.mo.util.MorUtil;
 import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
@@ -42,7 +41,7 @@ import java.util.List;
  * The Datacenter managed object provides the interface to the common container object for hosts, virtual machines, networks, and datastores.
  * These entities must be under a distinct datacenter in the inventory, and datacenters may not be nested under other datacenters.
  * Every Datacenter has the following set of dedicated folders. These folders are empty until you create entities for the Datacenter.
- *
+ * <p>
  * A folder for VirtualMachine, template, and VirtualApp objects.
  * A folder for a ComputeResource hierarchy.
  * A folder for Network, DistributedVirtualSwitch, and DistributedVirtualPortgroup objects.
@@ -53,87 +52,185 @@ import java.util.List;
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @version 6.7.1
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("unused")
 public class Datacenter extends ManagedEntity {
 
-    public Datacenter(ServerConnection sc, ManagedObjectReference mor) {
+    public Datacenter(final ServerConnection sc, final ManagedObjectReference mor) {
         super(sc, mor);
     }
 
     public DatacenterConfigInfo getConfiguration() {
-        return (DatacenterConfigInfo) getCurrentProperty("configuration");
+        return getCurrentProperty("configuration", DatacenterConfigInfo.class);
     }
 
-    public Datastore[] getDatastores() {
-        return getDatastores("datastore");
+    public List<Datastore> getDatastores() {
+        return Arrays.asList(this.getDatastores("datastore"));
     }
 
     public Folder getDatastoreFolder() {
-        return (Folder) getManagedObject("datastoreFolder");
+        return (Folder) this.getManagedObject("datastoreFolder");
     }
 
-    public Folder getHostFolder() throws InvalidProperty, RuntimeFault, RemoteException {
+    public Folder getHostFolder() {
         return (Folder) this.getManagedObject("hostFolder");
     }
 
-    public Network[] getNetworks() throws InvalidProperty, RuntimeFault, RemoteException {
-        return getNetworks("network");
+    public List<Network> getNetworks() {
+        return Arrays.asList(this.getNetworks("network"));
     }
 
     public Folder getNetworkFolder() {
-        return (Folder) getManagedObject("networkFolder");
+        return (Folder) this.getManagedObject("networkFolder");
     }
 
-    public Folder getVmFolder() throws InvalidProperty, RuntimeFault, RemoteException {
+    public Folder getVmFolder() {
         return (Folder) this.getManagedObject("vmFolder");
     }
 
-    public List<DatacenterBasicConnectInfo> batchQueryConnectInfo(final List<HostConnectSpec> hostSpecs) throws NotSupported, RuntimeFault, RemoteException {
+    @SuppressWarnings("unchecked")
+    public List<DatacenterBasicConnectInfo> batchQueryConnectInfo(final List<HostConnectSpec> hostSpecs) throws RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("hostSpecs", "HostConnectSpec[]", hostSpecs));
-        return (List<DatacenterBasicConnectInfo>) this.getVimService().getWsc().invoke("BatchQueryConnectInfo", params, "List.DatacenterBasicConnectInfo");
-    }
-
-    /**
-     * old signature for back compatibility with 2.5 and 4.0
-     */
-    public Task powerOnMultiVM_Task(VirtualMachine[] vms) throws RuntimeFault, RemoteException {
-        return powerOnMultiVM_Task(vms, null);
-    }
-
-    /**
-     * @since SDK4.1
-     */
-    public Task powerOnMultiVM_Task(VirtualMachine[] vms, OptionValue[] option) throws RuntimeFault, RemoteException {
-        if (vms == null) {
-            throw new IllegalArgumentException("vms must not be null.");
+                new Argument("hostSpecs", HostConnectSpec[].class, hostSpecs));
+        try {
+            return (List<DatacenterBasicConnectInfo>) this.getVimService().getWsc()
+                    .invoke("BatchQueryConnectInfo", params, "List.DatacenterBasicConnectInfo");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
-        ManagedObjectReference[] mors = MorUtil.createMORs(vms);
-        ManagedObjectReference tmor = getVimService().powerOnMultiVM_Task(getMOR(), mors, option);
-        return new Task(getServerConnection(), tmor);
     }
 
-    public HostConnectInfo queryConnectionInfo(String hostname, int port, String username, String password,
-                                               String sslThumbprint) throws InvalidLogin, HostConnectFault, RuntimeFault, RemoteException {
-        return getVimService().queryConnectionInfo(getMOR(), hostname, port, username, password, sslThumbprint);
+    public Task powerOnMultiVM(final List<ManagedObjectReference> vms, final List<OptionValue> option) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vms", ManagedObjectReference[].class, vms),
+                new Argument("option", OptionValue[].class, option));
+        try {
+            return this.invokeWithTaskReturn("PowerOnMultiVM_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public HostConnectInfo queryConnectionInfo(final String hostname, final int port, final String username,
+                                               final String password, final String sslThumbprint)
+            throws AlreadyConnected, InvalidLogin, NoHost, NotSupportedHost, SSLDisabledFault, SSLVerifyFault,
+            HostConnectFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("hostname", String.class, hostname),
+                Argument.fromBasicType("port", port),
+                new Argument("username", String.class, username),
+                new Argument("password", String.class, password),
+                new Argument("sslThumbprint", String.class, sslThumbprint));
+        try {
+            return this.getVimService().getWsc().invoke("QueryConnectionInfo", params, HostConnectInfo.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof AlreadyConnected) {
+                throw (AlreadyConnected) cause;
+            }
+            if (cause instanceof InvalidLogin) {
+                throw (InvalidLogin) cause;
+            }
+            if (cause instanceof NoHost) {
+                throw (NoHost) cause;
+            }
+            if (cause instanceof NotSupportedHost) {
+                throw (NotSupportedHost) cause;
+            }
+            if (cause instanceof SSLDisabledFault) {
+                throw (SSLDisabledFault) cause;
+            }
+            if (cause instanceof SSLVerifyFault) {
+                throw (SSLVerifyFault) cause;
+            }
+            if (cause instanceof HostConnectFault) {
+                throw (HostConnectFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
     public HostConnectInfo queryConnectionInfoViaSpec(final HostConnectSpec spec)
             throws GatewayConnectFault, GatewayHostNotReachable, GatewayNotFound, GatewayNotReachable, GatewayOperationRefused,
-            GatewayToHostAuthFault, GatewayToHostTrustVerifyFault, HostConnectFault, InvalidArgument, InvalidLogin, RuntimeFault, RemoteException {
+            GatewayToHostAuthFault, GatewayToHostTrustVerifyFault, HostConnectFault, InvalidLogin, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("spec", HostConnectSpec.class, spec));
-        return this.getVimService().getWsc().invoke("QueryConnectionInfoViaSpec", params, HostConnectInfo.class);
+        try {
+            return this.getVimService().getWsc().invoke("QueryConnectionInfoViaSpec", params, HostConnectInfo.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof GatewayHostNotReachable) {
+                throw (GatewayHostNotReachable) cause;
+            }
+            if (cause instanceof GatewayNotFound) {
+                throw (GatewayNotFound) cause;
+            }
+            if (cause instanceof GatewayNotReachable) {
+                throw (GatewayNotReachable) cause;
+            }
+            if (cause instanceof GatewayOperationRefused) {
+                throw (GatewayOperationRefused) cause;
+            }
+            if (cause instanceof GatewayToHostAuthFault) {
+                throw (GatewayToHostAuthFault) cause;
+            }
+            if (cause instanceof GatewayToHostTrustVerifyFault) {
+                throw (GatewayToHostTrustVerifyFault) cause;
+            }
+            if (cause instanceof GatewayConnectFault) {
+                throw (GatewayConnectFault) cause;
+            }
+            if (cause instanceof InvalidLogin) {
+                throw (InvalidLogin) cause;
+            }
+            if (cause instanceof HostConnectFault) {
+                throw (HostConnectFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public List<VirtualMachineConfigOptionDescriptor> queryDatacenterConfigOptionDescriptor() throws RuntimeFault, RemoteException {
-        return (List<VirtualMachineConfigOptionDescriptor>) this.getVimService().getWsc()
-                .invoke("queryDatacenterConfigOptionDescriptor", this.getSingleSelfArgumentList(), "List.VirtualMachineConfigOptionDescriptor");
+    @SuppressWarnings("unchecked")
+    public List<VirtualMachineConfigOptionDescriptor> queryDatacenterConfigOptionDescriptor() throws RuntimeFault {
+        try {
+            return (List<VirtualMachineConfigOptionDescriptor>) this.getVimService().getWsc()
+                    .invoke("queryDatacenterConfigOptionDescriptor", this.getSingleSelfArgumentList(),
+                            "List.VirtualMachineConfigOptionDescriptor");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task reconfigureDatacenter_Task(DatacenterConfigSpec spec, boolean modify) throws RuntimeFault, RemoteException {
-        ManagedObjectReference tmor = getVimService().reconfigureDatacenter_Task(getMOR(), spec, modify);
-        return new Task(getServerConnection(), tmor);
+    public Task reconfigureDatacenter(final DatacenterConfigSpec spec, final boolean modify) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", DatacenterConfigSpec.class, spec),
+                Argument.fromBasicType("modify", modify));
+        try {
+            return this.invokeWithTaskReturn("ReconfigureDatacenter_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
 }

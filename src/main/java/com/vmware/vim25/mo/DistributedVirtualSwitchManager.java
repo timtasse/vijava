@@ -32,112 +32,263 @@ package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.util.MorUtil;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
- * @since 4.0
+ * The DistributedVirtualSwitchManager provides methods that support the following operations:
+ *      Backup and restore operations for VmwareDistributedVirtualSwitch and associated DistributedVirtualPortgroup managed objects.
+ *      Query operations for information about portgroups and distributed virtual switches.
+ *      Distributed virtual switch configuration update operations.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @since 4.0
  */
+@SuppressWarnings("unused")
+public class DistributedVirtualSwitchManager extends ManagedObject {
 
-public class DistributedVirtualSwitchManager extends ManagedObject 
-{
-	public DistributedVirtualSwitchManager(ServerConnection sc, ManagedObjectReference mor) 
-	{
-		super(sc, mor);
-	}
-	
-	public DistributedVirtualSwitchProductSpec[] queryAvailableDvsSpec() throws RuntimeFault, RemoteException
-	{
-		return getVimService().queryAvailableDvsSpec(getMOR());
-	}
+    public DistributedVirtualSwitchManager(final ServerConnection sc, final ManagedObjectReference mor) {
+        super(sc, mor);
+    }
 
-	public HostSystem[] queryCompatibleHostForExistingDvs(ManagedEntity container, boolean recursive, DistributedVirtualSwitch dvs) throws RuntimeFault, RemoteException
-	{
-		ManagedObjectReference[] mors = getVimService().queryCompatibleHostForExistingDvs(getMOR(), container.getMOR(), recursive, dvs.getMOR());
-		
-		HostSystem[] hosts = new HostSystem[mors.length];
-		for(int i=0; i<hosts.length; i++)
-		{
-			hosts[i] = new HostSystem(getServerConnection(), mors[i]);
-		}
-		return hosts;
-	}
-	
-	public HostSystem[] queryCompatibleHostForNewDvs(ManagedEntity container, boolean recursive, DistributedVirtualSwitchProductSpec switchProductSpec) throws RuntimeFault, RemoteException
-	{
-		ManagedObjectReference[] mors = getVimService().queryCompatibleHostForNewDvs(getMOR(), container.getMOR(), recursive, switchProductSpec);
-		
-		HostSystem[] hosts = new HostSystem[mors.length];
-		for(int i=0; i<hosts.length; i++)
-		{
-			hosts[i] = new HostSystem(getServerConnection(), mors[i]);
-		}
-		return hosts;
-	}
-	
-	public DistributedVirtualSwitchHostProductSpec[] queryDvsCompatibleHostSpec(DistributedVirtualSwitchProductSpec switchProductSpec) throws RuntimeFault, RemoteException
-	{
-		return getVimService().queryDvsCompatibleHostSpec(getMOR(), switchProductSpec);
-	}
-	
-	/** @since SDK4.1 */
-	public DistributedVirtualSwitchManagerCompatibilityResult[] queryDvsCheckCompatibility(
-	    DistributedVirtualSwitchManagerHostContainer hostContainer,	DistributedVirtualSwitchManagerDvsProductSpec dvsProductSpec,
-	    DistributedVirtualSwitchManagerHostDvsFilterSpec[] hostFilterSpec) throws RuntimeFault, RemoteException
-	{
-	  return getVimService().queryDvsCheckCompatibility(getMOR(), hostContainer, dvsProductSpec, hostFilterSpec);
-	}
-	    
-	
-	public DVSManagerDvsConfigTarget queryDvsConfigTarget(HostSystem host, DistributedVirtualSwitch dvs) throws RuntimeFault, RemoteException
-	{
-		return getVimService().queryDvsConfigTarget(getMOR(), 
-				host==null? null : host.getMOR(), 
-				dvs==null? null : dvs.getMOR());
-	}
-	
-	public DistributedVirtualSwitch queryDvsByUuid(String uuid) throws NotFound, RuntimeFault, RemoteException
-	{
-		ManagedObjectReference mor = getVimService().queryDvsByUuid(getMOR(), uuid);
-		return new DistributedVirtualSwitch(getServerConnection(), mor);
-	}
-	
-	 /** @since SDK4.1 */
-	public DVSFeatureCapability queryDvsFeatureCapability(DistributedVirtualSwitchProductSpec switchProductSpec) throws RuntimeFault, RemoteException
-	{
-	  return getVimService().queryDvsFeatureCapability(getMOR(), switchProductSpec);
-	}
-	
-	/**
-	 * @since SDK5.0
-	 */
-	public Task rectifyDvsOnHost_Task(HostSystem[] hosts) throws DvsFault, RuntimeFault, RemoteException
-	{
-	  ManagedObjectReference[] hostMors = MorUtil.createMORs(hosts);
-	  ManagedObjectReference taskMor = getVimService().rectifyDvsOnHost_Task(getMOR(), hostMors);
-	  return new Task(getServerConnection(), taskMor);
-	}
+    public Task dVSManagerExportEntity(final List<SelectionSet> selectionSet) throws BackupBlobWriteFailure, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("selectionSet", SelectionSet[].class, selectionSet));
+        try {
+            return this.invokeWithTaskReturn("DVSManagerExportEntity_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof BackupBlobWriteFailure) {
+                throw (BackupBlobWriteFailure) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
 
-	/** @since SDK5.1 */
-	public Task dVSManagerExportEntity_Task(SelectionSet[] selectionSet) throws BackupBlobWriteFailure, NotFound, RuntimeFault, RemoteException 
-	{
-	    ManagedObjectReference taskMor = getVimService().dVSManagerExportEntity_Task(getMOR(), selectionSet);
-	    return new Task(getServerConnection(), taskMor);
-	}
+    public Task dVSManagerImportEntity(final List<EntityBackupConfig> entityBackup, final EntityImportType importType)
+            throws DvsFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entityBackup", EntityBackupConfig[].class, entityBackup),
+                new Argument("importType", String.class, importType.name()));
+        try {
+            return this.invokeWithTaskReturn("DVSManagerImportEntity_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DvsFault) {
+                throw (DvsFault) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
 
-	/** @since SDK5.1 */
-	public Task dVSManagerImportEntity_Task(EntityBackupConfig[] entityBackup, String importType) throws DvsFault, NotFound, RuntimeFault, RemoteException 
-	{
-	    ManagedObjectReference taskMor = getVimService().dVSManagerImportEntity_Task(getMOR(), entityBackup, importType);
-	    return new Task(getServerConnection(), taskMor);
-	}
+    public DistributedVirtualPortgroup dVSManagerLookupDvPortGroup(final String switchUuid, final String portgroupKey)
+            throws NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("switchUuid", String.class, switchUuid),
+                new Argument("portgroupKey", String.class, portgroupKey));
+        try {
+            final ManagedObjectReference mor = this.getVimService().getWsc()
+                    .invoke("DVSManagerLookupDvPortGroup", params, ManagedObjectReference.class);
+            return new DistributedVirtualPortgroup(getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
 
-	/** @since SDK5.1 */
-	public DistributedVirtualPortgroup dVSManagerLookupDvPortGroup(String switchUuid, String portgroupKey) throws NotFound, RuntimeFault, RemoteException 
-	{
-	    ManagedObjectReference mor = getVimService().dVSManagerLookupDvPortGroup(getMOR(), switchUuid, portgroupKey);
-	    return new DistributedVirtualPortgroup(getServerConnection(), mor);
-	}
+    @SuppressWarnings("unchecked")
+    public List<DistributedVirtualSwitchProductSpec> queryAvailableDvsSpec(final Boolean recommended) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                Argument.fromBasicType("recommended", recommended));
+        try {
+            return (List<DistributedVirtualSwitchProductSpec>) this.getVimService().getWsc()
+                    .invoke("QueryAvailableDvsSpec", params, "List.DistributedVirtualSwitchProductSpec");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public List<HostSystem> queryCompatibleHostForExistingDvs(final ManagedObjectReference container,
+                                                          final boolean recursive,
+                                                          final ManagedObjectReference dvs)
+            throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("container", ManagedObjectReference.class, container),
+                Argument.fromBasicType("recursive", recursive),
+                new Argument("dvs", ManagedObjectReference.class, dvs));
+        try {
+            return Optional.ofNullable(this.getVimService().getWsc()
+                            .invoke("QueryCompatibleHostForExistingDvs", params, ManagedObjectReference[].class))
+                    .map(ManagedObjectReference[].class::cast)
+                    .map(Arrays::asList)
+                    .stream().flatMap(List::stream)
+                    .map(mor -> new HostSystem(this.getServerConnection(), mor))
+                    .collect(Collectors.toList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public List<HostSystem> queryCompatibleHostForNewDvs(final ManagedObjectReference container,
+                                                         final boolean recursive,
+                                                         final DistributedVirtualSwitchProductSpec switchProductSpec)
+            throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("container", ManagedObjectReference.class, container),
+                Argument.fromBasicType("recursive", recursive),
+                new Argument("switchProductSpec", DistributedVirtualSwitchProductSpec.class, switchProductSpec));
+        try {
+            return Optional.ofNullable(this.getVimService().getWsc()
+                            .invoke("QueryCompatibleHostForNewDvs", params, ManagedObjectReference[].class))
+                    .map(ManagedObjectReference[].class::cast)
+                    .map(Arrays::asList)
+                    .stream().flatMap(List::stream)
+                    .map(mor -> new HostSystem(this.getServerConnection(), mor))
+                    .collect(Collectors.toList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public DistributedVirtualSwitch queryDvsByUuid(final String uuid) throws NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("uuid", String.class, uuid));
+        try {
+            final ManagedObjectReference mor = this.getVimService().getWsc()
+                    .invoke("QueryDvsByUuid", params, ManagedObjectReference.class);
+            return new DistributedVirtualSwitch(this.getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<DistributedVirtualSwitchManagerCompatibilityResult> queryDvsCheckCompatibility(
+            final DistributedVirtualSwitchManagerHostContainer hostContainer,
+            final DistributedVirtualSwitchManagerDvsProductSpec dvsProductSpec,
+            final List<DistributedVirtualSwitchManagerHostDvsFilterSpec> hostFilterSpec) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("hostContainer", DistributedVirtualSwitchManagerHostContainer.class, hostContainer),
+                new Argument("dvsProductSpec", DistributedVirtualSwitchManagerDvsProductSpec.class, dvsProductSpec),
+                new Argument("hostFilterSpec", DistributedVirtualSwitchManagerHostDvsFilterSpec[].class, hostFilterSpec));
+        try {
+            return (List<DistributedVirtualSwitchManagerCompatibilityResult>) this.getVimService().getWsc()
+                    .invoke("QueryDvsCheckCompatibility", params, "List.DistributedVirtualSwitchManagerCompatibilityResult");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<DistributedVirtualSwitchHostProductSpec> queryDvsCompatibleHostSpec(
+            final DistributedVirtualSwitchProductSpec switchProductSpec) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("switchProductSpec", DistributedVirtualSwitchProductSpec.class, switchProductSpec));
+        try {
+            return (List<DistributedVirtualSwitchHostProductSpec>) this.getVimService().getWsc()
+                    .invoke("QueryDvsCompatibleHostSpec", params, "List.DistributedVirtualSwitchHostProductSpec");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public DVSManagerDvsConfigTarget queryDvsConfigTarget(final ManagedObjectReference host, final ManagedObjectReference dvs)
+            throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("host", ManagedObjectReference.class, host),
+                new Argument("dvs", ManagedObjectReference.class, dvs));
+        try {
+            return this.getVimService().getWsc().invoke("QueryDvsConfigTarget", params, DVSManagerDvsConfigTarget.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public DVSFeatureCapability queryDvsFeatureCapability(final DistributedVirtualSwitchProductSpec switchProductSpec)
+            throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("switchProductSpec", DistributedVirtualSwitchProductSpec.class, switchProductSpec));
+        try {
+            return this.getVimService().getWsc().invoke("QueryDvsFeatureCapability", params, DVSFeatureCapability.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task rectifyDvsOnHost(final List<ManagedObjectReference> hosts) throws DvsFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("hosts", ManagedObjectReference[].class, hosts));
+        try {
+            return this.invokeWithTaskReturn("RectifyDvsOnHost_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DvsFault) {
+                throw (DvsFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
 }

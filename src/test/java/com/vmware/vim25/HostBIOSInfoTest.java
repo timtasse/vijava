@@ -14,6 +14,7 @@ import java.net.URLConnection;
 import java.rmi.RemoteException;
 import java.time.Instant;
 import java.util.*;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -64,6 +65,16 @@ public class HostBIOSInfoTest {
         LOGGER.debug(capability.toString());
     }
 
+    @Test
+    public void testDvs() throws Exception {
+        final List<VmwareDistributedVirtualSwitch> switches = Optional.ofNullable(new InventoryNavigator(this.instance.getRootFolder()).searchManagedEntities(VmwareDistributedVirtualSwitch.class.getSimpleName()))
+                .stream().flatMap(Arrays::stream)
+                .map(VmwareDistributedVirtualSwitch.class::cast)
+                .collect(Collectors.toList());
+        LOGGER.debug(switches.get(0).getName());
+        LOGGER.debug("{}", switches.get(0).queryUsedVlanIds());
+
+    }
 
     @Test
     public void testEvcManager() throws Exception {
@@ -82,7 +93,7 @@ public class HostBIOSInfoTest {
     @Test(enabled = false)
     public void testSnapshot() throws Exception {
         final VirtualMachine vm = this.getVirtualMachine();
-        final Task task = vm.createSnapshot_Task("test123", "test", false, false);
+        final Task task = vm.createSnapshot("test123", "test", false, false);
         task.waitForTask();
         if (task.getTaskInfo().getState() == TaskInfoState.success) {
             VirtualMachineSnapshot snap =
@@ -98,6 +109,12 @@ public class HostBIOSInfoTest {
     public void testGuestIntegrity() throws Exception {
         final VirtualMachine vm = this.getVirtualMachine();
         LOGGER.debug("{}", vm);
+        final VirtualMachineTicket ticket = vm.acquireTicket(VirtualMachineTicketType.mks);
+        LOGGER.debug("{}", ticket);
+        LOGGER.debug("vmrc://{}:{}/?mksticket={}&thumbprint={}&path={}", ticket.getHost(), ticket.getPort(), ticket.getTicket(), ticket.getSslThumbprint().replace(":", "%3A"), ticket.getCfgFile());
+        final VirtualMachineTicket webTicket = vm.acquireTicket(VirtualMachineTicketType.webmks);
+        LOGGER.debug("{}", webTicket);
+        Thread.sleep(40000);
         final VirtualMachineConfigInfo config = vm.getConfig();
         final VirtualMachineGuestIntegrityInfo integrityInfo = config.getGuestIntegrityInfo();
         LOGGER.debug("IntegrityInfo enabled={}", integrityInfo.isEnabled());
@@ -146,6 +163,9 @@ public class HostBIOSInfoTest {
     @Test
     public void testLogEvent() throws Exception {
         final VirtualMachine vm = this.getVirtualMachine();
+        final List<VirtualMachineSnapshot> rootSnapshot = vm.getRootSnapshot();
+        LOGGER.debug("{} - {}", rootSnapshot, rootSnapshot.getClass());
+        LOGGER.debug(VirtualMachineTicketType.webmks.name());
         final EventManager eventManager = this.instance.getEventManager();
         for (EventDescriptionEventDetail detail : eventManager.getDescription().getEventInfo()) {
             if (detail.getKey().toLowerCase().contains("freenet")) {
@@ -280,7 +300,7 @@ public class HostBIOSInfoTest {
         LOGGER.debug("hostAccessManagerSupported={}", capability.getHostAccessManagerSupported());
         LOGGER.debug("maxNumDisksSVMotion={}", capability.getMaxNumDisksSVMotion());
         LOGGER.debug("nfs41Supported={}", capability.getNfs41Supported());
-        LOGGER.debug("provisioningNicSelectionSupported={}", capability.isProvisioningNicSelectionSupported());
+        LOGGER.debug("provisioningNicSelectionSupported={}", capability.getProvisioningNicSelectionSupported());
         LOGGER.debug("turnDiskLocatorLedSupported={}", capability.getTurnDiskLocatorLedSupported());
         LOGGER.debug("virtualVolumeDatastoreSupported={}", capability.getVirtualVolumeDatastoreSupported());
         final HostBIOSInfo biosInfo = host.getHardware().getBiosInfo();
@@ -294,7 +314,9 @@ public class HostBIOSInfoTest {
         assertNotNull(biosInfo.getReleaseDate());
         try {
             accessManager.changeAccessMode("test", false, HostAccessMode.accessAdmin);
-        } catch (Exception e) {
+        } catch (final UserNotFound e) {
+            LOGGER.debug("User {} not found", e.getPrincipal(), e);
+        } catch (final Exception e) {
             LOGGER.debug("Error in changeAccessMode", e);
         }
         LOGGER.debug(accessManager.querySystemUsers().toString());
@@ -309,14 +331,6 @@ public class HostBIOSInfoTest {
 //        LOGGER.debug(statsNew.toString());
 //        this.testSpeed(true, accessManager);
 //        this.testSpeed(false, accessManager);
-    }
-
-    private void testSpeed(final boolean old, final HostAccessManager accessManager) {
-        if (old) {
-            LOGGER.debug("Old: {}", Stream.generate(accessManager::test).limit(100).mapToLong(val -> val).summaryStatistics());
-        } else {
-            LOGGER.debug("New: {}", Stream.generate(accessManager::testNew).limit(100).mapToLong(val -> val).summaryStatistics());
-        }
     }
 
     @Test
@@ -353,10 +367,10 @@ public class HostBIOSInfoTest {
         deviceConfigSpec.setOperation(VirtualDeviceConfigSpecOperation.edit);
         final VirtualMachineConfigSpec configSpec = new VirtualMachineConfigSpec();
         configSpec.setDeviceChange(new VirtualDeviceConfigSpec[]{deviceConfigSpec});
-        final Task task = vm.reconfigVM_Task(configSpec);
+        final Task task = vm.reconfigVM(configSpec);
         task.waitForTask();
         nic.resourceAllocation.share.level = level;
-        final Task task1 = vm.reconfigVM_Task(configSpec);
+        final Task task1 = vm.reconfigVM(configSpec);
         task1.waitForTask();
         final List<VirtualDeviceConfigSpec> specsList = Arrays.stream(devices).peek(dev -> LOGGER.debug("{} : {}", dev.getClass().getSimpleName(), dev.key))
                 .filter(dev -> dev.key >= 500 && dev.key != 600 && dev.key != 700)
@@ -369,7 +383,7 @@ public class HostBIOSInfoTest {
         final VirtualDeviceConfigSpec[] specs = specsList.toArray(new VirtualDeviceConfigSpec[specsList.size()]);
         final VirtualMachineConfigSpec configSpec1 = new VirtualMachineConfigSpec();
         configSpec1.setDeviceChange(specs);
-        final Task task2 = vm.reconfigVM_Task(configSpec1);
+        final Task task2 = vm.reconfigVM(configSpec1);
         task2.waitForTask();
     }
 

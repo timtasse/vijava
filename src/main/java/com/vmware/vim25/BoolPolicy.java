@@ -30,19 +30,25 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 public class BoolPolicy extends InheritablePolicy {
-  public Boolean value;
 
-  public Boolean getValue() {
-    return this.value;
-  }
+    private Boolean value;
 
-  public void setValue(Boolean value) {
-    this.value=value;
-  }
+    @Override
+    public String toString() {
+        return "BoolPolicy{" +
+                "value=" + value +
+                "} " + super.toString();
+    }
+
+    public Boolean getValue() {
+        return this.value;
+    }
+
+    public void setValue(Boolean value) {
+        this.value = value;
+    }
 }

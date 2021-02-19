@@ -29,56 +29,88 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The ClusterDrsConfigInfo data object contains configuration information for the VMware DRS service.
+ *
+ * All fields are optional. If you set the modify parameter to true when you call ReconfigureComputeResource_Task,
+ * an unset property has no effect on the existing property value in the cluster configuration on the Server.
+ * If you set the modify parameter to false when you reconfigure a cluster,
+ * the cluster configuration is reverted to the default values, then the new configuration values are applied.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class ClusterDrsConfigInfo extends DynamicData {
-  public Boolean enabled;
-  public Boolean enableVmBehaviorOverrides;
-  public DrsBehavior defaultVmBehavior;
-  public Integer vmotionRate;
-  public OptionValue[] option;
 
-  public Boolean getEnabled() {
-    return this.enabled;
-  }
+    @Deprecated(since = "7.0")
+    private Boolean enabled;
+    private Boolean enableVmBehaviorOverrides;
+    private DrsBehavior defaultVmBehavior;
+    private Integer vmotionRate;
+    private String scaleDescendantsShares;
+    private OptionValue[] option;
 
-  public Boolean getEnableVmBehaviorOverrides() {
-    return this.enableVmBehaviorOverrides;
-  }
+    @Override
+    public String toString() {
+        return "ClusterDrsConfigInfo{" +
+                "enabled=" + enabled +
+                ", enableVmBehaviorOverrides=" + enableVmBehaviorOverrides +
+                ", defaultVmBehavior=" + defaultVmBehavior +
+                ", vmotionRate=" + vmotionRate +
+                ", scaleDescendantsShares='" + scaleDescendantsShares + '\'' +
+                ", option=" + Arrays.toString(option) +
+                "} " + super.toString();
+    }
 
-  public DrsBehavior getDefaultVmBehavior() {
-    return this.defaultVmBehavior;
-  }
+    public Boolean getEnabled() {
+        return this.enabled;
+    }
 
-  public Integer getVmotionRate() {
-    return this.vmotionRate;
-  }
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
+    }
 
-  public OptionValue[] getOption() {
-    return this.option;
-  }
+    public Boolean getEnableVmBehaviorOverrides() {
+        return this.enableVmBehaviorOverrides;
+    }
 
-  public void setEnabled(Boolean enabled) {
-    this.enabled=enabled;
-  }
+    public void setEnableVmBehaviorOverrides(Boolean enableVmBehaviorOverrides) {
+        this.enableVmBehaviorOverrides = enableVmBehaviorOverrides;
+    }
 
-  public void setEnableVmBehaviorOverrides(Boolean enableVmBehaviorOverrides) {
-    this.enableVmBehaviorOverrides=enableVmBehaviorOverrides;
-  }
+    public DrsBehavior getDefaultVmBehavior() {
+        return this.defaultVmBehavior;
+    }
 
-  public void setDefaultVmBehavior(DrsBehavior defaultVmBehavior) {
-    this.defaultVmBehavior=defaultVmBehavior;
-  }
+    public void setDefaultVmBehavior(DrsBehavior defaultVmBehavior) {
+        this.defaultVmBehavior = defaultVmBehavior;
+    }
 
-  public void setVmotionRate(Integer vmotionRate) {
-    this.vmotionRate=vmotionRate;
-  }
+    public Integer getVmotionRate() {
+        return this.vmotionRate;
+    }
 
-  public void setOption(OptionValue[] option) {
-    this.option=option;
-  }
+    public void setVmotionRate(Integer vmotionRate) {
+        this.vmotionRate = vmotionRate;
+    }
+
+    public OptionValue[] getOption() {
+        return this.option;
+    }
+
+    public void setOption(OptionValue[] option) {
+        this.option = option;
+    }
+
+    public String getScaleDescendantsShares() {
+        return scaleDescendantsShares;
+    }
+
+    public void setScaleDescendantsShares(final String scaleDescendantsShares) {
+        this.scaleDescendantsShares = scaleDescendantsShares;
+    }
+
 }

@@ -146,7 +146,7 @@ public class VirtualMachineDeviceManager {
             throw new RuntimeException("No available IDE controller for floppy drive.");
         }
 
-        return vm.reconfigVM_Task(config);
+        return vm.reconfigVM(config);
     }
 
     /*############################################################
@@ -225,7 +225,7 @@ public class VirtualMachineDeviceManager {
             throw new RuntimeException("No free IDE controller for addtional CD Drive.");
         }
 
-        Task task = vm.reconfigVM_Task(config);
+        Task task = vm.reconfigVM(config);
         task.waitForTask();
     }
 
@@ -287,7 +287,7 @@ public class VirtualMachineDeviceManager {
         VirtualDeviceConfigSpec[] vdiskSpecArray = {vdiskSpec};
 
         vmConfigSpec.setDeviceChange(vdiskSpecArray);
-        Task task = vm.reconfigVM_Task(vmConfigSpec);
+        Task task = vm.reconfigVM(vmConfigSpec);
 
         task.waitForTask(200, 100);
     }
@@ -317,7 +317,7 @@ public class VirtualMachineDeviceManager {
         diskSpec.setOperation(VirtualDeviceConfigSpecOperation.add);
         diskSpec.setDevice(disk);
 
-        Task task = vm.reconfigVM_Task(vmConfigSpec);
+        Task task = vm.reconfigVM(vmConfigSpec);
 
         task.waitForTask(200, 100);
     }
@@ -400,7 +400,7 @@ public class VirtualMachineDeviceManager {
 
         VirtualMachineConfigSpec vmConfigSpec = new VirtualMachineConfigSpec();
         vmConfigSpec.setDeviceChange(new VirtualDeviceConfigSpec[]{nicSpec});
-        Task task = vm.reconfigVM_Task(vmConfigSpec);
+        Task task = vm.reconfigVM(vmConfigSpec);
 
         task.waitForTask(200, 100);
     }
@@ -418,8 +418,8 @@ public class VirtualMachineDeviceManager {
             validateDVPortGroupForVNicConnection(dvPortgroupInfo);
             VirtualEthernetCardDistributedVirtualPortBackingInfo nicBacking = new VirtualEthernetCardDistributedVirtualPortBackingInfo();
             nicBacking.port = new DistributedVirtualSwitchPortConnection();
-            nicBacking.port.portgroupKey = dvPortgroupInfo.portgroupKey;
-            nicBacking.port.switchUuid = dvPortgroupInfo.switchUuid;
+            nicBacking.port.portgroupKey = dvPortgroupInfo.getPortgroupKey();
+            nicBacking.port.switchUuid = dvPortgroupInfo.getSwitchUuid();
             result = createNicSpec(adapterType, macAddress, wakeOnLan, startConnected, nicBacking);
         } else {
             NetworkSummary netSummary = getHostNetworkSummaryByName(
@@ -434,11 +434,11 @@ public class VirtualMachineDeviceManager {
 
     // Validate if vDS Portgroup can be bound to vnic
     private void validateDVPortGroupForVNicConnection(DistributedVirtualPortgroupInfo dvPortgroupInfo) {
-        if (dvPortgroupInfo.uplinkPortgroup) {
+        if (dvPortgroupInfo.isUplinkPortgroup()) {
             throw new RuntimeException("The vDS portgroup's uplinkPortgroup should not be null");
         }
 
-        DistributedVirtualPortgroupPortgroupType portgroupType = DistributedVirtualPortgroupPortgroupType.valueOf(dvPortgroupInfo.portgroupType);
+        DistributedVirtualPortgroupPortgroupType portgroupType = DistributedVirtualPortgroupPortgroupType.valueOf(dvPortgroupInfo.getPortgroupType());
 
         String prodLineId = vm.getServerConnection().getServiceInstance().getAboutInfo().getProductLineId();
         // standalone host cannot do early or late binding
@@ -478,7 +478,7 @@ public class VirtualMachineDeviceManager {
 
         if (hostDistributedVirtualPortgroupInfo != null) {
             for (DistributedVirtualPortgroupInfo portgroupInfo : hostDistributedVirtualPortgroupInfo) {
-                if (portgroupInfo.portgroupName.equalsIgnoreCase(portgroupName)) {
+                if (portgroupInfo.getPortgroupName().equalsIgnoreCase(portgroupName)) {
                     result = portgroupInfo;
                     break;
                 }
@@ -679,7 +679,7 @@ public class VirtualMachineDeviceManager {
             for (int i = 0; i < configSpecList.size(); i++) {
                 config.getDeviceChange()[i] = configSpecList.get(i);
             }
-            Task task = vm.reconfigVM_Task(config);
+            Task task = vm.reconfigVM(config);
             return task;
         }
         return null;

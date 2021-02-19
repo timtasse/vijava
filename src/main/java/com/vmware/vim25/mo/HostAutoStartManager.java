@@ -32,18 +32,25 @@ package com.vmware.vim25.mo;
 import com.vmware.vim25.HostAutoStartManagerConfig;
 import com.vmware.vim25.ManagedObjectReference;
 import com.vmware.vim25.RuntimeFault;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * The AutoStartManager allows clients to invoke and set up the auto-start/auto-stop order of virtual machines on a single host.
+ * Virtual machines configured to use auto-start are automatically started or stopped when the host is started or shut down.
+ * The AutoStartManager is available when clients connect directly to a host, such as an ESX Server machine or through VirtualCenter.
  *
  * @author Steve JIN (http://www.doublecloud.org)
- * @author Stefan Dilk
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 2.0
  */
+@SuppressWarnings("unused")
 public class HostAutoStartManager extends ManagedObject {
 
-    public HostAutoStartManager(ServerConnection serverConnection, ManagedObjectReference mor) {
+    public HostAutoStartManager(final ServerConnection serverConnection, final ManagedObjectReference mor) {
         super(serverConnection, mor);
     }
 
@@ -53,37 +60,39 @@ public class HostAutoStartManager extends ManagedObject {
 
     public void autoStartPowerOff() throws RuntimeFault {
         try {
-            getVimService().autoStartPowerOff(getMOR());
-        } catch (RemoteException e) {
+            this.getVimService().getWsc().invokeWithoutReturn("AutoStartPowerOff", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {
                 throw (RuntimeFault) cause;
             }
-            throw new IllegalStateException("Exception not known", e);
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
     }
 
     public void autoStartPowerOn() throws RuntimeFault {
         try {
-            getVimService().autoStartPowerOn(getMOR());
-        } catch (RemoteException e) {
+            this.getVimService().getWsc().invokeWithoutReturn("AutoStartPowerOn", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {
                 throw (RuntimeFault) cause;
             }
-            throw new IllegalStateException("Exception not known", e);
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
     }
 
-    public void reconfigureAutostart(HostAutoStartManagerConfig spec) throws RuntimeFault {
+    public void reconfigureAutostart(final HostAutoStartManagerConfig spec) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", HostAutoStartManagerConfig.class, spec));
         try {
-            getVimService().reconfigureAutostart(getMOR(), spec);
-        } catch (RemoteException e) {
+            this.getVimService().getWsc().invokeWithoutReturn("ReconfigureAutostart", params);
+        } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {
                 throw (RuntimeFault) cause;
             }
-            throw new IllegalStateException("Exception not known", e);
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
     }
 

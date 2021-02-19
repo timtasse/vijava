@@ -83,6 +83,8 @@ public class VirtualMachineCapability extends DynamicData {
     private boolean vmNpivWwnSupported;
     private boolean vmNpivWwnUpdateSupported;
     private boolean vPMCSupported;
+    private Boolean toolsSyncTimeAllowSupported;
+    private Boolean sevSupported;
 
     @Override
     public String toString() {
@@ -129,6 +131,8 @@ public class VirtualMachineCapability extends DynamicData {
                 ", vmNpivWwnSupported=" + vmNpivWwnSupported +
                 ", vmNpivWwnUpdateSupported=" + vmNpivWwnUpdateSupported +
                 ", vPMCSupported=" + vPMCSupported +
+                ", toolsSyncTimeAllowSupported=" + toolsSyncTimeAllowSupported +
+                ", sevSupported=" + sevSupported +
                 "} " + super.toString();
     }
 
@@ -466,6 +470,22 @@ public class VirtualMachineCapability extends DynamicData {
 
     public void setvPMCSupported(final boolean vPMCSupported) {
         this.vPMCSupported = vPMCSupported;
+    }
+
+    public Boolean getToolsSyncTimeAllowSupported() {
+        return toolsSyncTimeAllowSupported;
+    }
+
+    public void setToolsSyncTimeAllowSupported(final Boolean toolsSyncTimeAllowSupported) {
+        this.toolsSyncTimeAllowSupported = toolsSyncTimeAllowSupported;
+    }
+
+    public Boolean getSevSupported() {
+        return sevSupported;
+    }
+
+    public void setSevSupported(final Boolean sevSupported) {
+        this.sevSupported = sevSupported;
     }
 
 }

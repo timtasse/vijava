@@ -9,30 +9,81 @@ import java.util.List;
 
 /**
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0
  * @since 6.7
  */
+@SuppressWarnings("unused")
 public class CryptoManagerHost extends CryptoManager {
 
     public CryptoManagerHost(final ServerConnection serverConnection, final ManagedObjectReference mor) {
         super(serverConnection, mor);
     }
 
-    public Task changeKey(final CryptoKeyPlain newKey) throws InvalidState, RuntimeFault, RemoteException {
+    public Task changeKey(final CryptoKeyPlain newKey) throws InvalidState, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("newKey", CryptoKeyPlain.class, newKey));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("ChangeKey_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+        try {
+            return this.invokeWithTaskReturn("ChangeKey_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void enable(final CryptoKeyPlain initialKey) throws AlreadyExists, InvalidState, RuntimeFault, RemoteException {
+    public void disable() throws InvalidState, RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("CryptoManagerHostDisable", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void enable(final CryptoKeyPlain initialKey) throws AlreadyExists, InvalidState, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("initialKey", CryptoKeyPlain.class, initialKey));
-        this.getVimService().getWsc().invokeWithoutReturn("CryptoManagerHostEnable", params);
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("CryptoManagerHostEnable", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void prepare() throws InvalidState, RuntimeFault, RemoteException {
-        this.getVimService().getWsc().invokeWithoutReturn("CryptoManagerHostPrepare", this.getSingleSelfArgumentList());
+    public void prepare() throws InvalidState, RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("CryptoManagerHostPrepare", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
 }

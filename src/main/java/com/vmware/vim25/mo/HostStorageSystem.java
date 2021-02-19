@@ -36,6 +36,8 @@ import java.rmi.RemoteException;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * This managed object gets and sets configuration information about the host's storage subsystem.
@@ -44,437 +46,1605 @@ import java.util.List;
  *
  * @author Steve JIN (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7.2
+ * @version 7.0
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("unused")
 public class HostStorageSystem extends ExtensibleManagedObject {
 
-    public HostStorageSystem(ServerConnection serverConnection, ManagedObjectReference mor) {
+    public HostStorageSystem(final ServerConnection serverConnection, final ManagedObjectReference mor) {
         super(serverConnection, mor);
     }
 
     public HostFileSystemVolumeInfo getFileSystemVolumeInfo() {
-        return (HostFileSystemVolumeInfo) getCurrentProperty("fileSystemVolumeInfo");
+        return getCurrentProperty("fileSystemVolumeInfo", HostFileSystemVolumeInfo.class);
     }
 
     public HostMultipathStateInfo getMultipathStateInfo() {
-        return (HostMultipathStateInfo) getCurrentProperty("multipathStateInfo");
+        return getCurrentProperty("multipathStateInfo", HostMultipathStateInfo.class);
     }
 
     public HostStorageDeviceInfo getStorageDeviceInfo() {
-        return (HostStorageDeviceInfo) getCurrentProperty("storageDeviceInfo");
+        return getCurrentProperty("storageDeviceInfo", HostStorageDeviceInfo.class);
     }
 
-    public String[] getSystemFile() {
-        return (String[]) getCurrentProperty("systemFile");
+    public List<String> getSystemFile() {
+        final Optional<String[]> systemFile = Optional.ofNullable(getCurrentProperty("systemFile", String[].class));
+        if (systemFile.isEmpty()) {
+            return Collections.emptyList();
+        }
+        return systemFile.stream().flatMap(Arrays::stream).collect(Collectors.toList());
     }
 
-    public void addInternetScsiSendTargets(String iScsiHbaDevice, HostInternetScsiHbaSendTarget[] targets) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().addInternetScsiSendTargets(getMOR(), iScsiHbaDevice, targets);
-    }
-
-    public void addInternetScsiStaticTargets(String iScsiHbaDevice, HostInternetScsiHbaStaticTarget[] targets) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().addInternetScsiStaticTargets(getMOR(), iScsiHbaDevice, targets);
-    }
-
-    public void attachScsiLun(String lunUuid) throws NotFound, HostConfigFault, InvalidState, RuntimeFault, RemoteException {
-        getVimService().attachScsiLun(getMOR(), lunUuid);
-    }
-
-    public Task attachScsiLunEx(final List<String> lunUuid) throws HostConfigFault, RuntimeFault, RemoteException {
+    public void addInternetScsiSendTargets(final String iScsiHbaDevice, final List<HostInternetScsiHbaSendTarget> targets)
+            throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("lunUuid", "String[]", lunUuid));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("AttachScsiLunEx_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+                new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
+                new Argument("targets", HostInternetScsiHbaSendTarget[].class, targets));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("AddInternetScsiSendTargets", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void attachVmfsExtent(String vmfsPath, HostScsiDiskPartition extent) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().attachVmfsExtent(getMOR(), vmfsPath, extent);
-    }
-
-    public void changeNFSUserPassword(final String password) throws HostConfigFault, RuntimeFault, RemoteException {
+    public void addInternetScsiStaticTargets(final String iScsiHbaDevice, final List<HostInternetScsiHbaStaticTarget> targets)
+            throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("password", "String", password));
-        this.getVimService().getWsc().invokeWithoutReturn("ChangeNFSUserPassword", params);
+                new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
+                new Argument("targets", HostInternetScsiHbaStaticTarget.class, targets));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("AddInternetScsiStaticTargets", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void clearNFSUser() throws HostConfigFault, RuntimeFault, RemoteException {
-        final List<Argument> params = Collections.singletonList(this.getSelfArgument());
-        this.getVimService().getWsc().invokeWithoutReturn("ClearNFSUser", params);
+    public void attachScsiLun(final String lunUuid) throws NotFound, HostConfigFault, InvalidState, RuntimeFault {
+        final List<Argument> param = Arrays.asList(this.getSelfArgument(),
+                new Argument("lunUuid", String.class, lunUuid));
+        try {
+            getVimService().getWsc().invokeWithoutReturn("AttachScsiLun", param);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task attachScsiLunEx(final List<String> lunUuid) throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("lunUuid", String[].class, lunUuid.toArray()));
+        try {
+            return this.invokeWithTaskReturn("AttachScsiLunEx_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void attachVmfsExtent(final String vmfsPath, final HostScsiDiskPartition extent)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vmfsPath", String.class, vmfsPath),
+                new Argument("extent", HostScsiDiskPartition.class, extent));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("AttachVmfsExtent", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void changeNFSUserPassword(final String password) throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("password", String.class, password));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("ChangeNFSUserPassword", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void clearNFSUser() throws HostConfigFault, RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("ClearNFSUser", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
     //SDK4.1 signature for back compatibility
-    public HostDiskPartitionInfo computeDiskPartitionInfo(String devicePath, HostDiskPartitionLayout layout) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        return computeDiskPartitionInfo(devicePath, layout, null);
+    public HostDiskPartitionInfo computeDiskPartitionInfo(final String devicePath, final HostDiskPartitionLayout layout)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        return this.computeDiskPartitionInfo(devicePath, layout, null);
     }
 
     //SDK5.0 signature
-    public HostDiskPartitionInfo computeDiskPartitionInfo(String devicePath, HostDiskPartitionLayout layout, String partitionFormat) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        return getVimService().computeDiskPartitionInfo(getMOR(), devicePath, layout, partitionFormat);
+    public HostDiskPartitionInfo computeDiskPartitionInfo(final String devicePath, final HostDiskPartitionLayout layout,
+                                                          final String partitionFormat)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("devicePath", String.class, devicePath),
+                new Argument("layout", HostDiskPartitionLayout.class, layout),
+                new Argument("partitionFormat", String.class, partitionFormat));
+        try {
+            return this.getVimService().getWsc().invoke("ComputeDiskPartitionInfo", params, HostDiskPartitionInfo.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
     //SDK4.1 signature for back compatibility
-    public HostDiskPartitionInfo computeDiskPartitionInfoForResize(HostScsiDiskPartition partition, HostDiskPartitionBlockRange blockRange) throws NotFound, HostConfigFault, RuntimeFault, RemoteException {
-        return computeDiskPartitionInfoForResize(partition, blockRange, null);
+    public HostDiskPartitionInfo computeDiskPartitionInfoForResize(final HostScsiDiskPartition partition,
+                                                                   final HostDiskPartitionBlockRange blockRange)
+            throws NotFound, HostConfigFault, RuntimeFault {
+        return this.computeDiskPartitionInfoForResize(partition, blockRange, null);
     }
 
     //SDK5.0 signature
-    public HostDiskPartitionInfo computeDiskPartitionInfoForResize(HostScsiDiskPartition partition, HostDiskPartitionBlockRange blockRange, String partitionFormat) throws NotFound, HostConfigFault, RuntimeFault, RemoteException {
-        return getVimService().computeDiskPartitionInfoForResize(getMOR(), partition, blockRange, partitionFormat);
-    }
-
-    public void deleteScsiLunState(final String lunCanonicalName) throws HostConfigFault, RuntimeFault, RemoteException {
+    public HostDiskPartitionInfo computeDiskPartitionInfoForResize(final HostScsiDiskPartition partition,
+                                                                   final HostDiskPartitionBlockRange blockRange,
+                                                                   final String partitionFormat)
+            throws NotFound, HostConfigFault, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("lunCanonicalName", "String", lunCanonicalName));
-        this.getVimService().getWsc().invokeWithoutReturn("DeleteScsiLunState", params);
+                new Argument("partition", HostScsiDiskPartition.class, partition),
+                new Argument("blockRange", HostDiskPartitionBlockRange.class, blockRange),
+                new Argument("partitionFormat", String.class, partitionFormat));
+        try {
+            return this.getVimService().getWsc().invoke("ComputeDiskPartitionInfoForResize", params, HostDiskPartitionInfo.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void deleteVffsVolumeState(String vffsUuid) throws HostConfigFault, RuntimeFault, RemoteException {
-        getVimService().deleteVffsVolumeState(this.getMOR(), vffsUuid);
-    }
-
-    public void deleteVmfsVolumeState(final String vmfsUuid) throws HostConfigFault, RuntimeFault, RemoteException {
+    public void connectNvmeController(final HostNvmeConnectSpec connectSpec) throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("vmfsUuid", "String", vmfsUuid));
-        this.getVimService().getWsc().invokeWithoutReturn("DeleteVmfsVolumeState", params);
+                new Argument("connectSpec", HostNvmeConnectSpec.class, connectSpec));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("ConnectNvmeController", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void destroyVffs(String vffsPath) throws NotFound, HostConfigFault, ResourceInUse, RuntimeFault, RemoteException {
-        getVimService().destroyVffs(this.getMOR(), vffsPath);
-    }
-
-    public void detachScsiLun(String lunUuid) throws NotFound, HostConfigFault, InvalidState, ResourceInUse, RuntimeFault, RemoteException {
-        getVimService().detachScsiLun(getMOR(), lunUuid);
-    }
-
-    public Task detachScsiLunEx(final List<String> lunUuid) throws HostConfigFault, RuntimeFault, RemoteException {
+    public void createNvmeOverRdmaAdapter(final String rdmaDeviceName) throws ResourceInUse, HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("lunUuid", "String[]", lunUuid.toArray()));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("DetachScsiLunEx_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+                new Argument("rdmaDeviceName", String.class, rdmaDeviceName));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("CreateNvmeOverRdmaAdapter", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void disableMultipathPath(String pathName) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().disableMultipathPath(getMOR(), pathName);
-    }
-
-    public void discoverFcoeHbas(FcoeConfigFcoeSpecification fcoeSpec) throws FcoeFaultPnicHasNoPortSet, HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().discoverFcoeHbas(getMOR(), fcoeSpec);
-    }
-
-    public void enableMultipathPath(String pathName) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().enableMultipathPath(getMOR(), pathName);
-    }
-
-    public void expandVmfsExtent(String vmfsPath, HostScsiDiskPartition extent) throws NotFound, HostConfigFault, RuntimeFault, RemoteException {
-        getVimService().expandVmfsExtent(getMOR(), vmfsPath, extent);
-    }
-
-    public void extendVffs(String vffsPath, String devicePath, HostDiskPartitionSpec spec) throws NotFound, HostConfigFault, ResourceInUse, RuntimeFault, RemoteException {
-        getVimService().extendVffs(this.getMOR(), vffsPath, devicePath, spec);
-    }
-
-    public HostVffsVolume formatVffs(String vffsPath, String devicePath, HostVffsSpec createSpec) throws AlreadyExists, HostConfigFault, ResourceInUse, RuntimeFault, RemoteException {
-        return getVimService().formatVffs(this.getMOR(), createSpec);
-    }
-
-    public HostVmfsVolume formatVmfs(HostVmfsSpec createSpec) throws HostConfigFault, AlreadyExists, RuntimeFault, RemoteException {
-        return getVimService().formatVmfs(getMOR(), createSpec);
-    }
-
-    public Task markAsLocal(final String scsiDiskUuid) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
+    public void deleteScsiLunState(final String lunCanonicalName) throws HostConfigFault, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("scsiDiskUuid", "String", scsiDiskUuid));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("MarkAsLocal_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+                new Argument("lunCanonicalName", String.class, lunCanonicalName));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("DeleteScsiLunState", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task markAsNonLocal(final String scsiDiskUuid) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
+    public void deleteVffsVolumeState(final String vffsUuid) throws HostConfigFault, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("scsiDiskUuid", "String", scsiDiskUuid));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("MarkAsNonLocal_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+                new Argument("vffsUuid", String.class, vffsUuid));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("DeleteVffsVolumeState", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task markAsNonSsd(final String scsiDiskUuid) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
+    public void deleteVmfsVolumeState(final String vmfsUuid) throws HostConfigFault, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("scsiDiskUuid", "String", scsiDiskUuid));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("MarkAsNonSsd_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+                new Argument("vmfsUuid", String.class, vmfsUuid));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("DeleteVmfsVolumeState", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task markAsSsd(final String scsiDiskUuid) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
+    public void destroyVffs(final String vffsPath) throws NotFound, HostConfigFault, ResourceInUse, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("scsiDiskUuid", "String", scsiDiskUuid));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("MarkAsSsd_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+                new Argument("vffsPath", String.class, vffsPath));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("DestroyVffs", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void markForRemoval(final String hbaName, final boolean remove) throws HostConfigFault, InvalidArgument, NotFound, RuntimeFault, RemoteException {
+    public void detachScsiLun(final String lunUuid) throws NotFound, HostConfigFault, InvalidState, ResourceInUse, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("lunUuid", String.class, lunUuid));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("DetachScsiLun", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task detachScsiLunEx(final List<String> lunUuid) throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("lunUuid", String[].class, lunUuid.toArray()));
+        try {
+            return this.invokeWithTaskReturn("DetachScsiLunEx_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void disableMultipathPath(final String pathName) throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("pathName", String.class, pathName));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("DisableMultipathPath", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void disconnectNvmeController(final HostNvmeDisconnectSpec disconnectSpec)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("disconnectSpec", HostNvmeDisconnectSpec.class, disconnectSpec));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("DisconnectNvmeController", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void discoverFcoeHbas(final FcoeConfigFcoeSpecification fcoeSpec)
+            throws FcoeFaultPnicHasNoPortSet, HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("fcoeSpec", FcoeConfigFcoeSpecification.class, fcoeSpec));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("DiscoverFcoeHbas", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof FcoeFaultPnicHasNoPortSet) {
+                throw (FcoeFaultPnicHasNoPortSet) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public HostNvmeDiscoveryLog discoverNvmeControllers(final HostNvmeDiscoverSpec discoverSpec)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("discoverSpec", HostNvmeDiscoverSpec.class, discoverSpec));
+        try {
+            return this.getVimService().getWsc().invoke("DiscoverNvmeControllers", params, HostNvmeDiscoveryLog.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void enableMultipathPath(final String pathName) throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("pathName", String.class, pathName));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("EnableMultipathPath", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void expandVmfsExtent(final String vmfsPath, final HostScsiDiskPartition extent)
+            throws NotFound, HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vmfsPath", String.class, vmfsPath),
+                new Argument("extent", HostScsiDiskPartition.class, extent));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("ExpandVmfsExtent", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void extendVffs(final String vffsPath, final String devicePath, final HostDiskPartitionSpec spec)
+            throws NotFound, HostConfigFault, ResourceInUse, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vffsPath", String.class, vffsPath),
+                new Argument("devicePath", String.class, devicePath),
+                new Argument("spec", HostDiskPartitionSpec.class, spec));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("ExtendVffs", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public HostVffsVolume formatVffs(final HostVffsSpec createSpec)
+            throws AlreadyExists, HostConfigFault, ResourceInUse, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("createSpec", HostVffsSpec.class, createSpec));
+        try {
+            return this.getVimService().getWsc().invoke("FormatVffs", params, HostVffsVolume.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public HostVmfsVolume formatVmfs(final HostVmfsSpec createSpec) throws HostConfigFault, AlreadyExists, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("createSpec", HostVmfsSpec.class, createSpec));
+        try {
+            return this.getVimService().getWsc().invoke("FormatVmfs", params, HostVmfsVolume.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task markAsLocal(final String scsiDiskUuid) throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("scsiDiskUuid", String.class, scsiDiskUuid));
+        try {
+            return this.invokeWithTaskReturn("MarkAsLocal_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task markAsNonLocal(final String scsiDiskUuid) throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("scsiDiskUuid", String.class, scsiDiskUuid));
+        try {
+            return this.invokeWithTaskReturn("MarkAsNonLocal_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task markAsNonSsd(final String scsiDiskUuid) throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("scsiDiskUuid", String.class, scsiDiskUuid));
+        try {
+            return this.invokeWithTaskReturn("MarkAsNonSsd_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task markAsSsd(final String scsiDiskUuid) throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("scsiDiskUuid", String.class, scsiDiskUuid));
+        try {
+            return this.invokeWithTaskReturn("MarkAsSsd_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void markForRemoval(final String hbaName, final boolean remove) throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("hbaName", String.class, hbaName),
                 new Argument("remove", "boolean", remove));
-        this.getVimService().getWsc().invokeWithoutReturn("MarkForRemoval", params);
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("MarkForRemoval", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void markPerenniallyReserved(final String lunUuid, final boolean state) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
+    public void markPerenniallyReserved(final String lunUuid, final boolean state) throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("lunUuid", String.class, lunUuid),
                 new Argument("state", "boolean", state));
-        this.getVimService().getWsc().invokeWithoutReturn("MarkPerenniallyReserved", params);
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("MarkPerenniallyReserved", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task markPerenniallyReservedEx(final List<String> lunUuid, final boolean state) throws RuntimeFault, RemoteException {
+    public Task markPerenniallyReservedEx(final List<String> lunUuid, final boolean state) throws RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("lunUuid", "String[]", lunUuid.toArray()),
-                new Argument("state", "boolean", state));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("MarkPerenniallyReservedEx_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+                new Argument("lunUuid", String[].class, lunUuid.toArray()),
+                Argument.fromBasicType("state", state));
+        try {
+            return this.invokeWithTaskReturn("MarkPerenniallyReservedEx_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void mountVffsVolume(String vffsUuid) throws NotFound, InvalidState, HostConfigFault, ResourceInUse, RuntimeFault, RemoteException {
-        getVimService().mountVffsVolume(this.getMOR(), vffsUuid);
-    }
-
-    public void mountVmfsVolume(String vmfsUuid) throws NotFound, InvalidState, HostConfigFault, ResourceInUse, RuntimeFault, RemoteException {
-        getVimService().mountVmfsVolume(getMOR(), vmfsUuid);
-    }
-
-    public Task mountVmfsVolumeEx(final List<String> vmfsUuid) throws HostConfigFault, RuntimeFault, RemoteException {
+    public void mountVffsVolume(final String vffsUuid) throws NotFound, InvalidState, HostConfigFault, ResourceInUse, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("vmfsUuid", "String[]", vmfsUuid.toArray()));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("MountVmfsVolumeEx_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+                new Argument("vffsUuid", String.class, vffsUuid));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("MountVffsVolume", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public HostScsiDisk[] queryAvailableSsds(String vffsPath) throws NotFound, HostConfigFault, RuntimeFault, RemoteException {
-        return getVimService().queryAvailableSsds(this.getMOR(), vffsPath);
-    }
-
-    public HostNasVolumeUserInfo queryNFSUser() throws HostConfigFault, RuntimeFault, RemoteException {
-        final List<Argument> params = Collections.singletonList(this.getSelfArgument());
-        return (HostNasVolumeUserInfo) this.getVimService().getWsc().invoke("QueryNFSUser", params, "HostNasVolumeUserInfo");
-    }
-
-    /**
-     * @since 4.0
-     */
-    public HostPathSelectionPolicyOption[] queryPathSelectionPolicyOptions() throws HostConfigFault, RuntimeFault, RemoteException {
-        return getVimService().queryPathSelectionPolicyOptions(getMOR());
-    }
-
-    /**
-     * @since 4.0
-     */
-    public HostStorageArrayTypePolicyOption[] queryStorageArrayTypePolicyOptions() throws HostConfigFault, RuntimeFault, RemoteException {
-        return getVimService().queryStorageArrayTypePolicyOptions(getMOR());
-    }
-
-    /**
-     * @since 4.0
-     */
-    public HostUnresolvedVmfsVolume[] queryUnresolvedVmfsVolume() throws RuntimeFault, RemoteException {
-        return getVimService().queryUnresolvedVmfsVolume(getMOR());
-    }
-
-    public List<VmfsConfigOption> queryVmfsConfigOption() throws RuntimeFault, RemoteException {
-        final List<Argument> params = Collections.singletonList(this.getSelfArgument());
-        return (List<VmfsConfigOption>) this.getVimService().getWsc().invoke("QueryVmfsConfigOption", params, "List.VmfsConfigOption");
-    }
-
-    public void refreshStorageSystem() throws RuntimeFault, RemoteException {
-        getVimService().refreshStorageSystem(getMOR());
-    }
-
-    public void removeInternetScsiSendTargets(String iScsiHbaDevice, HostInternetScsiHbaSendTarget[] targets) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().removeInternetScsiSendTargets(getMOR(), iScsiHbaDevice, targets);
-    }
-
-    public void removeInternetScsiStaticTargets(String iScsiHbaDevice, HostInternetScsiHbaStaticTarget[] targets) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().removeInternetScsiStaticTargets(getMOR(), iScsiHbaDevice, targets);
-    }
-
-    public void rescanAllHba() throws HostConfigFault, RuntimeFault, RemoteException {
-        getVimService().rescanAllHba(getMOR());
-    }
-
-    public void rescanHba(String hbaDevice) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().rescanHba(getMOR(), hbaDevice);
-    }
-
-    /**
-     * @since SDK5.5
-     */
-    public void rescanVffs() throws HostConfigFault, RuntimeFault, RemoteException {
-        getVimService().rescanVffs(this.getMOR());
-    }
-
-    public void rescanVmfs() throws HostConfigFault, RuntimeFault, RemoteException {
-        getVimService().rescanVmfs(getMOR());
-    }
-
-    /**
-     * @since 4.0
-     */
-    public HostUnresolvedVmfsResolutionResult[] resolveMultipleUnresolvedVmfsVolumes(HostUnresolvedVmfsResolutionSpec[] resolutionSpec) throws HostConfigFault, RuntimeFault, RemoteException {
-        return getVimService().resolveMultipleUnresolvedVmfsVolumes(getMOR(), resolutionSpec);
-    }
-
-    /**
-     * @since SDK5.5
-     */
-    public Task resolveMultipleUnresolvedVmfsVolumesEx_Task(HostUnresolvedVmfsResolutionSpec[] resolutionSpec) throws HostConfigFault, RuntimeFault, RemoteException {
-        ManagedObjectReference mor = getVimService().resolveMultipleUnresolvedVmfsVolumesEx_Task(this.getMOR(), resolutionSpec);
-        return new Task(this.getServerConnection(), mor);
-    }
-
-    public HostDiskPartitionInfo[] retrieveDiskPartitionInfo(String[] devicePath) throws RuntimeFault, RemoteException {
-        return getVimService().retrieveDiskPartitionInfo(getMOR(), devicePath);
-    }
-
-    public void setMultipathLunPolicy(String lunId, HostMultipathInfoLogicalUnitPolicy policy) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().setMultipathLunPolicy(getMOR(), lunId, policy);
-    }
-
-    public void setNFSUser(final String user, final String password) throws HostConfigFault, RuntimeFault, RemoteException {
+    public void mountVmfsVolume(final String vmfsUuid) throws NotFound, InvalidState, HostConfigFault, ResourceInUse, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("user", "String", user),
-                new Argument("password", "String", password));
-        this.getVimService().getWsc().invokeWithoutReturn("SetNFSUser", params);
+                new Argument("vmfsUuid", String.class, vmfsUuid));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("MountVmfsVolume", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task turnDiskLocatorLedOff(final List<String> scsiDiskUuids) throws HostConfigFault, RuntimeFault, RemoteException {
+    public Task mountVmfsVolumeEx(final List<String> vmfsUuid) throws HostConfigFault, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("scsiDiskUuids", "String[]", scsiDiskUuids.toArray()));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("TurnDiskLocatorLedOff_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+                new Argument("vmfsUuid", String[].class, vmfsUuid.toArray()));
+        try {
+            return this.invokeWithTaskReturn("MountVmfsVolumeEx_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task turnDiskLocatorLedOn(final List<String> scsiDiskUuids) throws HostConfigFault, RuntimeFault, RemoteException {
+    @SuppressWarnings("unchecked")
+    public List<HostScsiDisk> queryAvailableSsds(final String vffsPath) throws NotFound, HostConfigFault, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("scsiDiskUuids", "String[]", scsiDiskUuids.toArray()));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("TurnDiskLocatorLedOn_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+                new Argument("vffsPath", String.class, vffsPath));
+        try {
+            return (List<HostScsiDisk>) getVimService().getWsc()
+                    .invoke("QueryAvailableSsds", params, "List.HostScsiDisk");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task unmapVmfsVolumeEx(final List<String> vmfsUuid) throws HostConfigFault, RuntimeFault, RemoteException {
+    public HostNasVolumeUserInfo queryNFSUser() throws HostConfigFault, RuntimeFault {
+        try {
+            return this.getVimService().getWsc().invoke("QueryNFSUser", this.getSingleSelfArgumentList(), HostNasVolumeUserInfo.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<HostPathSelectionPolicyOption> queryPathSelectionPolicyOptions() throws HostConfigFault, RuntimeFault {
+        try {
+            return (List<HostPathSelectionPolicyOption>) this.getVimService().getWsc()
+                    .invoke("QueryPathSelectionPolicyOptions",
+                            this.getSingleSelfArgumentList(),
+                            "List.HostPathSelectionPolicyOption");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<HostStorageArrayTypePolicyOption> queryStorageArrayTypePolicyOptions() throws HostConfigFault, RuntimeFault {
+        try {
+            return (List<HostStorageArrayTypePolicyOption>) this.getVimService().getWsc()
+                    .invoke("QueryStorageArrayTypePolicyOptions",
+                            this.getSingleSelfArgumentList(),
+                            "List.HostStorageArrayTypePolicyOption");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<HostUnresolvedVmfsVolume> queryUnresolvedVmfsVolume() throws RuntimeFault {
+        try {
+            return (List<HostUnresolvedVmfsVolume>) this.getVimService().getWsc()
+                    .invoke("QueryUnresolvedVmfsVolume",
+                            this.getSingleSelfArgumentList(),
+                            "List.HostUnresolvedVmfsVolume");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<VmfsConfigOption> queryVmfsConfigOption() throws RuntimeFault {
+        try {
+            return (List<VmfsConfigOption>) this.getVimService().getWsc()
+                    .invoke("QueryVmfsConfigOption", this.getSingleSelfArgumentList(), "List.VmfsConfigOption");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void refreshStorageSystem() throws RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RefreshStorageSystem", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void removeInternetScsiSendTargets(final String iScsiHbaDevice, final List<HostInternetScsiHbaSendTarget> targets)
+            throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("vmfsUuid", "String[]", vmfsUuid.toArray()));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("UnmapVmfsVolumeEx_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+                new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
+                new Argument("targets", HostInternetScsiHbaSendTarget[].class, targets));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RemoveInternetScsiSendTargets", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    /**
-     * @since SDK4.0
-     */
-    public void unmountForceMountedVmfsVolume(String vmfsUuid) throws NotFound, HostConfigFault, RuntimeFault, RemoteException {
-        getVimService().unmountForceMountedVmfsVolume(getMOR(), vmfsUuid);
-    }
-
-    /**
-     * @since SDK5.5
-     */
-    public void unmountVffsVolume(String vffsUuid) throws NotFound, InvalidState, HostConfigFault, ResourceInUse, RuntimeFault, RemoteException {
-        getVimService().unmountVffsVolume(this.getMOR(), vffsUuid);
-    }
-
-    /**
-     * @since SDK5.0
-     */
-    public void unmountVmfsVolume(String vmfsUuid) throws NotFound, InvalidState, HostConfigFault, ResourceInUse, RuntimeFault, RemoteException {
+    public void removeInternetScsiStaticTargets(final String iScsiHbaDevice, final List<HostInternetScsiHbaStaticTarget> targets)
+            throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("vmfsUuid", "String", vmfsUuid));
-        this.getVimService().getWsc().invokeWithoutReturn("UnmountVmfsVolume", params);
+                new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
+                new Argument("targets", HostInternetScsiHbaStaticTarget[].class, targets));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RemoveInternetScsiStaticTargets", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task unmountVmfsVolumeEx(List<String> vmfsUuids) throws HostConfigFault, RuntimeFault, RemoteException {
+    public void removeNvmeOverRdmaAdapter(final String hbaDeviceName) throws HostConfigFault, NotFound, ResourceInUse, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("hbaDeviceName", String.class, hbaDeviceName));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RemoveNvmeOverRdmaAdapter", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void rescanAllHba() throws HostConfigFault, RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RescanAllHba", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void rescanHba(final String hbaDevice) throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("hbaDevice", String.class, hbaDevice));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RescanHba", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void rescanVffs() throws HostConfigFault, RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RescanVffs", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void rescanVmfs() throws HostConfigFault, RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RescanVmfs", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<HostUnresolvedVmfsResolutionResult> resolveMultipleUnresolvedVmfsVolumes(final List<HostUnresolvedVmfsResolutionSpec> resolutionSpec)
+            throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("resolutionSpec", HostUnresolvedVmfsResolutionSpec[].class, resolutionSpec));
+        try {
+            return (List<HostUnresolvedVmfsResolutionResult>) this.getVimService().getWsc()
+                    .invoke("ResolveMultipleUnresolvedVmfsVolumes", params, "List.HostUnresolvedVmfsResolutionResult");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task resolveMultipleUnresolvedVmfsVolumesEx(final List<HostUnresolvedVmfsResolutionSpec> resolutionSpec)
+            throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("resolutionSpec", HostUnresolvedVmfsResolutionSpec[].class, resolutionSpec));
+        try {
+            return this.invokeWithTaskReturn("ResolveMultipleUnresolvedVmfsVolumesEx_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<HostDiskPartitionInfo> retrieveDiskPartitionInfo(final List<String> devicePath) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("devicePath", String[].class, devicePath));
+        try {
+            return (List<HostDiskPartitionInfo>) this.getVimService().getWsc()
+                    .invoke("RetrieveDiskPartitionInfo", params, "List.HostDiskPartitionInfo");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void setMultipathLunPolicy(final String lunId, final HostMultipathInfoLogicalUnitPolicy policy)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("lunId", String.class, lunId),
+                new Argument("policy", HostMultipathInfoLogicalUnitPolicy.class, policy));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("SetMultipathLunPolicy", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void setNFSUser(final String user, final String password) throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("user", String.class, user),
+                new Argument("password", String.class, password));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("SetNFSUser", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task turnDiskLocatorLedOff(final List<String> scsiDiskUuids) throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("scsiDiskUuids", String[].class, scsiDiskUuids.toArray()));
+        try {
+            return this.invokeWithTaskReturn("TurnDiskLocatorLedOff_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task turnDiskLocatorLedOn(final List<String> scsiDiskUuids) throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("scsiDiskUuids", String[].class, scsiDiskUuids.toArray()));
+        try {
+            return this.invokeWithTaskReturn("TurnDiskLocatorLedOn_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task unmapVmfsVolumeEx(final List<String> vmfsUuid) throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vmfsUuid", String[].class, vmfsUuid.toArray()));
+        try {
+            return this.invokeWithTaskReturn("UnmapVmfsVolumeEx_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void unmountForceMountedVmfsVolume(final String vmfsUuid) throws NotFound, HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vmfsUuid", String.class, vmfsUuid));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UnmountForceMountedVmfsVolume", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void unmountVffsVolume(final String vffsUuid) throws NotFound, InvalidState, HostConfigFault, ResourceInUse, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vffsUuid", String.class, vffsUuid));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UnmountVffsVolume", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void unmountVmfsVolume(final String vmfsUuid) throws NotFound, InvalidState, HostConfigFault, ResourceInUse, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vmfsUuid", String.class, vmfsUuid));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UnmountVmfsVolume", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task unmountVmfsVolumeEx(final List<String> vmfsUuids) throws HostConfigFault, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("vmfsUuid", "String[]", vmfsUuids.toArray()));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("UnmountVmfsVolumeEx_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+        try {
+            return this.invokeWithTaskReturn("UnmountVmfsVolumeEx_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void updateDiskPartitions(String devicePath, HostDiskPartitionSpec spec) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().updateDiskPartitions(getMOR(), devicePath, spec);
+    public void updateDiskPartitions(final String devicePath, final HostDiskPartitionSpec spec)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("devicePath", String.class, devicePath),
+                new Argument("spec", HostDiskPartitionSpec.class, spec));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateDiskPartitions", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void updateInternetScsiAlias(String iScsiHbaDevice, String iScsiAlias) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().updateInternetScsiAlias(getMOR(), iScsiHbaDevice, iScsiAlias);
+    public void updateHppMultipathLunPolicy(final String lunId, final HostMultipathInfoHppLogicalUnitPolicy policy)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("lunId", String.class, lunId),
+                new Argument("policy", HostMultipathInfoHppLogicalUnitPolicy.class, policy));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateHppMultipathLunPolicy", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+    public void updateInternetScsiAdvancedOptions(final String iScsiHbaDevice, final HostInternetScsiHbaTargetSet targetSet,
+                                                  final List<HostInternetScsiHbaParamValue> options)
+            throws NotFound, HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
+                new Argument("targetSet", HostInternetScsiHbaTargetSet.class, targetSet),
+                new Argument("options", HostInternetScsiHbaParamValue[].class, options));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateInternetScsiAdvancedOptions", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateInternetScsiAlias(final String iScsiHbaDevice, final String iScsiAlias)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
+                new Argument("iScsiAlias", String.class, iScsiAlias));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateInternetScsiAlias", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
     //SDK2.5 signature for back compatibility
-    public void updateInternetScsiAuthenticationProperties(String iScsiHbaDevice, HostInternetScsiHbaAuthenticationProperties authenticationProperties)
-            throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        updateInternetScsiAuthenticationProperties(iScsiHbaDevice, authenticationProperties, null);
+    public void updateInternetScsiAuthenticationProperties(final String iScsiHbaDevice,
+                                                           final HostInternetScsiHbaAuthenticationProperties authenticationProperties)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        this.updateInternetScsiAuthenticationProperties(iScsiHbaDevice, authenticationProperties, null);
     }
 
-    //SDK4.0 signature
-    public void updateInternetScsiAuthenticationProperties(String iScsiHbaDevice, HostInternetScsiHbaAuthenticationProperties authenticationProperties, HostInternetScsiHbaTargetSet targetSet)
-            throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().updateInternetScsiAuthenticationProperties(getMOR(), iScsiHbaDevice, authenticationProperties, targetSet);
-    }
-
-    /**
-     * @since 4.0
-     */
-    public void updateInternetScsiAdvancedOptions(String iScsiHbaDevice, HostInternetScsiHbaTargetSet targetSet, HostInternetScsiHbaParamValue[] options) throws NotFound, HostConfigFault, RuntimeFault, RemoteException {
-        getVimService().updateInternetScsiAdvancedOptions(getMOR(), iScsiHbaDevice, targetSet, options);
-    }
-
-    /**
-     * @since 4.0
-     */
-    public void updateInternetScsiDigestProperties(String iScsiHbaDevice, HostInternetScsiHbaTargetSet targetSet, HostInternetScsiHbaDigestProperties digestProperties) throws NotFound, HostConfigFault, RuntimeFault, RemoteException {
-        getVimService().updateInternetScsiDigestProperties(getMOR(), iScsiHbaDevice, targetSet, digestProperties);
-    }
-
-    /**
-     * @since 4.0
-     */
-    public void updateScsiLunDisplayName(String lunUuid, String displayName) throws NotFound, HostConfigFault, InvalidName, DuplicateName, RuntimeFault, RemoteException {
-        getVimService().updateScsiLunDisplayName(getMOR(), lunUuid, displayName);
-    }
-
-    public void updateInternetScsiDiscoveryProperties(String iScsiHbaDevice, HostInternetScsiHbaDiscoveryProperties discoveryProperties)
-            throws NotFound, RuntimeFault, RemoteException {
-        getVimService().updateInternetScsiDiscoveryProperties(getMOR(), iScsiHbaDevice, discoveryProperties);
-    }
-
-    public void updateInternetScsiIPProperties(String iScsiHbaDevice, HostInternetScsiHbaIPProperties ipProperties)
-            throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().updateInternetScsiIPProperties(getMOR(), iScsiHbaDevice, ipProperties);
-    }
-
-    public void updateInternetScsiName(String iScsiHbaDevice, String iScsiName) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().updateInternetScsiName(getMOR(), iScsiHbaDevice, iScsiName);
-    }
-
-    public void updateSoftwareInternetScsiEnabled(boolean enabled) throws HostConfigFault, RuntimeFault, RemoteException {
-        getVimService().updateSoftwareInternetScsiEnabled(getMOR(), enabled);
-    }
-
-    public void updateVmfsUnmapBandwidth(final String vmfsUuid, final VmfsUnmapBandwidthSpec unmapBandwidthSpec) throws RuntimeFault, RemoteException {
+    public void updateInternetScsiAuthenticationProperties(final String iScsiHbaDevice,
+                                                           final HostInternetScsiHbaAuthenticationProperties authenticationProperties,
+                                                           final HostInternetScsiHbaTargetSet targetSet)
+            throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("vmfsUuid", "String", vmfsUuid),
-                new Argument("unmapBandwidthSpec", "VmfsUnmapBandwidthSpec", unmapBandwidthSpec)
-        );
-        this.getVimService().getWsc().invokeWithoutReturn("UpdateVmfsUnmapBandwidth", params);
+                new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
+                new Argument("authenticationProperties", HostInternetScsiHbaAuthenticationProperties.class, authenticationProperties),
+                new Argument("targetSet", HostInternetScsiHbaTargetSet.class, targetSet));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateInternetScsiAuthenticationProperties", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void updateVmfsUnmapPriority(final String vmfsUuid, final String unmapPriority) throws RuntimeFault, RemoteException {
+    public void updateInternetScsiDigestProperties(final String iScsiHbaDevice, final HostInternetScsiHbaTargetSet targetSet,
+                                                   final HostInternetScsiHbaDigestProperties digestProperties)
+            throws NotFound, HostConfigFault, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("vmfsUuid", "String", vmfsUuid),
-                new Argument("unmapPriority", "String", unmapPriority)
+                new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
+                new Argument("targetSet", HostInternetScsiHbaTargetSet.class, targetSet),
+                new Argument("digestProperties", HostInternetScsiHbaDigestProperties.class, digestProperties));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateInternetScsiDigestProperties", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateInternetScsiDiscoveryProperties(final String iScsiHbaDevice, final HostInternetScsiHbaDiscoveryProperties discoveryProperties)
+            throws NotFound, RuntimeFault, HostConfigFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
+                new Argument("discoveryProperties", HostInternetScsiHbaDiscoveryProperties.class, discoveryProperties));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateInternetScsiDiscoveryProperties", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateInternetScsiIPProperties(final String iScsiHbaDevice, final HostInternetScsiHbaIPProperties ipProperties)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
+                new Argument("ipProperties", HostInternetScsiHbaIPProperties.class, ipProperties));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateInternetScsiIPProperties", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateInternetScsiName(final String iScsiHbaDevice, final String iScsiName)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
+                new Argument("iScsiName", String.class, iScsiName));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateInternetScsiName", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateScsiLunDisplayName(final String lunUuid, final String displayName)
+            throws NotFound, HostConfigFault, InvalidName, DuplicateName, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("lunUuid", String.class, lunUuid),
+                new Argument("displayName", String.class, displayName));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateScsiLunDisplayName", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateSoftwareInternetScsiEnabled(final boolean enabled) throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                Argument.fromBasicType("enabled", enabled));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateSoftwareInternetScsiEnabled", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateVmfsUnmapBandwidth(final String vmfsUuid, final VmfsUnmapBandwidthSpec unmapBandwidthSpec) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vmfsUuid", String.class, vmfsUuid),
+                new Argument("unmapBandwidthSpec", VmfsUnmapBandwidthSpec.class, unmapBandwidthSpec)
         );
-        this.getVimService().getWsc().invokeWithoutReturn("UpdateVmfsUnmapPriority", params);
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateVmfsUnmapBandwidth", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void upgradeVmfs(String vmfsPath) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().upgradeVmfs(getMOR(), vmfsPath);
+    public void updateVmfsUnmapPriority(final String vmfsUuid, final String unmapPriority) throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vmfsUuid", String.class, vmfsUuid),
+                new Argument("unmapPriority", String.class, unmapPriority)
+        );
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateVmfsUnmapPriority", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void upgradeVmLayout(String vmfsPath) throws HostConfigFault, NotFound, RuntimeFault, RemoteException {
-        getVimService().upgradeVmfs(getMOR(), vmfsPath);
+    public void upgradeVmfs(final String vmfsPath) throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vmfsPath", String.class, vmfsPath));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpgradeVmfs", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void upgradeVmLayout() throws RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpgradeVmLayout", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
 }

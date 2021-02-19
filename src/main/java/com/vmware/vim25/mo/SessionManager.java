@@ -31,6 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.VimStub;
 
 import java.net.MalformedURLException;
 import java.rmi.RemoteException;
@@ -120,7 +121,7 @@ public class SessionManager extends ManagedObject
     ServerConnection oldsc = oldsi.getServerConnection();
     String ticket = oldsi.getSessionManager().acquireCloneTicket();
 	  
-    VimPortType vimService = new VimPortType(oldsc.getUrl().toString(), ignoreCert);
+    VimStub vimService = new VimStub(oldsc.getUrl(), ignoreCert);
     vimService.getWsc().setVimNameSpace(oldsc.getVimService().getWsc().getVimNameSpace());
     vimService.getWsc().setSoapActionOnApiVersion(oldsi.getAboutInfo().getApiVersion());
 
@@ -128,8 +129,8 @@ public class SessionManager extends ManagedObject
     ServiceInstance newsi = new ServiceInstance(newsc);
     newsc.setServiceInstance(newsi);
     
-    UserSession userSession = newsi.getSessionManager().cloneSession(ticket);
-    newsc.setUserSession(userSession);
+    //UserSession userSession = newsi.getSessionManager().cloneSession(ticket);
+    //newsc.setUserSession(userSession);
     return newsi;
   }
 

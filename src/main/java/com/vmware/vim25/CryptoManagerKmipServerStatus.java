@@ -1,19 +1,31 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * Status of a KMIP server.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.5
  */
 public class CryptoManagerKmipServerStatus extends DynamicData {
 
-    public CryptoManagerKmipCertificateInfo certInfo;
-    public Boolean clientTrustServer;
-    public String connectionStatus;
-    public String name;
-    public Boolean serverTrustClient;
-    public ManagedEntityStatus status;
+    private String name;
+    private ManagedEntityStatus status;
+    private String connectionStatus;
+    private CryptoManagerKmipCertificateInfo certInfo;
+    private Boolean clientTrustServer;
+    private Boolean serverTrustClient;
+
+    @Override
+    public String toString() {
+        return "CryptoManagerKmipServerStatus{" +
+                "name='" + name + '\'' +
+                ", status=" + status +
+                ", connectionStatus='" + connectionStatus + '\'' +
+                ", certInfo=" + certInfo +
+                ", clientTrustServer=" + clientTrustServer +
+                ", serverTrustClient=" + serverTrustClient +
+                "} " + super.toString();
+    }
 
     public CryptoManagerKmipCertificateInfo getCertInfo() {
         return certInfo;

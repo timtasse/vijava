@@ -36,11 +36,6 @@ import org.slf4j.LoggerFactory;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -74,6 +69,7 @@ public abstract class WSClient {
     protected static final String SOAP_ACTION_V671 = "urn:vim25/6.7.1";
     protected static final String SOAP_ACTION_V672 = "urn:vim25/6.7.2";
     protected static final String SOAP_ACTION_V70 = "urn:vim25/7.0";
+    protected static final String SOAP_ACTION_V701 = "urn:vim25/7.0.1";
 
     private final URL baseUrl;
     private final URI baseUri;
@@ -84,17 +80,8 @@ public abstract class WSClient {
     private int connectTimeout;
     private int readTimeout;
 
-    public WSClient(final String serverUrl, final boolean ignoreCert) {
-        try {
-            if (serverUrl.endsWith("/")) {
-                this.baseUrl = new URL(serverUrl.substring(0, serverUrl.length() - 1));
-            } else {
-                this.baseUrl = new URL(serverUrl);
-            }
-        } catch (MalformedURLException e) {
-            LOGGER.error("URL is malformed: {}", serverUrl, e);
-            throw new IllegalArgumentException("URL is malformed", e);
-        }
+    public WSClient(final URL serverUrl, final boolean ignoreCert) {
+        this.baseUrl = serverUrl;
         URI uri;
         try {
             uri = this.baseUrl.toURI();
@@ -144,6 +131,8 @@ public abstract class WSClient {
       "6.7"       vSphere 6.7
       "6.7.1"     vSphere 6.7u1
       "6.7.2"     vSphere 6.7u3
+      "7.0"       vSphere 7.0
+      "7.0.1"     vSphere 7.0u1
       ===============================================*/
     public void setSoapActionOnApiVersion(String apiVersion) {
         switch (apiVersion) {
@@ -177,23 +166,15 @@ public abstract class WSClient {
             case "6.7.2":
                 soapAction = SOAP_ACTION_V672;
                 break;
-//            case "7.0.0.0":
-//                soapAction = SOAP_ACTION_V70;
-//                break;
+            case "7.0.0.0":
+                soapAction = SOAP_ACTION_V70;
+                break;
+            case "7.0.1.0":
+            case "7.0.1.1":
+                soapAction = SOAP_ACTION_V701;
+                break;
             default:
-                soapAction = SOAP_ACTION_V672;
-        }
-    }
-
-    private StringBuffer readStream(InputStream is) throws IOException {
-        try (final InputStreamReader isr = new InputStreamReader(is);
-             final BufferedReader in = new BufferedReader(isr)) {
-            final StringBuffer sb = new StringBuffer();
-            String lineStr;
-            while ((lineStr = in.readLine()) != null) {
-                sb.append(lineStr);
-            }
-            return sb;
+                soapAction = SOAP_ACTION_V70;
         }
     }
 

@@ -30,40 +30,69 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * Provision the SNMP Version 1,2c agent. This object is accessed through the HostConfigManager object.
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
+@SuppressWarnings("unused")
+public class HostSnmpSystem extends ManagedObject {
 
-public class HostSnmpSystem extends ManagedObject 
-{
+    public HostSnmpSystem(final ServerConnection serverConnection, final ManagedObjectReference mor) {
+        super(serverConnection, mor);
+    }
 
-	public HostSnmpSystem(ServerConnection serverConnection, ManagedObjectReference mor) 
-	{
-		super(serverConnection, mor);
-	}
+    public HostSnmpConfigSpec getConfiguration() {
+        return getCurrentProperty("configuration", HostSnmpConfigSpec.class);
+    }
 
-	public HostSnmpConfigSpec getConfiguration()
-	{
-		return (HostSnmpConfigSpec) getCurrentProperty("configuration");
-	}
-	
-	public HostSnmpSystemAgentLimits getLimits()
-	{
-		return (HostSnmpSystemAgentLimits) getCurrentProperty("limits");
-	}
-	
-	public void reconfigureSnmpAgent(HostSnmpConfigSpec spec) throws InsufficientResourcesFault, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().reconfigureSnmpAgent(getMOR(), spec);
-	}
-	
-	public void sendTestNotification() throws InsufficientResourcesFault, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().sendTestNotification(getMOR());
-	}
-	
+    public HostSnmpSystemAgentLimits getLimits() {
+        return getCurrentProperty("limits", HostSnmpSystemAgentLimits.class);
+    }
+
+    public void reconfigureSnmpAgent(final HostSnmpConfigSpec spec) throws InsufficientResourcesFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", HostSnmpConfigSpec.class, spec));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("ReconfigureSnmpAgent", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void sendTestNotification() throws InsufficientResourcesFault, NotFound, RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("SendTestNotification", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InsufficientResourcesFault) {
+                throw (InsufficientResourcesFault) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
 }

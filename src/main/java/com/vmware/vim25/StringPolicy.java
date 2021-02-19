@@ -30,19 +30,25 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 public class StringPolicy extends InheritablePolicy {
-  public String value;
 
-  public String getValue() {
-    return this.value;
-  }
+    private String value;
 
-  public void setValue(String value) {
-    this.value=value;
-  }
+    @Override
+    public String toString() {
+        return "StringPolicy{" +
+                "value='" + value + '\'' +
+                "} " + super.toString();
+    }
+
+    public String getValue() {
+        return this.value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
+    }
 }

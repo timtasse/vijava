@@ -1,16 +1,25 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * Information about the KMIP server certificate.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.5
  */
 public class CryptoManagerKmipServerCertInfo extends DynamicData {
 
-    public String certificate;
-    public CryptoManagerKmipCertificateInfo certInfo;
-    public Boolean clientTrustServer;
+    private String certificate;
+    private CryptoManagerKmipCertificateInfo certInfo;
+    private Boolean clientTrustServer;
+
+    @Override
+    public String toString() {
+        return "CryptoManagerKmipServerCertInfo{" +
+                "certificate='" + certificate + '\'' +
+                ", certInfo=" + certInfo +
+                ", clientTrustServer=" + clientTrustServer +
+                "} " + super.toString();
+    }
 
     public String getCertificate() {
         return certificate;

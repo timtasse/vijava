@@ -29,47 +29,66 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The HostMemberRuntimeInfo data object contains healthcheck and
+ * status information about a host member of a distributed virtual switch.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class HostMemberRuntimeInfo extends DynamicData {
-  public ManagedObjectReference host;
-  public String status;
-  public String statusDetail;
-  public HostMemberHealthCheckResult[] healthCheckResult;
 
-  public ManagedObjectReference getHost() {
-    return this.host;
-  }
+    private ManagedObjectReference host;
+    private String status;
+    private String statusDetail;
+    private String nsxtStatus;
+    private String nsxtStatusDetail;
+    private HostMemberHealthCheckResult[] healthCheckResult;
 
-  public String getStatus() {
-    return this.status;
-  }
+    @Override
+    public String toString() {
+        return "HostMemberRuntimeInfo{" +
+                "host=" + host +
+                ", status='" + status + '\'' +
+                ", statusDetail='" + statusDetail + '\'' +
+                ", nsxtStatus='" + nsxtStatus + '\'' +
+                ", nsxtStatusDetail='" + nsxtStatusDetail + '\'' +
+                ", healthCheckResult=" + Arrays.toString(healthCheckResult) +
+                "} " + super.toString();
+    }
 
-  public String getStatusDetail() {
-    return this.statusDetail;
-  }
+    public ManagedObjectReference getHost() {
+        return this.host;
+    }
 
-  public HostMemberHealthCheckResult[] getHealthCheckResult() {
-    return this.healthCheckResult;
-  }
+    public void setHost(ManagedObjectReference host) {
+        this.host = host;
+    }
 
-  public void setHost(ManagedObjectReference host) {
-    this.host=host;
-  }
+    public String getStatus() {
+        return this.status;
+    }
 
-  public void setStatus(String status) {
-    this.status=status;
-  }
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
-  public void setStatusDetail(String statusDetail) {
-    this.statusDetail=statusDetail;
-  }
+    public String getStatusDetail() {
+        return this.statusDetail;
+    }
 
-  public void setHealthCheckResult(HostMemberHealthCheckResult[] healthCheckResult) {
-    this.healthCheckResult=healthCheckResult;
-  }
+    public void setStatusDetail(String statusDetail) {
+        this.statusDetail = statusDetail;
+    }
+
+    public HostMemberHealthCheckResult[] getHealthCheckResult() {
+        return this.healthCheckResult;
+    }
+
+    public void setHealthCheckResult(HostMemberHealthCheckResult[] healthCheckResult) {
+        this.healthCheckResult = healthCheckResult;
+    }
 }

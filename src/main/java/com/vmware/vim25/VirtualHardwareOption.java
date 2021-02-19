@@ -36,54 +36,58 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0
  */
-
-@SuppressWarnings("all")
 public class VirtualHardwareOption extends DynamicData {
 
-    private boolean deviceListReadonly;
     private int hwVersion;
-    private String[] licensingLimit;
-    private LongOption memoryMB;
-    private IntOption numCoresPerSocket;
+    private VirtualDeviceOption[] virtualDeviceOption;
+    private boolean deviceListReadonly;
     private int[] numCPU;
+    private IntOption numCoresPerSocket;
     private boolean numCpuReadonly;
-    private IntOption numIDEControllers;
-    private IntOption numNVDIMMControllers;
+    private LongOption memoryMB;
     private IntOption numPCIControllers;
-    private IntOption numPS2Controllers;
-    private IntOption numSIOControllers;
-    private IntOption numSupportedWwnNodes;
-    private IntOption numSupportedWwnPorts;
-    private IntOption numTPMDevices;
+    private IntOption numIDEControllers;
     private IntOption numUSBControllers;
     private IntOption numUSBXHCIControllers;
+    private IntOption numSIOControllers;
+    private IntOption numPS2Controllers;
+    private String[] licensingLimit;
+    private IntOption numSupportedWwnPorts;
+    private IntOption numSupportedWwnNodes;
     private ResourceConfigOption resourceConfigOption;
-    private VirtualDeviceOption[] virtualDeviceOption;
+    private IntOption numNVDIMMControllers;
+    private IntOption numTPMDevices;
+    private IntOption numWDTDevices;
+    private IntOption numPrecisionClockDevices;
+    private LongOption epcMemoryMB;
 
     @Override
     public String toString() {
         return "VirtualHardwareOption{" +
-                "deviceListReadonly=" + deviceListReadonly +
-                ", hwVersion=" + hwVersion +
-                ", licensingLimit=" + Arrays.toString(licensingLimit) +
-                ", memoryMB=" + memoryMB +
-                ", numCoresPerSocket=" + numCoresPerSocket +
+                "hwVersion=" + hwVersion +
+                ", virtualDeviceOption=" + Arrays.toString(virtualDeviceOption) +
+                ", deviceListReadonly=" + deviceListReadonly +
                 ", numCPU=" + Arrays.toString(numCPU) +
+                ", numCoresPerSocket=" + numCoresPerSocket +
                 ", numCpuReadonly=" + numCpuReadonly +
-                ", numIDEControllers=" + numIDEControllers +
-                ", numNVDIMMControllers=" + numNVDIMMControllers +
+                ", memoryMB=" + memoryMB +
                 ", numPCIControllers=" + numPCIControllers +
-                ", numPS2Controllers=" + numPS2Controllers +
-                ", numSIOControllers=" + numSIOControllers +
-                ", numSupportedWwnNodes=" + numSupportedWwnNodes +
-                ", numSupportedWwnPorts=" + numSupportedWwnPorts +
-                ", numTPMDevices=" + numTPMDevices +
+                ", numIDEControllers=" + numIDEControllers +
                 ", numUSBControllers=" + numUSBControllers +
                 ", numUSBXHCIControllers=" + numUSBXHCIControllers +
+                ", numSIOControllers=" + numSIOControllers +
+                ", numPS2Controllers=" + numPS2Controllers +
+                ", licensingLimit=" + Arrays.toString(licensingLimit) +
+                ", numSupportedWwnPorts=" + numSupportedWwnPorts +
+                ", numSupportedWwnNodes=" + numSupportedWwnNodes +
                 ", resourceConfigOption=" + resourceConfigOption +
-                ", virtualDeviceOption=" + Arrays.toString(virtualDeviceOption) +
+                ", numNVDIMMControllers=" + numNVDIMMControllers +
+                ", numTPMDevices=" + numTPMDevices +
+                ", numWDTDevices=" + numWDTDevices +
+                ", numPrecisionClockDevices=" + numPrecisionClockDevices +
+                ", epcMemoryMB=" + epcMemoryMB +
                 "} " + super.toString();
     }
 
@@ -237,6 +241,30 @@ public class VirtualHardwareOption extends DynamicData {
 
     public void setNumTPMDevices(final IntOption numTPMDevices) {
         this.numTPMDevices = numTPMDevices;
+    }
+
+    public IntOption getNumWDTDevices() {
+        return numWDTDevices;
+    }
+
+    public void setNumWDTDevices(final IntOption numWDTDevices) {
+        this.numWDTDevices = numWDTDevices;
+    }
+
+    public IntOption getNumPrecisionClockDevices() {
+        return numPrecisionClockDevices;
+    }
+
+    public void setNumPrecisionClockDevices(final IntOption numPrecisionClockDevices) {
+        this.numPrecisionClockDevices = numPrecisionClockDevices;
+    }
+
+    public LongOption getEpcMemoryMB() {
+        return epcMemoryMB;
+    }
+
+    public void setEpcMemoryMB(final LongOption epcMemoryMB) {
+        this.epcMemoryMB = epcMemoryMB;
     }
 
 }

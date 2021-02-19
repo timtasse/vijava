@@ -29,26 +29,46 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-/**
- * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
- */
+import java.util.Arrays;
 
-@SuppressWarnings("all")
+/**
+ * Specification for moving or copying a virtual machine to a different datastore or host.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class VirtualMachineRelocateSpec extends DynamicData {
 
-    public ServiceLocator service;
-    public ManagedObjectReference folder;
-    public ManagedObjectReference datastore;
-    public String diskMoveType;
-    public ManagedObjectReference pool;
-    public ManagedObjectReference host;
-    public VirtualMachineRelocateSpecDiskLocator[] disk;
+    private ServiceLocator service;
+    private ManagedObjectReference folder;
+    private ManagedObjectReference datastore;
+    private String diskMoveType;
+    private ManagedObjectReference pool;
+    private ManagedObjectReference host;
+    private VirtualMachineRelocateSpecDiskLocator[] disk;
     @Deprecated
-    public VirtualMachineRelocateTransformation transform;
-    public VirtualDeviceConfigSpec[] deviceChange;
-    public VirtualMachineProfileSpec[] profile;
+    private VirtualMachineRelocateTransformation transform;
+    private VirtualDeviceConfigSpec[] deviceChange;
+    private VirtualMachineProfileSpec[] profile;
+    private CryptoSpec cryptoSpec;
+
+    @Override
+    public String toString() {
+        return "VirtualMachineRelocateSpec{" +
+                "service=" + service +
+                ", folder=" + folder +
+                ", datastore=" + datastore +
+                ", diskMoveType='" + diskMoveType + '\'' +
+                ", pool=" + pool +
+                ", host=" + host +
+                ", disk=" + Arrays.toString(disk) +
+                ", transform=" + transform +
+                ", deviceChange=" + Arrays.toString(deviceChange) +
+                ", profile=" + Arrays.toString(profile) +
+                ", cryptoSpec=" + cryptoSpec +
+                "} " + super.toString();
+    }
 
     public ManagedObjectReference getDatastore() {
         return this.datastore;
@@ -131,4 +151,13 @@ public class VirtualMachineRelocateSpec extends DynamicData {
     public void setService(final ServiceLocator service) {
         this.service = service;
     }
+
+    public CryptoSpec getCryptoSpec() {
+        return cryptoSpec;
+    }
+
+    public void setCryptoSpec(final CryptoSpec cryptoSpec) {
+        this.cryptoSpec = cryptoSpec;
+    }
+
 }

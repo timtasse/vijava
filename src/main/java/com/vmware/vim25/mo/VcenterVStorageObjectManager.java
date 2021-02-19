@@ -14,10 +14,10 @@ import java.util.List;
  * In that case, user operation would succeed but if user checks SPBM Entity Compliance, it will show "Mismatch" / "Non Compliant" as a compliance result.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0
  * @since 6.5
  */
-@SuppressWarnings("unchecked")
+@SuppressWarnings("unused")
 public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
 
     public VcenterVStorageObjectManager(final ServerConnection serverConnection, final ManagedObjectReference mor) {
@@ -26,17 +26,17 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
 
     public void attachTagToVStorageObject(final ID id, final String category, final String tag) throws NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("category", "String", category),
-                new Argument("tag", "String", tag));
+                new Argument("id", ID.class, id),
+                new Argument("category", String.class, category),
+                new Argument("tag", String.class, tag));
         this.getVimService().getWsc().invokeWithoutReturn("AttachTagToVStorageObject", params);
     }
 
     public void clearVStorageObjectControlFlags(final ID id, final ManagedObjectReference datastore, final List<String> controlFlags) throws InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore),
-                new Argument("controlFlags", "String[]", controlFlags));
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("controlFlags", String[].class, controlFlags.toArray()));
         this.getVimService().getWsc().invokeWithoutReturn("ClearVStorageObjectControlFlags", params);
     }
 
@@ -46,11 +46,10 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
 
     public Task cloneVStorageObject(final ID id, final ManagedObjectReference datastore, final VslmCloneSpec spec) throws FileFault, InvalidDatastore, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore),
-                new Argument("spec", "VslmCloneSpec", spec));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc().invoke("CloneVStorageObject_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("spec", VslmCloneSpec.class, spec));
+        return this.invokeWithTaskReturn("CloneVStorageObject_Task", params);
     }
 
     public Task cloneVStorageObject(final ID id, final Datastore datastore, final VslmCloneSpec spec) throws FileFault, InvalidDatastore, NotFound, RuntimeFault, RemoteException {
@@ -59,23 +58,21 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
 
     public Task createDisk(final VslmCreateSpec spec) throws FileFault, InvalidDatastore, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(), new Argument("spec", "VslmCreateSpec", spec));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc().invoke("CreateDisk_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+        return this.invokeWithTaskReturn("CreateDisk_Task", params);
     }
 
     public Task createDiskFromSnapshot(final ID id, final ManagedObjectReference datastore, final ID snapshotId, final String name,
                                        final List<VirtualMachineProfileSpec> profile, final CryptoSpec crypto, final String path)
             throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore),
-                new Argument("snapshotId", "ID", snapshotId),
-                new Argument("name", "String", name),
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("snapshotId", ID.class, snapshotId),
+                new Argument("name", String.class, name),
                 new Argument("profile", "VirtualMachineProfileSpec[]", profile.toArray()),
-                new Argument("crypto", CryptoSpec.class.getSimpleName(), crypto),
-                new Argument("path", "String", path));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc().invoke("CreateDiskFromSnapshot_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("crypto", CryptoSpec.class, crypto),
+                new Argument("path", String.class, path));
+        return this.invokeWithTaskReturn("CreateDiskFromSnapshot_Task", params);
     }
 
     public Task createDiskFromSnapshot(final ID id, final Datastore datastore, final ID snapshotId, final String name,
@@ -87,11 +84,10 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
     public Task deleteSnapshot(final ID id, final ManagedObjectReference datastore, final ID snapshotId)
             throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore),
-                new Argument("snapshotId", "ID", snapshotId));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc().invoke("DeleteSnapshot_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("snapshotId", ID.class, snapshotId));
+        return this.invokeWithTaskReturn("DeleteSnapshot_Task", params);
     }
 
     public Task deleteSnapshot(final ID id, final Datastore datastore, final ID snapshotId)
@@ -101,10 +97,9 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
 
     public Task deleteVStorageObject(final ID id, final ManagedObjectReference datastore) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc().invoke("DeleteVStorageObject_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore));
+        return this.invokeWithTaskReturn("DeleteVStorageObject_Task", params);
     }
 
     public Task deleteVStorageObject(final ID id, final Datastore datastore) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
@@ -113,19 +108,18 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
 
     public void detachTagFromVStorageObject(final ID id, final String category, final String tag) throws NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("category", "String", category),
-                new Argument("tag", "String", tag));
+                new Argument("id", ID.class, id),
+                new Argument("category", String.class, category),
+                new Argument("tag", String.class, tag));
         this.getVimService().getWsc().invokeWithoutReturn("DetachTagFromVStorageObject", params);
     }
 
     public Task extendDisk(final ID id, final ManagedObjectReference datastore, final long newCapacityInMB) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore),
-                new Argument("newCapacityInMB", "long", newCapacityInMB));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc().invoke("ExtendDisk_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                Argument.fromBasicType("newCapacityInMB", newCapacityInMB));
+        return this.invokeWithTaskReturn("ExtendDisk_Task", params);
     }
 
     public Task extendDisk(final ID id, final Datastore datastore, final long newCapacityInMB) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
@@ -134,25 +128,26 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
 
     public Task inflateDisk(final ID id, final ManagedObjectReference datastore) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc().invoke("InflateDisk_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore));
+        return this.invokeWithTaskReturn("InflateDisk_Task", params);
     }
 
     public Task inflateDisk(final ID id, final Datastore datastore) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
         return this.inflateDisk(id, datastore.getMOR());
     }
 
+    @SuppressWarnings("unchecked")
     public List<VslmTagEntry> listTagsAttachedToVStorageObject(final ID id) throws NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id));
+                new Argument("id", ID.class, id));
         return (List<VslmTagEntry>) this.getVimService().getWsc().invoke("ListTagsAttachedToVStorageObject", params, "List.VslmTagEntry");
     }
 
+    @SuppressWarnings("unchecked")
     public List<ID> listVStorageObject(final ManagedObjectReference datastore) throws InvalidDatastore, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore));
+                new Argument("datastore", ManagedObjectReference.class, datastore));
         return (List<ID>) this.getVimService().getWsc().invoke("ListVStorageObject", params, "List.ID");
     }
 
@@ -160,18 +155,18 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
         return this.listVStorageObject(datastore.getMOR());
     }
 
+    @SuppressWarnings("unchecked")
     public List<ID> listVStorageObjectsAttachedToTag(final String category, final String tag) throws NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("category", "String", category),
-                new Argument("tag", "String", tag));
+                new Argument("category", String.class, category),
+                new Argument("tag", String.class, tag));
         return (List<ID>) this.getVimService().getWsc().invoke("ListVStorageObjectsAttachedToTag", params, "List.ID");
     }
 
     public Task reconcileDatastoreInventory(final ManagedObjectReference datastore) throws InvalidDatastore, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc().invoke("ReconcileDatastoreInventory_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("datastore", ManagedObjectReference.class, datastore));
+        return this.invokeWithTaskReturn("ReconcileDatastoreInventory_Task", params);
     }
 
     public Task reconcileDatastoreInventory(final Datastore datastore) throws InvalidDatastore, NotFound, RuntimeFault, RemoteException {
@@ -180,19 +175,18 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
 
     public VStorageObject registerDisk(final String path, final String name) throws AlreadyExists, FileFault, InvalidDatastore, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("path", "String", path),
-                new Argument("name", "String", name));
-        return (VStorageObject) this.getVimService().getWsc().invoke("RegisterDisk", params, VStorageObject.class.getSimpleName());
+                new Argument("path", String.class, path),
+                new Argument("name", String.class, name));
+        return this.getVimService().getWsc().invoke("RegisterDisk", params, VStorageObject.class);
     }
 
     public Task relocateVStorageObject(final ID id, final ManagedObjectReference datastore, final VslmRelocateSpec spec)
             throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore),
-                new Argument("spec", VslmRelocateSpec.class.getSimpleName(), spec));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc().invoke("RelocateVStorageObject_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("spec", VslmRelocateSpec.class, spec));
+        return this.invokeWithTaskReturn("RelocateVStorageObject_Task", params);
     }
 
     public Task relocateVStorageObject(final ID id, final Datastore datastore, final VslmRelocateSpec spec)
@@ -203,9 +197,9 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
     public void renameVStorageObject(final ID id, final ManagedObjectReference datastore, final String name)
             throws FileFault, InvalidDatastore, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore),
-                new Argument("name", "String", name));
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("name", String.class, name));
         this.getVimService().getWsc().invokeWithoutReturn("RenameVStorageObject", params);
     }
 
@@ -217,9 +211,9 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
     public VStorageObjectSnapshotInfo retrieveSnapshotInfo(final ID id, final ManagedObjectReference datastore)
             throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore));
-        return (VStorageObjectSnapshotInfo) this.getVimService().getWsc().invoke("RetrieveSnapshotInfo", params, VStorageObjectSnapshotInfo.class.getSimpleName());
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore));
+        return this.getVimService().getWsc().invoke("RetrieveSnapshotInfo", params, VStorageObjectSnapshotInfo.class);
     }
 
     public VStorageObjectSnapshotInfo retrieveSnapshotInfo(final ID id, final Datastore datastore)
@@ -227,10 +221,11 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
         return this.retrieveSnapshotInfo(id, datastore.getMOR());
     }
 
+    @SuppressWarnings("unchecked")
     public List<vslmInfrastructureObjectPolicy> retrieveVStorageInfrastructureObjectPolicy(final ManagedObjectReference datastore)
             throws InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore));
+                new Argument("datastore", ManagedObjectReference.class, datastore));
         return (List<vslmInfrastructureObjectPolicy>) this.getVimService().getWsc().invoke("RetrieveVStorageInfrastructureObjectPolicy", params, "List.vslmInfrastructureObjectPolicy");
     }
 
@@ -242,9 +237,9 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
     public VStorageObject retrieveVStorageObject(final ID id, final ManagedObjectReference datastore)
             throws FileFault, InvalidDatastore, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore));
-        return (VStorageObject) this.getVimService().getWsc().invoke("RetrieveVStorageObject", params, VStorageObject.class.getSimpleName());
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore));
+        return this.getVimService().getWsc().invoke("RetrieveVStorageObject", params, VStorageObject.class);
     }
 
     public VStorageObject retrieveVStorageObject(final ID id, final Datastore datastore)
@@ -252,18 +247,19 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
         return this.retrieveVStorageObject(id, datastore.getMOR());
     }
 
+    @SuppressWarnings("unchecked")
     public List<VStorageObjectAssociations> retrieveVStorageObjectAssociations(final List<RetrieveVStorageObjSpec> ids) throws RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("ids", "RetrieveVStorageObjSpec[]", ids.toArray()));
+                new Argument("ids", RetrieveVStorageObjSpec[].class, ids.toArray()));
         return (List<VStorageObjectAssociations>) this.getVimService().getWsc().invoke("RetrieveVStorageObjectAssociations", params, "List.VStorageObjectAssociations");
     }
 
     public VStorageObjectStateInfo retrieveVStorageObjectState(final ID id, final ManagedObjectReference datastore)
             throws FileFault, InvalidDatastore, NotFound, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore));
-        return (VStorageObjectStateInfo) this.getVimService().getWsc().invoke("RetrieveVStorageObjectState", params, VStorageObjectStateInfo.class.getSimpleName());
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore));
+        return this.getVimService().getWsc().invoke("RetrieveVStorageObjectState", params, VStorageObjectStateInfo.class);
     }
 
     public VStorageObjectStateInfo retrieveVStorageObjectState(final ID id, final Datastore datastore) throws FileFault, InvalidDatastore, NotFound, RemoteException {
@@ -273,11 +269,10 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
     public Task revertVStorageObject(final ID id, final ManagedObjectReference datastore, final ID snapshotId)
             throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore),
-                new Argument("snapshotId", "ID", snapshotId));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc().invoke("RevertVStorageObject_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("snapshotId", ID.class, snapshotId));
+        return this.invokeWithTaskReturn("RevertVStorageObject_Task", params);
     }
 
     public Task revertVStorageObject(final ID id, final Datastore datastore, final ID snapshotId)
@@ -287,7 +282,7 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
 
     public void scheduleReconcileDatastoreInventory(final ManagedObjectReference datastore) throws InvalidDatastore, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), null));
+                new Argument("datastore", ManagedObjectReference.class, null));
         this.getVimService().getWsc().invokeWithoutReturn("ScheduleReconcileDatastoreInventory", params);
     }
 
@@ -298,9 +293,9 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
     public void setVStorageObjectControlFlags(final ID id, final ManagedObjectReference datastore, final List<String> controlFlags)
             throws InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore),
-                new Argument("controlFlags", "String[]", controlFlags.toArray()));
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("controlFlags", String[].class, controlFlags.toArray()));
         this.getVimService().getWsc().invokeWithoutReturn("SetVStorageObjectControlFlags", params);
     }
 
@@ -312,21 +307,50 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
     public Task updateVStorageInfrastructureObjectPolicy(final vslmInfrastructureObjectPolicySpec spec)
             throws InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("spec", vslmInfrastructureObjectPolicySpec.class.getSimpleName(), spec));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc()
-                .invoke("UpdateVStorageInfrastructureObjectPolicy_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("spec", vslmInfrastructureObjectPolicySpec.class, spec));
+        return this.invokeWithTaskReturn("UpdateVStorageInfrastructureObjectPolicy_Task", params);
+    }
+
+    public Task updateVStorageObjectCrypto(final ID id,
+                                           final ManagedObjectReference datastore,
+                                           final List<VirtualMachineProfileSpec> profile,
+                                           final DiskCryptoSpec disksCrypto)
+            throws FileFault, InvalidDatastore, NotFound, TaskInProgress, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("profile", VirtualMachineProfileSpec[].class, profile.toArray()),
+                new Argument("disksCrypto", DiskCryptoSpec.class, disksCrypto));
+        try {
+            return this.invokeWithTaskReturn("UpdateVStorageObjectCrypto_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof InvalidDatastore) {
+                throw (InvalidDatastore) cause;
+            }
+            if (cause instanceof TaskInProgress) {
+                throw (TaskInProgress) cause;
+            }
+            if (cause instanceof FileFault) {
+                throw (FileFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
     public Task updateVStorageObjectPolicy(final ID id, final ManagedObjectReference datastore, final List<VirtualMachineProfileSpec> profile)
             throws FileFault, InvalidDatastore, NotFound, RuntimeFault, TaskInProgress, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore),
-                new Argument("profile", "VirtualMachineProfileSpec[]", profile.toArray()));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc()
-                .invoke("UpdateVStorageObjectPolicy_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("profile", VirtualMachineProfileSpec[].class, profile.toArray()));
+        return this.invokeWithTaskReturn("UpdateVStorageObjectPolicy_Task", params);
     }
 
     public Task updateVStorageObjectPolicy(final ID id, final Datastore datastore, final List<VirtualMachineProfileSpec> profile)
@@ -337,12 +361,10 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
     public Task createSnapshot(final ID id, final ManagedObjectReference datastore, final String description)
             throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("id", "ID", id),
-                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore),
-                new Argument("description", "String", description));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc()
-                .invoke("VStorageObjectCreateSnapshot_Task", params, ManagedObjectReference.class.getSimpleName());
-        return new Task(this.getServerConnection(), mor);
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("description", String.class, description));
+        return this.invokeWithTaskReturn("VStorageObjectCreateSnapshot_Task", params);
     }
 
     public Task createSnapshot(final ID id, final Datastore datastore, final String description)

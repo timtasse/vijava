@@ -30,160 +30,521 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * This managed object type describes networking host configuration and serves as the top level container for relevant networking data objects.
+ *
  * @author Steve JIN (http://www.doublecloud.org), Lu Yu (lyu@vmware.com)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.5
  */
+@SuppressWarnings("unused")
+public class HostNetworkSystem extends ExtensibleManagedObject {
 
-public class HostNetworkSystem extends ExtensibleManagedObject 
-{
+    public HostNetworkSystem(final ServerConnection serverConnection, final ManagedObjectReference mor) {
+        super(serverConnection, mor);
+    }
 
-	public HostNetworkSystem(ServerConnection serverConnection, ManagedObjectReference mor) 
-	{
-		super(serverConnection, mor);
-	}
+    public HostNetCapabilities getCapabilities() {
+        return getCurrentProperty("capabilities", HostNetCapabilities.class);
+    }
 
-	public HostNetCapabilities getCapabilities()
-	{
-		return (HostNetCapabilities) getCurrentProperty("capabilities");
-	}
-	
-	public HostIpRouteConfig getConsoleIpRouteConfig()
-	{
-		return (HostIpRouteConfig) getCurrentProperty("consoleIpRouteConfig");
-	}
-	
-	public HostDnsConfig getDnsConfig()
-	{
-		return (HostDnsConfig) getCurrentProperty("dnsConfig");
-	}
-	
-	public HostIpRouteConfig getIpRouteConfig()
-	{
-		return (HostIpRouteConfig) getCurrentProperty("ipRouteConfig");
-	}
-	
-	public HostNetworkConfig getNetworkConfig()
-	{
-		return (HostNetworkConfig) getCurrentProperty("networkConfig");
-	}
-	
-	public HostNetworkInfo getNetworkInfo()
-	{
-		return (HostNetworkInfo) getCurrentProperty("networkInfo");
-	}
+    public HostIpRouteConfig getConsoleIpRouteConfig() {
+        return getCurrentProperty("consoleIpRouteConfig", HostIpRouteConfig.class);
+    }
 
-	public HostNetOffloadCapabilities getOffloadCapabilities()
-	{
-		return (HostNetOffloadCapabilities) getCurrentProperty("offloadCapabilities");
-	}
-	
-	public void addPortGroup(HostPortGroupSpec portgrp) throws HostConfigFault, AlreadyExists, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().addPortGroup(getMOR(), portgrp);
-	}
-	
-	public String addServiceConsoleVirtualNic(String portgroup, HostVirtualNicSpec spec) throws HostConfigFault, RuntimeFault, RemoteException 
-	{
-		return getVimService().addServiceConsoleVirtualNic(getMOR(), portgroup, spec);
-	}
-	
-	public String addVirtualNic(String portgroup, HostVirtualNicSpec nicSpec) throws HostConfigFault, AlreadyExists, RuntimeFault, RemoteException 
-	{
-		return getVimService().addVirtualNic(getMOR(), portgroup, nicSpec);
-	}
-	
-	public void addVirtualSwitch(String vswitchName, HostVirtualSwitchSpec spec) throws HostConfigFault, ResourceInUse, AlreadyExists, RuntimeFault, RemoteException 
-	{
-		getVimService().addVirtualSwitch(getMOR(), vswitchName, spec);
-	}
-	
-	public PhysicalNicHintInfo[] queryNetworkHint(String[] devices) throws HostConfigFault, NotFound, RuntimeFault, RemoteException 
-	{
-		return getVimService().queryNetworkHint(getMOR(), devices);
-	}
-	
-	public void refreshNetworkSystem() throws RuntimeFault, RemoteException 
-	{
-		getVimService().refreshNetworkSystem(getMOR());
-	}
-	
-	public void removePortGroup(String pgName) throws HostConfigFault, ResourceInUse, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().removePortGroup(getMOR(), pgName);
-	}
-	
-	public void removeServiceConsoleVirtualNic(String device) throws HostConfigFault, ResourceInUse, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().removeServiceConsoleVirtualNic(getMOR(), device);
-	}
-	
-	public void removeVirtualNic(String device) throws HostConfigFault, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().removeVirtualNic(getMOR(), device);
-	}
-	
-	public void removeVirtualSwitch(String vswitchName) throws HostConfigFault, ResourceInUse, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().removeVirtualSwitch(getMOR(), vswitchName);
-	}
-	
-	public void restartServiceConsoleVirtualNic(String device) throws HostConfigFault, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().restartServiceConsoleVirtualNic(getMOR(), device);
-	}
-	
-	public void updateConsoleIpRouteConfig(HostIpRouteConfig config) throws HostConfigFault, RuntimeFault, RemoteException 
-	{
-		getVimService().updateConsoleIpRouteConfig(getMOR(), config);
-	}
-	
-	public void updateDnsConfig(HostDnsConfig config) throws HostConfigFault, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().updateDnsConfig(getMOR(), config);
-	}
-	
-	public void updateIpRouteConfig(HostIpRouteConfig config) throws HostConfigFault, RuntimeFault, RemoteException 
-	{
-		getVimService().updateIpRouteConfig(getMOR(), config);
-	}
-	
-  public void updateIpRouteTableConfig(HostIpRouteTableConfig config) throws HostConfigFault, RuntimeFault, RemoteException 
-  {
-    getVimService().updateIpRouteTableConfig(getMOR(), config);
-  }
-	
-	public void updateNetworkConfig(HostNetworkConfig config, String changeMode) throws HostConfigFault, AlreadyExists, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().updateNetworkConfig(getMOR(), config, changeMode);
-	}
-	
-	public void updatePhysicalNicLinkSpeed(String device, PhysicalNicLinkInfo linkSpeed) throws HostConfigFault, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().updatePhysicalNicLinkSpeed(getMOR(), device, linkSpeed);
-	}
-	
-	public void updatePortGroup(String pgName, HostPortGroupSpec portgrp) throws HostConfigFault, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().updatePortGroup(getMOR(), pgName, portgrp);
-	}
-	
-	public void updateServiceConsoleVirtualNic(String device, HostVirtualNicSpec nic) throws HostConfigFault, ResourceInUse, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().updateServiceConsoleVirtualNic(getMOR(), device, nic);
-	}
-	
-	public void updateVirtualNic(String device, HostVirtualNicSpec nic) throws HostConfigFault, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().updateVirtualNic(getMOR(), device, nic);
-	}
-	
-	public void updateVirtualSwitch(String vswitchName, HostVirtualSwitchSpec spec) throws HostConfigFault, ResourceInUse, NotFound, RuntimeFault, RemoteException 
-	{
-		getVimService().updateVirtualSwitch(getMOR(), vswitchName, spec);
-	}
-	
+    @Deprecated(since = "5.5")
+    public HostDnsConfig getDnsConfig() {
+        return getCurrentProperty("dnsConfig", HostDnsConfig.class);
+    }
+
+    @Deprecated(since = "5.5")
+    public HostIpRouteConfig getIpRouteConfig() {
+        return getCurrentProperty("ipRouteConfig", HostIpRouteConfig.class);
+    }
+
+    public HostNetworkConfig getNetworkConfig() {
+        return getCurrentProperty("networkConfig", HostNetworkConfig.class);
+    }
+
+    public HostNetworkInfo getNetworkInfo() {
+        return getCurrentProperty("networkInfo", HostNetworkInfo.class);
+    }
+
+    @Deprecated(since = "4.0")
+    public HostNetOffloadCapabilities getOffloadCapabilities() {
+        return getCurrentProperty("offloadCapabilities", HostNetOffloadCapabilities.class);
+    }
+
+    public void addPortGroup(final HostPortGroupSpec portgrp) throws HostConfigFault, AlreadyExists, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("portgrp", HostPortGroupSpec.class, portgrp));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("AddPortGroup", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public String addServiceConsoleVirtualNic(final String portgroup, final HostVirtualNicSpec nic)
+            throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("portgroup", String.class, portgroup),
+                new Argument("nic", HostVirtualNicSpec.class, nic));
+        try {
+            return this.getVimService().getWsc().invoke("AddServiceConsoleVirtualNic", params, String.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public String addVirtualNic(final String portgroup, final HostVirtualNicSpec nic)
+            throws HostConfigFault, InvalidState, AlreadyExists, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("portgroup", String.class, portgroup),
+                new Argument("nic", HostVirtualNicSpec.class, nic));
+        try {
+            return this.getVimService().getWsc().invoke("AddVirtualNic", params, String.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void addVirtualSwitch(final String vswitchName, final HostVirtualSwitchSpec spec)
+            throws HostConfigFault, ResourceInUse, AlreadyExists, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vswitchName", String.class, vswitchName),
+                new Argument("spec", HostVirtualSwitchSpec.class, spec));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("AddVirtualSwitch", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<PhysicalNicHintInfo> queryNetworkHint(final List<String> device)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("device", String[].class, device));
+        try {
+            return (List<PhysicalNicHintInfo>) this.getVimService().getWsc()
+                    .invoke("QueryNetworkHint", params, "List.PhysicalNicHintInfo");
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void refreshNetworkSystem() throws RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RefreshNetworkSystem", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void removePortGroup(final String pgName) throws HostConfigFault, ResourceInUse, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("pgName", String.class, pgName));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RemovePortGroup", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void removeServiceConsoleVirtualNic(final String device) throws HostConfigFault, ResourceInUse, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("device", String.class, device));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RemoveServiceConsoleVirtualNic", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void removeVirtualNic(final String device) throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("device", String.class, device));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RemoveVirtualNic", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void removeVirtualSwitch(final String vswitchName) throws HostConfigFault, ResourceInUse, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vswitchName", String.class, vswitchName));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RemoveVirtualSwitch", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void restartServiceConsoleVirtualNic(final String device) throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("device", String.class, device));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RestartServiceConsoleVirtualNic", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateConsoleIpRouteConfig(final HostIpRouteConfig config) throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("config", HostIpRouteConfig.class, config));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateConsoleIpRouteConfig", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @Deprecated(since = "5.5")
+    public void updateDnsConfig(final HostDnsConfig config) throws HostInDomain, HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("config", HostDnsConfig.class, config));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateDnsConfig", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostInDomain) {
+                throw (HostInDomain) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @Deprecated(since = "5.5")
+    public void updateIpRouteConfig(final HostIpRouteConfig config) throws HostConfigFault, InvalidState, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("config", HostIpRouteConfig.class, config));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateIpRouteConfig", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @Deprecated(since = "5.5")
+    public void updateIpRouteTableConfig(final HostIpRouteTableConfig config) throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("config", HostIpRouteTableConfig.class, config));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateIpRouteTableConfig", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public HostNetworkConfigResult updateNetworkConfig(final HostNetworkConfig config, final HostConfigChangeMode changeMode)
+            throws HostConfigFault, AlreadyExists, NotFound, ResourceInUse, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("config", HostNetworkConfig.class, config),
+                new Argument("changeMode", String.class, changeMode.name()));
+        try {
+            return this.getVimService().getWsc().invoke("UpdateNetworkConfig", params, HostNetworkConfigResult.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updatePhysicalNicLinkSpeed(final String device, final PhysicalNicLinkInfo linkSpeed)
+            throws HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("device", String.class, device),
+                new Argument("linkSpeed", PhysicalNicLinkInfo.class, linkSpeed));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdatePhysicalNicLinkSpeed", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updatePortGroup(final String pgName, final HostPortGroupSpec portgrp)
+            throws AlreadyExists, HostConfigFault, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("pgName", String.class, pgName),
+                new Argument("portgrp", HostPortGroupSpec.class, portgrp));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdatePortGroup", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateServiceConsoleVirtualNic(final String device, final HostVirtualNicSpec nic)
+            throws HostConfigFault, ResourceInUse, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("device", String.class, device),
+                new Argument("nic", HostVirtualNicSpec.class, nic));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateServiceConsoleVirtualNic", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateVirtualNic(final String device, final HostVirtualNicSpec nic)
+            throws HostConfigFault, NotFound, InvalidState, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("device", String.class, device),
+                new Argument("nic", HostVirtualNicSpec.class, nic));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateVirtualNic", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateVirtualSwitch(final String vswitchName, final HostVirtualSwitchSpec spec)
+            throws HostConfigFault, ResourceInUse, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("vswitchName", String.class, vswitchName),
+                new Argument("spec", HostVirtualSwitchSpec.class, spec));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateVirtualSwitch", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
 }

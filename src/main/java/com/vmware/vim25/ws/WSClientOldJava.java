@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.ProtocolException;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.rmi.RemoteException;
 import java.util.List;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class WSClientOldJava extends WSClient {
 
-    WSClientOldJava(final String serverUrl, final boolean ignoreCert) {
+    WSClientOldJava(final URL serverUrl, final boolean ignoreCert) {
         super(serverUrl, ignoreCert);
         if (ignoreCert) {
             final SSLContext sc = trustAllHttpsCertificates();

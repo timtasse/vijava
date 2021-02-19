@@ -2,6 +2,11 @@
 <project version="4">
   <component name="SonarLintProjectSettings">
     <option name="bindingEnabled" value="true" />
+    <option name="fileExclusions">
+      <list>
+        <option value="FILE:src/main/java/com/vmware/vim25/ws/VimStub.java" />
+      </list>
+    </option>
     <option name="projectKey" value="de.freenet.cloud:vijava" />
     <option name="serverId" value="dev-vmware" />
   </component>

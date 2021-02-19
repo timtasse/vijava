@@ -33,14 +33,14 @@ package com.vmware.vim25;
  * This data object type describes the configuration of a host across products and versions.
  *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.7
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
  */
-@SuppressWarnings("all")
 public class HostConfigManager extends DynamicData {
 
     private ManagedObjectReference accountManager;
     private ManagedObjectReference advancedOption;
+    private ManagedObjectReference assignableHardwareManager;
     private ManagedObjectReference authenticationManager;
     private ManagedObjectReference autoStartManager;
     private ManagedObjectReference bootDeviceSystem;
@@ -391,5 +391,13 @@ public class HostConfigManager extends DynamicData {
 
     public void setvFlashManager(final ManagedObjectReference vFlashManager) {
         this.vFlashManager = vFlashManager;
+    }
+
+    public ManagedObjectReference getAssignableHardwareManager() {
+        return assignableHardwareManager;
+    }
+
+    public void setAssignableHardwareManager(final ManagedObjectReference assignableHardwareManager) {
+        this.assignableHardwareManager = assignableHardwareManager;
     }
 }

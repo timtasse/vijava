@@ -30,55 +30,79 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object contains the information needed to establish a connection to a running virtual machine.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class VirtualMachineTicket extends DynamicData {
-  public String ticket;
-  public String cfgFile;
-  public String host;
-  public Integer port;
-  public String sslThumbprint;
 
-  public String getTicket() {
-    return this.ticket;
-  }
+    private String ticket;
+    private String cfgFile;
+    private String host;
+    private Integer port;
+    private String sslThumbprint;
+    private String url;
 
-  public String getCfgFile() {
-    return this.cfgFile;
-  }
+    @Override
+    public String toString() {
+        return "VirtualMachineTicket{" +
+                "ticket='" + ticket + '\'' +
+                ", cfgFile='" + cfgFile + '\'' +
+                ", host='" + host + '\'' +
+                ", port=" + port +
+                ", sslThumbprint='" + sslThumbprint + '\'' +
+                ", url='" + url + '\'' +
+                "} " + super.toString();
+    }
 
-  public String getHost() {
-    return this.host;
-  }
+    public String getTicket() {
+        return this.ticket;
+    }
 
-  public Integer getPort() {
-    return this.port;
-  }
+    public void setTicket(String ticket) {
+        this.ticket = ticket;
+    }
 
-  public String getSslThumbprint() {
-    return this.sslThumbprint;
-  }
+    public String getCfgFile() {
+        return this.cfgFile;
+    }
 
-  public void setTicket(String ticket) {
-    this.ticket=ticket;
-  }
+    public void setCfgFile(String cfgFile) {
+        this.cfgFile = cfgFile;
+    }
 
-  public void setCfgFile(String cfgFile) {
-    this.cfgFile=cfgFile;
-  }
+    public String getHost() {
+        return this.host;
+    }
 
-  public void setHost(String host) {
-    this.host=host;
-  }
+    public void setHost(String host) {
+        this.host = host;
+    }
 
-  public void setPort(Integer port) {
-    this.port=port;
-  }
+    public Integer getPort() {
+        return this.port;
+    }
 
-  public void setSslThumbprint(String sslThumbprint) {
-    this.sslThumbprint=sslThumbprint;
-  }
+    public void setPort(Integer port) {
+        this.port = port;
+    }
+
+    public String getSslThumbprint() {
+        return this.sslThumbprint;
+    }
+
+    public void setSslThumbprint(String sslThumbprint) {
+        this.sslThumbprint = sslThumbprint;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(final String url) {
+        this.url = url;
+    }
+
 }

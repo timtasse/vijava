@@ -40,9 +40,8 @@ import java.util.Calendar;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0
  */
-@SuppressWarnings("all")
 public class VirtualMachineConfigSpec extends DynamicData {
 
     private String changeVersion;
@@ -107,46 +106,19 @@ public class VirtualMachineConfigSpec extends DynamicData {
     private Boolean messageBusTunnelEnabled;
     private CryptoSpec crypto;
     private String migrateEncryption;
+    private VirtualMachineSgxInfo sgxInfo;
+    private VirtualMachineGuestMonitoringModeInfo guestMonitoringModeInfo;
+    private Boolean sevEnabled;
 
     @Override
     public String toString() {
         return "VirtualMachineConfigSpec{" +
-                "alternateGuestName='" + alternateGuestName + '\'' +
-                ", annotation='" + annotation + '\'' +
-                ", bootOptions=" + bootOptions +
-                ", changeTrackingEnabled=" + changeTrackingEnabled +
-                ", changeVersion='" + changeVersion + '\'' +
-                ", consolePreferences=" + consolePreferences +
-                ", cpuAffinity=" + cpuAffinity +
-                ", cpuAllocation=" + cpuAllocation +
-                ", cpuFeatureMask=" + Arrays.toString(cpuFeatureMask) +
-                ", cpuHotAddEnabled=" + cpuHotAddEnabled +
-                ", cpuHotRemoveEnabled=" + cpuHotRemoveEnabled +
-                ", createDate=" + createDate +
-                ", crypto=" + crypto +
-                ", deviceChange=" + Arrays.toString(deviceChange) +
-                ", extraConfig=" + Arrays.toString(extraConfig) +
-                ", files=" + files +
-                ", firmware='" + firmware + '\'' +
-                ", flags=" + flags +
-                ", ftInfo=" + ftInfo +
-                ", guestAutoLockEnabled=" + guestAutoLockEnabled +
-                ", guestId='" + guestId + '\'' +
-                ", instanceUuid='" + instanceUuid + '\'' +
-                ", latencySensitivity=" + latencySensitivity +
-                ", locationId='" + locationId + '\'' +
-                ", managedBy=" + managedBy +
-                ", maxMksConnections=" + maxMksConnections +
-                ", memoryAffinity=" + memoryAffinity +
-                ", memoryAllocation=" + memoryAllocation +
-                ", memoryHotAddEnabled=" + memoryHotAddEnabled +
-                ", memoryMB=" + memoryMB +
-                ", memoryReservationLockedToMax=" + memoryReservationLockedToMax +
-                ", messageBusTunnelEnabled=" + messageBusTunnelEnabled +
-                ", migrateEncryption='" + migrateEncryption + '\'' +
+                "changeVersion='" + changeVersion + '\'' +
                 ", name='" + name + '\'' +
-                ", nestedHVEnabled=" + nestedHVEnabled +
-                ", networkShaper=" + networkShaper +
+                ", version='" + version + '\'' +
+                ", createDate=" + createDate +
+                ", uuid='" + uuid + '\'' +
+                ", instanceUuid='" + instanceUuid + '\'' +
                 ", npivDesiredNodeWwns=" + npivDesiredNodeWwns +
                 ", npivDesiredPortWwns=" + npivDesiredPortWwns +
                 ", npivNodeWorldWideName=" + Arrays.toString(npivNodeWorldWideName) +
@@ -155,22 +127,55 @@ public class VirtualMachineConfigSpec extends DynamicData {
                 ", npivTemporaryDisabled=" + npivTemporaryDisabled +
                 ", npivWorldWideNameOp='" + npivWorldWideNameOp + '\'' +
                 ", npivWorldWideNameType='" + npivWorldWideNameType + '\'' +
-                ", numCoresPerSocket=" + numCoresPerSocket +
-                ", numCPUs=" + numCPUs +
-                ", powerOpInfo=" + powerOpInfo +
-                ", repConfig=" + repConfig +
-                ", scheduledHardwareUpgradeInfo=" + scheduledHardwareUpgradeInfo +
-                ", swapPlacement='" + swapPlacement + '\'' +
+                ", locationId='" + locationId + '\'' +
+                ", guestId='" + guestId + '\'' +
+                ", alternateGuestName='" + alternateGuestName + '\'' +
+                ", annotation='" + annotation + '\'' +
+                ", files=" + files +
                 ", tools=" + tools +
-                ", uuid='" + uuid + '\'' +
-                ", vAppConfig=" + vAppConfig +
-                ", vAppConfigRemoved=" + vAppConfigRemoved +
-                ", vAssertsEnabled=" + vAssertsEnabled +
-                ", version='" + version + '\'' +
+                ", flags=" + flags +
+                ", consolePreferences=" + consolePreferences +
+                ", powerOpInfo=" + powerOpInfo +
+                ", numCPUs=" + numCPUs +
+                ", numCoresPerSocket=" + numCoresPerSocket +
+                ", memoryMB=" + memoryMB +
+                ", memoryHotAddEnabled=" + memoryHotAddEnabled +
+                ", cpuHotAddEnabled=" + cpuHotAddEnabled +
+                ", cpuHotRemoveEnabled=" + cpuHotRemoveEnabled +
                 ", virtualICH7MPresent=" + virtualICH7MPresent +
                 ", virtualSMCPresent=" + virtualSMCPresent +
-                ", vmProfile=" + Arrays.toString(vmProfile) +
+                ", deviceChange=" + Arrays.toString(deviceChange) +
+                ", cpuAllocation=" + cpuAllocation +
+                ", memoryAllocation=" + memoryAllocation +
+                ", latencySensitivity=" + latencySensitivity +
+                ", cpuAffinity=" + cpuAffinity +
+                ", memoryAffinity=" + memoryAffinity +
+                ", networkShaper=" + networkShaper +
+                ", cpuFeatureMask=" + Arrays.toString(cpuFeatureMask) +
+                ", extraConfig=" + Arrays.toString(extraConfig) +
+                ", swapPlacement='" + swapPlacement + '\'' +
+                ", bootOptions=" + bootOptions +
+                ", vAppConfig=" + vAppConfig +
+                ", ftInfo=" + ftInfo +
+                ", repConfig=" + repConfig +
+                ", vAppConfigRemoved=" + vAppConfigRemoved +
+                ", vAssertsEnabled=" + vAssertsEnabled +
+                ", changeTrackingEnabled=" + changeTrackingEnabled +
+                ", firmware='" + firmware + '\'' +
+                ", maxMksConnections=" + maxMksConnections +
+                ", guestAutoLockEnabled=" + guestAutoLockEnabled +
+                ", managedBy=" + managedBy +
+                ", memoryReservationLockedToMax=" + memoryReservationLockedToMax +
+                ", nestedHVEnabled=" + nestedHVEnabled +
                 ", vPMCEnabled=" + vPMCEnabled +
+                ", scheduledHardwareUpgradeInfo=" + scheduledHardwareUpgradeInfo +
+                ", vmProfile=" + Arrays.toString(vmProfile) +
+                ", messageBusTunnelEnabled=" + messageBusTunnelEnabled +
+                ", crypto=" + crypto +
+                ", migrateEncryption='" + migrateEncryption + '\'' +
+                ", sgxInfo=" + sgxInfo +
+                ", guestMonitoringModeInfo=" + guestMonitoringModeInfo +
+                ", sevEnabled=" + sevEnabled +
                 "} " + super.toString();
     }
 
@@ -652,6 +657,30 @@ public class VirtualMachineConfigSpec extends DynamicData {
 
     public void setvPMCEnabled(final Boolean vPMCEnabled) {
         this.vPMCEnabled = vPMCEnabled;
+    }
+
+    public VirtualMachineSgxInfo getSgxInfo() {
+        return sgxInfo;
+    }
+
+    public void setSgxInfo(final VirtualMachineSgxInfo sgxInfo) {
+        this.sgxInfo = sgxInfo;
+    }
+
+    public VirtualMachineGuestMonitoringModeInfo getGuestMonitoringModeInfo() {
+        return guestMonitoringModeInfo;
+    }
+
+    public void setGuestMonitoringModeInfo(final VirtualMachineGuestMonitoringModeInfo guestMonitoringModeInfo) {
+        this.guestMonitoringModeInfo = guestMonitoringModeInfo;
+    }
+
+    public Boolean getSevEnabled() {
+        return sevEnabled;
+    }
+
+    public void setSevEnabled(final Boolean sevEnabled) {
+        this.sevEnabled = sevEnabled;
     }
 
 }

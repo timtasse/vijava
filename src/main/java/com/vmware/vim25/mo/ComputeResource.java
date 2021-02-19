@@ -47,31 +47,31 @@ import java.util.List;
  * @author Steve JIN (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
-
+@SuppressWarnings("unused")
 public class ComputeResource extends ManagedEntity {
 
-    public ComputeResource(ServerConnection sc, ManagedObjectReference mor) {
+    public ComputeResource(final ServerConnection sc, final ManagedObjectReference mor) {
         super(sc, mor);
     }
 
     public ComputeResourceConfigInfo getConfigurationEx() {
-        return (ComputeResourceConfigInfo) this.getCurrentProperty("configurationEx");
+        return this.getCurrentProperty("configurationEx", ComputeResourceConfigInfo.class);
     }
 
-    public Datastore[] getDatastores() {
-        return getDatastores("datastore");
+    public List<Datastore> getDatastores() {
+        return Arrays.asList(getDatastores("datastore"));
     }
 
     public EnvironmentBrowser getEnvironmentBrowser() {
         return (EnvironmentBrowser) this.getManagedObject("environmentBrowser");
     }
 
-    public HostSystem[] getHosts() {
-        return getHosts("host");
+    public List<HostSystem> getHosts() {
+        return Arrays.asList(getHosts("host"));
     }
 
-    public Network[] getNetworks() {
-        return getNetworks("network");
+    public List<Network> getNetworks() {
+        return Arrays.asList(getNetworks("network"));
     }
 
     public ResourcePool getResourcePool() {
@@ -79,15 +79,26 @@ public class ComputeResource extends ManagedEntity {
     }
 
     public ComputeResourceSummary getSummary() {
-        return (ComputeResourceSummary) this.getCurrentProperty("summary");
+        return this.getCurrentProperty("summary", ComputeResourceSummary.class);
     }
 
-    public Task reconfigureComputeResource_Task(final ComputeResourceConfigSpec spec, final boolean modify) throws CannotDisableDrsOnClustersWithVApps, RuntimeFault, RemoteException {
+    public Task reconfigureComputeResource(final ComputeResourceConfigSpec spec, final boolean modify)
+            throws CannotDisableDrsOnClustersWithVApps, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("spec", ComputeResourceConfigSpec.class, spec),
                 new Argument("modify", "boolean", modify));
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("ReconfigureComputeResource_Task", params, ManagedObjectReference.class);
-        return new Task(this.getServerConnection(), mor);
+        try {
+            return this.invokeWithTaskReturn("ReconfigureComputeResource_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof CannotDisableDrsOnClustersWithVApps) {
+                throw (CannotDisableDrsOnClustersWithVApps) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
 }

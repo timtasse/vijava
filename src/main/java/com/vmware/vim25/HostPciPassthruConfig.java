@@ -30,28 +30,48 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object provides information about the state of PciPassthru for all pci devices.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
+ */
 public class HostPciPassthruConfig extends DynamicData {
-  public String id;
-  public boolean passthruEnabled;
 
-  public String getId() {
-    return this.id;
-  }
+    private String id;
+    private boolean passthruEnabled;
+    private Boolean applyNow;
 
-  public boolean isPassthruEnabled() {
-    return this.passthruEnabled;
-  }
+    @Override
+    public String toString() {
+        return "HostPciPassthruConfig{" +
+                "id='" + id + '\'' +
+                ", passthruEnabled=" + passthruEnabled +
+                ", applyNow=" + applyNow +
+                "} " + super.toString();
+    }
 
-  public void setId(String id) {
-    this.id=id;
-  }
+    public String getId() {
+        return this.id;
+    }
 
-  public void setPassthruEnabled(boolean passthruEnabled) {
-    this.passthruEnabled=passthruEnabled;
-  }
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public boolean isPassthruEnabled() {
+        return this.passthruEnabled;
+    }
+
+    public void setPassthruEnabled(boolean passthruEnabled) {
+        this.passthruEnabled = passthruEnabled;
+    }
+
+    public Boolean getApplyNow() {
+        return applyNow;
+    }
+
+    public void setApplyNow(final Boolean applyNow) {
+        this.applyNow = applyNow;
+    }
 }

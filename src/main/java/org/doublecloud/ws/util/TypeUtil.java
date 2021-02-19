@@ -38,9 +38,9 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public final class TypeUtil {
 
-    final public static Class<?> INT_ARRAY_CLASS = new int[]{}.getClass();
-    final public static Class<?> BYTE_ARRAY_CLASS = new byte[]{}.getClass();
-    final public static Class<?> LONG_ARRAY_CLASS = new long[]{}.getClass();
+    public static final Class<?> INT_ARRAY_CLASS = int[].class;
+    public static final Class<?> BYTE_ARRAY_CLASS = byte[].class;
+    public static final Class<?> LONG_ARRAY_CLASS = long[].class;
 
     private static final Logger LOGGER = LoggerFactory.getLogger(TypeUtil.class);
     private static final String PACKAGE_NAME = "com.vmware.vim25";
@@ -49,13 +49,13 @@ public final class TypeUtil {
     private static final List<String> BASIC_TYPES = Arrays.asList("String", "int", "short", "long", "float", "Float", "byte", "boolean", "Boolean", "Calendar", "double",
             "List.String", "List.Integer", "List.Short", "List.Long", "List.Float", "List.Double", "List.Byte", "List.Boolean", "List.Calendar");
     private static final List<Package> BASIC_PACKAGES = Arrays.asList(String.class.getPackage(), Calendar.class.getPackage());
-    private static Class<?>[] clazzes = new Class[]{
+    private static final Class<?>[] clazzes = new Class[]{
             java.lang.Integer.class, java.lang.Long.class,
             java.lang.Boolean.class, java.lang.Short.class,
             java.lang.Float.class, java.lang.String.class,
             java.lang.Byte.class, java.lang.Double.class
     };
-    private static String[] xsdStrs = new String[]{
+    private static final String[] xsdStrs = new String[]{
             "xsd:int", "xsd:long",
             "xsd:boolean", "xsd:short",
             "xsd:float", "xsd:string",
@@ -76,35 +76,35 @@ public final class TypeUtil {
         // Static Class
     }
 
-    public static boolean isPrimitiveType(String type) {
+    public static boolean isPrimitiveType(final String type) {
         return PRIMITIVE_TYPES.contains(type);
     }
 
     public static boolean isBasicType(final String type) {
-        return BASIC_TYPES.stream().filter(v -> type.startsWith(v)).findAny().isPresent();
+        return BASIC_TYPES.stream().anyMatch(type::startsWith);
     }
 
     public static boolean isBasicType(final Class<?> clazz) {
-        return BASIC_PACKAGES.stream().filter(v -> clazz.getPackage() == null || v.equals(clazz.getPackage())).findAny().isPresent();
+        return BASIC_PACKAGES.stream().anyMatch(v -> clazz.getPackage() == null || v.equals(clazz.getPackage()));
     }
 
-    public final static Class<?> getVimClass(final String type) {
+    public static Class<?> getVimClass(final String type) {
         if (VIM_CLASSES.containsKey(type)) {
             return VIM_CLASSES.get(type);
         } else {
             try {
-                Class<?> clazz;
-                if (type.endsWith("[]") == false) {
+                final Class<?> clazz;
+                if (!type.endsWith("[]")) {
                     clazz = Class.forName(PACKAGE_NAME + "." + type);
                 } else {
-                    String arrayType = type.substring(0, type.length() - 2);
+                    final String arrayType = type.substring(0, type.length() - 2);
                     clazz = Array.newInstance(getVimClass(arrayType), 0).getClass();
                 }
 
                 VIM_CLASSES.put(type, clazz);
 
                 return clazz;
-            } catch (ClassNotFoundException cnfe) {
+            } catch (final ClassNotFoundException cnfe) {
                 LOGGER.error("Class {} not found", type, cnfe);
                 return null;
             }
@@ -112,8 +112,8 @@ public final class TypeUtil {
     }
 
     //only for the basic data types as shown above
-    public static String getXSIType(Object obj) {
-        Class<?> type = obj.getClass();
+    public static String getXSIType(final Object obj) {
+        final Class<?> type = obj.getClass();
 
         for (int i = 0; i < clazzes.length; i++) {
             if (type == clazzes[i]) {

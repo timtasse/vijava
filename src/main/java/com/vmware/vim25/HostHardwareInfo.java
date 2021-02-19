@@ -36,40 +36,43 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0.1
  */
-
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class HostHardwareInfo extends DynamicData {
 
-    private HostBIOSInfo biosInfo;
-    private HostCpuIdInfo[] cpuFeature;
+    private HostSystemInfo systemInfo;
+    private HostCpuPowerManagementInfo cpuPowerManagementInfo;
     private HostCpuInfo cpuInfo;
     private HostCpuPackage[] cpuPkg;
-    private HostCpuPowerManagementInfo cpuPowerManagementInfo;
     private long memorySize;
     private HostNumaInfo numaInfo;
-    private HostPciDevice[] pciDevice;
-    private HostPersistentMemoryInfo persistentMemoryInfo;
-    private HostReliableMemoryInfo reliableMemoryInfo;
     private Boolean smcPresent;
-    private HostSystemInfo systemInfo;
+    private HostPciDevice[] pciDevice;
+    private HostCpuIdInfo[] cpuFeature;
+    private HostBIOSInfo biosInfo;
+    private HostReliableMemoryInfo reliableMemoryInfo;
+    private HostPersistentMemoryInfo persistentMemoryInfo;
+    private HostSgxInfo sgxInfo;
+    private HostSevInfo sevInfo;
 
     @Override
     public String toString() {
         return "HostHardwareInfo{" +
-                "biosInfo=" + biosInfo +
-                ", cpuFeature=" + Arrays.toString(cpuFeature) +
+                "systemInfo=" + systemInfo +
+                ", cpuPowerManagementInfo=" + cpuPowerManagementInfo +
                 ", cpuInfo=" + cpuInfo +
                 ", cpuPkg=" + Arrays.toString(cpuPkg) +
-                ", cpuPowerManagementInfo=" + cpuPowerManagementInfo +
                 ", memorySize=" + memorySize +
                 ", numaInfo=" + numaInfo +
-                ", pciDevice=" + Arrays.toString(pciDevice) +
-                ", persistentMemoryInfo=" + persistentMemoryInfo +
-                ", reliableMemoryInfo=" + reliableMemoryInfo +
                 ", smcPresent=" + smcPresent +
-                ", systemInfo=" + systemInfo +
+                ", pciDevice=" + Arrays.toString(pciDevice) +
+                ", cpuFeature=" + Arrays.toString(cpuFeature) +
+                ", biosInfo=" + biosInfo +
+                ", reliableMemoryInfo=" + reliableMemoryInfo +
+                ", persistentMemoryInfo=" + persistentMemoryInfo +
+                ", sgxInfo=" + sgxInfo +
+                ", sevInfo=" + sevInfo +
                 "} " + super.toString();
     }
 
@@ -77,7 +80,7 @@ public class HostHardwareInfo extends DynamicData {
         return this.systemInfo;
     }
 
-    public void setSystemInfo(HostSystemInfo systemInfo) {
+    public void setSystemInfo(final HostSystemInfo systemInfo) {
         this.systemInfo = systemInfo;
     }
 
@@ -85,7 +88,7 @@ public class HostHardwareInfo extends DynamicData {
         return this.cpuPowerManagementInfo;
     }
 
-    public void setCpuPowerManagementInfo(HostCpuPowerManagementInfo cpuPowerManagementInfo) {
+    public void setCpuPowerManagementInfo(final HostCpuPowerManagementInfo cpuPowerManagementInfo) {
         this.cpuPowerManagementInfo = cpuPowerManagementInfo;
     }
 
@@ -93,7 +96,7 @@ public class HostHardwareInfo extends DynamicData {
         return this.cpuInfo;
     }
 
-    public void setCpuInfo(HostCpuInfo cpuInfo) {
+    public void setCpuInfo(final HostCpuInfo cpuInfo) {
         this.cpuInfo = cpuInfo;
     }
 
@@ -101,7 +104,7 @@ public class HostHardwareInfo extends DynamicData {
         return this.cpuPkg;
     }
 
-    public void setCpuPkg(HostCpuPackage[] cpuPkg) {
+    public void setCpuPkg(final HostCpuPackage[] cpuPkg) {
         this.cpuPkg = cpuPkg;
     }
 
@@ -109,7 +112,7 @@ public class HostHardwareInfo extends DynamicData {
         return this.memorySize;
     }
 
-    public void setMemorySize(long memorySize) {
+    public void setMemorySize(final long memorySize) {
         this.memorySize = memorySize;
     }
 
@@ -117,7 +120,7 @@ public class HostHardwareInfo extends DynamicData {
         return this.numaInfo;
     }
 
-    public void setNumaInfo(HostNumaInfo numaInfo) {
+    public void setNumaInfo(final HostNumaInfo numaInfo) {
         this.numaInfo = numaInfo;
     }
 
@@ -125,7 +128,7 @@ public class HostHardwareInfo extends DynamicData {
         return this.smcPresent;
     }
 
-    public void setSmcPresent(Boolean smcPresent) {
+    public void setSmcPresent(final Boolean smcPresent) {
         this.smcPresent = smcPresent;
     }
 
@@ -133,7 +136,7 @@ public class HostHardwareInfo extends DynamicData {
         return this.pciDevice;
     }
 
-    public void setPciDevice(HostPciDevice[] pciDevice) {
+    public void setPciDevice(final HostPciDevice[] pciDevice) {
         this.pciDevice = pciDevice;
     }
 
@@ -141,7 +144,7 @@ public class HostHardwareInfo extends DynamicData {
         return this.cpuFeature;
     }
 
-    public void setCpuFeature(HostCpuIdInfo[] cpuFeature) {
+    public void setCpuFeature(final HostCpuIdInfo[] cpuFeature) {
         this.cpuFeature = cpuFeature;
     }
 
@@ -149,7 +152,7 @@ public class HostHardwareInfo extends DynamicData {
         return this.biosInfo;
     }
 
-    public void setBiosInfo(HostBIOSInfo biosInfo) {
+    public void setBiosInfo(final HostBIOSInfo biosInfo) {
         this.biosInfo = biosInfo;
     }
 
@@ -157,7 +160,7 @@ public class HostHardwareInfo extends DynamicData {
         return this.reliableMemoryInfo;
     }
 
-    public void setReliableMemoryInfo(HostReliableMemoryInfo reliableMemoryInfo) {
+    public void setReliableMemoryInfo(final HostReliableMemoryInfo reliableMemoryInfo) {
         this.reliableMemoryInfo = reliableMemoryInfo;
     }
 
@@ -167,6 +170,22 @@ public class HostHardwareInfo extends DynamicData {
 
     public void setPersistentMemoryInfo(final HostPersistentMemoryInfo persistentMemoryInfo) {
         this.persistentMemoryInfo = persistentMemoryInfo;
+    }
+
+    public HostSgxInfo getSgxInfo() {
+        return sgxInfo;
+    }
+
+    public void setSgxInfo(final HostSgxInfo sgxInfo) {
+        this.sgxInfo = sgxInfo;
+    }
+
+    public HostSevInfo getSevInfo() {
+        return sevInfo;
+    }
+
+    public void setSevInfo(final HostSevInfo sevInfo) {
+        this.sevInfo = sevInfo;
     }
 
 }

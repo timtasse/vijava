@@ -29,28 +29,50 @@ POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 package com.vmware.vim25.mo;
 
-import com.vmware.vim25.DvsFault;
-import com.vmware.vim25.ManagedObjectReference;
-import com.vmware.vim25.RuntimeFault;
-import com.vmware.vim25.VMwareDvsLacpGroupSpec;
+import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * The VmwareDistributedVirtualSwitch managed object is the VMware implementation of a distributed virtual switch.
+ * The functionality listed here is for a VMware distributed virtual switch only.
+ * When you use a VMware distributed virtual switch, you can perform backup and restore operations on the VMware switch.
+ * You can also perform rollback operations on the switch and on portgroups associated with the VMware switch.
+ * See the description for the following methods:
+ * {@link com.vmware.vim25.mo.DistributedVirtualSwitchManager#dVSManagerExportEntity}
+ * {@link com.vmware.vim25.mo.DistributedVirtualSwitchManager#dVSManagerImportEntity}
+ * {@link com.vmware.vim25.mo.DistributedVirtualSwitch#dVSRollback_Task}
+ * {@link com.vmware.vim25.mo.DistributedVirtualPortgroup#dVPortgroupRollback_Task}
+ *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 4.0
  */
-public class VmwareDistributedVirtualSwitch extends DistributedVirtualSwitch  
-{
-	public VmwareDistributedVirtualSwitch(ServerConnection sc, ManagedObjectReference mor) 
-	{
-		super(sc, mor);
-	}
-	
-	public Task updateDVSLacpGroupConfig_Task(VMwareDvsLacpGroupSpec[] lacpGroupSpec) throws DvsFault, RuntimeFault, RemoteException
-	{
-	  ManagedObjectReference mor = getVimService().updateDVSLacpGroupConfig_Task(this.getMOR(), lacpGroupSpec);
-	  return new Task(this.getServerConnection(), mor);
-	}
+@SuppressWarnings("unused")
+public class VmwareDistributedVirtualSwitch extends DistributedVirtualSwitch {
+
+    public VmwareDistributedVirtualSwitch(final ServerConnection sc, final ManagedObjectReference mor) {
+        super(sc, mor);
+    }
+
+    public Task updateDVSLacpGroupConfig(final List<VMwareDvsLacpGroupSpec> lacpGroupSpec) throws DvsFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("lacpGroupSpec", VMwareDvsLacpGroupSpec[].class, lacpGroupSpec.toArray()));
+        try {
+            return this.invokeWithTaskReturn("UpdateDVSLacpGroupConfig_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DvsFault) {
+                throw (DvsFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
 }

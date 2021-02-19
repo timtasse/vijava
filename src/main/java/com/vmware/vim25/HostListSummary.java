@@ -36,43 +36,46 @@ import java.util.Arrays;
  * VirtualCenter can retrieve this information very efficiently, even for a large set of hosts.
  *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.7
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.1
  */
-
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class HostListSummary extends DynamicData {
 
-    private HostConfigSummary config;
-    private String currentEVCModeKey;
-    private CustomFieldValue[] customValue;
-    private HostListSummaryGatewaySummary gateway;
-    private HostHardwareSummary hardware;
     private ManagedObjectReference host;
+    private HostHardwareSummary hardware;
+    private HostRuntimeInfo runtime;
+    private HostConfigSummary config;
+    private HostListSummaryQuickStats quickStats;
+    private ManagedEntityStatus overallStatus;
+    private boolean rebootRequired;
+    private CustomFieldValue[] customValue;
     private String managementServerIp;
     private String maxEVCModeKey;
-    private ManagedEntityStatus overallStatus;
-    private HostListSummaryQuickStats quickStats;
-    private boolean rebootRequired;
-    private HostRuntimeInfo runtime;
+    private String currentEVCModeKey;
+    private String currentEVCGraphicsModeKey;
+    private HostListSummaryGatewaySummary gateway;
     private HostTpmAttestationInfo tpmAttestation;
+    private HostTrustAuthorityAttestationInfo trustAuthorityAttestationInfos;
 
     @Override
     public String toString() {
         return "HostListSummary{" +
-                "config=" + config +
-                ", currentEVCModeKey='" + currentEVCModeKey + '\'' +
-                ", customValue=" + Arrays.toString(customValue) +
-                ", gateway=" + gateway +
+                "host=" + host +
                 ", hardware=" + hardware +
-                ", host=" + host +
+                ", runtime=" + runtime +
+                ", config=" + config +
+                ", quickStats=" + quickStats +
+                ", overallStatus=" + overallStatus +
+                ", rebootRequired=" + rebootRequired +
+                ", customValue=" + Arrays.toString(customValue) +
                 ", managementServerIp='" + managementServerIp + '\'' +
                 ", maxEVCModeKey='" + maxEVCModeKey + '\'' +
-                ", overallStatus=" + overallStatus +
-                ", quickStats=" + quickStats +
-                ", rebootRequired=" + rebootRequired +
-                ", runtime=" + runtime +
+                ", currentEVCModeKey='" + currentEVCModeKey + '\'' +
+                ", currentEVCGraphicsModeKey='" + currentEVCGraphicsModeKey + '\'' +
+                ", gateway=" + gateway +
                 ", tpmAttestation=" + tpmAttestation +
+                ", trustAuthorityAttestationInfos=" + trustAuthorityAttestationInfos +
                 "} " + super.toString();
     }
 
@@ -80,7 +83,7 @@ public class HostListSummary extends DynamicData {
         return this.host;
     }
 
-    public void setHost(ManagedObjectReference host) {
+    public void setHost(final ManagedObjectReference host) {
         this.host = host;
     }
 
@@ -88,7 +91,7 @@ public class HostListSummary extends DynamicData {
         return this.hardware;
     }
 
-    public void setHardware(HostHardwareSummary hardware) {
+    public void setHardware(final HostHardwareSummary hardware) {
         this.hardware = hardware;
     }
 
@@ -96,7 +99,7 @@ public class HostListSummary extends DynamicData {
         return this.runtime;
     }
 
-    public void setRuntime(HostRuntimeInfo runtime) {
+    public void setRuntime(final HostRuntimeInfo runtime) {
         this.runtime = runtime;
     }
 
@@ -104,7 +107,7 @@ public class HostListSummary extends DynamicData {
         return this.config;
     }
 
-    public void setConfig(HostConfigSummary config) {
+    public void setConfig(final HostConfigSummary config) {
         this.config = config;
     }
 
@@ -112,7 +115,7 @@ public class HostListSummary extends DynamicData {
         return this.quickStats;
     }
 
-    public void setQuickStats(HostListSummaryQuickStats quickStats) {
+    public void setQuickStats(final HostListSummaryQuickStats quickStats) {
         this.quickStats = quickStats;
     }
 
@@ -120,7 +123,7 @@ public class HostListSummary extends DynamicData {
         return this.overallStatus;
     }
 
-    public void setOverallStatus(ManagedEntityStatus overallStatus) {
+    public void setOverallStatus(final ManagedEntityStatus overallStatus) {
         this.overallStatus = overallStatus;
     }
 
@@ -128,7 +131,7 @@ public class HostListSummary extends DynamicData {
         return this.rebootRequired;
     }
 
-    public void setRebootRequired(boolean rebootRequired) {
+    public void setRebootRequired(final boolean rebootRequired) {
         this.rebootRequired = rebootRequired;
     }
 
@@ -136,7 +139,7 @@ public class HostListSummary extends DynamicData {
         return this.customValue;
     }
 
-    public void setCustomValue(CustomFieldValue[] customValue) {
+    public void setCustomValue(final CustomFieldValue[] customValue) {
         this.customValue = customValue;
     }
 
@@ -144,7 +147,7 @@ public class HostListSummary extends DynamicData {
         return this.managementServerIp;
     }
 
-    public void setManagementServerIp(String managementServerIp) {
+    public void setManagementServerIp(final String managementServerIp) {
         this.managementServerIp = managementServerIp;
     }
 
@@ -152,7 +155,7 @@ public class HostListSummary extends DynamicData {
         return this.maxEVCModeKey;
     }
 
-    public void setMaxEVCModeKey(String maxEVCModeKey) {
+    public void setMaxEVCModeKey(final String maxEVCModeKey) {
         this.maxEVCModeKey = maxEVCModeKey;
     }
 
@@ -160,7 +163,7 @@ public class HostListSummary extends DynamicData {
         return this.currentEVCModeKey;
     }
 
-    public void setCurrentEVCModeKey(String currentEVCModeKey) {
+    public void setCurrentEVCModeKey(final String currentEVCModeKey) {
         this.currentEVCModeKey = currentEVCModeKey;
     }
 
@@ -178,6 +181,22 @@ public class HostListSummary extends DynamicData {
 
     public void setTpmAttestation(final HostTpmAttestationInfo tpmAttestation) {
         this.tpmAttestation = tpmAttestation;
+    }
+
+    public String getCurrentEVCGraphicsModeKey() {
+        return currentEVCGraphicsModeKey;
+    }
+
+    public void setCurrentEVCGraphicsModeKey(final String currentEVCGraphicsModeKey) {
+        this.currentEVCGraphicsModeKey = currentEVCGraphicsModeKey;
+    }
+
+    public HostTrustAuthorityAttestationInfo getTrustAuthorityAttestationInfos() {
+        return trustAuthorityAttestationInfos;
+    }
+
+    public void setTrustAuthorityAttestationInfos(final HostTrustAuthorityAttestationInfo trustAuthorityAttestationInfos) {
+        this.trustAuthorityAttestationInfos = trustAuthorityAttestationInfos;
     }
 
 }

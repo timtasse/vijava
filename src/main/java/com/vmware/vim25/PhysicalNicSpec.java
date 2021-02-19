@@ -30,26 +30,27 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
- * This data object type describes the physical network adapter specification representing the properties on a physical network adapter that can be configured once the object exists.
+ * This data object type describes the physical network adapter specification representing
+ * the properties on a physical network adapter that can be configured once the object exists.
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0
  */
-
-@SuppressWarnings("all")
 public class PhysicalNicSpec extends DynamicData {
 
     private HostIpConfig ip;
     private PhysicalNicLinkInfo linkSpeed;
     private Boolean enableEnhancedNetworkingStack;
+    private Boolean ensInterruptEnabled;
 
     @Override
     public String toString() {
         return "PhysicalNicSpec{" +
-                "enableEnhancedNetworkingStack=" + enableEnhancedNetworkingStack +
-                ", ip=" + ip +
+                "ip=" + ip +
                 ", linkSpeed=" + linkSpeed +
+                ", enableEnhancedNetworkingStack=" + enableEnhancedNetworkingStack +
+                ", ensInterruptEnabled=" + ensInterruptEnabled +
                 "} " + super.toString();
     }
 
@@ -75,6 +76,14 @@ public class PhysicalNicSpec extends DynamicData {
 
     public void setEnableEnhancedNetworkingStack(final Boolean enableEnhancedNetworkingStack) {
         this.enableEnhancedNetworkingStack = enableEnhancedNetworkingStack;
+    }
+
+    public Boolean getEnsInterruptEnabled() {
+        return ensInterruptEnabled;
+    }
+
+    public void setEnsInterruptEnabled(final Boolean ensInterruptEnabled) {
+        this.ensInterruptEnabled = ensInterruptEnabled;
     }
 
 }

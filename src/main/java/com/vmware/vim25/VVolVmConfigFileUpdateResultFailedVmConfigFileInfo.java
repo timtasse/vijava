@@ -1,15 +1,25 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * Information of the failed update on the virtual machine config file.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @since 6.5
+ * @since 7.0
  */
 public class VVolVmConfigFileUpdateResultFailedVmConfigFileInfo extends DynamicData {
 
-    public LocalizedMethodFault fault;
-    public String targetConfigVVolId;
+    private String targetConfigVVolId;
+    private String dsPath;
+    private LocalizedMethodFault fault;
+
+    @Override
+    public String toString() {
+        return "VVolVmConfigFileUpdateResultFailedVmConfigFileInfo{" +
+                "targetConfigVVolId='" + targetConfigVVolId + '\'' +
+                ", dsPath='" + dsPath + '\'' +
+                ", fault=" + fault +
+                "} " + super.toString();
+    }
 
     public LocalizedMethodFault getFault() {
         return fault;
@@ -26,4 +36,13 @@ public class VVolVmConfigFileUpdateResultFailedVmConfigFileInfo extends DynamicD
     public void setTargetConfigVVolId(final String targetConfigVVolId) {
         this.targetConfigVVolId = targetConfigVVolId;
     }
+
+    public String getDsPath() {
+        return dsPath;
+    }
+
+    public void setDsPath(final String dsPath) {
+        this.dsPath = dsPath;
+    }
+
 }

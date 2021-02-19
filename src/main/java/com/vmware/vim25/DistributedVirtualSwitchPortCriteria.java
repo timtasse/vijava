@@ -29,64 +29,105 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
+ * The criteria specification for selecting ports.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 7.0
  */
-@SuppressWarnings("all")
 public class DistributedVirtualSwitchPortCriteria extends DynamicData {
 
-    public Boolean active;
-    public Boolean connected;
-    public ManagedObjectReference host;
-    public Boolean inside;
-    public String[] portgroupKey;
-    public String[] portKey;
+    private Boolean connected;
+    private Boolean active;
+    private Boolean uplinkPort;
+    private Boolean nsxPort;
     @Deprecated
-    public ManagedObjectReference scope;
-    public Boolean uplinkPort;
+    private ManagedObjectReference scope;
+    private String[] portgroupKey;
+    private Boolean inside;
+    private String[] portKey;
+    private ManagedObjectReference host;
 
-    @Deprecated
-    public ManagedObjectReference getScope() {
-        return this.scope;
+    @Override
+    public String toString() {
+        return "DistributedVirtualSwitchPortCriteria{" +
+                "connected=" + connected +
+                ", active=" + active +
+                ", uplinkPort=" + uplinkPort +
+                ", nsxPort=" + nsxPort +
+                ", scope=" + scope +
+                ", portgroupKey=" + Arrays.toString(portgroupKey) +
+                ", inside=" + inside +
+                ", portKey=" + Arrays.toString(portKey) +
+                ", host=" + host +
+                "} " + super.toString();
     }
 
-    @Deprecated
-    public void setScope(ManagedObjectReference scope) {
+    public Boolean getConnected() {
+        return connected;
+    }
+
+    public void setConnected(final Boolean connected) {
+        this.connected = connected;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(final Boolean active) {
+        this.active = active;
+    }
+
+    public Boolean getUplinkPort() {
+        return uplinkPort;
+    }
+
+    public void setUplinkPort(final Boolean uplinkPort) {
+        this.uplinkPort = uplinkPort;
+    }
+
+    public Boolean getNsxPort() {
+        return nsxPort;
+    }
+
+    public void setNsxPort(final Boolean nsxPort) {
+        this.nsxPort = nsxPort;
+    }
+
+    public ManagedObjectReference getScope() {
+        return scope;
+    }
+
+    public void setScope(final ManagedObjectReference scope) {
         this.scope = scope;
     }
 
     public String[] getPortgroupKey() {
-        return this.portgroupKey;
+        return portgroupKey;
     }
 
-    public void setPortgroupKey(String[] portgroupKey) {
+    public void setPortgroupKey(final String[] portgroupKey) {
         this.portgroupKey = portgroupKey;
     }
 
+    public Boolean getInside() {
+        return inside;
+    }
+
+    public void setInside(final Boolean inside) {
+        this.inside = inside;
+    }
+
     public String[] getPortKey() {
-        return this.portKey;
+        return portKey;
     }
 
-    public void setPortKey(String[] portKey) {
+    public void setPortKey(final String[] portKey) {
         this.portKey = portKey;
-    }
-
-    public Boolean isActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Boolean isConnected() {
-        return connected;
-    }
-
-    public void setConnected(Boolean connected) {
-        this.connected = connected;
     }
 
     public ManagedObjectReference getHost() {
@@ -97,19 +138,4 @@ public class DistributedVirtualSwitchPortCriteria extends DynamicData {
         this.host = host;
     }
 
-    public Boolean isInside() {
-        return inside;
-    }
-
-    public void setInside(Boolean inside) {
-        this.inside = inside;
-    }
-
-    public Boolean isUplinkPort() {
-        return uplinkPort;
-    }
-
-    public void setUplinkPort(Boolean uplinkPort) {
-        this.uplinkPort = uplinkPort;
-    }
 }

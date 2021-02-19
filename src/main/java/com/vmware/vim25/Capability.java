@@ -42,29 +42,39 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7.1
+ * @version 7.0.1
  */
-
+@SuppressWarnings("unused")
 public class Capability extends DynamicData {
 
+    private boolean provisioningSupported;
+    private boolean multiHostSupported;
+    private boolean userShellAccessSupported;
+    private EVCMode[] supportedEVCMode;
+    private FeatureEVCMode[] supportedEVCGraphicsMode;
+    private Boolean networkBackupAndRestoreSupported;
     private Boolean ftDrsWithoutEvcSupported;
     private Boolean hciWorkflowSupported;
-    private boolean multiHostSupported;
-    private Boolean networkBackupAndRestoreSupported;
-    private boolean provisioningSupported;
-    private EVCMode[] supportedEVCMode;
-    private boolean userShellAccessSupported;
+    private Integer computePolicyVersion;
+    private Boolean clusterPlacementSupported;
+    private Boolean lifecycleManagementSupported;
+    private Boolean scalableSharesSupported;
 
     @Override
     public String toString() {
         return "Capability{" +
-                "ftDrsWithoutEvcSupported=" + ftDrsWithoutEvcSupported +
-                ", hciWorkflowSupported=" + hciWorkflowSupported +
+                "provisioningSupported=" + provisioningSupported +
                 ", multiHostSupported=" + multiHostSupported +
-                ", networkBackupAndRestoreSupported=" + networkBackupAndRestoreSupported +
-                ", provisioningSupported=" + provisioningSupported +
-                ", supportedEVCMode=" + Arrays.toString(supportedEVCMode) +
                 ", userShellAccessSupported=" + userShellAccessSupported +
+                ", supportedEVCMode=" + Arrays.toString(supportedEVCMode) +
+                ", supportedEVCGraphicsMode=" + Arrays.toString(supportedEVCGraphicsMode) +
+                ", networkBackupAndRestoreSupported=" + networkBackupAndRestoreSupported +
+                ", ftDrsWithoutEvcSupported=" + ftDrsWithoutEvcSupported +
+                ", hciWorkflowSupported=" + hciWorkflowSupported +
+                ", computePolicyVersion=" + computePolicyVersion +
+                ", clusterPlacementSupported=" + clusterPlacementSupported +
+                ", lifecycleManagementSupported=" + lifecycleManagementSupported +
+                ", scalableSharesSupported=" + scalableSharesSupported +
                 "} " + super.toString();
     }
 
@@ -123,4 +133,45 @@ public class Capability extends DynamicData {
     public void setHciWorkflowSupported(final Boolean hciWorkflowSupported) {
         this.hciWorkflowSupported = hciWorkflowSupported;
     }
+
+    public Integer getComputePolicyVersion() {
+        return computePolicyVersion;
+    }
+
+    public void setComputePolicyVersion(final Integer computePolicyVersion) {
+        this.computePolicyVersion = computePolicyVersion;
+    }
+
+    public Boolean getClusterPlacementSupported() {
+        return clusterPlacementSupported;
+    }
+
+    public void setClusterPlacementSupported(final Boolean clusterPlacementSupported) {
+        this.clusterPlacementSupported = clusterPlacementSupported;
+    }
+
+    public Boolean getLifecycleManagementSupported() {
+        return lifecycleManagementSupported;
+    }
+
+    public void setLifecycleManagementSupported(final Boolean lifecycleManagementSupported) {
+        this.lifecycleManagementSupported = lifecycleManagementSupported;
+    }
+
+    public Boolean getScalableSharesSupported() {
+        return scalableSharesSupported;
+    }
+
+    public void setScalableSharesSupported(final Boolean scalableSharesSupported) {
+        this.scalableSharesSupported = scalableSharesSupported;
+    }
+
+    public FeatureEVCMode[] getSupportedEVCGraphicsMode() {
+        return supportedEVCGraphicsMode;
+    }
+
+    public void setSupportedEVCGraphicsMode(final FeatureEVCMode[] supportedEVCGraphicsMode) {
+        this.supportedEVCGraphicsMode = supportedEVCGraphicsMode;
+    }
+
 }

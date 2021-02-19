@@ -30,22 +30,37 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * Indicators of support for version-specific DVS features that are only available on a VMware-class switch.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0
  */
-
-@SuppressWarnings("all")
 public class VMwareDVSFeatureCapability extends DVSFeatureCapability {
 
-    public Boolean vspanSupported;
-    public Boolean lldpSupported;
+    private Boolean vspanSupported;
+    private Boolean lldpSupported;
     @Deprecated
-    public Boolean ipfixSupported;
-    public VMwareDVSVspanCapability vspanCapability;
-    public VMwareDvsLacpCapability lacpCapability;
-    public VMwareDvsIpfixCapability ipfixCapability;
-    public Boolean multicastSnoopingSupported;
+    private Boolean ipfixSupported;
+    private VMwareDvsIpfixCapability ipfixCapability;
+    private Boolean multicastSnoopingSupported;
+    private VMwareDVSVspanCapability vspanCapability;
+    private VMwareDvsLacpCapability lacpCapability;
+    private Boolean nsxSupported;
+
+    @Override
+    public String toString() {
+        return "VMwareDVSFeatureCapability{" +
+                "vspanSupported=" + vspanSupported +
+                ", lldpSupported=" + lldpSupported +
+                ", ipfixSupported=" + ipfixSupported +
+                ", ipfixCapability=" + ipfixCapability +
+                ", multicastSnoopingSupported=" + multicastSnoopingSupported +
+                ", vspanCapability=" + vspanCapability +
+                ", lacpCapability=" + lacpCapability +
+                ", nsxSupported=" + nsxSupported +
+                "} " + super.toString();
+    }
 
     public VMwareDVSVspanCapability getVspanCapability() {
         return this.vspanCapability;

@@ -1,16 +1,23 @@
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 28.03.18.
+ * Managed object used to control direct access to the host.
+ * This should be used to control users and privileges on the host directly, which are different from the users and privileges defined in vCenter.
+ *
+ * See AuthorizationManager for more information on permissions.
+ *
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.0
+ * @since 6.0
  */
 public class HostAccessManager extends ManagedObject {
-
-    //private static final Logger LOGGER = LoggerFactory.getLogger(HostAccessManager.class);
 
     public HostAccessManager(final ServerConnection serverConnection, final ManagedObjectReference mor) {
         super(serverConnection, mor);
@@ -21,19 +28,17 @@ public class HostAccessManager extends ManagedObject {
     }
 
     public void changeAccessMode(final String principal, final boolean isGroup, final HostAccessMode accessMode)
-            throws UserNotFound, SecurityError, AuthMinimumAdminPermission, InvalidArgument, RuntimeFault {
+            throws UserNotFound, AuthMinimumAdminPermission, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("principal", String.class, principal),
+                new Argument("isGroup", "boolean", isGroup),
+                new Argument("accessMode", HostAccessMode.class, accessMode));
         try {
-            getVimService().changeAccessMode(getMOR(), principal, isGroup, accessMode);
+            this.getVimService().getWsc().invokeWithoutReturn("ChangeAccessMode", params);
         } catch (RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof UserNotFound) {
                 throw (UserNotFound) cause;
-            }
-            if (cause instanceof SecurityError) {
-                throw (SecurityError) cause;
-            }
-            if (cause instanceof InvalidArgument) {
-                throw (InvalidArgument) cause;
             }
             if (cause instanceof AuthMinimumAdminPermission) {
                 throw (AuthMinimumAdminPermission) cause;
@@ -41,57 +46,105 @@ public class HostAccessManager extends ManagedObject {
             if (cause instanceof RuntimeFault) {
                 throw (RuntimeFault) cause;
             }
-            throw new IllegalStateException("Exception not known", e);
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
     }
 
+    public void changeLockdownMode(final HostLockdownMode mode) throws AuthMinimumAdminPermission, RuntimeFault {
+        if (mode == null) {
+            throw new IllegalArgumentException("mode should not be null");
+        }
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("mode", HostLockdownMode.class, mode));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("ChangeLockdownMode", params);
+        } catch (RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof AuthMinimumAdminPermission) {
+                throw (AuthMinimumAdminPermission) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public List<String> queryLockdownExceptions() throws RuntimeFault {
+        try {
+            return (List<String>) this.getVimService().getWsc().invoke("QueryLockdownExceptions", this.getSingleSelfArgumentList(), "List.String");
+        } catch (RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
     public List<String> querySystemUsers() throws RuntimeFault {
         try {
-            return getVimService().querySystemUsers(getMOR());
+            return (List<String>) this.getVimService().getWsc().invoke("QuerySystemUsers", this.getSingleSelfArgumentList(), "List.String");
         } catch (RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {
                 throw (RuntimeFault) cause;
             }
-            throw new IllegalStateException("Exception not known", e);
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
     }
 
+    @SuppressWarnings("unchecked")
     public List<HostAccessControlEntry> retrieveAccessEntries() throws RuntimeFault {
         try {
-            for (int i = 0; i < 10; i++) {
-                this.test();
-            }
-            for (int i = 0; i < 10; i++) {
-                this.testNew();
-            }
-            return getVimService().retrieveAccessEntries(getMOR());
+            return (List<HostAccessControlEntry>) this.getVimService().getWsc()
+                    .invoke("RetrieveHostAccessControlEntries", this.getSingleSelfArgumentList(), "List.HostAccessControlEntry");
         } catch (RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {
                 throw (RuntimeFault) cause;
             }
-            throw new IllegalStateException("Exception not known", e);
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
     }
 
-    public long test() {
-        final long start = System.nanoTime();
+    public void updateLockdownExceptions(final List<String> users) throws AuthMinimumAdminPermission, RuntimeFault, UserNotFound {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("users", String[].class, users.toArray()));
         try {
-            getVimService().retrieveAccessEntries(getMOR());
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateLockdownExceptions", params);
         } catch (RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof UserNotFound) {
+                throw (UserNotFound) cause;
+            }
+            if (cause instanceof AuthMinimumAdminPermission) {
+                throw (AuthMinimumAdminPermission) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
-        return System.nanoTime() - start;
     }
 
-    public long testNew() {
-        final long start = System.nanoTime();
+    public void updateSystemUsers(final List<String> users) throws UserNotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("users", String[].class, users.toArray()));
         try {
-            getVimService().retrieveAccessEntriesNew(getMOR());
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateSystemUsers", params);
         } catch (RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof UserNotFound) {
+                throw (UserNotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
-        return System.nanoTime() - start;
     }
-    // TODO: implement the other Methods
 
 }
