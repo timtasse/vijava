@@ -19,6 +19,10 @@ Here an example:</br>
 
 ## Changelog
 
+#### 7.0.1-2.5.3
+  * GuestInfo.hwVersion is now implemented
+  * VirtualMachineGuestSummary.hwVersion is now implemented
+
 #### 7.0.1-2.5.2
   * Error in HostNetworkSystem.queryNetworkHint fixed
   * XML generation can now handle Lists

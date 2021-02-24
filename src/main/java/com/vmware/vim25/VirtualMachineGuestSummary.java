@@ -30,82 +30,112 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * A subset of virtual machine guest information.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 6.9.1
+ */
+@SuppressWarnings("unused")
 public class VirtualMachineGuestSummary extends DynamicData {
-  public String guestId;
-  public String guestFullName;
-  public VirtualMachineToolsStatus toolsStatus;
-  public String toolsVersionStatus;
-  public String toolsVersionStatus2;
-  public String toolsRunningStatus;
-  public String hostName;
-  public String ipAddress;
 
-  public String getGuestId() {
-    return this.guestId;
-  }
+    private String guestId;
+    private String guestFullName;
+    @Deprecated(since = "4.0")
+    private VirtualMachineToolsStatus toolsStatus;
+    @Deprecated(since = "5.1")
+    private String toolsVersionStatus;
+    private String toolsVersionStatus2;
+    private String toolsRunningStatus;
+    private String hostName;
+    private String ipAddress;
+    private String hwVersion;
 
-  public String getGuestFullName() {
-    return this.guestFullName;
-  }
+    @Override
+    public String toString() {
+        return "VirtualMachineGuestSummary{" +
+                "guestId='" + guestId + '\'' +
+                ", guestFullName='" + guestFullName + '\'' +
+                ", toolsStatus=" + toolsStatus +
+                ", toolsVersionStatus='" + toolsVersionStatus + '\'' +
+                ", toolsVersionStatus2='" + toolsVersionStatus2 + '\'' +
+                ", toolsRunningStatus='" + toolsRunningStatus + '\'' +
+                ", hostName='" + hostName + '\'' +
+                ", ipAddress='" + ipAddress + '\'' +
+                ", hwVersion='" + hwVersion + '\'' +
+                "} " + super.toString();
+    }
 
-  public VirtualMachineToolsStatus getToolsStatus() {
-    return this.toolsStatus;
-  }
+    public String getGuestId() {
+        return this.guestId;
+    }
 
-  public String getToolsVersionStatus() {
-    return this.toolsVersionStatus;
-  }
+    public void setGuestId(String guestId) {
+        this.guestId = guestId;
+    }
 
-  public String getToolsVersionStatus2() {
-    return this.toolsVersionStatus2;
-  }
+    public String getGuestFullName() {
+        return this.guestFullName;
+    }
 
-  public String getToolsRunningStatus() {
-    return this.toolsRunningStatus;
-  }
+    public void setGuestFullName(String guestFullName) {
+        this.guestFullName = guestFullName;
+    }
 
-  public String getHostName() {
-    return this.hostName;
-  }
+    public VirtualMachineToolsStatus getToolsStatus() {
+        return this.toolsStatus;
+    }
 
-  public String getIpAddress() {
-    return this.ipAddress;
-  }
+    public void setToolsStatus(VirtualMachineToolsStatus toolsStatus) {
+        this.toolsStatus = toolsStatus;
+    }
 
-  public void setGuestId(String guestId) {
-    this.guestId=guestId;
-  }
+    public String getToolsVersionStatus() {
+        return this.toolsVersionStatus;
+    }
 
-  public void setGuestFullName(String guestFullName) {
-    this.guestFullName=guestFullName;
-  }
+    public void setToolsVersionStatus(String toolsVersionStatus) {
+        this.toolsVersionStatus = toolsVersionStatus;
+    }
 
-  public void setToolsStatus(VirtualMachineToolsStatus toolsStatus) {
-    this.toolsStatus=toolsStatus;
-  }
+    public String getToolsVersionStatus2() {
+        return this.toolsVersionStatus2;
+    }
 
-  public void setToolsVersionStatus(String toolsVersionStatus) {
-    this.toolsVersionStatus=toolsVersionStatus;
-  }
+    public void setToolsVersionStatus2(String toolsVersionStatus2) {
+        this.toolsVersionStatus2 = toolsVersionStatus2;
+    }
 
-  public void setToolsVersionStatus2(String toolsVersionStatus2) {
-    this.toolsVersionStatus2=toolsVersionStatus2;
-  }
+    public String getToolsRunningStatus() {
+        return this.toolsRunningStatus;
+    }
 
-  public void setToolsRunningStatus(String toolsRunningStatus) {
-    this.toolsRunningStatus=toolsRunningStatus;
-  }
+    public void setToolsRunningStatus(String toolsRunningStatus) {
+        this.toolsRunningStatus = toolsRunningStatus;
+    }
 
-  public void setHostName(String hostName) {
-    this.hostName=hostName;
-  }
+    public String getHostName() {
+        return this.hostName;
+    }
 
-  public void setIpAddress(String ipAddress) {
-    this.ipAddress=ipAddress;
-  }
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
+    }
+
+    public String getIpAddress() {
+        return this.ipAddress;
+    }
+
+    public void setIpAddress(String ipAddress) {
+        this.ipAddress = ipAddress;
+    }
+
+    public String getHwVersion() {
+        return hwVersion;
+    }
+
+    public void setHwVersion(final String hwVersion) {
+        this.hwVersion = hwVersion;
+    }
+
 }
