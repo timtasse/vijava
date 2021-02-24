@@ -68,8 +68,8 @@ public abstract class WSClient {
     protected static final String SOAP_ACTION_V67 = "urn:vim25/6.7";
     protected static final String SOAP_ACTION_V671 = "urn:vim25/6.7.1";
     protected static final String SOAP_ACTION_V672 = "urn:vim25/6.7.2";
-    protected static final String SOAP_ACTION_V70 = "urn:vim25/7.0";
-    protected static final String SOAP_ACTION_V701 = "urn:vim25/7.0.1";
+    protected static final String SOAP_ACTION_V70 = "urn:vim25/7.0.0.0";
+    protected static final String SOAP_ACTION_V701 = "urn:vim25/7.0.1.0";
 
     private final URL baseUrl;
     private final URI baseUri;
@@ -170,7 +170,6 @@ public abstract class WSClient {
                 soapAction = SOAP_ACTION_V70;
                 break;
             case "7.0.1.0":
-            case "7.0.1.1":
                 soapAction = SOAP_ACTION_V701;
                 break;
             default:

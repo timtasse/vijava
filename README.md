@@ -19,6 +19,9 @@ Here an example:</br>
 
 ## Changelog
 
+#### 7.0.1-2.5.4
+  * changed the Version for the SoapAction Header in SOAP Calls (it has 4 digits from 7.0 and above)
+
 #### 7.0.1-2.5.3
   * GuestInfo.hwVersion is now implemented
   * VirtualMachineGuestSummary.hwVersion is now implemented

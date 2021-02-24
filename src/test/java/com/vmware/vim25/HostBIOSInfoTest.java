@@ -76,9 +76,13 @@ public class HostBIOSInfoTest {
     }
 
     @Test
-    public void testVmSummary() throws Exception {
+    public void testSummary() throws Exception {
         final VirtualMachine vm = this.getVirtualMachine();
         LOGGER.debug("{}", vm.getSummary().getConfig());
+        final ClusterComputeResource cluster = (ClusterComputeResource) new InventoryNavigator(this.instance.getRootFolder())
+                .searchManagedEntity(ClusterComputeResource.class.getSimpleName(), "pi-esx-1");
+        final ComputeResourceSummary summary = cluster.getSummary();
+        LOGGER.debug("{}", summary);
     }
 
     @Test
