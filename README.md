@@ -19,6 +19,11 @@ Here an example:</br>
 
 ## Changelog
 
+#### 7.0.1-2.5.1
+  * VirtualMachineConfigSummary.hwVersion is now implemented
+  * DateFormatter is now thread-safe handled
+  * a non existing field is now only logged as Error Level Message and not throws a NoSuchFieldException
+
 #### 7.0.1-2.5
   * API Version up to 7.0.1 is fully implemented, but not fully tested (i do not have enough features in test environment)
   * migrating methods from the large VimStub class into the ManagedObjects  itself, so handling is more intuitive and not much indirect
