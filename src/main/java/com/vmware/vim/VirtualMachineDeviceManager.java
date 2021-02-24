@@ -27,7 +27,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
-package com.vmware.vim25.mox;
+package com.vmware.vim;
 
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.*;

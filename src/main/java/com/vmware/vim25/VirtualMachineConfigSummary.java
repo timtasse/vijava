@@ -34,7 +34,7 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 6.9.1
  */
 
 @SuppressWarnings("all")
@@ -45,6 +45,7 @@ public class VirtualMachineConfigSummary extends DynamicData {
     private FaultToleranceConfigInfo ftInfo;
     private String guestFullName;
     private String guestId;
+    private String hwVersion;
     private Boolean installBootRequired;
     private String instanceUuid;
     private ManagedByInfo managedBy;
@@ -69,6 +70,7 @@ public class VirtualMachineConfigSummary extends DynamicData {
                 ", ftInfo=" + ftInfo +
                 ", guestFullName='" + guestFullName + '\'' +
                 ", guestId='" + guestId + '\'' +
+                ", hwVersion='" + hwVersion + '\'' +
                 ", installBootRequired=" + installBootRequired +
                 ", instanceUuid='" + instanceUuid + '\'' +
                 ", managedBy=" + managedBy +
@@ -247,4 +249,11 @@ public class VirtualMachineConfigSummary extends DynamicData {
         this.vmPathName = vmPathName;
     }
 
+    public String getHwVersion() {
+        return hwVersion;
+    }
+
+    public void setHwVersion(final String hwVersion) {
+        this.hwVersion = hwVersion;
+    }
 }

@@ -213,92 +213,96 @@ final class XmlGenDom extends XmlGen {
             final Element e = subNodes.get(i);
             final String tagName = e.getName();
 
-            final Field field = getField(clazz, tagName);
-            Class<?> fType = field.getType();
-            final boolean isFieldArray = fType.isArray();
-            //if field is an array, adjust it to the component type
-            if (isFieldArray) {
-                fType = fType.getComponentType();
-            }
-
-            Class fRealType = fType;
-            final String xsiType = e.attributeValue(SoapConsts.XSI_TYPE);
-            if (xsiType != null && (!xsiType.startsWith("xsd:"))) {
-                fRealType = TypeUtil.getVimClass(xsiType);
-            }
-
-            if (fRealType == ManagedObjectReference.class) { // MOR
+            try {
+                final Field field = getField(clazz, tagName);
+                Class<?> fType = field.getType();
+                final boolean isFieldArray = fType.isArray();
+                //if field is an array, adjust it to the component type
                 if (isFieldArray) {
-                    final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
-                    final ManagedObjectReference[] mos = new ManagedObjectReference[sizeOfFieldArray];
-                    for (int j = 0; j < sizeOfFieldArray; j++) {
-                        final Element elem = subNodes.get(j + i);
-                        mos[j] = ManagedObjectReference.create(elem.attributeValue("type"), elem.getText());
-                    }
-                    field.set(obj, mos);
-                    i = i + sizeOfFieldArray - 1;
-                } else {
-                    field.set(obj, ManagedObjectReference.create(e.attributeValue("type"), e.getText()));
+                    fType = fType.getComponentType();
                 }
-            } else if (fRealType.isEnum()) { // Enum type
-                if (!isFieldArray) {
-                    final Object fo = Enum.valueOf(fRealType, e.getText());
-                    field.set(obj, fo);
-                } else {
-                    final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
-                    final Object ao = Array.newInstance(fRealType, sizeOfFieldArray);
-                    for (int j = 0; j < sizeOfFieldArray; j++) {
-                        final String enumStr = (subNodes.get(j + i)).getText();
-                        Array.set(ao, j, Enum.valueOf(fRealType, enumStr));
-                    }
-                    field.set(obj, ao);
-                    i = i + sizeOfFieldArray - 1;
+
+                Class fRealType = fType;
+                final String xsiType = e.attributeValue(SoapConsts.XSI_TYPE);
+                if (xsiType != null && (!xsiType.startsWith("xsd:"))) {
+                    fRealType = TypeUtil.getVimClass(xsiType);
                 }
-            } else if (TypeUtil.isBasicType(fRealType)) { // basic data types
-                if (isFieldArray) {
-                    final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
 
-                    final List<String> values = new ArrayList<>();
-                    for (int j = 0; j < sizeOfFieldArray; j++) {
-                        values.add((subNodes.get(j + i)).getText());
-                    }
-
-                    String fTrueType;
-                    if (xsiType != null) {
-                        fTrueType = xsiType.substring("xsd:".length()) + "[]";
+                if (fRealType == ManagedObjectReference.class) { // MOR
+                    if (isFieldArray) {
+                        final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
+                        final ManagedObjectReference[] mos = new ManagedObjectReference[sizeOfFieldArray];
+                        for (int j = 0; j < sizeOfFieldArray; j++) {
+                            final Element elem = subNodes.get(j + i);
+                            mos[j] = ManagedObjectReference.create(elem.attributeValue("type"), elem.getText());
+                        }
+                        field.set(obj, mos);
+                        i = i + sizeOfFieldArray - 1;
                     } else {
-                        fTrueType = fRealType.getSimpleName();
-                        if (!fTrueType.endsWith("[]")) {
-                            fTrueType = fTrueType + "[]";
+                        field.set(obj, ManagedObjectReference.create(e.attributeValue("type"), e.getText()));
+                    }
+                } else if (fRealType.isEnum()) { // Enum type
+                    if (!isFieldArray) {
+                        final Object fo = Enum.valueOf(fRealType, e.getText());
+                        field.set(obj, fo);
+                    } else {
+                        final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
+                        final Object ao = Array.newInstance(fRealType, sizeOfFieldArray);
+                        for (int j = 0; j < sizeOfFieldArray; j++) {
+                            final String enumStr = (subNodes.get(j + i)).getText();
+                            Array.set(ao, j, Enum.valueOf(fRealType, enumStr));
+                        }
+                        field.set(obj, ao);
+                        i = i + sizeOfFieldArray - 1;
+                    }
+                } else if (TypeUtil.isBasicType(fRealType)) { // basic data types
+                    if (isFieldArray) {
+                        final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
+
+                        final List<String> values = new ArrayList<>();
+                        for (int j = 0; j < sizeOfFieldArray; j++) {
+                            values.add((subNodes.get(j + i)).getText());
+                        }
+
+                        String fTrueType;
+                        if (xsiType != null) {
+                            fTrueType = xsiType.substring("xsd:".length()) + "[]";
+                        } else {
+                            fTrueType = fRealType.getSimpleName();
+                            if (!fTrueType.endsWith("[]")) {
+                                fTrueType = fTrueType + "[]";
+                            }
+                        }
+                        ReflectUtil.setObjectArrayField(obj, field, fTrueType, values);
+                        i = i + sizeOfFieldArray - 1;
+                    } else {
+                        if (xsiType != null) {
+                            ReflectUtil.setObjectField(obj, field, xsiType.substring("xsd:".length()), e.getText());
+                        } else {
+                            ReflectUtil.setObjectField(obj, field, fRealType.getSimpleName(), e.getText());
                         }
                     }
-                    ReflectUtil.setObjectArrayField(obj, field, fTrueType, values);
-                    i = i + sizeOfFieldArray - 1;
-                } else {
-                    if (xsiType != null) {
-                        ReflectUtil.setObjectField(obj, field, xsiType.substring("xsd:".length()), e.getText());
-                    } else {
-                        ReflectUtil.setObjectField(obj, field, fRealType.getSimpleName(), e.getText());
+                } else { //VIM type
+                    if (isFieldArray) {
+                        final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
+                        final Object ao = Array.newInstance(fType, sizeOfFieldArray);
+                        final String fGenericType = fType.getSimpleName();
+                        for (int j = 0; j < sizeOfFieldArray; j++) {
+                            final Element elem = subNodes.get(j + i);
+                            final String elemXsiType = elem.attributeValue(SoapConsts.XSI_TYPE);
+                            final String elemType = elemXsiType != null ? elemXsiType : fGenericType;
+                            final Object o = parseVimClassFromElement(TypeUtil.getVimClass(elemType), elem);
+                            Array.set(ao, j, o);
+                        }
+                        field.set(obj, ao);
+                        i = i + sizeOfFieldArray - 1;
+                    } else { // single VIM
+                        final Object o = parseVimClassFromElement(fRealType, e);
+                        field.set(obj, o);
                     }
                 }
-            } else { //VIM type
-                if (isFieldArray) {
-                    final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
-                    final Object ao = Array.newInstance(fType, sizeOfFieldArray);
-                    final String fGenericType = fType.getSimpleName();
-                    for (int j = 0; j < sizeOfFieldArray; j++) {
-                        final Element elem = subNodes.get(j + i);
-                        final String elemXsiType = elem.attributeValue(SoapConsts.XSI_TYPE);
-                        final String elemType = elemXsiType != null ? elemXsiType : fGenericType;
-                        final Object o = parseVimClassFromElement(TypeUtil.getVimClass(elemType), elem);
-                        Array.set(ao, j, o);
-                    }
-                    field.set(obj, ao);
-                    i = i + sizeOfFieldArray - 1;
-                } else { // single VIM
-                    final Object o = parseVimClassFromElement(fRealType, e);
-                    field.set(obj, o);
-                }
+            } catch (final NoSuchFieldException exc) {
+                LOGGER.error("Field {} could not found on Class", tagName, exc);
             }
         }
         return obj;

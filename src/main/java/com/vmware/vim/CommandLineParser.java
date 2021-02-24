@@ -27,7 +27,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 ================================================================================*/
 
-package com.vmware.vim25.mo.util;
+package com.vmware.vim;
+
+import com.vmware.vim25.mo.util.OptionSpec;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -43,7 +45,7 @@ public class CommandLineParser
    private HashMap userOpts = new HashMap();
    private HashMap builtInOpts = new HashMap();
    
-   public CommandLineParser(OptionSpec [] userOptions , String [] args)
+   public CommandLineParser(OptionSpec[] userOptions , String [] args)
    {
 	   builtinOptions();
 

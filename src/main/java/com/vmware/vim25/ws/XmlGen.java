@@ -38,7 +38,6 @@ import org.doublecloud.ws.util.XmlUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.bind.DatatypeConverter;
 import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.text.DateFormat;
@@ -50,35 +49,18 @@ import java.util.TimeZone;
 public abstract class XmlGen {
 
     protected static final Logger LOGGER = LoggerFactory.getLogger(XmlGen.class);
-    protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSX");
 
     /*
+    extra method because of non thread-safety of DateFormat
     2018-04-19T14:49:13Z
     2018-04-19T14:50:12.95902Z
     2018-04-19T14:50:47.00073Z
     2018-04-19T14:51:47.00068Z
-
      */
-    static {
-        DATE_FORMAT.setTimeZone(TimeZone.getTimeZone("UTC"));
-    }
-
-    public static String toXML(final String methodName, final Argument[] paras, final String vimNameSpace) {
-        final StringBuilder sb = new StringBuilder();
-        sb.append(SoapConsts.SOAP_HEADER);
-
-        sb.append("<" + methodName + vimNameSpace);
-
-        for (int i = 0; i < paras.length; i++) {
-            final String key = paras[i].getName();
-            final String type = paras[i].getType();
-            final Object obj = paras[i].getValue();
-            sb.append(toXML(key, type, obj));
-        }
-
-        sb.append("</" + methodName + ">");
-        sb.append(SoapConsts.SOAP_END);
-        return sb.toString();
+    public static DateFormat getDateFormat() {
+        final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSX");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+        return dateFormat;
     }
 
     public static String generateSoapMethod(final String methodName, final List<Argument> paras, final String vimNameSpace) {
@@ -103,20 +85,6 @@ public abstract class XmlGen {
         sb.append(methodName);
         sb.append(SoapConsts.TAG_END);
         sb.append(SoapConsts.SOAP_END);
-        return sb.toString();
-    }
-
-    private static String toXML(final String tag, final String type, final Object obj) {
-        if (obj == null) {
-            return "";
-        }
-        final StringBuffer sb = new StringBuffer();
-        if (TypeUtil.isBasicType(type)) {
-            toXML(sb, tag, obj.getClass(), obj);
-        } else {
-            final Class<?> clazz = TypeUtil.getVimClass(type);
-            toXML(sb, tag, clazz, obj);
-        }
         return sb.toString();
     }
 
@@ -160,7 +128,7 @@ public abstract class XmlGen {
             SoapConsts.appendTagEnd(sb, tagName);
         } else if (obj instanceof Calendar) {
             SoapConsts.appendTagStartWithXSI(sb, tagName, "xsd:dateTime");
-            sb.append(DATE_FORMAT.format(((Calendar) obj).getTime()));
+            sb.append(getDateFormat().format(((Calendar) obj).getTime()));
             SoapConsts.appendTagEnd(sb, tagName);
         } else { // VIM type
             if (clazz == type) {
@@ -228,97 +196,6 @@ public abstract class XmlGen {
             for (int i = 0; i < objs.length; i++) {
                 generateSoapAttribute(sb, tagName, type.getComponentType(), objs[i]);
             }
-        }
-    }
-
-    private static void toXML(final StringBuffer sb, final String tagName, final Class<?> type, Object obj) {
-        final Class<?> clazz = obj.getClass();
-
-        if (clazz.isArray()) {
-            if (obj.getClass() == TypeUtil.INT_ARRAY_CLASS) {
-                final int[] objs = (int[]) obj;
-                for (int i = 0; i < objs.length; i++) {
-                    sb.append("<" + tagName + ">");
-                    sb.append(objs[i]);
-                    sb.append("</" + tagName + ">");
-                }
-            } else if (obj.getClass() == TypeUtil.BYTE_ARRAY_CLASS) {
-                final byte[] objs = (byte[]) obj;
-                for (int i = 0; i < objs.length; i++) {
-                    sb.append("<" + tagName + ">");
-                    sb.append(objs[i]);
-                    sb.append("</" + tagName + ">");
-                }
-            } else if (obj.getClass() == TypeUtil.LONG_ARRAY_CLASS) {
-                final long[] objs = (long[]) obj;
-                for (int i = 0; i < objs.length; i++) {
-                    sb.append("<" + tagName + ">");
-                    sb.append(objs[i]);
-                    sb.append("</" + tagName + ">");
-                }
-            } else {
-                final Object[] objs = (Object[]) obj;
-                for (int i = 0; i < objs.length; i++) {
-                    toXML(sb, tagName, type.getComponentType(), objs[i]);
-                }
-            }
-        }
-
-        // from now on, no array type
-        else if (clazz == ManagedObjectReference.class) { //MOR]
-            final ManagedObjectReference mor = (ManagedObjectReference) obj;
-            if (clazz == type) {
-                sb.append("<" + tagName + " type=\"" + mor.getType() + "\">");
-            } else {
-                sb.append("<" + tagName + " xsi:type=\"ManagedObjectReference\" type=\"" + mor.getType() + "\">");
-            }
-            sb.append(mor.getVal());
-            sb.append("</" + tagName + ">");
-        } else if (clazz.getCanonicalName().startsWith("java.lang")) { //basic data type
-            if (clazz != type) {
-                sb.append("<" + tagName + " xsi:type=\"" + TypeUtil.getXSIType(obj) + "\">");
-            } else {
-                sb.append("<" + tagName + ">");
-            }
-
-            if (clazz == String.class) {
-                final String temp = (String) obj;
-                obj = XmlUtil.escapeForXML(temp);
-            }
-
-            sb.append(obj);
-            sb.append("</" + tagName + ">");
-        } else if (clazz.isEnum()) { //enum data type
-            sb.append("<" + tagName + ">" + obj + "</" + tagName + ">");
-        } else if (obj instanceof Calendar) {
-            sb.append("<" + tagName + " xsi:type=\"xsd:dateTime\">" + DatatypeConverter.printDateTime((Calendar) obj) + "</" + tagName + ">");
-        } else { // VIM type
-            if (clazz == type) {
-                sb.append("<" + tagName + ">");
-            } else {
-                String nameSpaceType = clazz.getSimpleName();
-                sb.append("<" + tagName + " xsi:type=\"" + nameSpaceType + "\">");
-            }
-
-            final List<Field> fields = ReflectUtil.getAllFields(clazz);
-
-            for (Field f : fields) {
-                final String fName = f.getName();
-
-                Object value = null;
-                try {
-                    value = f.get(obj);
-                } catch (IllegalAccessException iae) {
-                    LOGGER.error("ReflectionError in Field {} of Class {}", fName, clazz.getSimpleName(), iae);
-                }
-                if (value == null) {
-                    continue;
-                }
-
-                final Class<?> fType = f.getType();
-                toXML(sb, fName, fType, value);
-            }
-            sb.append("</" + tagName + ">");
         }
     }
 

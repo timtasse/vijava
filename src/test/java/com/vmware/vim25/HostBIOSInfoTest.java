@@ -13,10 +13,9 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.rmi.RemoteException;
 import java.time.Instant;
-import java.util.*;
 import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.testng.Assert.assertNotNull;
 
@@ -114,7 +113,7 @@ public class HostBIOSInfoTest {
         LOGGER.debug("vmrc://{}:{}/?mksticket={}&thumbprint={}&path={}", ticket.getHost(), ticket.getPort(), ticket.getTicket(), ticket.getSslThumbprint().replace(":", "%3A"), ticket.getCfgFile());
         final VirtualMachineTicket webTicket = vm.acquireTicket(VirtualMachineTicketType.webmks);
         LOGGER.debug("{}", webTicket);
-        Thread.sleep(40000);
+        //Thread.sleep(40000);
         final VirtualMachineConfigInfo config = vm.getConfig();
         final VirtualMachineGuestIntegrityInfo integrityInfo = config.getGuestIntegrityInfo();
         LOGGER.debug("IntegrityInfo enabled={}", integrityInfo.isEnabled());
@@ -165,7 +164,6 @@ public class HostBIOSInfoTest {
         final VirtualMachine vm = this.getVirtualMachine();
         final List<VirtualMachineSnapshot> rootSnapshot = vm.getRootSnapshot();
         LOGGER.debug("{} - {}", rootSnapshot, rootSnapshot.getClass());
-        LOGGER.debug(VirtualMachineTicketType.webmks.name());
         final EventManager eventManager = this.instance.getEventManager();
         for (EventDescriptionEventDetail detail : eventManager.getDescription().getEventInfo()) {
             if (detail.getKey().toLowerCase().contains("freenet")) {
@@ -270,7 +268,7 @@ public class HostBIOSInfoTest {
                 }
                 printEvent(event);
             }
-            events = collector.readNextEvents(100);
+            events = collector.readNextEvents(10);
         }
     }
 
