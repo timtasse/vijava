@@ -177,7 +177,7 @@ public class HostNetworkSystem extends ExtensibleManagedObject {
     public List<PhysicalNicHintInfo> queryNetworkHint(final List<String> device)
             throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("device", String[].class, device));
+                new Argument("device", String[].class, device.toArray()));
         try {
             return (List<PhysicalNicHintInfo>) this.getVimService().getWsc()
                     .invoke("QueryNetworkHint", params, "List.PhysicalNicHintInfo");

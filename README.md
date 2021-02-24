@@ -19,6 +19,10 @@ Here an example:</br>
 
 ## Changelog
 
+#### 7.0.1-2.5.2
+  * Error in HostNetworkSystem.queryNetworkHint fixed
+  * XML generation can now handle Lists
+
 #### 7.0.1-2.5.1
   * VirtualMachineConfigSummary.hwVersion is now implemented
   * DateFormatter is now thread-safe handled

@@ -96,6 +96,11 @@ public abstract class XmlGen {
             return;
         }
 
+        if (obj instanceof List<?>) {
+            handleArrays(sb, tagName, type, ((List<?>)obj).toArray());
+            return;
+        }
+
         // from now on, no array type
         if (clazz == ManagedObjectReference.class) { //MOR]
             final ManagedObjectReference mor = (ManagedObjectReference) obj;

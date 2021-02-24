@@ -302,7 +302,7 @@ final class XmlGenDom extends XmlGen {
                     }
                 }
             } catch (final NoSuchFieldException exc) {
-                LOGGER.error("Field {} could not found on Class", tagName, exc);
+                LOGGER.error("Field {} could not found on Class {}", tagName, clazz.getSimpleName(), exc);
             }
         }
         return obj;
