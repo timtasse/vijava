@@ -1,5 +1,6 @@
 package com.vmware.vim25.ws;
 
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
@@ -20,11 +21,9 @@ import java.rmi.RemoteException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
 import java.util.List;
 
 /**
- *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
 public final class WSClientApacheHttp extends WSClient {
@@ -32,7 +31,7 @@ public final class WSClientApacheHttp extends WSClient {
     private final CloseableHttpClient httpClient;
     private final BasicCookieStore cookieStore;
 
-    WSClientApacheHttp(final URL serverUrl, final boolean ignoreCert) {
+    WSClientApacheHttp(final URL serverUrl, final boolean ignoreCert, final int connectTimeout, final int socketTimeout) {
         super(serverUrl, ignoreCert);
         this.cookieStore = new BasicCookieStore();
         final HttpClientBuilder httpClientBuilder = HttpClients.custom()
@@ -48,16 +47,25 @@ public final class WSClientApacheHttp extends WSClient {
                 LOGGER.error("Error in setting other SSLContext", e);
             }
         }
-        this.httpClient = httpClientBuilder.build();
+        final RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(connectTimeout).setSocketTimeout(socketTimeout).build();
+        this.httpClient = httpClientBuilder.setDefaultRequestConfig(requestConfig).build();
     }
 
     @Override
-    public Object invoke(final String methodName, final List<Argument> paras, final String returnType) throws RemoteException {
+    public Object invokeWithTimeout(final String methodName, final List<Argument> paras, final String returnType,
+                                    final int connectTimeout, final int socketTimeout) throws RemoteException {
         final String soapMsg = XmlGen.generateSoapMethod(methodName, paras, this.getVimNameSpace());
         final HttpPost httpPost = new HttpPost(this.getBaseUri());
         final StringEntity entity = new StringEntity(soapMsg, ContentType.TEXT_XML);
         httpPost.setEntity(entity);
         httpPost.addHeader(SOAP_ACTION_HEADER, this.getSoapAction());
+        if (connectTimeout != 0 || socketTimeout != 0) {
+            final RequestConfig requestConfig = RequestConfig.custom()
+                    .setConnectTimeout(connectTimeout != 0 ? connectTimeout : WSClientFactory.DEFAULT_CONNECT_TIMEOUT)
+                    .setSocketTimeout(socketTimeout != 0 ? socketTimeout : WSClientFactory.DEFAULT_SOCKET_TIMEOUT)
+                    .build();
+            httpPost.setConfig(requestConfig);
+        }
         //LOGGER.debug("Request-Header: {}", Arrays.toString(httpPost.getAllHeaders()));
         //LOGGER.debug(soapMsg);
         try (final CloseableHttpResponse response = this.httpClient.execute(httpPost);

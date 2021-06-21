@@ -43,8 +43,8 @@ public class VimStub {
 
     private final WSClient wsc;
 
-    public VimStub(final URL url, final boolean ignoreCert) {
-        this.wsc = WSClientFactory.getClient(url, ignoreCert);
+    public VimStub(final URL url, final boolean ignoreCert, final int connectTimeout, final int socketTimeout) {
+        this.wsc = WSClientFactory.getClient(url, ignoreCert, connectTimeout, socketTimeout);
     }
 
     public VimStub(final WSClient wsc) {

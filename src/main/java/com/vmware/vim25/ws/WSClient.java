@@ -117,7 +117,12 @@ public abstract class WSClient {
         return (T) this.invoke(methodName, paras, (String) null);
     }
 
-    public abstract Object invoke(final String methodName, final List<Argument> paras, final String returnType) throws RemoteException;
+    public Object invoke(final String methodName, final List<Argument> paras, final String returnType) throws RemoteException {
+        return this.invokeWithTimeout(methodName, paras, returnType, 0, 0);
+    }
+
+    public abstract Object invokeWithTimeout(final String methodName, final List<Argument> paras, final String returnType,
+                                             final int connectTimeout, final int socketTimeout) throws RemoteException;
 
     /*===============================================
        * API versions *

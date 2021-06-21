@@ -22,21 +22,24 @@ public class WSClientJava11 extends WSClient {
 
     private HttpClient client;
 
-    WSClientJava11(final URL serverUrl, final boolean ignoreCert) {
+    WSClientJava11(final URL serverUrl, final boolean ignoreCert, final int connectTimeout, final int socketTimeout) {
         super(serverUrl, ignoreCert);
         final HttpClient.Builder builder = HttpClient.newBuilder()
-                .cookieHandler(new CookieManager());
+                .cookieHandler(new CookieManager())
+                .connectTimeout(Duration.ofMillis(connectTimeout));
         if (ignoreCert) {
             final SSLContext sc = trustAllHttpsCertificates();
             if (sc != null) {
                 builder.sslContext(sc);
             }
         }
+        this.setConnectTimeout(connectTimeout);
+        this.setReadTimeout(socketTimeout);
         this.client = builder.build();
     }
 
     @Override
-    public Object invoke(final String methodName, final List<Argument> paras, final String returnType) throws RemoteException {
+    public Object invokeWithTimeout(final String methodName, final List<Argument> paras, final String returnType, final int connectTimeout, final int socketTimeout) throws RemoteException {
         final String soapMsg = XmlGen.generateSoapMethod(methodName, paras, this.getVimNameSpace());
         final HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofString(soapMsg);
         final HttpRequest.Builder builder = HttpRequest.newBuilder().uri(this.getBaseUri());

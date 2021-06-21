@@ -121,7 +121,7 @@ public class SessionManager extends ManagedObject
     ServerConnection oldsc = oldsi.getServerConnection();
     String ticket = oldsi.getSessionManager().acquireCloneTicket();
 	  
-    VimStub vimService = new VimStub(oldsc.getUrl(), ignoreCert);
+    VimStub vimService = new VimStub(oldsc.getUrl(), ignoreCert, 0, 0);
     vimService.getWsc().setVimNameSpace(oldsc.getVimService().getWsc().getVimNameSpace());
     vimService.getWsc().setSoapActionOnApiVersion(oldsi.getAboutInfo().getApiVersion());
 

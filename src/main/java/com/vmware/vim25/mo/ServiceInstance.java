@@ -65,7 +65,18 @@ public class ServiceInstance extends ManagedObject {
         this(url, username, password, ignoreCert, VIM25_NAMESPACE);
     }
 
+    public ServiceInstance(final URL url, final String username, final String password, final boolean ignoreCert, final int connectTimeout, final int socketTimeout)
+            throws RemoteException, MalformedURLException {
+        this(url, username, password, ignoreCert, connectTimeout, socketTimeout, VIM25_NAMESPACE);
+    }
+
     public ServiceInstance(final URL url, final String username, final String password, final boolean ignoreCert, final String namespace)
+            throws RemoteException, MalformedURLException {
+        this(url, username, password, ignoreCert, 0, 0, namespace);
+    }
+
+    public ServiceInstance(final URL url, final String username, final String password, final boolean ignoreCert,
+                           final int connectTimeout, final int socketTimeout, final String namespace)
             throws RemoteException, MalformedURLException {
         if (url == null || username == null) {
             throw new NullPointerException("None of url, username can be null.");
@@ -73,7 +84,7 @@ public class ServiceInstance extends ManagedObject {
 
         setMOR(SERVICE_INSTANCE_MOR);
 
-        final VimStub vimService = new VimStub(url, ignoreCert);
+        final VimStub vimService = new VimStub(url, ignoreCert, connectTimeout, socketTimeout);
         vimService.getWsc().setVimNameSpace(namespace);
 
         serviceContent = vimService.retrieveServiceContent(SERVICE_INSTANCE_MOR);
@@ -91,16 +102,21 @@ public class ServiceInstance extends ManagedObject {
         this(url, sessionStr, ignoreCert, VIM25_NAMESPACE);
     }
 
-    // sessionStr format: "vmware_soap_session=\"B3240D15-34DF-4BB8-B902-A844FDF42E85\""
     public ServiceInstance(final URL url, final String sessionStr, final boolean ignoreCert, final String namespace)
             throws RemoteException, MalformedURLException {
+        this(url, sessionStr, ignoreCert, 0, 0, namespace);
+    }
+
+    // sessionStr format: "vmware_soap_session=\"B3240D15-34DF-4BB8-B902-A844FDF42E85\""
+    public ServiceInstance(final URL url, final String sessionStr, final boolean ignoreCert, final int connectTimeout,
+                           final int socketTimeout, final String namespace) throws RemoteException, MalformedURLException {
         if (url == null || sessionStr == null) {
             throw new NullPointerException("None of url, session string can be null.");
         }
 
         setMOR(SERVICE_INSTANCE_MOR);
 
-        final VimStub vimService = new VimStub(url, ignoreCert);
+        final VimStub vimService = new VimStub(url, ignoreCert, connectTimeout, socketTimeout);
         final WSClient wsc = vimService.getWsc();
         wsc.setCookie(sessionStr);
         wsc.setVimNameSpace(namespace);

@@ -21,8 +21,10 @@ import java.util.List;
  */
 public class WSClientOldJava extends WSClient {
 
-    WSClientOldJava(final URL serverUrl, final boolean ignoreCert) {
+    WSClientOldJava(final URL serverUrl, final boolean ignoreCert, final int connectTimeout, final int socketTimeout) {
         super(serverUrl, ignoreCert);
+        this.setConnectTimeout(connectTimeout);
+        this.setReadTimeout(socketTimeout);
         if (ignoreCert) {
             final SSLContext sc = trustAllHttpsCertificates();
             if (sc != null) {
@@ -33,7 +35,7 @@ public class WSClientOldJava extends WSClient {
     }
 
     @Override
-    public Object invoke(final String methodName, final List<Argument> paras, final String returnType) throws RemoteException {
+    public Object invokeWithTimeout(final String methodName, final List<Argument> paras, final String returnType, final int connectTimeout, final int socketTimeout) throws RemoteException {
         final String soapMsg = XmlGen.generateSoapMethod(methodName, paras, this.getVimNameSpace());
         try {
             final HttpURLConnection postCon = (HttpURLConnection) this.getBaseUrl().openConnection();
@@ -51,7 +53,9 @@ public class WSClientOldJava extends WSClient {
             }
             postCon.setDoOutput(true);
             postCon.setDoInput(true);
-            postCon.setRequestProperty(SOAP_ACTION_HEADER, this.getSoapAction());
+            if (this.getSoapAction() != null) {
+                postCon.setRequestProperty(SOAP_ACTION_HEADER, this.getSoapAction());
+            }
             postCon.setRequestProperty("Content-Type", "text/xml; charset=utf-8");
 
             if (this.getCookie() != null) {
@@ -69,6 +73,7 @@ public class WSClientOldJava extends WSClient {
             try {
                 is = postCon.getInputStream();
             } catch (IOException ioe) {
+                LOGGER.error("IO Error in Request", ioe);
                 is = postCon.getErrorStream();
             }
 

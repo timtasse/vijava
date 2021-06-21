@@ -48,7 +48,7 @@ public class HostBIOSInfoTest {
     @BeforeMethod
     public void setUp() throws Exception {
         final URL url = new URL("https://" + HOSTNAME + "/sdk");
-        instance = new ServiceInstance(url, USERNAME, PASSWORD, true);
+        instance = new ServiceInstance(url, USERNAME, PASSWORD, true, 1000, 1000);
     }
 
     @AfterMethod
