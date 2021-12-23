@@ -37,10 +37,9 @@ import java.util.Calendar;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0.2
  */
-
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class VirtualMachineRuntimeInfo extends DynamicData {
 
     private Calendar bootTime;
@@ -74,7 +73,10 @@ public class VirtualMachineRuntimeInfo extends DynamicData {
     private Long suspendInterval;
     private Calendar suspendTime;
     private boolean toolsInstallerMounted;
+    @Deprecated
     private Long vFlashCacheAllocation;
+    private Boolean vmFailoverInProgress;
+    private Boolean suspendedToMemory;
 
     @Override
     public String toString() {
@@ -109,7 +111,9 @@ public class VirtualMachineRuntimeInfo extends DynamicData {
                 ", suspendTime=" + suspendTime +
                 ", toolsInstallerMounted=" + toolsInstallerMounted +
                 ", vFlashCacheAllocation=" + vFlashCacheAllocation +
-                "} " + super.toString();
+                ", vmFailoverInProgress=" + vmFailoverInProgress +
+                ", suspendedToMemory=" + suspendedToMemory +
+                '}';
     }
 
     public Calendar getBootTime() {
@@ -350,6 +354,22 @@ public class VirtualMachineRuntimeInfo extends DynamicData {
 
     public void setvFlashCacheAllocation(final Long vFlashCacheAllocation) {
         this.vFlashCacheAllocation = vFlashCacheAllocation;
+    }
+
+    public Boolean getVmFailoverInProgress() {
+        return vmFailoverInProgress;
+    }
+
+    public void setVmFailoverInProgress(final Boolean vmFailoverInProgress) {
+        this.vmFailoverInProgress = vmFailoverInProgress;
+    }
+
+    public Boolean getSuspendedToMemory() {
+        return suspendedToMemory;
+    }
+
+    public void setSuspendedToMemory(final Boolean suspendedToMemory) {
+        this.suspendedToMemory = suspendedToMemory;
     }
 
 }

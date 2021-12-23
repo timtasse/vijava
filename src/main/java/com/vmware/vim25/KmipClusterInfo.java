@@ -6,7 +6,7 @@ import java.util.Arrays;
  * Data Object representing a cluster of KMIP servers. All servers in a cluster must provide the same keys.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.2
  * @since 6.5
  */
 public class KmipClusterInfo extends DynamicData {
@@ -16,6 +16,9 @@ public class KmipClusterInfo extends DynamicData {
     private boolean useAsDefault;
     private String managementType;
     private ManagedObjectReference[] useAsEntityDefault;
+    private Boolean hasBackup;
+    private Boolean tpmRequired;
+    private String keyId;
 
     @Override
     public String toString() {
@@ -25,7 +28,10 @@ public class KmipClusterInfo extends DynamicData {
                 ", useAsDefault=" + useAsDefault +
                 ", managementType='" + managementType + '\'' +
                 ", useAsEntityDefault=" + Arrays.toString(useAsEntityDefault) +
-                "} " + super.toString();
+                ", hasBackup=" + hasBackup +
+                ", tpmRequired=" + tpmRequired +
+                ", keyId='" + keyId + '\'' +
+                '}';
     }
 
     public KeyProviderId getClusterId() {
@@ -67,4 +73,29 @@ public class KmipClusterInfo extends DynamicData {
     public void setUseAsEntityDefault(final ManagedObjectReference[] useAsEntityDefault) {
         this.useAsEntityDefault = useAsEntityDefault;
     }
+
+    public Boolean getHasBackup() {
+        return hasBackup;
+    }
+
+    public void setHasBackup(final Boolean hasBackup) {
+        this.hasBackup = hasBackup;
+    }
+
+    public Boolean getTpmRequired() {
+        return tpmRequired;
+    }
+
+    public void setTpmRequired(final Boolean tpmRequired) {
+        this.tpmRequired = tpmRequired;
+    }
+
+    public String getKeyId() {
+        return keyId;
+    }
+
+    public void setKeyId(final String keyId) {
+        this.keyId = keyId;
+    }
+
 }

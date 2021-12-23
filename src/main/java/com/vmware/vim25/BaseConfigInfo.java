@@ -1,25 +1,45 @@
 package com.vmware.vim25;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 /**
  * This data object type contains the basic configuration for a virtual storage object or a virtual storage object snapshot.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0.2
  * @since 6.5
  */
 public class BaseConfigInfo extends DynamicData {
 
-    private BaseConfigInfoBackingInfo backing;
-    private Boolean changedBlockTrackingEnabled;
-    private Calendar createTime;
     private ID id;
-    private String[] iofilter;
-    private Boolean keepAfterDeleteVm;
     private String name;
-    private Boolean nativeSnapshotSupported;
+    private Calendar createTime;
+    private Boolean keepAfterDeleteVm;
     private Boolean relocationDisabled;
+    private Boolean nativeSnapshotSupported;
+    private Boolean changedBlockTrackingEnabled;
+    private BaseConfigInfoBackingInfo backing;
+    private KeyValue[] metadata;
+    private VslmVClockInfo vclock;
+    private String[] iofilter;
+
+    @Override
+    public String toString() {
+        return "BaseConfigInfo{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", createTime=" + createTime +
+                ", keepAfterDeleteVm=" + keepAfterDeleteVm +
+                ", relocationDisabled=" + relocationDisabled +
+                ", nativeSnapshotSupported=" + nativeSnapshotSupported +
+                ", changedBlockTrackingEnabled=" + changedBlockTrackingEnabled +
+                ", backing=" + backing +
+                ", metadata=" + Arrays.toString(metadata) +
+                ", vclock=" + vclock +
+                ", iofilter=" + Arrays.toString(iofilter) +
+                '}';
+    }
 
     public BaseConfigInfoBackingInfo getBacking() {
         return backing;
@@ -91,6 +111,22 @@ public class BaseConfigInfo extends DynamicData {
 
     public void setRelocationDisabled(final Boolean relocationDisabled) {
         this.relocationDisabled = relocationDisabled;
+    }
+
+    public KeyValue[] getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata(final KeyValue[] metadata) {
+        this.metadata = metadata;
+    }
+
+    public VslmVClockInfo getVclock() {
+        return vclock;
+    }
+
+    public void setVclock(final VslmVClockInfo vclock) {
+        this.vclock = vclock;
     }
 
 }

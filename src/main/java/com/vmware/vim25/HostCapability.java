@@ -37,8 +37,9 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.2
  */
+@SuppressWarnings("unused")
 public class HostCapability extends DynamicData {
 
     private boolean recursiveResourcePoolsSupported;
@@ -168,6 +169,10 @@ public class HostCapability extends DynamicData {
     private Boolean precisionTimeProtocolSupported;
     private Boolean remoteDeviceVMotionSupported;
     private Integer maxSupportedVmMemory;
+    private Boolean ahDeviceHintsSupported;
+    private Boolean assignHwPciConfigSupported;
+    private Boolean pMemFailoverSupported;
+    private Boolean hostConfigEncryptionSupported;
 
     @Override
     public String toString() {
@@ -293,7 +298,11 @@ public class HostCapability extends DynamicData {
                 ", precisionTimeProtocolSupported=" + precisionTimeProtocolSupported +
                 ", remoteDeviceVMotionSupported=" + remoteDeviceVMotionSupported +
                 ", maxSupportedVmMemory=" + maxSupportedVmMemory +
-                "} " + super.toString();
+                ", ahDeviceHintsSupported=" + ahDeviceHintsSupported +
+                ", assignHwPciConfigSupported=" + assignHwPciConfigSupported +
+                ", pMemFailoverSupported=" + pMemFailoverSupported +
+                ", hostConfigEncryptionSupported=" + hostConfigEncryptionSupported +
+                '}';
     }
 
     public boolean isRecursiveResourcePoolsSupported() {
@@ -1262,6 +1271,38 @@ public class HostCapability extends DynamicData {
 
     public void setMaxSupportedVmMemory(final Integer maxSupportedVmMemory) {
         this.maxSupportedVmMemory = maxSupportedVmMemory;
+    }
+
+    public Boolean getAhDeviceHintsSupported() {
+        return ahDeviceHintsSupported;
+    }
+
+    public void setAhDeviceHintsSupported(final Boolean ahDeviceHintsSupported) {
+        this.ahDeviceHintsSupported = ahDeviceHintsSupported;
+    }
+
+    public Boolean getAssignHwPciConfigSupported() {
+        return assignHwPciConfigSupported;
+    }
+
+    public void setAssignHwPciConfigSupported(final Boolean assignHwPciConfigSupported) {
+        this.assignHwPciConfigSupported = assignHwPciConfigSupported;
+    }
+
+    public Boolean getpMemFailoverSupported() {
+        return pMemFailoverSupported;
+    }
+
+    public void setpMemFailoverSupported(final Boolean pMemFailoverSupported) {
+        this.pMemFailoverSupported = pMemFailoverSupported;
+    }
+
+    public Boolean getHostConfigEncryptionSupported() {
+        return hostConfigEncryptionSupported;
+    }
+
+    public void setHostConfigEncryptionSupported(final Boolean hostConfigEncryptionSupported) {
+        this.hostConfigEncryptionSupported = hostConfigEncryptionSupported;
     }
 
 }

@@ -14,7 +14,7 @@ import java.util.List;
  * In that case, user operation would succeed but if user checks SPBM Entity Compliance, it will show "Mismatch" / "Non Compliant" as a compliance result.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.2
  * @since 6.5
  */
 @SuppressWarnings("unused")
@@ -104,6 +104,17 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
 
     public Task deleteVStorageObject(final ID id, final Datastore datastore) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
         return this.deleteVStorageObject(id, datastore.getMOR());
+    }
+
+    public Task deleteVStorageObjectEx(final ID id, final ManagedObjectReference datastore) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore));
+        return this.invokeWithTaskReturn("DeleteVStorageObjectEx_Task", params);
+    }
+
+    public Task deleteVStorageObjectEx(final ID id, final Datastore datastore) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
+        return this.deleteVStorageObjectEx(id, datastore.getMOR());
     }
 
     public void detachTagFromVStorageObject(final ID id, final String category, final String tag) throws NotFound, RuntimeFault, RemoteException {
@@ -282,7 +293,7 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
 
     public void scheduleReconcileDatastoreInventory(final ManagedObjectReference datastore) throws InvalidDatastore, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("datastore", ManagedObjectReference.class, null));
+                new Argument("datastore", ManagedObjectReference.class, datastore));
         this.getVimService().getWsc().invokeWithoutReturn("ScheduleReconcileDatastoreInventory", params);
     }
 
@@ -359,17 +370,71 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
     }
 
     public Task createSnapshot(final ID id, final ManagedObjectReference datastore, final String description)
-            throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
+            throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("id", ID.class, id),
                 new Argument("datastore", ManagedObjectReference.class, datastore),
                 new Argument("description", String.class, description));
-        return this.invokeWithTaskReturn("VStorageObjectCreateSnapshot_Task", params);
+        try {
+            return this.invokeWithTaskReturn("VStorageObjectCreateSnapshot_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof FileFault) {
+                throw (FileFault) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof InvalidDatastore) {
+                throw (InvalidDatastore) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
     public Task createSnapshot(final ID id, final Datastore datastore, final String description)
-            throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
+            throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault {
         return this.createSnapshot(id, datastore.getMOR(), description);
+    }
+
+    public Task updateVStorageObjectMetadataEx(final ID id, final ManagedObjectReference datastore,
+                                               final List<KeyValue> metadata, final List<String> deleteKeys) throws
+            InvalidDatastore, InvalidState, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("metadata", "KeyValue[]", metadata == null ? null :metadata.toArray()),
+                new Argument("deleteKeys", "String[]", deleteKeys == null ? null : deleteKeys.toArray()));
+        try {
+            return this.invokeWithTaskReturn("VCenterUpdateVStorageObjectMetadataEx_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof InvalidDatastore) {
+                throw (InvalidDatastore) cause;
+            }
+            if (cause instanceof InvalidState) {
+                throw (InvalidState) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task updateVStorageObjectMetadataEx(final ID id, final Datastore datastore,
+                                               final List<KeyValue> metadata, final List<String> deleteKeys) throws
+            InvalidDatastore, InvalidState, NotFound, RuntimeFault {
+        return this.updateVStorageObjectMetadataEx(id, datastore.getMOR(), metadata, deleteKeys);
     }
 
 }

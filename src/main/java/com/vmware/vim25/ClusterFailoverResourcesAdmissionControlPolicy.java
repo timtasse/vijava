@@ -30,36 +30,70 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * The ClusterFailoverResourcesAdmissionControlPolicy reserves a specified percentage of aggregate cluster resources for failover.
+ * With the resources failover policy in place, vSphere HA uses the following calculations to control virtual machine migration in the cluster.
+ *
+ * 1. Calculate the total resource requirements for all powered-on virtual machines in the cluster.
+ * 2. Calculate the total host resources available for virtual machines.
+ * 3. Calculate the Current CPU failover capacity, memory failover capacity and optionally, persistent memory failover capacity for the cluster.
+ * 4. Compare the current CPU failover capacity and current memory failover capacity with the configured resource percentages (cpuFailoverResourcesPercent
+ *    and memoryFailoverResourcesPercent). If either current capacity is less than the corresponding configured capacity, HA does not allow the operation.
+ *
+ * HA uses the actual reservations of the virtual machines. If a virtual machine does not have reservations, meaning that the reservation is 0,
+ * a default of 0MB memory and 256MHz CPU is applied.
+ * This is controlled by the same HA advanced options used for the failover level policy (ClusterFailoverLevelAdmissionControlPolicy).
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 7.0.2
+ * @since 4.0
  */
-
-@SuppressWarnings("all")
 public class ClusterFailoverResourcesAdmissionControlPolicy extends ClusterDasAdmissionControlPolicy {
 
-    public Boolean autoComputePercentages;
-    public int cpuFailoverResourcesPercent;
-    public Integer failoverLevel;
-    public int memoryFailoverResourcesPercent;
+    private int cpuFailoverResourcesPercent;
+    private int memoryFailoverResourcesPercent;
+    private Integer failoverLevel;
+    private Boolean autoComputePercentages;
+    private Integer pMemFailoverResourcesPercent;
+    private Boolean autoComputePMemFailoverResourcesPercent;
 
-    public int getCpuFailoverResourcesPercent() {
-        return this.cpuFailoverResourcesPercent;
+    @Override
+    public String toString() {
+        return "ClusterFailoverResourcesAdmissionControlPolicy{" +
+                "cpuFailoverResourcesPercent=" + cpuFailoverResourcesPercent +
+                ", memoryFailoverResourcesPercent=" + memoryFailoverResourcesPercent +
+                ", failoverLevel=" + failoverLevel +
+                ", autoComputePercentages=" + autoComputePercentages +
+                ", pMemFailoverResourcesPercent=" + pMemFailoverResourcesPercent +
+                ", autoComputePMemFailoverResourcesPercent=" + autoComputePMemFailoverResourcesPercent +
+                '}';
     }
 
-    public void setCpuFailoverResourcesPercent(int cpuFailoverResourcesPercent) {
+    public int getCpuFailoverResourcesPercent() {
+        return cpuFailoverResourcesPercent;
+    }
+
+    public void setCpuFailoverResourcesPercent(final int cpuFailoverResourcesPercent) {
         this.cpuFailoverResourcesPercent = cpuFailoverResourcesPercent;
     }
 
     public int getMemoryFailoverResourcesPercent() {
-        return this.memoryFailoverResourcesPercent;
+        return memoryFailoverResourcesPercent;
     }
 
-    public void setMemoryFailoverResourcesPercent(int memoryFailoverResourcesPercent) {
+    public void setMemoryFailoverResourcesPercent(final int memoryFailoverResourcesPercent) {
         this.memoryFailoverResourcesPercent = memoryFailoverResourcesPercent;
     }
 
-    public Boolean isAutoComputePercentages() {
+    public Integer getFailoverLevel() {
+        return failoverLevel;
+    }
+
+    public void setFailoverLevel(final Integer failoverLevel) {
+        this.failoverLevel = failoverLevel;
+    }
+
+    public Boolean getAutoComputePercentages() {
         return autoComputePercentages;
     }
 
@@ -67,11 +101,20 @@ public class ClusterFailoverResourcesAdmissionControlPolicy extends ClusterDasAd
         this.autoComputePercentages = autoComputePercentages;
     }
 
-    public int getFailoverLevel() {
-        return failoverLevel;
+    public Integer getpMemFailoverResourcesPercent() {
+        return pMemFailoverResourcesPercent;
     }
 
-    public void setFailoverLevel(final int failoverLevel) {
-        this.failoverLevel = failoverLevel;
+    public void setpMemFailoverResourcesPercent(final Integer pMemFailoverResourcesPercent) {
+        this.pMemFailoverResourcesPercent = pMemFailoverResourcesPercent;
     }
+
+    public Boolean getAutoComputePMemFailoverResourcesPercent() {
+        return autoComputePMemFailoverResourcesPercent;
+    }
+
+    public void setAutoComputePMemFailoverResourcesPercent(final Boolean autoComputePMemFailoverResourcesPercent) {
+        this.autoComputePMemFailoverResourcesPercent = autoComputePMemFailoverResourcesPercent;
+    }
+
 }

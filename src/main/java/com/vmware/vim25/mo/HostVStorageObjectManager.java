@@ -11,7 +11,7 @@ import java.util.List;
  * Interface to manage virtual storage object on an ESXi host.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7.2
+ * @version 7.0.2
  * @since 6.5
  */
 @SuppressWarnings("unchecked")
@@ -62,6 +62,18 @@ public class HostVStorageObjectManager extends VStorageObjectManagerBase {
 
     public Task deleteVStorageObject(final ID id, final Datastore datastore) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
         return this.deleteVStorageObject(id, datastore.getMOR());
+    }
+
+    public Task deleteVStorageObjectEx(final ID id, final ManagedObjectReference datastore) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("id", "ID", id),
+                new Argument("datastore", ManagedObjectReference.class.getSimpleName(), datastore));
+        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc().invoke("HostDeleteVStorageObjectEx_Task", params, ManagedObjectReference.class.getSimpleName());
+        return new Task(this.getServerConnection(), mor);
+    }
+
+    public Task deleteVStorageObjectEx(final ID id, final Datastore datastore) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
+        return this.deleteVStorageObjectEx(id, datastore.getMOR());
     }
 
     public Task extendDisk(final ID id, final ManagedObjectReference datastore, final long newCapacityInMB) throws FileFault, InvalidDatastore, InvalidState, NotFound, RuntimeFault, TaskInProgress, RemoteException {
@@ -236,6 +248,17 @@ public class HostVStorageObjectManager extends VStorageObjectManagerBase {
                 new Argument("metadata", "KeyValue[]", metadata.toArray()),
                 new Argument("deleteKeys", "String[]", deleteKeys.toArray()));
         final ManagedObjectReference mor = this.getVimService().getWsc().invoke("HostUpdateVStorageObjectMetadata_Task", params, ManagedObjectReference.class);
+        return new Task(this.getServerConnection(), mor);
+    }
+
+    public Task updateVStorageObjectMetadataEx(final ID id, final ManagedObjectReference datastore, final List<KeyValue> metadata, final List<String> deleteKeys)
+            throws InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("id", ID.class, id),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                new Argument("metadata", "KeyValue[]", metadata.toArray()),
+                new Argument("deleteKeys", "String[]", deleteKeys.toArray()));
+        final ManagedObjectReference mor = this.getVimService().getWsc().invoke("HostUpdateVStorageObjectMetadataEx_Task", params, ManagedObjectReference.class);
         return new Task(this.getServerConnection(), mor);
     }
 

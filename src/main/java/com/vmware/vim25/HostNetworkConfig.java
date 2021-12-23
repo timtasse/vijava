@@ -29,137 +29,175 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object type describes networking host configuration data objects. These objects contain only the configuration information for networking.
+ * The runtime information is available from the NetworkInfo data object type. {@see HostNetworkInfo}
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.2
+ * @since 2.0
+ */
+@SuppressWarnings("unused")
 public class HostNetworkConfig extends DynamicData {
-  public HostVirtualSwitchConfig[] vswitch;
-  public HostProxySwitchConfig[] proxySwitch;
-  public HostPortGroupConfig[] portgroup;
-  public PhysicalNicConfig[] pnic;
-  public HostVirtualNicConfig[] vnic;
-  public HostVirtualNicConfig[] consoleVnic;
-  public HostDnsConfig dnsConfig;
-  public HostIpRouteConfig ipRouteConfig;
-  public HostIpRouteConfig consoleIpRouteConfig;
-  public HostIpRouteTableConfig routeTableConfig;
-  public HostDhcpServiceConfig[] dhcp;
-  public HostNatServiceConfig[] nat;
-  public Boolean ipV6Enabled;
-  public HostNetworkConfigNetStackSpec[] netStackSpec;
 
-  public HostVirtualSwitchConfig[] getVswitch() {
-    return this.vswitch;
-  }
+    private HostVirtualSwitchConfig[] vswitch;
+    private HostProxySwitchConfig[] proxySwitch;
+    private HostPortGroupConfig[] portgroup;
+    private PhysicalNicConfig[] pnic;
+    private HostVirtualNicConfig[] vnic;
+    private HostVirtualNicConfig[] consoleVnic;
+    private HostDnsConfig dnsConfig;
+    private HostIpRouteConfig ipRouteConfig;
+    private HostIpRouteConfig consoleIpRouteConfig;
+    private HostIpRouteTableConfig routeTableConfig;
+    private HostDhcpServiceConfig[] dhcp;
+    private HostNatServiceConfig[] nat;
+    private Boolean ipV6Enabled;
+    private HostNetworkConfigNetStackSpec[] netStackSpec;
+    private String migrationStatus;
 
-  public HostProxySwitchConfig[] getProxySwitch() {
-    return this.proxySwitch;
-  }
+    @Override
+    public String toString() {
+        return "HostNetworkConfig{" +
+                "vswitch=" + Arrays.toString(vswitch) +
+                ", proxySwitch=" + Arrays.toString(proxySwitch) +
+                ", portgroup=" + Arrays.toString(portgroup) +
+                ", pnic=" + Arrays.toString(pnic) +
+                ", vnic=" + Arrays.toString(vnic) +
+                ", consoleVnic=" + Arrays.toString(consoleVnic) +
+                ", dnsConfig=" + dnsConfig +
+                ", ipRouteConfig=" + ipRouteConfig +
+                ", consoleIpRouteConfig=" + consoleIpRouteConfig +
+                ", routeTableConfig=" + routeTableConfig +
+                ", dhcp=" + Arrays.toString(dhcp) +
+                ", nat=" + Arrays.toString(nat) +
+                ", ipV6Enabled=" + ipV6Enabled +
+                ", netStackSpec=" + Arrays.toString(netStackSpec) +
+                ", migrationStatus='" + migrationStatus + '\'' +
+                '}';
+    }
 
-  public HostPortGroupConfig[] getPortgroup() {
-    return this.portgroup;
-  }
+    public HostVirtualSwitchConfig[] getVswitch() {
+        return vswitch;
+    }
 
-  public PhysicalNicConfig[] getPnic() {
-    return this.pnic;
-  }
+    public void setVswitch(final HostVirtualSwitchConfig[] vswitch) {
+        this.vswitch = vswitch;
+    }
 
-  public HostVirtualNicConfig[] getVnic() {
-    return this.vnic;
-  }
+    public HostProxySwitchConfig[] getProxySwitch() {
+        return proxySwitch;
+    }
 
-  public HostVirtualNicConfig[] getConsoleVnic() {
-    return this.consoleVnic;
-  }
+    public void setProxySwitch(final HostProxySwitchConfig[] proxySwitch) {
+        this.proxySwitch = proxySwitch;
+    }
 
-  public HostDnsConfig getDnsConfig() {
-    return this.dnsConfig;
-  }
+    public HostPortGroupConfig[] getPortgroup() {
+        return portgroup;
+    }
 
-  public HostIpRouteConfig getIpRouteConfig() {
-    return this.ipRouteConfig;
-  }
+    public void setPortgroup(final HostPortGroupConfig[] portgroup) {
+        this.portgroup = portgroup;
+    }
 
-  public HostIpRouteConfig getConsoleIpRouteConfig() {
-    return this.consoleIpRouteConfig;
-  }
+    public PhysicalNicConfig[] getPnic() {
+        return pnic;
+    }
 
-  public HostIpRouteTableConfig getRouteTableConfig() {
-    return this.routeTableConfig;
-  }
+    public void setPnic(final PhysicalNicConfig[] pnic) {
+        this.pnic = pnic;
+    }
 
-  public HostDhcpServiceConfig[] getDhcp() {
-    return this.dhcp;
-  }
+    public HostVirtualNicConfig[] getVnic() {
+        return vnic;
+    }
 
-  public HostNatServiceConfig[] getNat() {
-    return this.nat;
-  }
+    public void setVnic(final HostVirtualNicConfig[] vnic) {
+        this.vnic = vnic;
+    }
 
-  public Boolean getIpV6Enabled() {
-    return this.ipV6Enabled;
-  }
+    public HostVirtualNicConfig[] getConsoleVnic() {
+        return consoleVnic;
+    }
 
-  public HostNetworkConfigNetStackSpec[] getNetStackSpec() {
-    return this.netStackSpec;
-  }
+    public void setConsoleVnic(final HostVirtualNicConfig[] consoleVnic) {
+        this.consoleVnic = consoleVnic;
+    }
 
-  public void setVswitch(HostVirtualSwitchConfig[] vswitch) {
-    this.vswitch=vswitch;
-  }
+    public HostDnsConfig getDnsConfig() {
+        return dnsConfig;
+    }
 
-  public void setProxySwitch(HostProxySwitchConfig[] proxySwitch) {
-    this.proxySwitch=proxySwitch;
-  }
+    public void setDnsConfig(final HostDnsConfig dnsConfig) {
+        this.dnsConfig = dnsConfig;
+    }
 
-  public void setPortgroup(HostPortGroupConfig[] portgroup) {
-    this.portgroup=portgroup;
-  }
+    public HostIpRouteConfig getIpRouteConfig() {
+        return ipRouteConfig;
+    }
 
-  public void setPnic(PhysicalNicConfig[] pnic) {
-    this.pnic=pnic;
-  }
+    public void setIpRouteConfig(final HostIpRouteConfig ipRouteConfig) {
+        this.ipRouteConfig = ipRouteConfig;
+    }
 
-  public void setVnic(HostVirtualNicConfig[] vnic) {
-    this.vnic=vnic;
-  }
+    public HostIpRouteConfig getConsoleIpRouteConfig() {
+        return consoleIpRouteConfig;
+    }
 
-  public void setConsoleVnic(HostVirtualNicConfig[] consoleVnic) {
-    this.consoleVnic=consoleVnic;
-  }
+    public void setConsoleIpRouteConfig(final HostIpRouteConfig consoleIpRouteConfig) {
+        this.consoleIpRouteConfig = consoleIpRouteConfig;
+    }
 
-  public void setDnsConfig(HostDnsConfig dnsConfig) {
-    this.dnsConfig=dnsConfig;
-  }
+    public HostIpRouteTableConfig getRouteTableConfig() {
+        return routeTableConfig;
+    }
 
-  public void setIpRouteConfig(HostIpRouteConfig ipRouteConfig) {
-    this.ipRouteConfig=ipRouteConfig;
-  }
+    public void setRouteTableConfig(final HostIpRouteTableConfig routeTableConfig) {
+        this.routeTableConfig = routeTableConfig;
+    }
 
-  public void setConsoleIpRouteConfig(HostIpRouteConfig consoleIpRouteConfig) {
-    this.consoleIpRouteConfig=consoleIpRouteConfig;
-  }
+    public HostDhcpServiceConfig[] getDhcp() {
+        return dhcp;
+    }
 
-  public void setRouteTableConfig(HostIpRouteTableConfig routeTableConfig) {
-    this.routeTableConfig=routeTableConfig;
-  }
+    public void setDhcp(final HostDhcpServiceConfig[] dhcp) {
+        this.dhcp = dhcp;
+    }
 
-  public void setDhcp(HostDhcpServiceConfig[] dhcp) {
-    this.dhcp=dhcp;
-  }
+    public HostNatServiceConfig[] getNat() {
+        return nat;
+    }
 
-  public void setNat(HostNatServiceConfig[] nat) {
-    this.nat=nat;
-  }
+    public void setNat(final HostNatServiceConfig[] nat) {
+        this.nat = nat;
+    }
 
-  public void setIpV6Enabled(Boolean ipV6Enabled) {
-    this.ipV6Enabled=ipV6Enabled;
-  }
+    public Boolean getIpV6Enabled() {
+        return ipV6Enabled;
+    }
 
-  public void setNetStackSpec(HostNetworkConfigNetStackSpec[] netStackSpec) {
-    this.netStackSpec=netStackSpec;
-  }
+    public void setIpV6Enabled(final Boolean ipV6Enabled) {
+        this.ipV6Enabled = ipV6Enabled;
+    }
+
+    public HostNetworkConfigNetStackSpec[] getNetStackSpec() {
+        return netStackSpec;
+    }
+
+    public void setNetStackSpec(final HostNetworkConfigNetStackSpec[] netStackSpec) {
+        this.netStackSpec = netStackSpec;
+    }
+
+    public String getMigrationStatus() {
+        return migrationStatus;
+    }
+
+    public void setMigrationStatus(final String migrationStatus) {
+        this.migrationStatus = migrationStatus;
+    }
+
 }

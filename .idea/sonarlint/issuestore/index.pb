@@ -1,0 +1,19 @@
+
+j
+:src/main/java/com/vmware/vim25/ManagedObjectReference.java,c/4/c4b7e21fce4ef3ab5def6e7d95ce3fa2432917ca
+9
+	README.md,8/e/8ec9a00bfd09b3190ac6b22251dbb1aa95a0579d
+q
+Asrc/main/java/com/vmware/vim25/ClusterComputeResourceSummary.java,3/f/3f537257073e0ad36095e348a70a6ec98034b516
+h
+8src/main/java/com/vmware/vim25/mo/HostNetworkSystem.java,4/f/4f5be9d04645846b148d6391e5d881d15fdb245f
+g
+7src/main/java/com/vmware/vim25/mo/ServerConnection.java,8/b/8b2672459ff9a219cc49f64bda9baf6747b78c2a
+d
+4src/main/java/com/vmware/vim25/mo/ManagedObject.java,b/0/b042edc3256c0b0e8052821bf4ea7bd5b936f8e3
+\
+,src/main/java/com/vmware/vim25/TaskInfo.java,8/5/853ead9cf6279581b0b1ae21eebc8cbbaa161b75
+[
++src/main/java/com/vmware/vim25/mo/Task.java,f/7/f725309a6e8f3e811def1b7c236d5b23cfd22d55
+e
+5src/main/java/com/vmware/vim25/mo/SessionManager.java,0/4/046c26c9bc4089814e0d92f4bfcb6a4cb6b1a91a

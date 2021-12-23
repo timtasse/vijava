@@ -30,15 +30,25 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * Base class for specifying how admission control should be done for vSphere HA.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 7.0.2
+ * @since 4.0
  */
-
-@SuppressWarnings("all")
 public class ClusterDasAdmissionControlPolicy extends DynamicData {
 
-    public Integer resourceReductionToToleratePercent;
+    private Integer resourceReductionToToleratePercent;
+    private Boolean pMemAdmissionControlEnabled;
+
+    @Override
+    public String toString() {
+        return "ClusterDasAdmissionControlPolicy{" +
+                "resourceReductionToToleratePercent=" + resourceReductionToToleratePercent +
+                ", pMemAdmissionControlEnabled=" + pMemAdmissionControlEnabled +
+                '}';
+    }
 
     public Integer getResourceReductionToToleratePercent() {
         return resourceReductionToToleratePercent;
@@ -47,4 +57,13 @@ public class ClusterDasAdmissionControlPolicy extends DynamicData {
     public void setResourceReductionToToleratePercent(final Integer resourceReductionToToleratePercent) {
         this.resourceReductionToToleratePercent = resourceReductionToToleratePercent;
     }
+
+    public Boolean getpMemAdmissionControlEnabled() {
+        return pMemAdmissionControlEnabled;
+    }
+
+    public void setpMemAdmissionControlEnabled(final Boolean pMemAdmissionControlEnabled) {
+        this.pMemAdmissionControlEnabled = pMemAdmissionControlEnabled;
+    }
+
 }

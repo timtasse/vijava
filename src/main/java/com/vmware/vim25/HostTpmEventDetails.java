@@ -52,4 +52,12 @@ public class HostTpmEventDetails extends DynamicData {
         this.dataHash = dataHash;
     }
 
+    public String getDataHashMethod() {
+        return dataHashMethod;
+    }
+
+    public void setDataHashMethod(final String dataHashMethod) {
+        this.dataHashMethod = dataHashMethod;
+    }
+
 }

@@ -30,37 +30,66 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object represents a ticket which grants access to some service.
+ * The ticket may be used only once and is valid only for the {@see SessionManagerServiceRequestSpec} with which it was acquired.
+ * For HTTP service requests (when spec is of type HttpServiceRequestSpec) the returned ticket must be used by setting id
+ * as the value of a special cookie in the HTTP request.
+ * For CGI requests the name of this cookie is 'vmware_cgi_ticket'.
+ * The use of the returned ticket for other services is to be defined.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.2
+ * @since 5.0
+ */
+@SuppressWarnings("unused")
 public class SessionManagerGenericServiceTicket extends DynamicData {
-  public String id;
-  public String hostName;
-  public String sslThumbprint;
 
-  public String getId() {
-    return this.id;
-  }
+    private String id;
+    private String hostName;
+    private String sslThumbprint;
+    private SessionManagerGenericServiceTicketTicketType ticketType;
 
-  public String getHostName() {
-    return this.hostName;
-  }
+    @Override
+    public String toString() {
+        return "SessionManagerGenericServiceTicket{" +
+                "id='" + id + '\'' +
+                ", hostName='" + hostName + '\'' +
+                ", sslThumbprint='" + sslThumbprint + '\'' +
+                ", ticketType=" + ticketType +
+                '}';
+    }
 
-  public String getSslThumbprint() {
-    return this.sslThumbprint;
-  }
+    public String getId() {
+        return this.id;
+    }
 
-  public void setId(String id) {
-    this.id=id;
-  }
+    public void setId(final String id) {
+        this.id = id;
+    }
 
-  public void setHostName(String hostName) {
-    this.hostName=hostName;
-  }
+    public String getHostName() {
+        return this.hostName;
+    }
 
-  public void setSslThumbprint(String sslThumbprint) {
-    this.sslThumbprint=sslThumbprint;
-  }
+    public void setHostName(final String hostName) {
+        this.hostName = hostName;
+    }
+
+    public String getSslThumbprint() {
+        return this.sslThumbprint;
+    }
+
+    public void setSslThumbprint(final String sslThumbprint) {
+        this.sslThumbprint = sslThumbprint;
+    }
+
+    public SessionManagerGenericServiceTicketTicketType getTicketType() {
+        return ticketType;
+    }
+
+    public void setTicketType(final SessionManagerGenericServiceTicketTicketType ticketType) {
+        this.ticketType = ticketType;
+    }
+
 }

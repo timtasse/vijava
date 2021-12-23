@@ -34,7 +34,8 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.2
+ * @since 2.5
  */
 public class ComputeResourceConfigSpec extends DynamicData {
 
@@ -42,6 +43,7 @@ public class ComputeResourceConfigSpec extends DynamicData {
     private Boolean spbmEnabled;
     private String defaultHardwareVersionKey;
     private DesiredSoftwareSpec desiredSoftwareSpec;
+    private String maximumHardwareVersionKey;
 
     @Override
     public String toString() {
@@ -50,14 +52,15 @@ public class ComputeResourceConfigSpec extends DynamicData {
                 ", spbmEnabled=" + spbmEnabled +
                 ", defaultHardwareVersionKey='" + defaultHardwareVersionKey + '\'' +
                 ", desiredSoftwareSpec=" + desiredSoftwareSpec +
-                "} " + super.toString();
+                ", maximumHardwareVersionKey='" + maximumHardwareVersionKey + '\'' +
+                '}';
     }
 
     public String getVmSwapPlacement() {
         return this.vmSwapPlacement;
     }
 
-    public void setVmSwapPlacement(String vmSwapPlacement) {
+    public void setVmSwapPlacement(final String vmSwapPlacement) {
         this.vmSwapPlacement = vmSwapPlacement;
     }
 
@@ -65,7 +68,7 @@ public class ComputeResourceConfigSpec extends DynamicData {
         return this.spbmEnabled;
     }
 
-    public void setSpbmEnabled(Boolean spbmEnabled) {
+    public void setSpbmEnabled(final Boolean spbmEnabled) {
         this.spbmEnabled = spbmEnabled;
     }
 
@@ -73,7 +76,7 @@ public class ComputeResourceConfigSpec extends DynamicData {
         return this.defaultHardwareVersionKey;
     }
 
-    public void setDefaultHardwareVersionKey(String defaultHardwareVersionKey) {
+    public void setDefaultHardwareVersionKey(final String defaultHardwareVersionKey) {
         this.defaultHardwareVersionKey = defaultHardwareVersionKey;
     }
 
@@ -84,4 +87,13 @@ public class ComputeResourceConfigSpec extends DynamicData {
     public void setDesiredSoftwareSpec(final DesiredSoftwareSpec desiredSoftwareSpec) {
         this.desiredSoftwareSpec = desiredSoftwareSpec;
     }
+
+    public String getMaximumHardwareVersionKey() {
+        return maximumHardwareVersionKey;
+    }
+
+    public void setMaximumHardwareVersionKey(final String maximumHardwareVersionKey) {
+        this.maximumHardwareVersionKey = maximumHardwareVersionKey;
+    }
+
 }

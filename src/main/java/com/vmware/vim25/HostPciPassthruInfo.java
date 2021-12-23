@@ -30,55 +30,81 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object provides information about the state of PciPassthru for all pci devices.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.2
+ * @since 4.0
+ */
+@SuppressWarnings("unused")
 public class HostPciPassthruInfo extends DynamicData {
-  public String id;
-  public String dependentDevice;
-  public boolean passthruEnabled;
-  public boolean passthruCapable;
-  public boolean passthruActive;
 
-  public String getId() {
-    return this.id;
-  }
+    private String id;
+    private String dependentDevice;
+    private boolean passthruEnabled;
+    private boolean passthruCapable;
+    private boolean passthruActive;
+    private String hardwareLabel;
 
-  public String getDependentDevice() {
-    return this.dependentDevice;
-  }
+    @Override
+    public String toString() {
+        return "HostPciPassthruInfo{" +
+                "id='" + id + '\'' +
+                ", dependentDevice='" + dependentDevice + '\'' +
+                ", passthruEnabled=" + passthruEnabled +
+                ", passthruCapable=" + passthruCapable +
+                ", passthruActive=" + passthruActive +
+                ", hardwareLabel='" + hardwareLabel + '\'' +
+                '}';
+    }
 
-  public boolean isPassthruEnabled() {
-    return this.passthruEnabled;
-  }
+    public String getId() {
+        return id;
+    }
 
-  public boolean isPassthruCapable() {
-    return this.passthruCapable;
-  }
+    public void setId(final String id) {
+        this.id = id;
+    }
 
-  public boolean isPassthruActive() {
-    return this.passthruActive;
-  }
+    public String getDependentDevice() {
+        return dependentDevice;
+    }
 
-  public void setId(String id) {
-    this.id=id;
-  }
+    public void setDependentDevice(final String dependentDevice) {
+        this.dependentDevice = dependentDevice;
+    }
 
-  public void setDependentDevice(String dependentDevice) {
-    this.dependentDevice=dependentDevice;
-  }
+    public boolean isPassthruEnabled() {
+        return passthruEnabled;
+    }
 
-  public void setPassthruEnabled(boolean passthruEnabled) {
-    this.passthruEnabled=passthruEnabled;
-  }
+    public void setPassthruEnabled(final boolean passthruEnabled) {
+        this.passthruEnabled = passthruEnabled;
+    }
 
-  public void setPassthruCapable(boolean passthruCapable) {
-    this.passthruCapable=passthruCapable;
-  }
+    public boolean isPassthruCapable() {
+        return passthruCapable;
+    }
 
-  public void setPassthruActive(boolean passthruActive) {
-    this.passthruActive=passthruActive;
-  }
+    public void setPassthruCapable(final boolean passthruCapable) {
+        this.passthruCapable = passthruCapable;
+    }
+
+    public boolean isPassthruActive() {
+        return passthruActive;
+    }
+
+    public void setPassthruActive(final boolean passthruActive) {
+        this.passthruActive = passthruActive;
+    }
+
+    public String getHardwareLabel() {
+        return hardwareLabel;
+    }
+
+    public void setHardwareLabel(final String hardwareLabel) {
+        this.hardwareLabel = hardwareLabel;
+    }
+
 }

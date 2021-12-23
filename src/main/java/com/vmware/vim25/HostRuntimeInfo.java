@@ -29,126 +29,160 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 /**
+ * This data object type describes the runtime state of a host.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 7.0.2
  */
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class HostRuntimeInfo extends DynamicData {
 
-    public Calendar bootTime;
-    public HostSystemConnectionState connectionState;
-    public CryptoKeyId cryptoKeyId;
-    public String cryptoState;
-    public ClusterDasFdmHostState dasHostState;
-    public HealthSystemRuntime healthSystemRuntime;
-    public Long hostMaxVirtualDiskCapacity;
-    public boolean inMaintenanceMode;
-    public Boolean inQuarantineMode;
-    public HostRuntimeInfoNetworkRuntimeInfo networkRuntimeInfo;
-    public HostSystemPowerState powerState;
-    public String standbyMode;
-    public HostTpmDigestInfo[] tpmPcrValues;
-    public HostVFlashManagerVFlashResourceRunTimeInfo vFlashResourceRuntimeInfo;
-    public VsanHostRuntimeInfo vsanRuntimeInfo;
+    private HostSystemConnectionState connectionState;
+    private HostSystemPowerState powerState;
+    private String standbyMode;
+    private boolean inMaintenanceMode;
+    private Boolean inQuarantineMode;
+    private Calendar bootTime;
+    private HealthSystemRuntime healthSystemRuntime;
+    private ClusterDasFdmHostState dasHostState;
+    private HostTpmDigestInfo[] tpmPcrValues;
+    private VsanHostRuntimeInfo vsanRuntimeInfo;
+    private HostRuntimeInfoNetworkRuntimeInfo networkRuntimeInfo;
+    private HostVFlashManagerVFlashResourceRunTimeInfo vFlashResourceRuntimeInfo;
+    private Long hostMaxVirtualDiskCapacity;
+    private String cryptoState;
+    private CryptoKeyId cryptoKeyId;
+    private String statelessNvdsMigrationReady;
 
-    public HostSystemConnectionState getConnectionState() {
-        return this.connectionState;
+    @Override
+    public String toString() {
+        return "HostRuntimeInfo{" +
+                "connectionState=" + connectionState +
+                ", powerState=" + powerState +
+                ", standbyMode='" + standbyMode + '\'' +
+                ", inMaintenanceMode=" + inMaintenanceMode +
+                ", inQuarantineMode=" + inQuarantineMode +
+                ", bootTime=" + bootTime +
+                ", healthSystemRuntime=" + healthSystemRuntime +
+                ", dasHostState=" + dasHostState +
+                ", tpmPcrValues=" + Arrays.toString(tpmPcrValues) +
+                ", vsanRuntimeInfo=" + vsanRuntimeInfo +
+                ", networkRuntimeInfo=" + networkRuntimeInfo +
+                ", vFlashResourceRuntimeInfo=" + vFlashResourceRuntimeInfo +
+                ", hostMaxVirtualDiskCapacity=" + hostMaxVirtualDiskCapacity +
+                ", cryptoState='" + cryptoState + '\'' +
+                ", cryptoKeyId=" + cryptoKeyId +
+                ", statelessNvdsMigrationReady='" + statelessNvdsMigrationReady + '\'' +
+                '}';
     }
 
-    public void setConnectionState(HostSystemConnectionState connectionState) {
+    public HostSystemConnectionState getConnectionState() {
+        return connectionState;
+    }
+
+    public void setConnectionState(final HostSystemConnectionState connectionState) {
         this.connectionState = connectionState;
     }
 
     public HostSystemPowerState getPowerState() {
-        return this.powerState;
+        return powerState;
     }
 
-    public void setPowerState(HostSystemPowerState powerState) {
+    public void setPowerState(final HostSystemPowerState powerState) {
         this.powerState = powerState;
     }
 
     public String getStandbyMode() {
-        return this.standbyMode;
+        return standbyMode;
     }
 
-    public void setStandbyMode(String standbyMode) {
+    public void setStandbyMode(final String standbyMode) {
         this.standbyMode = standbyMode;
     }
 
     public boolean isInMaintenanceMode() {
-        return this.inMaintenanceMode;
+        return inMaintenanceMode;
     }
 
-    public void setInMaintenanceMode(boolean inMaintenanceMode) {
+    public void setInMaintenanceMode(final boolean inMaintenanceMode) {
         this.inMaintenanceMode = inMaintenanceMode;
     }
 
-    public Calendar getBootTime() {
-        return this.bootTime;
+    public Boolean getInQuarantineMode() {
+        return inQuarantineMode;
     }
 
-    public void setBootTime(Calendar bootTime) {
+    public void setInQuarantineMode(final Boolean inQuarantineMode) {
+        this.inQuarantineMode = inQuarantineMode;
+    }
+
+    public Calendar getBootTime() {
+        return bootTime;
+    }
+
+    public void setBootTime(final Calendar bootTime) {
         this.bootTime = bootTime;
     }
 
     public HealthSystemRuntime getHealthSystemRuntime() {
-        return this.healthSystemRuntime;
+        return healthSystemRuntime;
     }
 
-    public void setHealthSystemRuntime(HealthSystemRuntime healthSystemRuntime) {
+    public void setHealthSystemRuntime(final HealthSystemRuntime healthSystemRuntime) {
         this.healthSystemRuntime = healthSystemRuntime;
     }
 
     public ClusterDasFdmHostState getDasHostState() {
-        return this.dasHostState;
+        return dasHostState;
     }
 
-    public void setDasHostState(ClusterDasFdmHostState dasHostState) {
+    public void setDasHostState(final ClusterDasFdmHostState dasHostState) {
         this.dasHostState = dasHostState;
     }
 
     public HostTpmDigestInfo[] getTpmPcrValues() {
-        return this.tpmPcrValues;
+        return tpmPcrValues;
     }
 
-    public void setTpmPcrValues(HostTpmDigestInfo[] tpmPcrValues) {
+    public void setTpmPcrValues(final HostTpmDigestInfo[] tpmPcrValues) {
         this.tpmPcrValues = tpmPcrValues;
     }
 
     public VsanHostRuntimeInfo getVsanRuntimeInfo() {
-        return this.vsanRuntimeInfo;
+        return vsanRuntimeInfo;
     }
 
-    public void setVsanRuntimeInfo(VsanHostRuntimeInfo vsanRuntimeInfo) {
+    public void setVsanRuntimeInfo(final VsanHostRuntimeInfo vsanRuntimeInfo) {
         this.vsanRuntimeInfo = vsanRuntimeInfo;
     }
 
     public HostRuntimeInfoNetworkRuntimeInfo getNetworkRuntimeInfo() {
-        return this.networkRuntimeInfo;
+        return networkRuntimeInfo;
     }
 
-    public void setNetworkRuntimeInfo(HostRuntimeInfoNetworkRuntimeInfo networkRuntimeInfo) {
+    public void setNetworkRuntimeInfo(final HostRuntimeInfoNetworkRuntimeInfo networkRuntimeInfo) {
         this.networkRuntimeInfo = networkRuntimeInfo;
     }
 
+    public HostVFlashManagerVFlashResourceRunTimeInfo getvFlashResourceRuntimeInfo() {
+        return vFlashResourceRuntimeInfo;
+    }
+
+    public void setvFlashResourceRuntimeInfo(final HostVFlashManagerVFlashResourceRunTimeInfo vFlashResourceRuntimeInfo) {
+        this.vFlashResourceRuntimeInfo = vFlashResourceRuntimeInfo;
+    }
+
     public Long getHostMaxVirtualDiskCapacity() {
-        return this.hostMaxVirtualDiskCapacity;
+        return hostMaxVirtualDiskCapacity;
     }
 
-    public void setHostMaxVirtualDiskCapacity(Long hostMaxVirtualDiskCapacity) {
+    public void setHostMaxVirtualDiskCapacity(final Long hostMaxVirtualDiskCapacity) {
         this.hostMaxVirtualDiskCapacity = hostMaxVirtualDiskCapacity;
-    }
-
-    public CryptoKeyId getCryptoKeyId() {
-        return cryptoKeyId;
-    }
-
-    public void setCryptoKeyId(final CryptoKeyId cryptoKeyId) {
-        this.cryptoKeyId = cryptoKeyId;
     }
 
     public String getCryptoState() {
@@ -159,19 +193,20 @@ public class HostRuntimeInfo extends DynamicData {
         this.cryptoState = cryptoState;
     }
 
-    public boolean isInQuarantineMode() {
-        return inQuarantineMode;
+    public CryptoKeyId getCryptoKeyId() {
+        return cryptoKeyId;
     }
 
-    public void setInQuarantineMode(final boolean inQuarantineMode) {
-        this.inQuarantineMode = inQuarantineMode;
+    public void setCryptoKeyId(final CryptoKeyId cryptoKeyId) {
+        this.cryptoKeyId = cryptoKeyId;
     }
 
-    public HostVFlashManagerVFlashResourceRunTimeInfo getvFlashResourceRuntimeInfo() {
-        return vFlashResourceRuntimeInfo;
+    public String getStatelessNvdsMigrationReady() {
+        return statelessNvdsMigrationReady;
     }
 
-    public void setvFlashResourceRuntimeInfo(final HostVFlashManagerVFlashResourceRunTimeInfo vFlashResourceRuntimeInfo) {
-        this.vFlashResourceRuntimeInfo = vFlashResourceRuntimeInfo;
+    public void setStatelessNvdsMigrationReady(final String statelessNvdsMigrationReady) {
+        this.statelessNvdsMigrationReady = statelessNvdsMigrationReady;
     }
+
 }

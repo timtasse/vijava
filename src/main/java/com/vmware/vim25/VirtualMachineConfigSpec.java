@@ -40,8 +40,9 @@ import java.util.Calendar;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.2
  */
+@SuppressWarnings("unused")
 public class VirtualMachineConfigSpec extends DynamicData {
 
     private String changeVersion;
@@ -50,14 +51,14 @@ public class VirtualMachineConfigSpec extends DynamicData {
     private Calendar createDate;
     private String uuid;
     private String instanceUuid;
+    private Long[] npivNodeWorldWideName;
+    private Long[] npivPortWorldWideName;
+    private String npivWorldWideNameType;
     private Short npivDesiredNodeWwns;
     private Short npivDesiredPortWwns;
-    private Long[] npivNodeWorldWideName;
-    private Boolean npivOnNonRdmDisks;
-    private Long[] npivPortWorldWideName;
     private Boolean npivTemporaryDisabled;
+    private Boolean npivOnNonRdmDisks;
     private String npivWorldWideNameOp;
-    private String npivWorldWideNameType;
     private String locationId;
     private String guestId;
     private String alternateGuestName;
@@ -68,6 +69,7 @@ public class VirtualMachineConfigSpec extends DynamicData {
     private VirtualMachineConsolePreferences consolePreferences;
     private VirtualMachineDefaultPowerOpInfo powerOpInfo;
     private Integer numCPUs;
+    private VirtualMachineVcpuConfig[] vcpuConfig;
     private Integer numCoresPerSocket;
     private Long memoryMB;
     private Boolean memoryHotAddEnabled;
@@ -80,6 +82,7 @@ public class VirtualMachineConfigSpec extends DynamicData {
     private ResourceAllocationInfo memoryAllocation;
     private LatencySensitivity latencySensitivity;
     private VirtualMachineAffinityInfo cpuAffinity;
+    @Deprecated
     private VirtualMachineAffinityInfo memoryAffinity;
     @Deprecated
     private VirtualMachineNetworkShaperInfo networkShaper;
@@ -93,11 +96,10 @@ public class VirtualMachineConfigSpec extends DynamicData {
     private Boolean vAppConfigRemoved;
     private Boolean vAssertsEnabled;
     private Boolean changeTrackingEnabled;
-    private String firmware;
+    private GuestOsDescriptorFirmwareType firmware;
     private Integer maxMksConnections;
     private Boolean guestAutoLockEnabled;
     private ManagedByInfo managedBy;
-    @Deprecated
     private Boolean memoryReservationLockedToMax;
     private Boolean nestedHVEnabled;
     private Boolean vPMCEnabled;
@@ -105,10 +107,12 @@ public class VirtualMachineConfigSpec extends DynamicData {
     private VirtualMachineProfileSpec[] vmProfile;
     private Boolean messageBusTunnelEnabled;
     private CryptoSpec crypto;
-    private String migrateEncryption;
+    private VirtualMachineConfigSpecEncryptedVMotionModes migrateEncryption;
     private VirtualMachineSgxInfo sgxInfo;
+    private VirtualMachineConfigSpecEncryptedFtModes ftEncryptionMode;
     private VirtualMachineGuestMonitoringModeInfo guestMonitoringModeInfo;
     private Boolean sevEnabled;
+    private Boolean pmemFailoverEnabled;
 
     @Override
     public String toString() {
@@ -119,14 +123,14 @@ public class VirtualMachineConfigSpec extends DynamicData {
                 ", createDate=" + createDate +
                 ", uuid='" + uuid + '\'' +
                 ", instanceUuid='" + instanceUuid + '\'' +
+                ", npivNodeWorldWideName=" + Arrays.toString(npivNodeWorldWideName) +
+                ", npivPortWorldWideName=" + Arrays.toString(npivPortWorldWideName) +
+                ", npivWorldWideNameType='" + npivWorldWideNameType + '\'' +
                 ", npivDesiredNodeWwns=" + npivDesiredNodeWwns +
                 ", npivDesiredPortWwns=" + npivDesiredPortWwns +
-                ", npivNodeWorldWideName=" + Arrays.toString(npivNodeWorldWideName) +
-                ", npivOnNonRdmDisks=" + npivOnNonRdmDisks +
-                ", npivPortWorldWideName=" + Arrays.toString(npivPortWorldWideName) +
                 ", npivTemporaryDisabled=" + npivTemporaryDisabled +
+                ", npivOnNonRdmDisks=" + npivOnNonRdmDisks +
                 ", npivWorldWideNameOp='" + npivWorldWideNameOp + '\'' +
-                ", npivWorldWideNameType='" + npivWorldWideNameType + '\'' +
                 ", locationId='" + locationId + '\'' +
                 ", guestId='" + guestId + '\'' +
                 ", alternateGuestName='" + alternateGuestName + '\'' +
@@ -137,6 +141,7 @@ public class VirtualMachineConfigSpec extends DynamicData {
                 ", consolePreferences=" + consolePreferences +
                 ", powerOpInfo=" + powerOpInfo +
                 ", numCPUs=" + numCPUs +
+                ", vcpuConfig=" + Arrays.toString(vcpuConfig) +
                 ", numCoresPerSocket=" + numCoresPerSocket +
                 ", memoryMB=" + memoryMB +
                 ", memoryHotAddEnabled=" + memoryHotAddEnabled +
@@ -174,9 +179,11 @@ public class VirtualMachineConfigSpec extends DynamicData {
                 ", crypto=" + crypto +
                 ", migrateEncryption='" + migrateEncryption + '\'' +
                 ", sgxInfo=" + sgxInfo +
+                ", ftEncryptionMode=" + ftEncryptionMode +
                 ", guestMonitoringModeInfo=" + guestMonitoringModeInfo +
                 ", sevEnabled=" + sevEnabled +
-                "} " + super.toString();
+                ", pmemFailoverEnabled=" + pmemFailoverEnabled +
+                '}';
     }
 
     public String getAlternateGuestName() {
@@ -307,11 +314,11 @@ public class VirtualMachineConfigSpec extends DynamicData {
         this.files = files;
     }
 
-    public String getFirmware() {
+    public GuestOsDescriptorFirmwareType getFirmware() {
         return firmware;
     }
 
-    public void setFirmware(final String firmware) {
+    public void setFirmware(final GuestOsDescriptorFirmwareType firmware) {
         this.firmware = firmware;
     }
 
@@ -435,11 +442,11 @@ public class VirtualMachineConfigSpec extends DynamicData {
         this.messageBusTunnelEnabled = messageBusTunnelEnabled;
     }
 
-    public String getMigrateEncryption() {
+    public VirtualMachineConfigSpecEncryptedVMotionModes getMigrateEncryption() {
         return migrateEncryption;
     }
 
-    public void setMigrateEncryption(final String migrateEncryption) {
+    public void setMigrateEncryption(final VirtualMachineConfigSpecEncryptedVMotionModes migrateEncryption) {
         this.migrateEncryption = migrateEncryption;
     }
 
@@ -681,6 +688,30 @@ public class VirtualMachineConfigSpec extends DynamicData {
 
     public void setSevEnabled(final Boolean sevEnabled) {
         this.sevEnabled = sevEnabled;
+    }
+
+    public VirtualMachineVcpuConfig[] getVcpuConfig() {
+        return vcpuConfig;
+    }
+
+    public void setVcpuConfig(final VirtualMachineVcpuConfig[] vcpuConfig) {
+        this.vcpuConfig = vcpuConfig;
+    }
+
+    public VirtualMachineConfigSpecEncryptedFtModes getFtEncryptionMode() {
+        return ftEncryptionMode;
+    }
+
+    public void setFtEncryptionMode(final VirtualMachineConfigSpecEncryptedFtModes ftEncryptionMode) {
+        this.ftEncryptionMode = ftEncryptionMode;
+    }
+
+    public Boolean getPmemFailoverEnabled() {
+        return pmemFailoverEnabled;
+    }
+
+    public void setPmemFailoverEnabled(final Boolean pmemFailoverEnabled) {
+        this.pmemFailoverEnabled = pmemFailoverEnabled;
     }
 
 }
