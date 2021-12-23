@@ -30,28 +30,51 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The feature capabilities of Link Aggregation Control Protocol supported by the vSphere Distributed Switch.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.2
+ * @since 5.1
+ */
+@SuppressWarnings("unused")
 public class VMwareDvsLacpCapability extends DynamicData {
-  public Boolean lacpSupported;
-  public Boolean multiLacpGroupSupported;
 
-  public Boolean getLacpSupported() {
-    return this.lacpSupported;
-  }
+    private Boolean lacpSupported;
+    private Boolean multiLacpGroupSupported;
+    private Boolean lacpFastModeSupported;
 
-  public Boolean getMultiLacpGroupSupported() {
-    return this.multiLacpGroupSupported;
-  }
+    @Override
+    public String toString() {
+        return "VMwareDvsLacpCapability{" +
+                "lacpSupported=" + lacpSupported +
+                ", multiLacpGroupSupported=" + multiLacpGroupSupported +
+                ", lacpFastModeSupported=" + lacpFastModeSupported +
+                '}';
+    }
 
-  public void setLacpSupported(Boolean lacpSupported) {
-    this.lacpSupported=lacpSupported;
-  }
+    public Boolean getLacpSupported() {
+        return this.lacpSupported;
+    }
 
-  public void setMultiLacpGroupSupported(Boolean multiLacpGroupSupported) {
-    this.multiLacpGroupSupported=multiLacpGroupSupported;
-  }
+    public void setLacpSupported(final Boolean lacpSupported) {
+        this.lacpSupported = lacpSupported;
+    }
+
+    public Boolean getMultiLacpGroupSupported() {
+        return this.multiLacpGroupSupported;
+    }
+
+    public void setMultiLacpGroupSupported(final Boolean multiLacpGroupSupported) {
+        this.multiLacpGroupSupported = multiLacpGroupSupported;
+    }
+
+    public Boolean getLacpFastModeSupported() {
+        return lacpFastModeSupported;
+    }
+
+    public void setLacpFastModeSupported(final Boolean lacpFastModeSupported) {
+        this.lacpFastModeSupported = lacpFastModeSupported;
+    }
+
 }

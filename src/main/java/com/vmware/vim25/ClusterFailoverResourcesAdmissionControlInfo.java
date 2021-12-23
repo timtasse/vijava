@@ -30,28 +30,41 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The current admission control related information if the cluster was configured with a FailoverResourcesAdmissionControlPolicy.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.2
+ * @since 4.0
+ */
 public class ClusterFailoverResourcesAdmissionControlInfo extends ClusterDasAdmissionControlInfo {
-  public int currentCpuFailoverResourcesPercent;
-  public int currentMemoryFailoverResourcesPercent;
 
-  public int getCurrentCpuFailoverResourcesPercent() {
-    return this.currentCpuFailoverResourcesPercent;
-  }
+    private int currentCpuFailoverResourcesPercent;
+    private int currentMemoryFailoverResourcesPercent;
+    private Integer currentPMemFailoverResourcesPercent;
 
-  public int getCurrentMemoryFailoverResourcesPercent() {
-    return this.currentMemoryFailoverResourcesPercent;
-  }
+    public int getCurrentCpuFailoverResourcesPercent() {
+        return this.currentCpuFailoverResourcesPercent;
+    }
 
-  public void setCurrentCpuFailoverResourcesPercent(int currentCpuFailoverResourcesPercent) {
-    this.currentCpuFailoverResourcesPercent=currentCpuFailoverResourcesPercent;
-  }
+    public void setCurrentCpuFailoverResourcesPercent(int currentCpuFailoverResourcesPercent) {
+        this.currentCpuFailoverResourcesPercent = currentCpuFailoverResourcesPercent;
+    }
 
-  public void setCurrentMemoryFailoverResourcesPercent(int currentMemoryFailoverResourcesPercent) {
-    this.currentMemoryFailoverResourcesPercent=currentMemoryFailoverResourcesPercent;
-  }
+    public int getCurrentMemoryFailoverResourcesPercent() {
+        return this.currentMemoryFailoverResourcesPercent;
+    }
+
+    public void setCurrentMemoryFailoverResourcesPercent(int currentMemoryFailoverResourcesPercent) {
+        this.currentMemoryFailoverResourcesPercent = currentMemoryFailoverResourcesPercent;
+    }
+
+    public Integer getCurrentPMemFailoverResourcesPercent() {
+        return currentPMemFailoverResourcesPercent;
+    }
+
+    public void setCurrentPMemFailoverResourcesPercent(final Integer currentPMemFailoverResourcesPercent) {
+        this.currentPMemFailoverResourcesPercent = currentPMemFailoverResourcesPercent;
+    }
+
 }

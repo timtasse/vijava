@@ -10,12 +10,14 @@ package com.vmware.vim25;
 public class VirtualNVDIMM extends VirtualDevice {
 
     private long capacityInMB;
+    private Long configuredCapacityInMB;
 
     @Override
     public String toString() {
         return "VirtualNVDIMM{" +
                 "capacityInMB=" + capacityInMB +
-                "} " + super.toString();
+                ", configuredCapacityInMB=" + configuredCapacityInMB +
+                '}';
     }
 
     public long getCapacityInMB() {
@@ -24,6 +26,14 @@ public class VirtualNVDIMM extends VirtualDevice {
 
     public void setCapacityInMB(final long capacityInMB) {
         this.capacityInMB = capacityInMB;
+    }
+
+    public Long getConfiguredCapacityInMB() {
+        return configuredCapacityInMB;
+    }
+
+    public void setConfiguredCapacityInMB(final Long configuredCapacityInMB) {
+        this.configuredCapacityInMB = configuredCapacityInMB;
     }
 
 }

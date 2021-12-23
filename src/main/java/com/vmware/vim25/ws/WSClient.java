@@ -70,6 +70,7 @@ public abstract class WSClient {
     protected static final String SOAP_ACTION_V672 = "urn:vim25/6.7.2";
     protected static final String SOAP_ACTION_V70 = "urn:vim25/7.0.0.0";
     protected static final String SOAP_ACTION_V701 = "urn:vim25/7.0.1.0";
+    protected static final String SOAP_ACTION_V702 = "urn:vim25/7.0.2.0";
 
     private final URL baseUrl;
     private final URI baseUri;
@@ -85,7 +86,7 @@ public abstract class WSClient {
         URI uri;
         try {
             uri = this.baseUrl.toURI();
-        } catch (URISyntaxException e) {
+        } catch (final URISyntaxException e) {
             LOGGER.error("URI Error", e);
             uri = null;
         }
@@ -139,7 +140,7 @@ public abstract class WSClient {
       "7.0"       vSphere 7.0
       "7.0.1"     vSphere 7.0u1
       ===============================================*/
-    public void setSoapActionOnApiVersion(String apiVersion) {
+    public void setSoapActionOnApiVersion(final String apiVersion) {
         switch (apiVersion) {
             case "4.0":
                 soapAction = SOAP_ACTION_V40;
@@ -177,6 +178,9 @@ public abstract class WSClient {
             case "7.0.1.0":
                 soapAction = SOAP_ACTION_V701;
                 break;
+            case "7.0.2.0":
+                soapAction = SOAP_ACTION_V702;
+                break;
             default:
                 soapAction = SOAP_ACTION_V70;
         }
@@ -202,7 +206,7 @@ public abstract class WSClient {
         return cookie;
     }
 
-    public void setCookie(String cookie) {
+    public void setCookie(final String cookie) {
         this.cookie = cookie;
     }
 
@@ -210,7 +214,7 @@ public abstract class WSClient {
         return vimNameSpace;
     }
 
-    public void setVimNameSpace(String vimNameSpace) {
+    public void setVimNameSpace(final String vimNameSpace) {
         this.vimNameSpace = vimNameSpace;
     }
 
@@ -218,7 +222,7 @@ public abstract class WSClient {
         return this.connectTimeout;
     }
 
-    public void setConnectTimeout(int timeoutMilliSec) {
+    public void setConnectTimeout(final int timeoutMilliSec) {
         this.connectTimeout = timeoutMilliSec;
     }
 
@@ -226,7 +230,7 @@ public abstract class WSClient {
         return this.readTimeout;
     }
 
-    public void setReadTimeout(int timeoutMilliSec) {
+    public void setReadTimeout(final int timeoutMilliSec) {
         this.readTimeout = timeoutMilliSec;
     }
 

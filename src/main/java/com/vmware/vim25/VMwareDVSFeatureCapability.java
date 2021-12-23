@@ -34,8 +34,9 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.2
  */
+@SuppressWarnings("unused")
 public class VMwareDVSFeatureCapability extends DVSFeatureCapability {
 
     private Boolean vspanSupported;
@@ -47,6 +48,7 @@ public class VMwareDVSFeatureCapability extends DVSFeatureCapability {
     private VMwareDVSVspanCapability vspanCapability;
     private VMwareDvsLacpCapability lacpCapability;
     private Boolean nsxSupported;
+    private VMwareDvsMtuCapability mtuCapability;
 
     @Override
     public String toString() {
@@ -59,48 +61,31 @@ public class VMwareDVSFeatureCapability extends DVSFeatureCapability {
                 ", vspanCapability=" + vspanCapability +
                 ", lacpCapability=" + lacpCapability +
                 ", nsxSupported=" + nsxSupported +
-                "} " + super.toString();
+                ", mtuCapability=" + mtuCapability +
+                '}';
     }
 
-    public VMwareDVSVspanCapability getVspanCapability() {
-        return this.vspanCapability;
-    }
-
-    public void setVspanCapability(VMwareDVSVspanCapability vspanCapability) {
-        this.vspanCapability = vspanCapability;
-    }
-
-    public VMwareDvsLacpCapability getLacpCapability() {
-        return this.lacpCapability;
-    }
-
-    public void setLacpCapability(VMwareDvsLacpCapability lacpCapability) {
-        this.lacpCapability = lacpCapability;
-    }
-
-    public Boolean isVspanSupported() {
+    public Boolean getVspanSupported() {
         return vspanSupported;
     }
 
-    public void setVspanSupported(Boolean vspanSupported) {
+    public void setVspanSupported(final Boolean vspanSupported) {
         this.vspanSupported = vspanSupported;
     }
 
-    public Boolean isLldpSupported() {
+    public Boolean getLldpSupported() {
         return lldpSupported;
     }
 
-    public void setLldpSupported(Boolean lldpSupported) {
+    public void setLldpSupported(final Boolean lldpSupported) {
         this.lldpSupported = lldpSupported;
     }
 
-    @Deprecated
-    public Boolean isIpfixSupported() {
+    public Boolean getIpfixSupported() {
         return ipfixSupported;
     }
 
-    @Deprecated
-    public void setIpfixSupported(Boolean ipfixSupported) {
+    public void setIpfixSupported(final Boolean ipfixSupported) {
         this.ipfixSupported = ipfixSupported;
     }
 
@@ -112,11 +97,44 @@ public class VMwareDVSFeatureCapability extends DVSFeatureCapability {
         this.ipfixCapability = ipfixCapability;
     }
 
-    public Boolean isMulticastSnoopingSupported() {
+    public Boolean getMulticastSnoopingSupported() {
         return multicastSnoopingSupported;
     }
 
     public void setMulticastSnoopingSupported(final Boolean multicastSnoopingSupported) {
         this.multicastSnoopingSupported = multicastSnoopingSupported;
     }
+
+    public VMwareDVSVspanCapability getVspanCapability() {
+        return vspanCapability;
+    }
+
+    public void setVspanCapability(final VMwareDVSVspanCapability vspanCapability) {
+        this.vspanCapability = vspanCapability;
+    }
+
+    public VMwareDvsLacpCapability getLacpCapability() {
+        return lacpCapability;
+    }
+
+    public void setLacpCapability(final VMwareDvsLacpCapability lacpCapability) {
+        this.lacpCapability = lacpCapability;
+    }
+
+    public Boolean getNsxSupported() {
+        return nsxSupported;
+    }
+
+    public void setNsxSupported(final Boolean nsxSupported) {
+        this.nsxSupported = nsxSupported;
+    }
+
+    public VMwareDvsMtuCapability getMtuCapability() {
+        return mtuCapability;
+    }
+
+    public void setMtuCapability(final VMwareDvsMtuCapability mtuCapability) {
+        this.mtuCapability = mtuCapability;
+    }
+
 }

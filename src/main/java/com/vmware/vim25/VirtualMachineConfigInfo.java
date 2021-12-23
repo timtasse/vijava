@@ -38,8 +38,9 @@ import java.util.Calendar;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.2
  */
+@SuppressWarnings("unused")
 public class VirtualMachineConfigInfo extends DynamicData {
 
     private String changeVersion;
@@ -112,8 +113,10 @@ public class VirtualMachineConfigInfo extends DynamicData {
     private String migrateEncryption;
     private VirtualMachineSgxInfo sgxInfo;
     private VirtualMachineContentLibraryItemInfo contentLibItemInfo;
+    private VirtualMachineConfigSpecEncryptedFtModes ftEncryptionMode;
     private VirtualMachineGuestMonitoringModeInfo guestMonitoringModeInfo;
     private Boolean sevEnabled;
+    private Boolean pmemFailoverEnabled;
 
     @Override
     public String toString() {
@@ -186,9 +189,11 @@ public class VirtualMachineConfigInfo extends DynamicData {
                 ", migrateEncryption='" + migrateEncryption + '\'' +
                 ", sgxInfo=" + sgxInfo +
                 ", contentLibItemInfo=" + contentLibItemInfo +
+                ", ftEncryptionMode=" + ftEncryptionMode +
                 ", guestMonitoringModeInfo=" + guestMonitoringModeInfo +
                 ", sevEnabled=" + sevEnabled +
-                "} " + super.toString();
+                ", pmemFailoverEnabled=" + pmemFailoverEnabled +
+                '}';
     }
 
     public String getAlternateGuestName() {
@@ -749,6 +754,22 @@ public class VirtualMachineConfigInfo extends DynamicData {
 
     public void setSevEnabled(final Boolean sevEnabled) {
         this.sevEnabled = sevEnabled;
+    }
+
+    public VirtualMachineConfigSpecEncryptedFtModes getFtEncryptionMode() {
+        return ftEncryptionMode;
+    }
+
+    public void setFtEncryptionMode(final VirtualMachineConfigSpecEncryptedFtModes ftEncryptionMode) {
+        this.ftEncryptionMode = ftEncryptionMode;
+    }
+
+    public Boolean getPmemFailoverEnabled() {
+        return pmemFailoverEnabled;
+    }
+
+    public void setPmemFailoverEnabled(final Boolean pmemFailoverEnabled) {
+        this.pmemFailoverEnabled = pmemFailoverEnabled;
     }
 
 }

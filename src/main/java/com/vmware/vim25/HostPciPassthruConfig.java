@@ -34,13 +34,15 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.2
+ * @since 4.0
  */
 public class HostPciPassthruConfig extends DynamicData {
 
     private String id;
     private boolean passthruEnabled;
     private Boolean applyNow;
+    private String hardwareLabel;
 
     @Override
     public String toString() {
@@ -48,14 +50,15 @@ public class HostPciPassthruConfig extends DynamicData {
                 "id='" + id + '\'' +
                 ", passthruEnabled=" + passthruEnabled +
                 ", applyNow=" + applyNow +
-                "} " + super.toString();
+                ", hardwareLabel='" + hardwareLabel + '\'' +
+                '}';
     }
 
     public String getId() {
         return this.id;
     }
 
-    public void setId(String id) {
+    public void setId(final String id) {
         this.id = id;
     }
 
@@ -63,7 +66,7 @@ public class HostPciPassthruConfig extends DynamicData {
         return this.passthruEnabled;
     }
 
-    public void setPassthruEnabled(boolean passthruEnabled) {
+    public void setPassthruEnabled(final boolean passthruEnabled) {
         this.passthruEnabled = passthruEnabled;
     }
 
@@ -74,4 +77,13 @@ public class HostPciPassthruConfig extends DynamicData {
     public void setApplyNow(final Boolean applyNow) {
         this.applyNow = applyNow;
     }
+
+    public String getHardwareLabel() {
+        return hardwareLabel;
+    }
+
+    public void setHardwareLabel(final String hardwareLabel) {
+        this.hardwareLabel = hardwareLabel;
+    }
+
 }

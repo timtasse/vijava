@@ -33,13 +33,16 @@ package com.vmware.vim25;
  * Configuration of the compute resource; applies to both standalone hosts and clusters.
  *
  * @author Steve Jin (http://www.doublecloud.org)
- * @version 5.1
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.2
+ * @since 2.5
  */
 public class ComputeResourceConfigInfo extends DynamicData {
 
     private String vmSwapPlacement;
     private Boolean spbmEnabled;
     private String defaultHardwareVersionKey;
+    private String maximumHardwareVersionKey;
 
     @Override
     public String toString() {
@@ -47,14 +50,15 @@ public class ComputeResourceConfigInfo extends DynamicData {
                 "vmSwapPlacement='" + vmSwapPlacement + '\'' +
                 ", spbmEnabled=" + spbmEnabled +
                 ", defaultHardwareVersionKey='" + defaultHardwareVersionKey + '\'' +
-                "} " + super.toString();
+                ", maximumHardwareVersionKey='" + maximumHardwareVersionKey + '\'' +
+                '}';
     }
 
     public String getVmSwapPlacement() {
         return this.vmSwapPlacement;
     }
 
-    public void setVmSwapPlacement(String vmSwapPlacement) {
+    public void setVmSwapPlacement(final String vmSwapPlacement) {
         this.vmSwapPlacement = vmSwapPlacement;
     }
 
@@ -62,7 +66,7 @@ public class ComputeResourceConfigInfo extends DynamicData {
         return this.spbmEnabled;
     }
 
-    public void setSpbmEnabled(Boolean spbmEnabled) {
+    public void setSpbmEnabled(final Boolean spbmEnabled) {
         this.spbmEnabled = spbmEnabled;
     }
 
@@ -70,8 +74,16 @@ public class ComputeResourceConfigInfo extends DynamicData {
         return this.defaultHardwareVersionKey;
     }
 
-    public void setDefaultHardwareVersionKey(String defaultHardwareVersionKey) {
+    public void setDefaultHardwareVersionKey(final String defaultHardwareVersionKey) {
         this.defaultHardwareVersionKey = defaultHardwareVersionKey;
+    }
+
+    public String getMaximumHardwareVersionKey() {
+        return maximumHardwareVersionKey;
+    }
+
+    public void setMaximumHardwareVersionKey(final String maximumHardwareVersionKey) {
+        this.maximumHardwareVersionKey = maximumHardwareVersionKey;
     }
 
 }

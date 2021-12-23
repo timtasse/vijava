@@ -29,92 +29,124 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This class defines VMware specific multiple IEEE 802.3ad Dynamic Link Aggregation Control Protocol groups.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.2
+ * @since 5.5
+ */
+@SuppressWarnings("unused")
 public class VMwareDvsLacpGroupConfig extends DynamicData {
-  public String key;
-  public String name;
-  public String mode;
-  public Integer uplinkNum;
-  public String loadbalanceAlgorithm;
-  public VMwareDvsLagVlanConfig vlan;
-  public VMwareDvsLagIpfixConfig ipfix;
-  public String[] uplinkName;
-  public String[] uplinkPortKey;
 
-  public String getKey() {
-    return this.key;
-  }
+    private String key;
+    private String name;
+    private VMwareUplinkLacpMode mode;
+    private Integer uplinkNum;
+    private VMwareDvsLacpLoadBalanceAlgorithm loadbalanceAlgorithm;
+    private VMwareDvsLagVlanConfig vlan;
+    private VMwareDvsLagIpfixConfig ipfix;
+    private String[] uplinkName;
+    private String[] uplinkPortKey;
+    private VMwareUplinkLacpTimeoutMode timeoutMode;
 
-  public String getName() {
-    return this.name;
-  }
+    @Override
+    public String toString() {
+        return "VMwareDvsLacpGroupConfig{" +
+                "key='" + key + '\'' +
+                ", name='" + name + '\'' +
+                ", mode=" + mode +
+                ", uplinkNum=" + uplinkNum +
+                ", loadbalanceAlgorithm=" + loadbalanceAlgorithm +
+                ", vlan=" + vlan +
+                ", ipfix=" + ipfix +
+                ", uplinkName=" + Arrays.toString(uplinkName) +
+                ", uplinkPortKey=" + Arrays.toString(uplinkPortKey) +
+                ", timeoutMode=" + timeoutMode +
+                '}';
+    }
 
-  public String getMode() {
-    return this.mode;
-  }
+    public String getKey() {
+        return key;
+    }
 
-  public Integer getUplinkNum() {
-    return this.uplinkNum;
-  }
+    public void setKey(final String key) {
+        this.key = key;
+    }
 
-  public String getLoadbalanceAlgorithm() {
-    return this.loadbalanceAlgorithm;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public VMwareDvsLagVlanConfig getVlan() {
-    return this.vlan;
-  }
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-  public VMwareDvsLagIpfixConfig getIpfix() {
-    return this.ipfix;
-  }
+    public VMwareUplinkLacpMode getMode() {
+        return mode;
+    }
 
-  public String[] getUplinkName() {
-    return this.uplinkName;
-  }
+    public void setMode(final VMwareUplinkLacpMode mode) {
+        this.mode = mode;
+    }
 
-  public String[] getUplinkPortKey() {
-    return this.uplinkPortKey;
-  }
+    public Integer getUplinkNum() {
+        return uplinkNum;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public void setUplinkNum(final Integer uplinkNum) {
+        this.uplinkNum = uplinkNum;
+    }
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public VMwareDvsLacpLoadBalanceAlgorithm getLoadbalanceAlgorithm() {
+        return loadbalanceAlgorithm;
+    }
 
-  public void setMode(String mode) {
-    this.mode=mode;
-  }
+    public void setLoadbalanceAlgorithm(final VMwareDvsLacpLoadBalanceAlgorithm loadbalanceAlgorithm) {
+        this.loadbalanceAlgorithm = loadbalanceAlgorithm;
+    }
 
-  public void setUplinkNum(Integer uplinkNum) {
-    this.uplinkNum=uplinkNum;
-  }
+    public VMwareDvsLagVlanConfig getVlan() {
+        return vlan;
+    }
 
-  public void setLoadbalanceAlgorithm(String loadbalanceAlgorithm) {
-    this.loadbalanceAlgorithm=loadbalanceAlgorithm;
-  }
+    public void setVlan(final VMwareDvsLagVlanConfig vlan) {
+        this.vlan = vlan;
+    }
 
-  public void setVlan(VMwareDvsLagVlanConfig vlan) {
-    this.vlan=vlan;
-  }
+    public VMwareDvsLagIpfixConfig getIpfix() {
+        return ipfix;
+    }
 
-  public void setIpfix(VMwareDvsLagIpfixConfig ipfix) {
-    this.ipfix=ipfix;
-  }
+    public void setIpfix(final VMwareDvsLagIpfixConfig ipfix) {
+        this.ipfix = ipfix;
+    }
 
-  public void setUplinkName(String[] uplinkName) {
-    this.uplinkName=uplinkName;
-  }
+    public String[] getUplinkName() {
+        return uplinkName;
+    }
 
-  public void setUplinkPortKey(String[] uplinkPortKey) {
-    this.uplinkPortKey=uplinkPortKey;
-  }
+    public void setUplinkName(final String[] uplinkName) {
+        this.uplinkName = uplinkName;
+    }
+
+    public String[] getUplinkPortKey() {
+        return uplinkPortKey;
+    }
+
+    public void setUplinkPortKey(final String[] uplinkPortKey) {
+        this.uplinkPortKey = uplinkPortKey;
+    }
+
+    public VMwareUplinkLacpTimeoutMode getTimeoutMode() {
+        return timeoutMode;
+    }
+
+    public void setTimeoutMode(final VMwareUplinkLacpTimeoutMode timeoutMode) {
+        this.timeoutMode = timeoutMode;
+    }
+
 }

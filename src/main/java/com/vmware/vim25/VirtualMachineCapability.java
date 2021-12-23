@@ -34,9 +34,9 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.7
+ * @version 7.0.2
  */
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class VirtualMachineCapability extends DynamicData {
 
     private boolean bootOptionsSupported;
@@ -85,6 +85,8 @@ public class VirtualMachineCapability extends DynamicData {
     private boolean vPMCSupported;
     private Boolean toolsSyncTimeAllowSupported;
     private Boolean sevSupported;
+    private Boolean pmemFailoverSupported;
+    private Boolean suspendToMemorySupported;
 
     @Override
     public String toString() {
@@ -133,7 +135,9 @@ public class VirtualMachineCapability extends DynamicData {
                 ", vPMCSupported=" + vPMCSupported +
                 ", toolsSyncTimeAllowSupported=" + toolsSyncTimeAllowSupported +
                 ", sevSupported=" + sevSupported +
-                "} " + super.toString();
+                ", pmemFailoverSupported=" + pmemFailoverSupported +
+                ", suspendToMemorySupported=" + suspendToMemorySupported +
+                '}';
     }
 
     public boolean isBootOptionsSupported() {
@@ -486,6 +490,22 @@ public class VirtualMachineCapability extends DynamicData {
 
     public void setSevSupported(final Boolean sevSupported) {
         this.sevSupported = sevSupported;
+    }
+
+    public Boolean getPmemFailoverSupported() {
+        return pmemFailoverSupported;
+    }
+
+    public void setPmemFailoverSupported(final Boolean pmemFailoverSupported) {
+        this.pmemFailoverSupported = pmemFailoverSupported;
+    }
+
+    public Boolean getSuspendToMemorySupported() {
+        return suspendToMemorySupported;
+    }
+
+    public void setSuspendToMemorySupported(final Boolean suspendToMemorySupported) {
+        this.suspendToMemorySupported = suspendToMemorySupported;
     }
 
 }

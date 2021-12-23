@@ -30,19 +30,40 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * Configuration of the datacenter.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.2
+ * @since 5.1
+ */
 public class DatacenterConfigInfo extends DynamicData {
-  public String defaultHardwareVersionKey;
 
-  public String getDefaultHardwareVersionKey() {
-    return this.defaultHardwareVersionKey;
-  }
+    private String defaultHardwareVersionKey;
+    private String maximumHardwareVersionKey;
 
-  public void setDefaultHardwareVersionKey(String defaultHardwareVersionKey) {
-    this.defaultHardwareVersionKey=defaultHardwareVersionKey;
-  }
+    @Override
+    public String toString() {
+        return "DatacenterConfigInfo{" +
+                "defaultHardwareVersionKey='" + defaultHardwareVersionKey + '\'' +
+                ", maximumHardwareVersionKey='" + maximumHardwareVersionKey + '\'' +
+                '}';
+    }
+
+    public String getDefaultHardwareVersionKey() {
+        return this.defaultHardwareVersionKey;
+    }
+
+    public void setDefaultHardwareVersionKey(final String defaultHardwareVersionKey) {
+        this.defaultHardwareVersionKey = defaultHardwareVersionKey;
+    }
+
+    public String getMaximumHardwareVersionKey() {
+        return maximumHardwareVersionKey;
+    }
+
+    public void setMaximumHardwareVersionKey(final String maximumHardwareVersionKey) {
+        this.maximumHardwareVersionKey = maximumHardwareVersionKey;
+    }
+
 }

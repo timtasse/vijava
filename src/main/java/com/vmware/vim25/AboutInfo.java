@@ -30,136 +30,149 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * This data object type describes system information including the name, type, version, and build number.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.2
+ * @since 2.0
+ */
 public class AboutInfo extends DynamicData {
-  public String name;
-  public String fullName;
-  public String vendor;
-  public String version;
-  public String build;
-  public String localeVersion;
-  public String localeBuild;
-  public String osType;
-  public String productLineId;
-  public String apiType;
-  public String apiVersion;
-  public String instanceUuid;
-  public String licenseProductName;
-  public String licenseProductVersion;
 
-  public String getName() {
-    return this.name;
-  }
+    private String name;
+    private String fullName;
+    private String vendor;
+    private String version;
+    private String patchLevel;
+    private String build;
+    private String localeVersion;
+    private String localeBuild;
+    private String osType;
+    private String productLineId;
+    private String apiType;
+    private String apiVersion;
+    private String instanceUuid;
+    private String licenseProductName;
+    private String licenseProductVersion;
 
-  public String getFullName() {
-    return this.fullName;
-  }
+    public String getName() {
+        return this.name;
+    }
 
-  public String getVendor() {
-    return this.vendor;
-  }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-  public String getVersion() {
-    return this.version;
-  }
+    public String getFullName() {
+        return this.fullName;
+    }
 
-  public String getBuild() {
-    return this.build;
-  }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-  public String getLocaleVersion() {
-    return this.localeVersion;
-  }
+    public String getVendor() {
+        return this.vendor;
+    }
 
-  public String getLocaleBuild() {
-    return this.localeBuild;
-  }
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
 
-  public String getOsType() {
-    return this.osType;
-  }
+    public String getVersion() {
+        return this.version;
+    }
 
-  public String getProductLineId() {
-    return this.productLineId;
-  }
+    public void setVersion(String version) {
+        this.version = version;
+    }
 
-  public String getApiType() {
-    return this.apiType;
-  }
+    public String getBuild() {
+        return this.build;
+    }
 
-  public String getApiVersion() {
-    return this.apiVersion;
-  }
+    public void setBuild(String build) {
+        this.build = build;
+    }
 
-  public String getInstanceUuid() {
-    return this.instanceUuid;
-  }
+    public String getLocaleVersion() {
+        return this.localeVersion;
+    }
 
-  public String getLicenseProductName() {
-    return this.licenseProductName;
-  }
+    public void setLocaleVersion(String localeVersion) {
+        this.localeVersion = localeVersion;
+    }
 
-  public String getLicenseProductVersion() {
-    return this.licenseProductVersion;
-  }
+    public String getLocaleBuild() {
+        return this.localeBuild;
+    }
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public void setLocaleBuild(String localeBuild) {
+        this.localeBuild = localeBuild;
+    }
 
-  public void setFullName(String fullName) {
-    this.fullName=fullName;
-  }
+    public String getOsType() {
+        return this.osType;
+    }
 
-  public void setVendor(String vendor) {
-    this.vendor=vendor;
-  }
+    public void setOsType(String osType) {
+        this.osType = osType;
+    }
 
-  public void setVersion(String version) {
-    this.version=version;
-  }
+    public String getProductLineId() {
+        return this.productLineId;
+    }
 
-  public void setBuild(String build) {
-    this.build=build;
-  }
+    public void setProductLineId(String productLineId) {
+        this.productLineId = productLineId;
+    }
 
-  public void setLocaleVersion(String localeVersion) {
-    this.localeVersion=localeVersion;
-  }
+    public String getApiType() {
+        return this.apiType;
+    }
 
-  public void setLocaleBuild(String localeBuild) {
-    this.localeBuild=localeBuild;
-  }
+    public void setApiType(String apiType) {
+        this.apiType = apiType;
+    }
 
-  public void setOsType(String osType) {
-    this.osType=osType;
-  }
+    public String getApiVersion() {
+        return this.apiVersion;
+    }
 
-  public void setProductLineId(String productLineId) {
-    this.productLineId=productLineId;
-  }
+    public void setApiVersion(String apiVersion) {
+        this.apiVersion = apiVersion;
+    }
 
-  public void setApiType(String apiType) {
-    this.apiType=apiType;
-  }
+    public String getInstanceUuid() {
+        return this.instanceUuid;
+    }
 
-  public void setApiVersion(String apiVersion) {
-    this.apiVersion=apiVersion;
-  }
+    public void setInstanceUuid(String instanceUuid) {
+        this.instanceUuid = instanceUuid;
+    }
 
-  public void setInstanceUuid(String instanceUuid) {
-    this.instanceUuid=instanceUuid;
-  }
+    public String getLicenseProductName() {
+        return this.licenseProductName;
+    }
 
-  public void setLicenseProductName(String licenseProductName) {
-    this.licenseProductName=licenseProductName;
-  }
+    public void setLicenseProductName(String licenseProductName) {
+        this.licenseProductName = licenseProductName;
+    }
 
-  public void setLicenseProductVersion(String licenseProductVersion) {
-    this.licenseProductVersion=licenseProductVersion;
-  }
+    public String getLicenseProductVersion() {
+        return this.licenseProductVersion;
+    }
+
+    public void setLicenseProductVersion(String licenseProductVersion) {
+        this.licenseProductVersion = licenseProductVersion;
+    }
+
+    public String getPatchLevel() {
+        return patchLevel;
+    }
+
+    public void setPatchLevel(final String patchLevel) {
+        this.patchLevel = patchLevel;
+    }
+
 }

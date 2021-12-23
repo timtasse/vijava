@@ -42,7 +42,7 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.1
+ * @version 7.0.2
  */
 @SuppressWarnings("unused")
 public class Capability extends DynamicData {
@@ -58,7 +58,9 @@ public class Capability extends DynamicData {
     private Integer computePolicyVersion;
     private Boolean clusterPlacementSupported;
     private Boolean lifecycleManagementSupported;
+    private Boolean hostSeedingSupported;
     private Boolean scalableSharesSupported;
+    private Boolean hadcsSupported;
 
     @Override
     public String toString() {
@@ -74,8 +76,10 @@ public class Capability extends DynamicData {
                 ", computePolicyVersion=" + computePolicyVersion +
                 ", clusterPlacementSupported=" + clusterPlacementSupported +
                 ", lifecycleManagementSupported=" + lifecycleManagementSupported +
+                ", hostSeedingSupported=" + hostSeedingSupported +
                 ", scalableSharesSupported=" + scalableSharesSupported +
-                "} " + super.toString();
+                ", hadcsSupported=" + hadcsSupported +
+                '}';
     }
 
     public Boolean getFtDrsWithoutEvcSupported() {
@@ -172,6 +176,22 @@ public class Capability extends DynamicData {
 
     public void setSupportedEVCGraphicsMode(final FeatureEVCMode[] supportedEVCGraphicsMode) {
         this.supportedEVCGraphicsMode = supportedEVCGraphicsMode;
+    }
+
+    public Boolean getHostSeedingSupported() {
+        return hostSeedingSupported;
+    }
+
+    public void setHostSeedingSupported(final Boolean hostSeedingSupported) {
+        this.hostSeedingSupported = hostSeedingSupported;
+    }
+
+    public Boolean getHadcsSupported() {
+        return hadcsSupported;
+    }
+
+    public void setHadcsSupported(final Boolean hadcsSupported) {
+        this.hadcsSupported = hadcsSupported;
     }
 
 }

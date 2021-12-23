@@ -36,8 +36,9 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.2
  */
+@SuppressWarnings("unused")
 public class HostNetworkInfo extends DynamicData {
 
     private HostVirtualSwitch[] vswitch;
@@ -62,6 +63,8 @@ public class HostNetworkInfo extends DynamicData {
     private HostOpaqueSwitch[] opaqueSwitch;
     private HostOpaqueNetworkInfo[] opaqueNetwork;
     private String nsxTransportNodeId;
+    private Boolean nvdsToVdsMigrationRequired;
+    private String migrationStatus;
 
     @Override
     public String toString() {
@@ -85,143 +88,41 @@ public class HostNetworkInfo extends DynamicData {
                 ", opaqueSwitch=" + Arrays.toString(opaqueSwitch) +
                 ", opaqueNetwork=" + Arrays.toString(opaqueNetwork) +
                 ", nsxTransportNodeId='" + nsxTransportNodeId + '\'' +
-                "} " + super.toString();
+                ", nvdsToVdsMigrationRequired=" + nvdsToVdsMigrationRequired +
+                ", migrationStatus='" + migrationStatus + '\'' +
+                '}';
     }
 
     public HostVirtualSwitch[] getVswitch() {
-        return this.vswitch;
+        return vswitch;
     }
 
-    public void setVswitch(HostVirtualSwitch[] vswitch) {
+    public void setVswitch(final HostVirtualSwitch[] vswitch) {
         this.vswitch = vswitch;
     }
 
     public HostProxySwitch[] getProxySwitch() {
-        return this.proxySwitch;
+        return proxySwitch;
     }
 
-    public void setProxySwitch(HostProxySwitch[] proxySwitch) {
+    public void setProxySwitch(final HostProxySwitch[] proxySwitch) {
         this.proxySwitch = proxySwitch;
     }
 
     public HostPortGroup[] getPortgroup() {
-        return this.portgroup;
+        return portgroup;
     }
 
-    public void setPortgroup(HostPortGroup[] portgroup) {
+    public void setPortgroup(final HostPortGroup[] portgroup) {
         this.portgroup = portgroup;
     }
 
     public PhysicalNic[] getPnic() {
-        return this.pnic;
+        return pnic;
     }
 
-    public void setPnic(PhysicalNic[] pnic) {
+    public void setPnic(final PhysicalNic[] pnic) {
         this.pnic = pnic;
-    }
-
-    public HostVirtualNic[] getVnic() {
-        return this.vnic;
-    }
-
-    public void setVnic(HostVirtualNic[] vnic) {
-        this.vnic = vnic;
-    }
-
-    public HostVirtualNic[] getConsoleVnic() {
-        return this.consoleVnic;
-    }
-
-    public void setConsoleVnic(HostVirtualNic[] consoleVnic) {
-        this.consoleVnic = consoleVnic;
-    }
-
-    public HostDnsConfig getDnsConfig() {
-        return this.dnsConfig;
-    }
-
-    public void setDnsConfig(HostDnsConfig dnsConfig) {
-        this.dnsConfig = dnsConfig;
-    }
-
-    public HostIpRouteConfig getIpRouteConfig() {
-        return this.ipRouteConfig;
-    }
-
-    public void setIpRouteConfig(HostIpRouteConfig ipRouteConfig) {
-        this.ipRouteConfig = ipRouteConfig;
-    }
-
-    public HostIpRouteConfig getConsoleIpRouteConfig() {
-        return this.consoleIpRouteConfig;
-    }
-
-    public void setConsoleIpRouteConfig(HostIpRouteConfig consoleIpRouteConfig) {
-        this.consoleIpRouteConfig = consoleIpRouteConfig;
-    }
-
-    public HostIpRouteTableInfo getRouteTableInfo() {
-        return this.routeTableInfo;
-    }
-
-    public void setRouteTableInfo(HostIpRouteTableInfo routeTableInfo) {
-        this.routeTableInfo = routeTableInfo;
-    }
-
-    public HostDhcpService[] getDhcp() {
-        return this.dhcp;
-    }
-
-    public void setDhcp(HostDhcpService[] dhcp) {
-        this.dhcp = dhcp;
-    }
-
-    public HostNatService[] getNat() {
-        return this.nat;
-    }
-
-    public void setNat(HostNatService[] nat) {
-        this.nat = nat;
-    }
-
-    public Boolean getIpV6Enabled() {
-        return this.ipV6Enabled;
-    }
-
-    public void setIpV6Enabled(Boolean ipV6Enabled) {
-        this.ipV6Enabled = ipV6Enabled;
-    }
-
-    public Boolean getAtBootIpV6Enabled() {
-        return this.atBootIpV6Enabled;
-    }
-
-    public void setAtBootIpV6Enabled(Boolean atBootIpV6Enabled) {
-        this.atBootIpV6Enabled = atBootIpV6Enabled;
-    }
-
-    public HostNetStackInstance[] getNetStackInstance() {
-        return this.netStackInstance;
-    }
-
-    public void setNetStackInstance(HostNetStackInstance[] netStackInstance) {
-        this.netStackInstance = netStackInstance;
-    }
-
-    public HostOpaqueSwitch[] getOpaqueSwitch() {
-        return this.opaqueSwitch;
-    }
-
-    public void setOpaqueSwitch(HostOpaqueSwitch[] opaqueSwitch) {
-        this.opaqueSwitch = opaqueSwitch;
-    }
-
-    public HostOpaqueNetworkInfo[] getOpaqueNetwork() {
-        return this.opaqueNetwork;
-    }
-
-    public void setOpaqueNetwork(HostOpaqueNetworkInfo[] opaqueNetwork) {
-        this.opaqueNetwork = opaqueNetwork;
     }
 
     public HostRdmaDevice[] getRdmaDevice() {
@@ -232,6 +133,110 @@ public class HostNetworkInfo extends DynamicData {
         this.rdmaDevice = rdmaDevice;
     }
 
+    public HostVirtualNic[] getVnic() {
+        return vnic;
+    }
+
+    public void setVnic(final HostVirtualNic[] vnic) {
+        this.vnic = vnic;
+    }
+
+    public HostVirtualNic[] getConsoleVnic() {
+        return consoleVnic;
+    }
+
+    public void setConsoleVnic(final HostVirtualNic[] consoleVnic) {
+        this.consoleVnic = consoleVnic;
+    }
+
+    public HostDnsConfig getDnsConfig() {
+        return dnsConfig;
+    }
+
+    public void setDnsConfig(final HostDnsConfig dnsConfig) {
+        this.dnsConfig = dnsConfig;
+    }
+
+    public HostIpRouteConfig getIpRouteConfig() {
+        return ipRouteConfig;
+    }
+
+    public void setIpRouteConfig(final HostIpRouteConfig ipRouteConfig) {
+        this.ipRouteConfig = ipRouteConfig;
+    }
+
+    public HostIpRouteConfig getConsoleIpRouteConfig() {
+        return consoleIpRouteConfig;
+    }
+
+    public void setConsoleIpRouteConfig(final HostIpRouteConfig consoleIpRouteConfig) {
+        this.consoleIpRouteConfig = consoleIpRouteConfig;
+    }
+
+    public HostIpRouteTableInfo getRouteTableInfo() {
+        return routeTableInfo;
+    }
+
+    public void setRouteTableInfo(final HostIpRouteTableInfo routeTableInfo) {
+        this.routeTableInfo = routeTableInfo;
+    }
+
+    public HostDhcpService[] getDhcp() {
+        return dhcp;
+    }
+
+    public void setDhcp(final HostDhcpService[] dhcp) {
+        this.dhcp = dhcp;
+    }
+
+    public HostNatService[] getNat() {
+        return nat;
+    }
+
+    public void setNat(final HostNatService[] nat) {
+        this.nat = nat;
+    }
+
+    public Boolean getIpV6Enabled() {
+        return ipV6Enabled;
+    }
+
+    public void setIpV6Enabled(final Boolean ipV6Enabled) {
+        this.ipV6Enabled = ipV6Enabled;
+    }
+
+    public Boolean getAtBootIpV6Enabled() {
+        return atBootIpV6Enabled;
+    }
+
+    public void setAtBootIpV6Enabled(final Boolean atBootIpV6Enabled) {
+        this.atBootIpV6Enabled = atBootIpV6Enabled;
+    }
+
+    public HostNetStackInstance[] getNetStackInstance() {
+        return netStackInstance;
+    }
+
+    public void setNetStackInstance(final HostNetStackInstance[] netStackInstance) {
+        this.netStackInstance = netStackInstance;
+    }
+
+    public HostOpaqueSwitch[] getOpaqueSwitch() {
+        return opaqueSwitch;
+    }
+
+    public void setOpaqueSwitch(final HostOpaqueSwitch[] opaqueSwitch) {
+        this.opaqueSwitch = opaqueSwitch;
+    }
+
+    public HostOpaqueNetworkInfo[] getOpaqueNetwork() {
+        return opaqueNetwork;
+    }
+
+    public void setOpaqueNetwork(final HostOpaqueNetworkInfo[] opaqueNetwork) {
+        this.opaqueNetwork = opaqueNetwork;
+    }
+
     public String getNsxTransportNodeId() {
         return nsxTransportNodeId;
     }
@@ -239,4 +244,21 @@ public class HostNetworkInfo extends DynamicData {
     public void setNsxTransportNodeId(final String nsxTransportNodeId) {
         this.nsxTransportNodeId = nsxTransportNodeId;
     }
+
+    public Boolean getNvdsToVdsMigrationRequired() {
+        return nvdsToVdsMigrationRequired;
+    }
+
+    public void setNvdsToVdsMigrationRequired(final Boolean nvdsToVdsMigrationRequired) {
+        this.nvdsToVdsMigrationRequired = nvdsToVdsMigrationRequired;
+    }
+
+    public String getMigrationStatus() {
+        return migrationStatus;
+    }
+
+    public void setMigrationStatus(final String migrationStatus) {
+        this.migrationStatus = migrationStatus;
+    }
+
 }

@@ -54,12 +54,13 @@ import java.util.List;
  *
  * @author Steve JIN (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0.2
  * @since 4.0
  */
+@SuppressWarnings({"unused", "unchecked"})
 public class HttpNfcLease extends ManagedObject {
 
-    public HttpNfcLease(ServerConnection sc, ManagedObjectReference mor) {
+    public HttpNfcLease(final ServerConnection sc, final ManagedObjectReference mor) {
         super(sc, mor);
     }
 
@@ -91,7 +92,7 @@ public class HttpNfcLease extends ManagedObject {
         return (Integer) getCurrentProperty("transferProgress");
     }
 
-    public void httpNfcLeaseAbort(LocalizedMethodFault fault) throws Timedout, InvalidState, RuntimeFault, RemoteException {
+    public void httpNfcLeaseAbort(final LocalizedMethodFault fault) throws Timedout, InvalidState, RuntimeFault, RemoteException {
         getVimService().httpNfcLeaseAbort(getMOR(), fault);
     }
 
@@ -103,7 +104,7 @@ public class HttpNfcLease extends ManagedObject {
         return getVimService().httpNfcLeaseGetManifest(getMOR());
     }
 
-    public void httpNfcLeaseProgress(int percent) throws Timedout, RuntimeFault, RemoteException {
+    public void httpNfcLeaseProgress(final int percent) throws Timedout, RuntimeFault, RemoteException {
         getVimService().httpNfcLeaseProgress(getMOR(), percent);
     }
 
@@ -119,6 +120,15 @@ public class HttpNfcLease extends ManagedObject {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("deviceUrlsToChecksumTypes", "KeyValue[]", deviceUrlsToChecksumTypes));
         this.getVimService().getWsc().invokeWithoutReturn("HttpNfcLeaseSetManifestChecksumType", params);
+    }
+
+    public List<HttpNfcLeaseProbeResult> probeUrls(final List<HttpNfcLeaseSourceFile> files, final Integer timeout)
+            throws InvalidState, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("files", "HttpNfcLeaseSourceFile[]", files),
+                Argument.fromBasicType("timeout", timeout));
+        return (List<HttpNfcLeaseProbeResult>) this.getVimService().getWsc()
+                .invoke("HttpNfcLeaseProbeUrls", params, "List.HttpNfcLeaseProbeResult");
     }
 
 }

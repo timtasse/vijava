@@ -1,0 +1,29 @@
+
+…
+AWFyBUmFHcBHgFSiDLL1	java:S112˜"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ2sdilk8¸¤¬…—,
+˜
+AWr_oE2XgtWgmFcdTQ3T	java:S135à"YReduce the total number of break and continue statements in this loop to use at most one.(Áÿã¹ûÿÿÿÿ2sdilk8èÎ€ù¦,
+o
+AXe7QkYyAQVsp0-ZI2zn
+java:S1128,"0Remove this unused import 'java.util.Hashtable'.(Œ»ÏÊüÿÿÿÿ2sdilk8˜™ûÙû.
+q
+AXe7QkYyAQVsp0-ZI2zo
+java:S1117r"7Rename "mor" which hides the field declared at line 70.(Ü¹ÈÛ2sdilk8˜™ûÙû.
+l
+AXe7QkYyAQVsp0-ZI2zp
+java:S1172½",Remove this unused method parameter "clazz".(ıÚÙ™ûÿÿÿÿ2sdilk8˜™ûÙû.
+w
+AXe7QkYyAQVsp0-ZI2zq
+java:S1117¸"7Rename "mor" which hides the field declared at line 70.(öÃœ’üÿÿÿÿ2sdilk8˜™ûÙû.
+
+AXe7QkYyAQVsp0-ZI2zr
+java:S3776Ê"RRefactor this method to reduce its Cognitive Complexity from 30 to the 15 allowed.(ÃºÔà2sdilk8˜™ûÙû.
+¼
+AXe7QkYyAQVsp0-ZI2zs
+java:S1130Ê"€Remove the declaration of thrown exception 'com.vmware.vim25.InvalidProperty' which is a subclass of 'java.rmi.RemoteException'.(ÃºÔà2sdilk8˜™ûÙû.
+¸
+AXe7QkYyAQVsp0-ZI2zt
+java:S1130Ê"}Remove the declaration of thrown exception 'com.vmware.vim25.RuntimeFault' which is a subclass of 'java.rmi.RemoteException'.(ÃºÔà2sdilk8˜™ûÙû.
+q
+AXe7QkYyAQVsp0-ZI2zu
+java:S1874á"6Remove this use of "waitForUpdates"; it is deprecated.(Ï±ü‡2sdilk8˜™ûÙû.

@@ -30,36 +30,31 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.1
+ */
 public enum VMwareDvsLacpLoadBalanceAlgorithm {
-  srcMac ("srcMac"),
-  destMac ("destMac"),
-  srcDestMac ("srcDestMac"),
-  destIpVlan ("destIpVlan"),
-  srcIpVlan ("srcIpVlan"),
-  srcDestIpVlan ("srcDestIpVlan"),
-  destTcpUdpPort ("destTcpUdpPort"),
-  srcTcpUdpPort ("srcTcpUdpPort"),
-  srcDestTcpUdpPort ("srcDestTcpUdpPort"),
-  destIpTcpUdpPort ("destIpTcpUdpPort"),
-  srcIpTcpUdpPort ("srcIpTcpUdpPort"),
-  srcDestIpTcpUdpPort ("srcDestIpTcpUdpPort"),
-  destIpTcpUdpPortVlan ("destIpTcpUdpPortVlan"),
-  srcIpTcpUdpPortVlan ("srcIpTcpUdpPortVlan"),
-  srcDestIpTcpUdpPortVlan ("srcDestIpTcpUdpPortVlan"),
-  destIp ("destIp"),
-  srcIp ("srcIp"),
-  srcDestIp ("srcDestIp"),
-  vlan ("vlan"),
-  srcPortId ("srcPortId");
 
-  @SuppressWarnings("unused")
-  private final String val;
-  private VMwareDvsLacpLoadBalanceAlgorithm(String val)
-  {
-    this.val = val;
-  }
+    srcMac,
+    destMac,
+    srcDestMac,
+    destIpVlan,
+    srcIpVlan,
+    srcDestIpVlan,
+    destTcpUdpPort,
+    srcTcpUdpPort,
+    srcDestTcpUdpPort,
+    destIpTcpUdpPort,
+    srcIpTcpUdpPort,
+    srcDestIpTcpUdpPort,
+    destIpTcpUdpPortVlan,
+    srcIpTcpUdpPortVlan,
+    srcDestIpTcpUdpPortVlan,
+    destIp,
+    srcIp,
+    srcDestIp,
+    vlan,
+    srcPortId
+
 }

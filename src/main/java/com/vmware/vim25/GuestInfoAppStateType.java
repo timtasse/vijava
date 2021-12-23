@@ -41,7 +41,7 @@ public enum GuestInfoAppStateType {
 
   @SuppressWarnings("unused")
   private final String val;
-  private GuestInfoAppStateType(String val)
+  GuestInfoAppStateType(String val)
   {
     this.val = val;
   }
