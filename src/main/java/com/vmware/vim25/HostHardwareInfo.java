@@ -29,14 +29,14 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * The HardwareInfo data object type describes the hardware configuration of the host.
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.1
+ * @version 7.0.3
  */
 @SuppressWarnings("unused")
 public class HostHardwareInfo extends DynamicData {
@@ -44,17 +44,19 @@ public class HostHardwareInfo extends DynamicData {
     private HostSystemInfo systemInfo;
     private HostCpuPowerManagementInfo cpuPowerManagementInfo;
     private HostCpuInfo cpuInfo;
-    private HostCpuPackage[] cpuPkg;
+    private List<HostCpuPackage> cpuPkg;
     private long memorySize;
     private HostNumaInfo numaInfo;
     private Boolean smcPresent;
-    private HostPciDevice[] pciDevice;
-    private HostCpuIdInfo[] cpuFeature;
+    private List<HostPciDevice> pciDevice;
+    private List<HostCpuIdInfo> cpuFeature;
     private HostBIOSInfo biosInfo;
     private HostReliableMemoryInfo reliableMemoryInfo;
     private HostPersistentMemoryInfo persistentMemoryInfo;
     private HostSgxInfo sgxInfo;
     private HostSevInfo sevInfo;
+    private HostMemoryTieringType memoryTieringType;
+    private List<HostMemoryTierInfo> memoryTierInfo;
 
     @Override
     public String toString() {
@@ -62,17 +64,19 @@ public class HostHardwareInfo extends DynamicData {
                 "systemInfo=" + systemInfo +
                 ", cpuPowerManagementInfo=" + cpuPowerManagementInfo +
                 ", cpuInfo=" + cpuInfo +
-                ", cpuPkg=" + Arrays.toString(cpuPkg) +
+                ", cpuPkg=" + cpuPkg +
                 ", memorySize=" + memorySize +
                 ", numaInfo=" + numaInfo +
                 ", smcPresent=" + smcPresent +
-                ", pciDevice=" + Arrays.toString(pciDevice) +
-                ", cpuFeature=" + Arrays.toString(cpuFeature) +
+                ", pciDevice=" + pciDevice +
+                ", cpuFeature=" + cpuFeature +
                 ", biosInfo=" + biosInfo +
                 ", reliableMemoryInfo=" + reliableMemoryInfo +
                 ", persistentMemoryInfo=" + persistentMemoryInfo +
                 ", sgxInfo=" + sgxInfo +
                 ", sevInfo=" + sevInfo +
+                ", memoryTieringType=" + memoryTieringType +
+                ", memoryTierInfo=" + memoryTierInfo +
                 "} " + super.toString();
     }
 
@@ -100,14 +104,6 @@ public class HostHardwareInfo extends DynamicData {
         this.cpuInfo = cpuInfo;
     }
 
-    public HostCpuPackage[] getCpuPkg() {
-        return this.cpuPkg;
-    }
-
-    public void setCpuPkg(final HostCpuPackage[] cpuPkg) {
-        this.cpuPkg = cpuPkg;
-    }
-
     public long getMemorySize() {
         return this.memorySize;
     }
@@ -130,22 +126,6 @@ public class HostHardwareInfo extends DynamicData {
 
     public void setSmcPresent(final Boolean smcPresent) {
         this.smcPresent = smcPresent;
-    }
-
-    public HostPciDevice[] getPciDevice() {
-        return this.pciDevice;
-    }
-
-    public void setPciDevice(final HostPciDevice[] pciDevice) {
-        this.pciDevice = pciDevice;
-    }
-
-    public HostCpuIdInfo[] getCpuFeature() {
-        return this.cpuFeature;
-    }
-
-    public void setCpuFeature(final HostCpuIdInfo[] cpuFeature) {
-        this.cpuFeature = cpuFeature;
     }
 
     public HostBIOSInfo getBiosInfo() {
@@ -186,6 +166,46 @@ public class HostHardwareInfo extends DynamicData {
 
     public void setSevInfo(final HostSevInfo sevInfo) {
         this.sevInfo = sevInfo;
+    }
+
+    public List<HostCpuPackage> getCpuPkg() {
+        return cpuPkg;
+    }
+
+    public void setCpuPkg(final List<HostCpuPackage> cpuPkg) {
+        this.cpuPkg = cpuPkg;
+    }
+
+    public List<HostPciDevice> getPciDevice() {
+        return pciDevice;
+    }
+
+    public void setPciDevice(final List<HostPciDevice> pciDevice) {
+        this.pciDevice = pciDevice;
+    }
+
+    public List<HostCpuIdInfo> getCpuFeature() {
+        return cpuFeature;
+    }
+
+    public void setCpuFeature(final List<HostCpuIdInfo> cpuFeature) {
+        this.cpuFeature = cpuFeature;
+    }
+
+    public HostMemoryTieringType getMemoryTieringType() {
+        return memoryTieringType;
+    }
+
+    public void setMemoryTieringType(final HostMemoryTieringType memoryTieringType) {
+        this.memoryTieringType = memoryTieringType;
+    }
+
+    public List<HostMemoryTierInfo> getMemoryTierInfo() {
+        return memoryTierInfo;
+    }
+
+    public void setMemoryTierInfo(final List<HostMemoryTierInfo> memoryTierInfo) {
+        this.memoryTierInfo = memoryTierInfo;
     }
 
 }

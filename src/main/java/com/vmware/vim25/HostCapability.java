@@ -37,7 +37,7 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.2
+ * @version 7.0.3
  */
 @SuppressWarnings("unused")
 public class HostCapability extends DynamicData {
@@ -160,7 +160,9 @@ public class HostCapability extends DynamicData {
     private Boolean vmfs3EOLSupported;
     private Boolean ftVmcpSupported;
     private Boolean quickBootSupported;
+    private Boolean encryptedFtSupported;
     private Boolean assignableHardwareSupported;
+    private Boolean suspendToMemorySupported;
     private Boolean useFeatureReqsForOldHWv;
     private Boolean markPerenniallyReservedSupported;
     private Boolean hppPspSupported;
@@ -170,9 +172,16 @@ public class HostCapability extends DynamicData {
     private Boolean remoteDeviceVMotionSupported;
     private Integer maxSupportedVmMemory;
     private Boolean ahDeviceHintsSupported;
+    private Boolean nvmeOverTcpSupported;
+    private Boolean nvmeStorageFabricServicesSupported;
     private Boolean assignHwPciConfigSupported;
+    private Boolean timeConfigSupported;
+    private Boolean nvmeBatchOperationsSupported;
     private Boolean pMemFailoverSupported;
     private Boolean hostConfigEncryptionSupported;
+    private Boolean ptpConfigSupported;
+    private Integer maxSupportedPtpPorts;
+    private Boolean pMemIndependentSnapshotSupported;
 
     @Override
     public String toString() {
@@ -289,7 +298,9 @@ public class HostCapability extends DynamicData {
                 ", vmfs3EOLSupported=" + vmfs3EOLSupported +
                 ", ftVmcpSupported=" + ftVmcpSupported +
                 ", quickBootSupported=" + quickBootSupported +
+                ", encryptedFtSupported=" + encryptedFtSupported +
                 ", assignableHardwareSupported=" + assignableHardwareSupported +
+                ", suspendToMemorySupported=" + suspendToMemorySupported +
                 ", useFeatureReqsForOldHWv=" + useFeatureReqsForOldHWv +
                 ", markPerenniallyReservedSupported=" + markPerenniallyReservedSupported +
                 ", hppPspSupported=" + hppPspSupported +
@@ -299,10 +310,17 @@ public class HostCapability extends DynamicData {
                 ", remoteDeviceVMotionSupported=" + remoteDeviceVMotionSupported +
                 ", maxSupportedVmMemory=" + maxSupportedVmMemory +
                 ", ahDeviceHintsSupported=" + ahDeviceHintsSupported +
+                ", nvmeOverTcpSupported=" + nvmeOverTcpSupported +
+                ", nvmeStorageFabricServicesSupported=" + nvmeStorageFabricServicesSupported +
                 ", assignHwPciConfigSupported=" + assignHwPciConfigSupported +
+                ", timeConfigSupported=" + timeConfigSupported +
+                ", nvmeBatchOperationsSupported=" + nvmeBatchOperationsSupported +
                 ", pMemFailoverSupported=" + pMemFailoverSupported +
                 ", hostConfigEncryptionSupported=" + hostConfigEncryptionSupported +
-                '}';
+                ", ptpConfigSupported=" + ptpConfigSupported +
+                ", maxSupportedPtpPorts=" + maxSupportedPtpPorts +
+                ", pMemIndependentSnapshotSupported=" + pMemIndependentSnapshotSupported +
+                "} " + super.toString();
     }
 
     public boolean isRecursiveResourcePoolsSupported() {
@@ -1303,6 +1321,78 @@ public class HostCapability extends DynamicData {
 
     public void setHostConfigEncryptionSupported(final Boolean hostConfigEncryptionSupported) {
         this.hostConfigEncryptionSupported = hostConfigEncryptionSupported;
+    }
+
+    public Boolean getNvmeOverTcpSupported() {
+        return nvmeOverTcpSupported;
+    }
+
+    public void setNvmeOverTcpSupported(final Boolean nvmeOverTcpSupported) {
+        this.nvmeOverTcpSupported = nvmeOverTcpSupported;
+    }
+
+    public Boolean getNvmeStorageFabricServicesSupported() {
+        return nvmeStorageFabricServicesSupported;
+    }
+
+    public void setNvmeStorageFabricServicesSupported(final Boolean nvmeStorageFabricServicesSupported) {
+        this.nvmeStorageFabricServicesSupported = nvmeStorageFabricServicesSupported;
+    }
+
+    public Boolean getTimeConfigSupported() {
+        return timeConfigSupported;
+    }
+
+    public void setTimeConfigSupported(final Boolean timeConfigSupported) {
+        this.timeConfigSupported = timeConfigSupported;
+    }
+
+    public Boolean getNvmeBatchOperationsSupported() {
+        return nvmeBatchOperationsSupported;
+    }
+
+    public void setNvmeBatchOperationsSupported(final Boolean nvmeBatchOperationsSupported) {
+        this.nvmeBatchOperationsSupported = nvmeBatchOperationsSupported;
+    }
+
+    public Boolean getPtpConfigSupported() {
+        return ptpConfigSupported;
+    }
+
+    public void setPtpConfigSupported(final Boolean ptpConfigSupported) {
+        this.ptpConfigSupported = ptpConfigSupported;
+    }
+
+    public Integer getMaxSupportedPtpPorts() {
+        return maxSupportedPtpPorts;
+    }
+
+    public void setMaxSupportedPtpPorts(final Integer maxSupportedPtpPorts) {
+        this.maxSupportedPtpPorts = maxSupportedPtpPorts;
+    }
+
+    public Boolean getpMemIndependentSnapshotSupported() {
+        return pMemIndependentSnapshotSupported;
+    }
+
+    public void setpMemIndependentSnapshotSupported(final Boolean pMemIndependentSnapshotSupported) {
+        this.pMemIndependentSnapshotSupported = pMemIndependentSnapshotSupported;
+    }
+
+    public Boolean getEncryptedFtSupported() {
+        return encryptedFtSupported;
+    }
+
+    public void setEncryptedFtSupported(final Boolean encryptedFtSupported) {
+        this.encryptedFtSupported = encryptedFtSupported;
+    }
+
+    public Boolean getSuspendToMemorySupported() {
+        return suspendToMemorySupported;
+    }
+
+    public void setSuspendToMemorySupported(final Boolean suspendToMemorySupported) {
+        this.suspendToMemorySupported = suspendToMemorySupported;
     }
 
 }

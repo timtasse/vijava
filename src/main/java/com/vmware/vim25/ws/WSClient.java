@@ -110,12 +110,16 @@ public abstract class WSClient {
         return this.invoke(methodName, Arrays.asList(paras), returnType);
     }
 
-    public <T> T invoke(final String methodName, final List<Argument> paras, final Class<?> T) throws RemoteException {
-        return (T) this.invoke(methodName, paras, T.getSimpleName());
+    public <T> T invoke(final String methodName, final List<Argument> paras, final Class<?> returnType) throws RemoteException {
+        return (T) this.invoke(methodName, paras, returnType.getSimpleName());
     }
 
     public <T> T invokeWithoutReturn(final String methodName, final List<Argument> paras) throws RemoteException {
         return (T) this.invoke(methodName, paras, (String) null);
+    }
+
+    public <T> List<T> invokeWithListReturn(final String methodName, final List<Argument> paras, final Class<?> returnType) throws RemoteException {
+        return (List<T>) this.invoke(methodName, paras, "List." + returnType.getSimpleName());
     }
 
     public Object invoke(final String methodName, final List<Argument> paras, final String returnType) throws RemoteException {

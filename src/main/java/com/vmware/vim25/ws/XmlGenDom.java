@@ -41,8 +41,13 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -142,7 +147,7 @@ final class XmlGenDom extends XmlGen {
 
         if (subNodes.isEmpty()) {
             if (type.startsWith("List.")) {
-                return Collections.EMPTY_LIST;
+                return Collections.emptyList();
             }
             return null;
         }
@@ -161,7 +166,7 @@ final class XmlGenDom extends XmlGen {
             }
         } else if (TypeUtil.isBasicType(type)) {
             final List<String> vals = new ArrayList<>();
-            for (Element subNode : subNodes) {
+            for (final Element subNode : subNodes) {
                 vals.add(subNode.getText());
             }
             return ReflectUtil.parseToObject(type, vals);
@@ -217,46 +222,65 @@ final class XmlGenDom extends XmlGen {
                 final Field field = getField(clazz, tagName);
                 Class<?> fType = field.getType();
                 final boolean isFieldArray = fType.isArray();
+                final boolean isList;
                 //if field is an array, adjust it to the component type
                 if (isFieldArray) {
                     fType = fType.getComponentType();
                 }
-
                 Class fRealType = fType;
+
+                if (List.class.isAssignableFrom(fType)) {
+                    fRealType = (Class<?>) ((ParameterizedType) field.getGenericType()).getActualTypeArguments()[0];
+                    isList = true;
+                } else {
+                    isList = false;
+                }
                 final String xsiType = e.attributeValue(SoapConsts.XSI_TYPE);
                 if (xsiType != null && (!xsiType.startsWith("xsd:"))) {
                     fRealType = TypeUtil.getVimClass(xsiType);
                 }
 
                 if (fRealType == ManagedObjectReference.class) { // MOR
-                    if (isFieldArray) {
+                    if (isFieldArray || isList) {
                         final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
-                        final ManagedObjectReference[] mos = new ManagedObjectReference[sizeOfFieldArray];
+                        final ArrayList<ManagedObjectReference> morList = new ArrayList<>(sizeOfFieldArray);
                         for (int j = 0; j < sizeOfFieldArray; j++) {
                             final Element elem = subNodes.get(j + i);
-                            mos[j] = ManagedObjectReference.create(elem.attributeValue("type"), elem.getText());
+                            morList.add(ManagedObjectReference.create(elem.attributeValue("type"), elem.getText()));
                         }
-                        field.set(obj, mos);
+                        if (isFieldArray) {
+                            field.set(obj, morList.toArray(new ManagedObjectReference[0]));
+                        } else {
+                            field.set(obj, morList);
+                        }
                         i = i + sizeOfFieldArray - 1;
                     } else {
                         field.set(obj, ManagedObjectReference.create(e.attributeValue("type"), e.getText()));
                     }
                 } else if (fRealType.isEnum()) { // Enum type
-                    if (!isFieldArray) {
+                    if (!isFieldArray && !isList) {
                         final Object fo = Enum.valueOf(fRealType, e.getText());
                         field.set(obj, fo);
                     } else {
                         final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
-                        final Object ao = Array.newInstance(fRealType, sizeOfFieldArray);
+                        final List<Object> objectList = new ArrayList<>(sizeOfFieldArray);
                         for (int j = 0; j < sizeOfFieldArray; j++) {
                             final String enumStr = (subNodes.get(j + i)).getText();
-                            Array.set(ao, j, Enum.valueOf(fRealType, enumStr));
+                            objectList.add(Enum.valueOf(fRealType, enumStr));
                         }
-                        field.set(obj, ao);
+                        if (isFieldArray) {
+                            final Object outputArray = Array.newInstance(fType, sizeOfFieldArray);
+                            for (int j = 0; j < sizeOfFieldArray; j++) {
+                                Array.set(outputArray, j, objectList.get(j));
+                            }
+                            field.set(obj, outputArray);
+                        } else {
+                            field.set(obj, objectList);
+                        }
                         i = i + sizeOfFieldArray - 1;
                     }
                 } else if (TypeUtil.isBasicType(fRealType)) { // basic data types
-                    if (isFieldArray) {
+                    if (isFieldArray || isList) {
                         final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
 
                         final List<String> values = new ArrayList<>();
@@ -273,7 +297,12 @@ final class XmlGenDom extends XmlGen {
                                 fTrueType = fTrueType + "[]";
                             }
                         }
-                        ReflectUtil.setObjectArrayField(obj, field, fTrueType, values);
+                        final Object array = ReflectUtil.getObjectArray(fTrueType, values);
+                        if (isList) {
+                            field.set(obj, Arrays.asList(array));
+                        } else {
+                            field.set(obj, array);
+                        }
                         i = i + sizeOfFieldArray - 1;
                     } else {
                         if (xsiType != null) {
@@ -283,18 +312,34 @@ final class XmlGenDom extends XmlGen {
                         }
                     }
                 } else { //VIM type
-                    if (isFieldArray) {
+                    if (isFieldArray || isList) {
+                        final Type genericType = field.getGenericType();
+                        Class<?> fGenericType;
+                        if (genericType instanceof ParameterizedType) {
+                            fGenericType = (Class<?>) ((ParameterizedType) genericType).getActualTypeArguments()[0];
+                        } else {
+                            fGenericType = fType;
+                        }
                         final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
-                        final Object ao = Array.newInstance(fType, sizeOfFieldArray);
-                        final String fGenericType = fType.getSimpleName();
+                        final List<Object> objectList = new ArrayList<>(sizeOfFieldArray);
                         for (int j = 0; j < sizeOfFieldArray; j++) {
                             final Element elem = subNodes.get(j + i);
                             final String elemXsiType = elem.attributeValue(SoapConsts.XSI_TYPE);
-                            final String elemType = elemXsiType != null ? elemXsiType : fGenericType;
-                            final Object o = parseVimClassFromElement(TypeUtil.getVimClass(elemType), elem);
-                            Array.set(ao, j, o);
+                            if (elemXsiType != null) {
+                                fGenericType = TypeUtil.getVimClass(elemXsiType);
+                            }
+                            final Object o = parseVimClassFromElement(fGenericType, elem);
+                            objectList.add(o);
                         }
-                        field.set(obj, ao);
+                        if (isFieldArray) {
+                            final Object outputArray = Array.newInstance(fType, sizeOfFieldArray);
+                            for (int j = 0; j < sizeOfFieldArray; j++) {
+                                Array.set(outputArray, j, objectList.get(j));
+                            }
+                            field.set(obj, outputArray);
+                        } else {
+                            field.set(obj, objectList);
+                        }
                         i = i + sizeOfFieldArray - 1;
                     } else { // single VIM
                         final Object o = parseVimClassFromElement(fRealType, e);

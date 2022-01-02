@@ -30,64 +30,77 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
+@SuppressWarnings("unused")
 public class HostCpuIdInfo extends DynamicData {
-  public int level;
-  public String vendor;
-  public String eax;
-  public String ebx;
-  public String ecx;
-  public String edx;
 
-  public int getLevel() {
-    return this.level;
-  }
+    private int level;
+    private String vendor;
+    private String eax;
+    private String ebx;
+    private String ecx;
+    private String edx;
 
-  public String getVendor() {
-    return this.vendor;
-  }
+    @Override
+    public String toString() {
+        return "HostCpuIdInfo{" +
+                "level=" + level +
+                ", vendor='" + vendor + '\'' +
+                ", eax='" + eax + '\'' +
+                ", ebx='" + ebx + '\'' +
+                ", ecx='" + ecx + '\'' +
+                ", edx='" + edx + '\'' +
+                "} " + super.toString();
+    }
 
-  public String getEax() {
-    return this.eax;
-  }
+    public int getLevel() {
+        return this.level;
+    }
 
-  public String getEbx() {
-    return this.ebx;
-  }
+    public void setLevel(final int level) {
+        this.level = level;
+    }
 
-  public String getEcx() {
-    return this.ecx;
-  }
+    public String getVendor() {
+        return this.vendor;
+    }
 
-  public String getEdx() {
-    return this.edx;
-  }
+    public void setVendor(final String vendor) {
+        this.vendor = vendor;
+    }
 
-  public void setLevel(int level) {
-    this.level=level;
-  }
+    public String getEax() {
+        return this.eax;
+    }
 
-  public void setVendor(String vendor) {
-    this.vendor=vendor;
-  }
+    public void setEax(final String eax) {
+        this.eax = eax;
+    }
 
-  public void setEax(String eax) {
-    this.eax=eax;
-  }
+    public String getEbx() {
+        return this.ebx;
+    }
 
-  public void setEbx(String ebx) {
-    this.ebx=ebx;
-  }
+    public void setEbx(final String ebx) {
+        this.ebx = ebx;
+    }
 
-  public void setEcx(String ecx) {
-    this.ecx=ecx;
-  }
+    public String getEcx() {
+        return this.ecx;
+    }
 
-  public void setEdx(String edx) {
-    this.edx=edx;
-  }
+    public void setEcx(final String ecx) {
+        this.ecx = ecx;
+    }
+
+    public String getEdx() {
+        return this.edx;
+    }
+
+    public void setEdx(final String edx) {
+        this.edx = edx;
+    }
+
 }

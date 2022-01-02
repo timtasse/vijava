@@ -41,7 +41,6 @@ import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.rmi.RemoteException;
 import java.util.Collections;
-import java.util.Hashtable;
 import java.util.List;
 
 /**
@@ -111,8 +110,8 @@ public abstract class ManagedObject {
     }
 
     protected Task invokeWithTaskReturn(final String methodName, final List<Argument> paras) throws RemoteException {
-        final ManagedObjectReference mor = this.getVimService().getWsc().invoke(methodName, paras, ManagedObjectReference.class);
-        return new Task(this.serverConnection, mor);
+        final ManagedObjectReference thisMor = this.getVimService().getWsc().invoke(methodName, paras, ManagedObjectReference.class);
+        return new Task(this.serverConnection, thisMor);
     }
 
     public ServerConnection getServerConnection() {
@@ -309,8 +308,8 @@ public abstract class ManagedObject {
     }
 
     protected ManagedObject getManagedObject(final String propName) {
-        final ManagedObjectReference mor = getCurrentProperty(propName, ManagedObjectReference.class);
-        return MorUtil.createExactManagedObject(getServerConnection(), mor);
+        final ManagedObjectReference thisMor = getCurrentProperty(propName, ManagedObjectReference.class);
+        return MorUtil.createExactManagedObject(getServerConnection(), thisMor);
     }
 
     /**
@@ -350,7 +349,7 @@ public abstract class ManagedObject {
         boolean reached = false;
 
         while (!reached) {
-            final UpdateSet updateset = pc.waitForUpdates(version);
+            final UpdateSet updateset = pc.waitForUpdatesEx(version, null);
             if (updateset == null) {
                 continue;
             }

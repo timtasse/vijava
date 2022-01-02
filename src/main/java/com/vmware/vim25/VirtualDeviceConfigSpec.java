@@ -29,25 +29,44 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+import java.util.List;
+
 /**
+ * The VirtualDeviceSpec data object type encapsulates change specifications for an individual virtual device.
+ * The virtual device being added or modified must be fully specified.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.5
+ * @version 7.0.2.1
  */
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class VirtualDeviceConfigSpec extends DynamicData {
 
-    public VirtualDeviceConfigSpecOperation operation;
-    public VirtualDeviceConfigSpecFileOperation fileOperation;
-    public VirtualDevice device;
-    public VirtualMachineProfileSpec[] profile;
-    public VirtualDeviceConfigSpecBackingSpec backing;
+    private VirtualDeviceConfigSpecOperation operation;
+    private VirtualDeviceConfigSpecFileOperation fileOperation;
+    private VirtualDevice device;
+    private VirtualMachineProfileSpec[] profile;
+    private VirtualDeviceConfigSpecBackingSpec backing;
+    private VirtualMachineBaseIndependentFilterSpec[] filterSpec;
+
+    @Override
+    public String toString() {
+        return "VirtualDeviceConfigSpec{" +
+                "operation=" + operation +
+                ", fileOperation=" + fileOperation +
+                ", device=" + device +
+                ", profile=" + Arrays.toString(profile) +
+                ", backing=" + backing +
+                ", filterSpec=" + Arrays.toString(filterSpec) +
+                "} " + super.toString();
+    }
 
     public VirtualDeviceConfigSpecOperation getOperation() {
         return this.operation;
     }
 
-    public void setOperation(VirtualDeviceConfigSpecOperation operation) {
+    public void setOperation(final VirtualDeviceConfigSpecOperation operation) {
         this.operation = operation;
     }
 
@@ -55,7 +74,7 @@ public class VirtualDeviceConfigSpec extends DynamicData {
         return this.fileOperation;
     }
 
-    public void setFileOperation(VirtualDeviceConfigSpecFileOperation fileOperation) {
+    public void setFileOperation(final VirtualDeviceConfigSpecFileOperation fileOperation) {
         this.fileOperation = fileOperation;
     }
 
@@ -63,7 +82,7 @@ public class VirtualDeviceConfigSpec extends DynamicData {
         return this.device;
     }
 
-    public void setDevice(VirtualDevice device) {
+    public void setDevice(final VirtualDevice device) {
         this.device = device;
     }
 
@@ -71,7 +90,7 @@ public class VirtualDeviceConfigSpec extends DynamicData {
         return this.profile;
     }
 
-    public void setProfile(VirtualMachineProfileSpec[] profile) {
+    public void setProfile(final VirtualMachineProfileSpec[] profile) {
         this.profile = profile;
     }
 
@@ -82,4 +101,13 @@ public class VirtualDeviceConfigSpec extends DynamicData {
     public void setBacking(final VirtualDeviceConfigSpecBackingSpec backing) {
         this.backing = backing;
     }
+
+    public List<VirtualMachineBaseIndependentFilterSpec> getFilterSpec() {
+        return Arrays.asList(filterSpec);
+    }
+
+    public void setFilterSpec(final List<VirtualMachineBaseIndependentFilterSpec> filterSpec) {
+        this.filterSpec = filterSpec.toArray(new VirtualMachineBaseIndependentFilterSpec[0]);
+    }
+
 }

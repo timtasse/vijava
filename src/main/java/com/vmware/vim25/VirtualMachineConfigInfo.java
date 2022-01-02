@@ -38,7 +38,7 @@ import java.util.Calendar;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.2
+ * @version 7.0.3
  */
 @SuppressWarnings("unused")
 public class VirtualMachineConfigInfo extends DynamicData {
@@ -117,6 +117,8 @@ public class VirtualMachineConfigInfo extends DynamicData {
     private VirtualMachineGuestMonitoringModeInfo guestMonitoringModeInfo;
     private Boolean sevEnabled;
     private Boolean pmemFailoverEnabled;
+    private Boolean vmOpNotificationToAppEnabled;
+    private VirtualMachineVirtualPMem pmem;
 
     @Override
     public String toString() {
@@ -193,7 +195,9 @@ public class VirtualMachineConfigInfo extends DynamicData {
                 ", guestMonitoringModeInfo=" + guestMonitoringModeInfo +
                 ", sevEnabled=" + sevEnabled +
                 ", pmemFailoverEnabled=" + pmemFailoverEnabled +
-                '}';
+                ", vmOpNotificationToAppEnabled=" + vmOpNotificationToAppEnabled +
+                ", pmem=" + pmem +
+                "} " + super.toString();
     }
 
     public String getAlternateGuestName() {
@@ -770,6 +774,22 @@ public class VirtualMachineConfigInfo extends DynamicData {
 
     public void setPmemFailoverEnabled(final Boolean pmemFailoverEnabled) {
         this.pmemFailoverEnabled = pmemFailoverEnabled;
+    }
+
+    public Boolean getVmOpNotificationToAppEnabled() {
+        return vmOpNotificationToAppEnabled;
+    }
+
+    public void setVmOpNotificationToAppEnabled(final Boolean vmOpNotificationToAppEnabled) {
+        this.vmOpNotificationToAppEnabled = vmOpNotificationToAppEnabled;
+    }
+
+    public VirtualMachineVirtualPMem getPmem() {
+        return pmem;
+    }
+
+    public void setPmem(final VirtualMachineVirtualPMem pmem) {
+        this.pmem = pmem;
     }
 
 }

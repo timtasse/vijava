@@ -111,8 +111,8 @@ public class HttpNfcLease extends ManagedObject {
     public Task pullFromUrls(final List<HttpNfcLeaseSourceFile> files) throws HttpFault, InvalidState, RuntimeFault, SSLVerifyFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("files", "HttpNfcLeaseSourceFile[]", files.toArray()));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc()
-                .invoke("HttpNfcLeasePullFromUrls_Task", params, ManagedObjectReference.class.getSimpleName());
+        final ManagedObjectReference mor = this.getVimService().getWsc()
+                .invoke("HttpNfcLeasePullFromUrls_Task", params, ManagedObjectReference.class);
         return new Task(this.getServerConnection(), mor);
     }
 

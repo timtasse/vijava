@@ -29,33 +29,34 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Information about the system as a whole.
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0.3
  */
-
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class HostSystemInfo extends DynamicData {
 
     private String model;
-    private HostSystemIdentificationInfo[] otherIdentifyingInfo;
+    private List<HostSystemIdentificationInfo> otherIdentifyingInfo;
     private String serialNumber;
     private String uuid;
     private String vendor;
+    private List<HostQualifiedName> qualifiedName;
 
     @Override
     public String toString() {
         return "HostSystemInfo{" +
                 "model='" + model + '\'' +
-                ", otherIdentifyingInfo=" + Arrays.toString(otherIdentifyingInfo) +
+                ", otherIdentifyingInfo=" + otherIdentifyingInfo +
                 ", serialNumber='" + serialNumber + '\'' +
                 ", uuid='" + uuid + '\'' +
                 ", vendor='" + vendor + '\'' +
+                ", qualifiedName=" + qualifiedName +
                 "} " + super.toString();
     }
 
@@ -83,20 +84,28 @@ public class HostSystemInfo extends DynamicData {
         this.uuid = uuid;
     }
 
-    public HostSystemIdentificationInfo[] getOtherIdentifyingInfo() {
-        return this.otherIdentifyingInfo;
-    }
-
-    public void setOtherIdentifyingInfo(HostSystemIdentificationInfo[] otherIdentifyingInfo) {
-        this.otherIdentifyingInfo = otherIdentifyingInfo;
-    }
-
     public String getSerialNumber() {
         return serialNumber;
     }
 
     public void setSerialNumber(final String serialNumber) {
         this.serialNumber = serialNumber;
+    }
+
+    public List<HostSystemIdentificationInfo> getOtherIdentifyingInfo() {
+        return otherIdentifyingInfo;
+    }
+
+    public void setOtherIdentifyingInfo(final List<HostSystemIdentificationInfo> otherIdentifyingInfo) {
+        this.otherIdentifyingInfo = otherIdentifyingInfo;
+    }
+
+    public List<HostQualifiedName> getQualifiedName() {
+        return qualifiedName;
+    }
+
+    public void setQualifiedName(final List<HostQualifiedName> qualifiedName) {
+        this.qualifiedName = qualifiedName;
     }
 
 }

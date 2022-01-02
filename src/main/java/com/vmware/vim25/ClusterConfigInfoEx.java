@@ -37,10 +37,11 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.3
  */
 public class ClusterConfigInfoEx extends ComputeResourceConfigInfo {
 
+    private ClusterSystemVMsConfigInfo systemVMsConfig;
     private ClusterDasConfigInfo dasConfig;
     private ClusterDasVmConfigInfo[] dasVmConfig;
     private ClusterDrsConfigInfo drsConfig;
@@ -60,7 +61,8 @@ public class ClusterConfigInfoEx extends ComputeResourceConfigInfo {
     @Override
     public String toString() {
         return "ClusterConfigInfoEx{" +
-                "dasConfig=" + dasConfig +
+                "systemVMsConfig=" + systemVMsConfig +
+                ", dasConfig=" + dasConfig +
                 ", dasVmConfig=" + Arrays.toString(dasVmConfig) +
                 ", drsConfig=" + drsConfig +
                 ", drsVmConfig=" + Arrays.toString(drsVmConfig) +
@@ -196,6 +198,14 @@ public class ClusterConfigInfoEx extends ComputeResourceConfigInfo {
 
     public void setCryptoConfig(final ClusterCryptoConfigInfo cryptoConfig) {
         this.cryptoConfig = cryptoConfig;
+    }
+
+    public ClusterSystemVMsConfigInfo getSystemVMsConfig() {
+        return systemVMsConfig;
+    }
+
+    public void setSystemVMsConfig(final ClusterSystemVMsConfigInfo systemVMsConfig) {
+        this.systemVMsConfig = systemVMsConfig;
     }
 
 }

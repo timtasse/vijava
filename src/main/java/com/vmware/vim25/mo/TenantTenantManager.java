@@ -57,9 +57,9 @@ public class TenantTenantManager extends ManagedObject {
     public List<ManagedEntity> retrieveServiceProviderEntities() throws RuntimeFault {
         try {
             return Optional.ofNullable(this.getVimService().getWsc()
-                    .invoke("RetrieveServiceProviderEntities", this.getSingleSelfArgumentList(), ManagedObjectReference[].class))
-                    .map(Arrays::asList)
-                    .stream().map(ManagedObjectReference.class::cast)
+                    .invokeWithListReturn("RetrieveServiceProviderEntities", this.getSingleSelfArgumentList(), ManagedObjectReference.class))
+                    .stream().flatMap(List::stream)
+                    .map(ManagedObjectReference.class::cast)
                     .map(mor -> MorUtil.createExactManagedEntity(this.getServerConnection(), mor, null))
                     .collect(Collectors.toList());
         } catch (final RemoteException e) {

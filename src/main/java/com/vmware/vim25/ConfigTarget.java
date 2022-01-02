@@ -30,13 +30,14 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * The ConfigTarget class contains information about "physical" devices that can be used to back virtual devices.
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.1
+ * @version 7.0.3
  */
 public class ConfigTarget extends DynamicData {
 
@@ -73,6 +74,8 @@ public class ConfigTarget extends DynamicData {
     private VirtualMachineSgxTargetInfo sgxTargetInfo;
     private VirtualMachinePrecisionClockInfo[] precisionClockInfo;
     private Boolean sevSupported;
+    private List<VirtualMachineVgpuDeviceInfo> vgpuDeviceInfo;
+    private List<VirtualMachineVgpuProfileInfo> vgpuProfileInfo;
 
     @Override
     public String toString() {
@@ -110,6 +113,8 @@ public class ConfigTarget extends DynamicData {
                 ", sgxTargetInfo=" + sgxTargetInfo +
                 ", precisionClockInfo=" + Arrays.toString(precisionClockInfo) +
                 ", sevSupported=" + sevSupported +
+                ", vgpuDeviceInfo=" + vgpuDeviceInfo +
+                ", vgpuProfileInfo=" + vgpuProfileInfo +
                 "} " + super.toString();
     }
 
@@ -375,6 +380,22 @@ public class ConfigTarget extends DynamicData {
 
     public void setSevSupported(final Boolean sevSupported) {
         this.sevSupported = sevSupported;
+    }
+
+    public List<VirtualMachineVgpuDeviceInfo> getVgpuDeviceInfo() {
+        return vgpuDeviceInfo;
+    }
+
+    public void setVgpuDeviceInfo(final List<VirtualMachineVgpuDeviceInfo> vgpuDeviceInfo) {
+        this.vgpuDeviceInfo = vgpuDeviceInfo;
+    }
+
+    public List<VirtualMachineVgpuProfileInfo> getVgpuProfileInfo() {
+        return vgpuProfileInfo;
+    }
+
+    public void setVgpuProfileInfo(final List<VirtualMachineVgpuProfileInfo> vgpuProfileInfo) {
+        this.vgpuProfileInfo = vgpuProfileInfo;
     }
 
 }

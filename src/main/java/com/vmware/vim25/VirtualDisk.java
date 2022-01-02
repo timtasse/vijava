@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * This data object type contains information about a disk in a virtual machine.
@@ -51,9 +52,9 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 7.0.2.1
  */
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class VirtualDisk extends VirtualDevice {
 
     @Deprecated
@@ -61,27 +62,29 @@ public class VirtualDisk extends VirtualDevice {
     private Long capacityInBytes;
     @Deprecated
     private SharesInfo shares;
-    @Deprecated
+    @Deprecated(since = "6.5")
     private StorageIOAllocationInfo storageIOAllocation;
-    @Deprecated
+    @Deprecated(since = "6.5")
     private String diskObjectId;
     private VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo;
     private String[] iofilter;
     private ID vDiskId;
     private Boolean nativeUnmanagedLinkedClone;
+    private VirtualMachineBaseIndependentFilterSpec[] independentFilters;
 
     @Override
     public String toString() {
         return "VirtualDisk{" +
-                "capacityInBytes=" + capacityInBytes +
-                ", capacityInKB=" + capacityInKB +
-                ", diskObjectId='" + diskObjectId + '\'' +
-                ", iofilter=" + Arrays.toString(iofilter) +
-                ", nativeUnmanagedLinkedClone=" + nativeUnmanagedLinkedClone +
+                "capacityInKB=" + capacityInKB +
+                ", capacityInBytes=" + capacityInBytes +
                 ", shares=" + shares +
                 ", storageIOAllocation=" + storageIOAllocation +
-                ", vDiskId=" + vDiskId +
+                ", diskObjectId='" + diskObjectId + '\'' +
                 ", vFlashCacheConfigInfo=" + vFlashCacheConfigInfo +
+                ", iofilter=" + Arrays.toString(iofilter) +
+                ", vDiskId=" + vDiskId +
+                ", nativeUnmanagedLinkedClone=" + nativeUnmanagedLinkedClone +
+                ", independentFilters=" + Arrays.toString(independentFilters) +
                 "} " + super.toString();
     }
 
@@ -148,6 +151,14 @@ public class VirtualDisk extends VirtualDevice {
 
     public void setvFlashCacheConfigInfo(final VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo) {
         this.vFlashCacheConfigInfo = vFlashCacheConfigInfo;
+    }
+
+    public List<VirtualMachineBaseIndependentFilterSpec> getIndependentFilters() {
+        return Arrays.asList(independentFilters);
+    }
+
+    public void setIndependentFilters(final List<VirtualMachineBaseIndependentFilterSpec> independentFilters) {
+        this.independentFilters = independentFilters.toArray(new VirtualMachineBaseIndependentFilterSpec[0]);
     }
 
 }

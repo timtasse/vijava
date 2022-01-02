@@ -44,10 +44,9 @@ import java.util.stream.Collectors;
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @version 6.7
  */
-
 public class AlarmManager extends ManagedObject {
 
-    public AlarmManager(ServerConnection sc, ManagedObjectReference mor) {
+    public AlarmManager(final ServerConnection sc, final ManagedObjectReference mor) {
         super(sc, mor);
     }
 
@@ -62,71 +61,64 @@ public class AlarmManager extends ManagedObject {
     /**
      * @since 4.0
      */
-    public void acknowledgeAlarm(Alarm alarm, ManagedEntity entity) throws RuntimeFault, RemoteException {
-        final List<Argument> params = Arrays.asList(
-                new Argument("_this", "ManagedObjectReference", this.getMOR()),
-                new Argument("alarm", "ManagedObjectReference", alarm),
-                new Argument("entity", "ManagedObjectReference", entity));
+    public void acknowledgeAlarm(final Alarm alarm, final ManagedEntity entity) throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("alarm", ManagedObjectReference.class, alarm),
+                new Argument("entity", ManagedObjectReference.class, entity));
         this.getVimService().getWsc().invokeWithoutReturn("AcknowledgeAlarm", params);
     }
 
     /**
      * @since 4.0
      */
-    public boolean areAlarmActionsEnabled(ManagedEntity entity) throws RuntimeFault, RemoteException {
-        final List<Argument> params = Arrays.asList(
-                new Argument("_this", "ManagedObjectReference", this.getMOR()),
-                new Argument("entity", "ManagedObjectReference", entity));
-        return (Boolean) this.getVimService().getWsc().invoke("AreAlarmActionsEnabled", params, "boolean");
+    public boolean areAlarmActionsEnabled(final ManagedEntity entity) throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entity", ManagedObjectReference.class, entity));
+        return this.getVimService().getWsc().invoke("AreAlarmActionsEnabled", params, Boolean.class);
     }
 
     public void clearTriggeredAlarms(final AlarmFilterSpec filter) throws RuntimeFault, RemoteException {
-        final List<Argument> params = Arrays.asList(
-                new Argument("_this", "ManagedObjectReference", this.getMOR()),
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("filter", "AlarmFilterSpec", filter));
         this.getVimService().getWsc().invokeWithoutReturn("ClearTriggeredAlarms", params);
     }
 
-    public Alarm createAlarm(ManagedEntity me, AlarmSpec as) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
+    public Alarm createAlarm(final ManagedEntity me, final AlarmSpec as) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
         if (me == null) {
             throw new IllegalArgumentException("entity must not be null.");
         }
-        final List<Argument> params = Arrays.asList(
-                new Argument("_this", "ManagedObjectReference", this.getMOR()),
-                new Argument("entity", "ManagedObjectReference", me.getMOR()),
-                new Argument("spec", "AlarmSpec", as));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc()
-                .invoke("CreateAlarm", params, "ManagedObjectReference");
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entity", ManagedObjectReference.class, me.getMOR()),
+                new Argument("spec", AlarmSpec.class, as));
+        final ManagedObjectReference mor = this.getVimService().getWsc()
+                .invoke("CreateAlarm", params, ManagedObjectReference.class);
         return new Alarm(this.getServerConnection(), mor);
     }
 
     /**
      * @since 4.0
      */
-    public void enableAlarmActions(ManagedEntity entity, boolean enabled) throws RuntimeFault, RemoteException {
-        final List<Argument> params = Arrays.asList(
-                new Argument("_this", "ManagedObjectReference", this.getMOR()),
-                new Argument("entity", "ManagedObjectReference", entity.getMOR()),
-                new Argument("enabled", "boolean", enabled));
+    public void enableAlarmActions(final ManagedEntity entity, final boolean enabled) throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entity", ManagedObjectReference.class, entity.getMOR()),
+                Argument.fromBasicType("enabled", enabled));
         this.getVimService().getWsc().invokeWithoutReturn("EnableAlarmActions", params);
     }
 
-    public List<Alarm> getAlarm(ManagedEntity me) throws RuntimeFault, RemoteException {
-        final List<Argument> params = Arrays.asList(
-                new Argument("_this", "ManagedObjectReference", this.getMOR()),
-                new Argument("entity", "ManagedObjectReference", me == null ? null : me.getMOR()));
-        final List<ManagedObjectReference> mors = (List<ManagedObjectReference>) this.getVimService().getWsc().invoke("GetAlarm", params, "List.ManagedObjectReference");
+    public List<Alarm> getAlarm(final ManagedEntity me) throws RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entity", ManagedObjectReference.class, me == null ? null : me.getMOR()));
+        final List<ManagedObjectReference> mors = this.getVimService().getWsc().invokeWithListReturn("GetAlarm", params, ManagedObjectReference.class);
         return mors.stream().map(mor -> new Alarm(this.getServerConnection(), mor)).collect(Collectors.toList());
     }
 
-    public List<AlarmState> getAlarmState(ManagedEntity me) throws RuntimeFault, RemoteException {
+    public List<AlarmState> getAlarmState(final ManagedEntity me) throws RuntimeFault, RemoteException {
         if (me == null) {
             throw new IllegalArgumentException("entity must not be null.");
         }
-        final List<Argument> params = Arrays.asList(
-                new Argument("_this", "ManagedObjectReference", this.getMOR()),
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("entity", "ManagedObjectReference", me.getMOR()));
-        return (List<AlarmState>) this.getVimService().getWsc().invoke("GetAlarmState", params, "List.AlarmState");
+        return this.getVimService().getWsc().invokeWithListReturn("GetAlarmState", params, AlarmState.class);
     }
 
 }

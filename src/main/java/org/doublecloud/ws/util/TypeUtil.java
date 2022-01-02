@@ -95,7 +95,11 @@ public final class TypeUtil {
             try {
                 final Class<?> clazz;
                 if (!type.endsWith("[]")) {
-                    clazz = Class.forName(PACKAGE_NAME + "." + type);
+                    if (type.startsWith(PACKAGE_NAME)) {
+                        clazz = Class.forName(type);
+                    } else {
+                        clazz = Class.forName(PACKAGE_NAME + "." + type);
+                    }
                 } else {
                     final String arrayType = type.substring(0, type.length() - 2);
                     clazz = Array.newInstance(getVimClass(arrayType), 0).getClass();
@@ -106,7 +110,7 @@ public final class TypeUtil {
                 return clazz;
             } catch (final ClassNotFoundException cnfe) {
                 LOGGER.error("Class {} not found", type, cnfe);
-                return null;
+                throw new IllegalArgumentException("Class " + type + " not found", cnfe);
             }
         }
     }

@@ -46,7 +46,7 @@ import java.util.stream.Collectors;
  *
  * @author Steve JIN (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.3
  */
 @SuppressWarnings("unused")
 public class HostStorageSystem extends ExtensibleManagedObject {
@@ -300,11 +300,50 @@ public class HostStorageSystem extends ExtensibleManagedObject {
         }
     }
 
+    public Task connectNvmeControllerEx(final List<HostNvmeConnectSpec> connectSpec) throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("connectSpec", HostNvmeConnectSpec[].class, connectSpec == null ? null : connectSpec.toArray()));
+        try {
+            return this.invokeWithTaskReturn("ConnectNvmeControllerEx_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
     public void createNvmeOverRdmaAdapter(final String rdmaDeviceName) throws ResourceInUse, HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("rdmaDeviceName", String.class, rdmaDeviceName));
         try {
             this.getVimService().getWsc().invokeWithoutReturn("CreateNvmeOverRdmaAdapter", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void createSoftwareAdapter(final HostHbaCreateSpec spec) throws HostConfigFault, NotFound, ResourceInUse, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(), new Argument("spec", HostHbaCreateSpec.class, spec));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("CreateSoftwareAdapter", params);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof ResourceInUse) {
@@ -473,6 +512,23 @@ public class HostStorageSystem extends ExtensibleManagedObject {
             }
             if (cause instanceof NotFound) {
                 throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public Task disconnectNvmeControllerEx(final List<HostNvmeDisconnectSpec> disconnectSpec) throws HostConfigFault, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(), new Argument("disconnectSpec",
+                HostNvmeDisconnectSpec[].class, disconnectSpec == null ? null : disconnectSpec.toArray()));
+        try {
+            return this.invokeWithTaskReturn("DisconnectNvmeControllerEx_Task", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
             }
             if (cause instanceof RuntimeFault) {
                 throw (RuntimeFault) cause;
@@ -844,13 +900,12 @@ public class HostStorageSystem extends ExtensibleManagedObject {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<HostScsiDisk> queryAvailableSsds(final String vffsPath) throws NotFound, HostConfigFault, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("vffsPath", String.class, vffsPath));
         try {
-            return (List<HostScsiDisk>) getVimService().getWsc()
-                    .invoke("QueryAvailableSsds", params, "List.HostScsiDisk");
+            return getVimService().getWsc()
+                    .invokeWithListReturn("QueryAvailableSsds", params, HostScsiDisk.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof NotFound) {
@@ -881,13 +936,11 @@ public class HostStorageSystem extends ExtensibleManagedObject {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<HostPathSelectionPolicyOption> queryPathSelectionPolicyOptions() throws HostConfigFault, RuntimeFault {
         try {
-            return (List<HostPathSelectionPolicyOption>) this.getVimService().getWsc()
-                    .invoke("QueryPathSelectionPolicyOptions",
+            return this.getVimService().getWsc().invokeWithListReturn("QueryPathSelectionPolicyOptions",
                             this.getSingleSelfArgumentList(),
-                            "List.HostPathSelectionPolicyOption");
+                            HostPathSelectionPolicyOption.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof HostConfigFault) {
@@ -900,13 +953,11 @@ public class HostStorageSystem extends ExtensibleManagedObject {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<HostStorageArrayTypePolicyOption> queryStorageArrayTypePolicyOptions() throws HostConfigFault, RuntimeFault {
         try {
-            return (List<HostStorageArrayTypePolicyOption>) this.getVimService().getWsc()
-                    .invoke("QueryStorageArrayTypePolicyOptions",
+            return this.getVimService().getWsc().invokeWithListReturn("QueryStorageArrayTypePolicyOptions",
                             this.getSingleSelfArgumentList(),
-                            "List.HostStorageArrayTypePolicyOption");
+                            HostStorageArrayTypePolicyOption.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof HostConfigFault) {
@@ -919,13 +970,11 @@ public class HostStorageSystem extends ExtensibleManagedObject {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<HostUnresolvedVmfsVolume> queryUnresolvedVmfsVolume() throws RuntimeFault {
         try {
-            return (List<HostUnresolvedVmfsVolume>) this.getVimService().getWsc()
-                    .invoke("QueryUnresolvedVmfsVolume",
+            return this.getVimService().getWsc().invokeWithListReturn("QueryUnresolvedVmfsVolume",
                             this.getSingleSelfArgumentList(),
-                            "List.HostUnresolvedVmfsVolume");
+                            HostUnresolvedVmfsVolume.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {
@@ -935,11 +984,10 @@ public class HostStorageSystem extends ExtensibleManagedObject {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<VmfsConfigOption> queryVmfsConfigOption() throws RuntimeFault {
         try {
-            return (List<VmfsConfigOption>) this.getVimService().getWsc()
-                    .invoke("QueryVmfsConfigOption", this.getSingleSelfArgumentList(), "List.VmfsConfigOption");
+            return this.getVimService().getWsc().invokeWithListReturn("QueryVmfsConfigOption",
+                    this.getSingleSelfArgumentList(), VmfsConfigOption.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {
@@ -1028,6 +1076,28 @@ public class HostStorageSystem extends ExtensibleManagedObject {
         }
     }
 
+    public void removeSoftwareAdapter(final String hbaDeviceName) throws HostConfigFault, NotFound, ResourceInUse, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(), new Argument("hbaDeviceName", String.class, hbaDeviceName));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RemoveSoftwareAdapter", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof ResourceInUse) {
+                throw (ResourceInUse) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof HostConfigFault) {
+                throw (HostConfigFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
     public void rescanAllHba() throws HostConfigFault, RuntimeFault {
         try {
             this.getVimService().getWsc().invokeWithoutReturn("RescanAllHba", this.getSingleSelfArgumentList());
@@ -1093,14 +1163,13 @@ public class HostStorageSystem extends ExtensibleManagedObject {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<HostUnresolvedVmfsResolutionResult> resolveMultipleUnresolvedVmfsVolumes(final List<HostUnresolvedVmfsResolutionSpec> resolutionSpec)
             throws HostConfigFault, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("resolutionSpec", HostUnresolvedVmfsResolutionSpec[].class, resolutionSpec));
+                new Argument("resolutionSpec", HostUnresolvedVmfsResolutionSpec[].class, resolutionSpec.toArray()));
         try {
-            return (List<HostUnresolvedVmfsResolutionResult>) this.getVimService().getWsc()
-                    .invoke("ResolveMultipleUnresolvedVmfsVolumes", params, "List.HostUnresolvedVmfsResolutionResult");
+            return this.getVimService().getWsc().invokeWithListReturn("ResolveMultipleUnresolvedVmfsVolumes",
+                    params, HostUnresolvedVmfsResolutionResult.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof HostConfigFault) {
@@ -1116,7 +1185,7 @@ public class HostStorageSystem extends ExtensibleManagedObject {
     public Task resolveMultipleUnresolvedVmfsVolumesEx(final List<HostUnresolvedVmfsResolutionSpec> resolutionSpec)
             throws HostConfigFault, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("resolutionSpec", HostUnresolvedVmfsResolutionSpec[].class, resolutionSpec));
+                new Argument("resolutionSpec", HostUnresolvedVmfsResolutionSpec[].class, resolutionSpec.toArray()));
         try {
             return this.invokeWithTaskReturn("ResolveMultipleUnresolvedVmfsVolumesEx_Task", params);
         } catch (final RemoteException e) {
@@ -1131,13 +1200,12 @@ public class HostStorageSystem extends ExtensibleManagedObject {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<HostDiskPartitionInfo> retrieveDiskPartitionInfo(final List<String> devicePath) throws RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("devicePath", String[].class, devicePath));
+                new Argument("devicePath", String[].class, devicePath.toArray()));
         try {
-            return (List<HostDiskPartitionInfo>) this.getVimService().getWsc()
-                    .invoke("RetrieveDiskPartitionInfo", params, "List.HostDiskPartitionInfo");
+            return this.getVimService().getWsc().invokeWithListReturn("RetrieveDiskPartitionInfo",
+                    params, HostDiskPartitionInfo.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {
@@ -1376,7 +1444,7 @@ public class HostStorageSystem extends ExtensibleManagedObject {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("iScsiHbaDevice", String.class, iScsiHbaDevice),
                 new Argument("targetSet", HostInternetScsiHbaTargetSet.class, targetSet),
-                new Argument("options", HostInternetScsiHbaParamValue[].class, options));
+                new Argument("options", HostInternetScsiHbaParamValue[].class, options.toArray()));
         try {
             this.getVimService().getWsc().invokeWithoutReturn("UpdateInternetScsiAdvancedOptions", params);
         } catch (final RemoteException e) {

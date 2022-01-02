@@ -30,14 +30,16 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * The DiskLocator data object type specifies a virtual disk device (by ID) and a datastore locator for the disk's storage.
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.2.1
  */
+@SuppressWarnings("unused")
 public class VirtualMachineRelocateSpecDiskLocator extends DynamicData {
 
     private int diskId;
@@ -46,6 +48,7 @@ public class VirtualMachineRelocateSpecDiskLocator extends DynamicData {
     private VirtualDeviceBackingInfo diskBackingInfo;
     private VirtualMachineProfileSpec[] profile;
     private VirtualMachineRelocateSpecDiskLocatorBackingSpec backing;
+    private VirtualMachineBaseIndependentFilterSpec[] filterSpec;
 
     @Override
     public String toString() {
@@ -56,6 +59,7 @@ public class VirtualMachineRelocateSpecDiskLocator extends DynamicData {
                 ", diskBackingInfo=" + diskBackingInfo +
                 ", profile=" + Arrays.toString(profile) +
                 ", backing=" + backing +
+                ", filterSpec=" + Arrays.toString(filterSpec) +
                 "} " + super.toString();
     }
 
@@ -63,7 +67,7 @@ public class VirtualMachineRelocateSpecDiskLocator extends DynamicData {
         return this.diskId;
     }
 
-    public void setDiskId(int diskId) {
+    public void setDiskId(final int diskId) {
         this.diskId = diskId;
     }
 
@@ -71,7 +75,7 @@ public class VirtualMachineRelocateSpecDiskLocator extends DynamicData {
         return this.datastore;
     }
 
-    public void setDatastore(ManagedObjectReference datastore) {
+    public void setDatastore(final ManagedObjectReference datastore) {
         this.datastore = datastore;
     }
 
@@ -79,7 +83,7 @@ public class VirtualMachineRelocateSpecDiskLocator extends DynamicData {
         return this.diskMoveType;
     }
 
-    public void setDiskMoveType(String diskMoveType) {
+    public void setDiskMoveType(final String diskMoveType) {
         this.diskMoveType = diskMoveType;
     }
 
@@ -87,7 +91,7 @@ public class VirtualMachineRelocateSpecDiskLocator extends DynamicData {
         return this.diskBackingInfo;
     }
 
-    public void setDiskBackingInfo(VirtualDeviceBackingInfo diskBackingInfo) {
+    public void setDiskBackingInfo(final VirtualDeviceBackingInfo diskBackingInfo) {
         this.diskBackingInfo = diskBackingInfo;
     }
 
@@ -95,7 +99,7 @@ public class VirtualMachineRelocateSpecDiskLocator extends DynamicData {
         return this.profile;
     }
 
-    public void setProfile(VirtualMachineProfileSpec[] profile) {
+    public void setProfile(final VirtualMachineProfileSpec[] profile) {
         this.profile = profile;
     }
 
@@ -105,6 +109,14 @@ public class VirtualMachineRelocateSpecDiskLocator extends DynamicData {
 
     public void setBacking(final VirtualMachineRelocateSpecDiskLocatorBackingSpec backing) {
         this.backing = backing;
+    }
+
+    public List<VirtualMachineBaseIndependentFilterSpec> getFilterSpec() {
+        return Arrays.asList(filterSpec);
+    }
+
+    public void setFilterSpec(final List<VirtualMachineBaseIndependentFilterSpec> filterSpec) {
+        this.filterSpec = filterSpec.toArray(new VirtualMachineBaseIndependentFilterSpec[0]);
     }
 
 }

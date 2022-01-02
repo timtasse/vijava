@@ -29,6 +29,8 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.List;
+
 /**
  * A set of statistics that are typically updated with near real-time regularity.
  * This data object type does not support notification, for scalability reasons.
@@ -37,8 +39,9 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 7.0.3
  */
+@SuppressWarnings("unused")
 public class VirtualMachineQuickStats extends DynamicData {
 
     private Integer overallCpuUsage;
@@ -63,6 +66,8 @@ public class VirtualMachineQuickStats extends DynamicData {
     private Long compressedMemory;
     private Integer uptimeSeconds;
     private Long ssdSwappedMemory;
+    private Integer activeMemory;
+    private List<VirtualMachineQuickStatsMemoryTierStats> memoryTierStats;
 
     @Override
     public String toString() {
@@ -89,6 +94,8 @@ public class VirtualMachineQuickStats extends DynamicData {
                 ", compressedMemory=" + compressedMemory +
                 ", uptimeSeconds=" + uptimeSeconds +
                 ", ssdSwappedMemory=" + ssdSwappedMemory +
+                ", activeMemory=" + activeMemory +
+                ", memoryTierStats=" + memoryTierStats +
                 "} " + super.toString();
     }
 
@@ -96,7 +103,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.overallCpuUsage;
     }
 
-    public void setOverallCpuUsage(Integer overallCpuUsage) {
+    public void setOverallCpuUsage(final Integer overallCpuUsage) {
         this.overallCpuUsage = overallCpuUsage;
     }
 
@@ -104,7 +111,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.overallCpuDemand;
     }
 
-    public void setOverallCpuDemand(Integer overallCpuDemand) {
+    public void setOverallCpuDemand(final Integer overallCpuDemand) {
         this.overallCpuDemand = overallCpuDemand;
     }
 
@@ -112,7 +119,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.guestMemoryUsage;
     }
 
-    public void setGuestMemoryUsage(Integer guestMemoryUsage) {
+    public void setGuestMemoryUsage(final Integer guestMemoryUsage) {
         this.guestMemoryUsage = guestMemoryUsage;
     }
 
@@ -120,7 +127,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.hostMemoryUsage;
     }
 
-    public void setHostMemoryUsage(Integer hostMemoryUsage) {
+    public void setHostMemoryUsage(final Integer hostMemoryUsage) {
         this.hostMemoryUsage = hostMemoryUsage;
     }
 
@@ -128,7 +135,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.guestHeartbeatStatus;
     }
 
-    public void setGuestHeartbeatStatus(ManagedEntityStatus guestHeartbeatStatus) {
+    public void setGuestHeartbeatStatus(final ManagedEntityStatus guestHeartbeatStatus) {
         this.guestHeartbeatStatus = guestHeartbeatStatus;
     }
 
@@ -136,7 +143,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.distributedCpuEntitlement;
     }
 
-    public void setDistributedCpuEntitlement(Integer distributedCpuEntitlement) {
+    public void setDistributedCpuEntitlement(final Integer distributedCpuEntitlement) {
         this.distributedCpuEntitlement = distributedCpuEntitlement;
     }
 
@@ -144,7 +151,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.distributedMemoryEntitlement;
     }
 
-    public void setDistributedMemoryEntitlement(Integer distributedMemoryEntitlement) {
+    public void setDistributedMemoryEntitlement(final Integer distributedMemoryEntitlement) {
         this.distributedMemoryEntitlement = distributedMemoryEntitlement;
     }
 
@@ -152,7 +159,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.staticCpuEntitlement;
     }
 
-    public void setStaticCpuEntitlement(Integer staticCpuEntitlement) {
+    public void setStaticCpuEntitlement(final Integer staticCpuEntitlement) {
         this.staticCpuEntitlement = staticCpuEntitlement;
     }
 
@@ -160,7 +167,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.staticMemoryEntitlement;
     }
 
-    public void setStaticMemoryEntitlement(Integer staticMemoryEntitlement) {
+    public void setStaticMemoryEntitlement(final Integer staticMemoryEntitlement) {
         this.staticMemoryEntitlement = staticMemoryEntitlement;
     }
 
@@ -168,7 +175,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.privateMemory;
     }
 
-    public void setPrivateMemory(Integer privateMemory) {
+    public void setPrivateMemory(final Integer privateMemory) {
         this.privateMemory = privateMemory;
     }
 
@@ -176,7 +183,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.sharedMemory;
     }
 
-    public void setSharedMemory(Integer sharedMemory) {
+    public void setSharedMemory(final Integer sharedMemory) {
         this.sharedMemory = sharedMemory;
     }
 
@@ -184,7 +191,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.swappedMemory;
     }
 
-    public void setSwappedMemory(Integer swappedMemory) {
+    public void setSwappedMemory(final Integer swappedMemory) {
         this.swappedMemory = swappedMemory;
     }
 
@@ -192,7 +199,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.balloonedMemory;
     }
 
-    public void setBalloonedMemory(Integer balloonedMemory) {
+    public void setBalloonedMemory(final Integer balloonedMemory) {
         this.balloonedMemory = balloonedMemory;
     }
 
@@ -200,7 +207,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.consumedOverheadMemory;
     }
 
-    public void setConsumedOverheadMemory(Integer consumedOverheadMemory) {
+    public void setConsumedOverheadMemory(final Integer consumedOverheadMemory) {
         this.consumedOverheadMemory = consumedOverheadMemory;
     }
 
@@ -208,7 +215,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.ftLogBandwidth;
     }
 
-    public void setFtLogBandwidth(Integer ftLogBandwidth) {
+    public void setFtLogBandwidth(final Integer ftLogBandwidth) {
         this.ftLogBandwidth = ftLogBandwidth;
     }
 
@@ -216,7 +223,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.ftSecondaryLatency;
     }
 
-    public void setFtSecondaryLatency(Integer ftSecondaryLatency) {
+    public void setFtSecondaryLatency(final Integer ftSecondaryLatency) {
         this.ftSecondaryLatency = ftSecondaryLatency;
     }
 
@@ -224,7 +231,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.ftLatencyStatus;
     }
 
-    public void setFtLatencyStatus(ManagedEntityStatus ftLatencyStatus) {
+    public void setFtLatencyStatus(final ManagedEntityStatus ftLatencyStatus) {
         this.ftLatencyStatus = ftLatencyStatus;
     }
 
@@ -232,7 +239,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.compressedMemory;
     }
 
-    public void setCompressedMemory(Long compressedMemory) {
+    public void setCompressedMemory(final Long compressedMemory) {
         this.compressedMemory = compressedMemory;
     }
 
@@ -240,7 +247,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.uptimeSeconds;
     }
 
-    public void setUptimeSeconds(Integer uptimeSeconds) {
+    public void setUptimeSeconds(final Integer uptimeSeconds) {
         this.uptimeSeconds = uptimeSeconds;
     }
 
@@ -248,7 +255,7 @@ public class VirtualMachineQuickStats extends DynamicData {
         return this.ssdSwappedMemory;
     }
 
-    public void setSsdSwappedMemory(Long ssdSwappedMemory) {
+    public void setSsdSwappedMemory(final Long ssdSwappedMemory) {
         this.ssdSwappedMemory = ssdSwappedMemory;
     }
 
@@ -268,4 +275,19 @@ public class VirtualMachineQuickStats extends DynamicData {
         this.grantedMemory = grantedMemory;
     }
 
+    public Integer getActiveMemory() {
+        return activeMemory;
+    }
+
+    public void setActiveMemory(final Integer activeMemory) {
+        this.activeMemory = activeMemory;
+    }
+
+    public List<VirtualMachineQuickStatsMemoryTierStats> getMemoryTierStats() {
+        return memoryTierStats;
+    }
+
+    public void setMemoryTierStats(final List<VirtualMachineQuickStatsMemoryTierStats> memoryTierStats) {
+        this.memoryTierStats = memoryTierStats;
+    }
 }

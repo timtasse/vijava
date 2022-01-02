@@ -43,6 +43,7 @@ import java.util.Arrays;
 @SuppressWarnings("all")
 public class ClusterConfigSpecEx extends ComputeResourceConfigSpec {
 
+    private ClusterSystemVMsConfigSpec systemVMsConfig;
     private ClusterDasConfigInfo dasConfig;
     private ClusterDasVmConfigSpec[] dasVmConfigSpec;
     private ClusterDrsConfigInfo drsConfig;
@@ -63,7 +64,8 @@ public class ClusterConfigSpecEx extends ComputeResourceConfigSpec {
     @Override
     public String toString() {
         return "ClusterConfigSpecEx{" +
-                "dasConfig=" + dasConfig +
+                "systemVMsConfig=" + systemVMsConfig +
+                ", dasConfig=" + dasConfig +
                 ", dasVmConfigSpec=" + Arrays.toString(dasVmConfigSpec) +
                 ", drsConfig=" + drsConfig +
                 ", drsVmConfigSpec=" + Arrays.toString(drsVmConfigSpec) +
@@ -208,6 +210,14 @@ public class ClusterConfigSpecEx extends ComputeResourceConfigSpec {
 
     public void setCryptoConfig(final ClusterCryptoConfigInfo cryptoConfig) {
         this.cryptoConfig = cryptoConfig;
+    }
+
+    public ClusterSystemVMsConfigSpec getSystemVMsConfig() {
+        return systemVMsConfig;
+    }
+
+    public void setSystemVMsConfig(final ClusterSystemVMsConfigSpec systemVMsConfig) {
+        this.systemVMsConfig = systemVMsConfig;
     }
 
 }

@@ -37,7 +37,7 @@ import java.util.Calendar;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 7.0.2
+ * @version 7.0.3
  */
 @SuppressWarnings("unused")
 public class HostRuntimeInfo extends DynamicData {
@@ -57,7 +57,8 @@ public class HostRuntimeInfo extends DynamicData {
     private Long hostMaxVirtualDiskCapacity;
     private String cryptoState;
     private CryptoKeyId cryptoKeyId;
-    private String statelessNvdsMigrationReady;
+    private HostRuntimeInfoStatelessNvdsMigrationState statelessNvdsMigrationReady;
+    private HostRuntimeInfoStateEncryptionInfo stateEncryption;
 
     @Override
     public String toString() {
@@ -78,7 +79,8 @@ public class HostRuntimeInfo extends DynamicData {
                 ", cryptoState='" + cryptoState + '\'' +
                 ", cryptoKeyId=" + cryptoKeyId +
                 ", statelessNvdsMigrationReady='" + statelessNvdsMigrationReady + '\'' +
-                '}';
+                ", stateEncryption=" + stateEncryption +
+                "} " + super.toString();
     }
 
     public HostSystemConnectionState getConnectionState() {
@@ -201,12 +203,20 @@ public class HostRuntimeInfo extends DynamicData {
         this.cryptoKeyId = cryptoKeyId;
     }
 
-    public String getStatelessNvdsMigrationReady() {
+    public HostRuntimeInfoStatelessNvdsMigrationState getStatelessNvdsMigrationReady() {
         return statelessNvdsMigrationReady;
     }
 
-    public void setStatelessNvdsMigrationReady(final String statelessNvdsMigrationReady) {
+    public void setStatelessNvdsMigrationReady(final HostRuntimeInfoStatelessNvdsMigrationState statelessNvdsMigrationReady) {
         this.statelessNvdsMigrationReady = statelessNvdsMigrationReady;
+    }
+
+    public HostRuntimeInfoStateEncryptionInfo getStateEncryption() {
+        return stateEncryption;
+    }
+
+    public void setStateEncryption(final HostRuntimeInfoStateEncryptionInfo stateEncryption) {
+        this.stateEncryption = stateEncryption;
     }
 
 }

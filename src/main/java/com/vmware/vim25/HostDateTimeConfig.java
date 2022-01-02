@@ -30,28 +30,101 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * This data object represents the dateTime configuration of the host.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.3
+ */
 
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class HostDateTimeConfig extends DynamicData {
-  public String timeZone;
-  public HostNtpConfig ntpConfig;
 
-  public String getTimeZone() {
-    return this.timeZone;
-  }
+    private String timeZone;
+    private HostNtpConfig ntpConfig;
+    private HostPtpConfig ptpConfig;
+    private HostDateTimeInfoProtocol protocol;
+    private Boolean enabled;
+    private Boolean disableEvents;
+    private Boolean disableFallback;
+    private Boolean resetToFactoryDefaults;
 
-  public HostNtpConfig getNtpConfig() {
-    return this.ntpConfig;
-  }
+    @Override
+    public String toString() {
+        return "HostDateTimeConfig{" +
+                "timeZone='" + timeZone + '\'' +
+                ", ntpConfig=" + ntpConfig +
+                ", ptpConfig=" + ptpConfig +
+                ", protocol=" + protocol +
+                ", enabled=" + enabled +
+                ", disableEvents=" + disableEvents +
+                ", disableFallback=" + disableFallback +
+                ", resetToFactoryDefaults=" + resetToFactoryDefaults +
+                "} " + super.toString();
+    }
 
-  public void setTimeZone(String timeZone) {
-    this.timeZone=timeZone;
-  }
+    public String getTimeZone() {
+        return this.timeZone;
+    }
 
-  public void setNtpConfig(HostNtpConfig ntpConfig) {
-    this.ntpConfig=ntpConfig;
-  }
+    public void setTimeZone(final String timeZone) {
+        this.timeZone = timeZone;
+    }
+
+    public HostNtpConfig getNtpConfig() {
+        return this.ntpConfig;
+    }
+
+    public void setNtpConfig(final HostNtpConfig ntpConfig) {
+        this.ntpConfig = ntpConfig;
+    }
+
+    public HostPtpConfig getPtpConfig() {
+        return ptpConfig;
+    }
+
+    public void setPtpConfig(final HostPtpConfig ptpConfig) {
+        this.ptpConfig = ptpConfig;
+    }
+
+    public HostDateTimeInfoProtocol getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(final HostDateTimeInfoProtocol protocol) {
+        this.protocol = protocol;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(final Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public Boolean getDisableEvents() {
+        return disableEvents;
+    }
+
+    public void setDisableEvents(final Boolean disableEvents) {
+        this.disableEvents = disableEvents;
+    }
+
+    public Boolean getDisableFallback() {
+        return disableFallback;
+    }
+
+    public void setDisableFallback(final Boolean disableFallback) {
+        this.disableFallback = disableFallback;
+    }
+
+    public Boolean getResetToFactoryDefaults() {
+        return resetToFactoryDefaults;
+    }
+
+    public void setResetToFactoryDefaults(final Boolean resetToFactoryDefaults) {
+        this.resetToFactoryDefaults = resetToFactoryDefaults;
+    }
+
 }

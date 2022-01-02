@@ -114,15 +114,15 @@ public class StorageResourceManager extends ManagedObject {
 
     public Task refreshRecommendationsForPod(final ManagedObjectReference pod) throws InvalidArgument, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("pod", ManagedObjectReference.class.getSimpleName(), pod));
-        final ManagedObjectReference mor = (ManagedObjectReference) this.getVimService().getWsc()
-                .invoke("RefreshStorageDrsRecommendationsForPod_Task", params, ManagedObjectReference.class.getSimpleName());
+                new Argument("pod", ManagedObjectReference.class, pod));
+        final ManagedObjectReference mor = this.getVimService().getWsc()
+                .invoke("RefreshStorageDrsRecommendationsForPod_Task", params, ManagedObjectReference.class);
         return new Task(this.getServerConnection(), mor);
     }
 
     public MethodFault validateStoragePodConfig(final ManagedObjectReference pod, final StorageDrsConfigSpec spec) throws RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("pod", ManagedObjectReference.class.getSimpleName(), pod),
+                new Argument("pod", ManagedObjectReference.class, pod),
                 new Argument("spec", StorageDrsConfigSpec.class.getSimpleName(), spec));
         return (MethodFault) this.getVimService().getWsc().invoke("ValidateStoragePodConfig", params, MethodFault.class.getSimpleName());
     }

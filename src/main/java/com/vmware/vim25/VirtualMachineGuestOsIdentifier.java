@@ -30,13 +30,16 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * Guest operating system identifier.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 6.7.1
+ * @version 7.0.3
  */
 public enum VirtualMachineGuestOsIdentifier {
 
     amazonlinux2_64Guest("amazonlinux2_64Guest"),
+    amazonlinux3_64Guest("amazonlinux3_64Guest"),
     asianux3Guest("asianux3Guest"),
     asianux3_64Guest("asianux3_64Guest"),
     asianux4Guest("asianux4Guest"),
@@ -44,14 +47,17 @@ public enum VirtualMachineGuestOsIdentifier {
     asianux5_64Guest("asianux5_64Guest"),
     asianux7_64Guest("asianux7_64Guest"),
     asianux8_64Guest("asianux8_64Guest"),
+    asianux9_64Guest("asianux9_64Guest"),
     centos6_64Guest("centos6_64Guest"),
     centos64Guest("centos64Guest"),
     centos6Guest("centos6Guest"),
     centos7_64Guest("centos7_64Guest"),
     centos7Guest("centos7Guest"),
     centos8_64Guest("centos8_64Guest"),
+    centos9_64Guest("centos9_64Guest"),
     centosGuest("centosGuest"),
     coreos64Guest("coreos64Guest"),
+    crxPod1Guest("crxPod1Guest"),
     darwin10Guest("darwin10Guest"),
     darwin10_64Guest("darwin10_64Guest"),
     darwin11Guest("darwin11Guest"),
@@ -63,10 +69,15 @@ public enum VirtualMachineGuestOsIdentifier {
     darwin16_64Guest("darwin16_64Guest"),
     darwin17_64Guest("darwin17_64Guest"),
     darwin18_64Guest("darwin18_64Guest"),
+    darwin19_64Guest("darwin19_64Guest"),
+    darwin20_64Guest("darwin20_64Guest"),
+    darwin21_64Guest("darwin21_64Guest"),
     darwin64Guest("darwin64Guest"),
     darwinGuest("darwinGuest"),
     debian10_64Guest("debian10_64Guest"),
     debian10Guest("debian10Guest"),
+    debian11_64Guest("debian11_64Guest"),
+    debian11Guest("debian11Guest"),
     debian4Guest("debian4Guest"),
     debian4_64Guest("debian4_64Guest"),
     debian5Guest("debian5Guest"),
@@ -88,6 +99,8 @@ public enum VirtualMachineGuestOsIdentifier {
     freebsd11Guest("freebsd11Guest"),
     freebsd12_64Guest("freebsd12_64Guest"),
     freebsd12Guest("freebsd12Guest"),
+    freebsd13_64Guest("freebsd13_64Guest"),
+    freebsd13Guest("freebsd13Guest"),
     freebsd64Guest("freebsd64Guest"),
     freebsdGuest("freebsdGuest"),
     genericLinuxGuest("genericLinuxGuest"),
@@ -108,6 +121,7 @@ public enum VirtualMachineGuestOsIdentifier {
     oracleLinux7_64Guest("oracleLinux7_64Guest"),
     oracleLinux7Guest("oracleLinux7Guest"),
     oracleLinux8_64Guest("oracleLinux8_64Guest"),
+    oracleLinux9_64Guest("oracleLinux9_64Guest"),
     oracleLinux64Guest("oracleLinux64Guest"),
     oracleLinuxGuest("oracleLinuxGuest"),
     os2Guest("os2Guest"),
@@ -119,6 +133,8 @@ public enum VirtualMachineGuestOsIdentifier {
     other3xLinuxGuest("other3xLinuxGuest"),
     other4xLinux64Guest("other4xLinux64Guest"),
     other4xLinuxGuest("other4xLinuxGuest"),
+    other5xLinux64Guest("other5xLinux64Guest"),
+    other5xLinuxGuest("other5xLinuxGuest"),
     otherGuest("otherGuest"),
     otherGuest64("otherGuest64"),
     otherLinux64Guest("otherLinux64Guest"),
@@ -136,6 +152,7 @@ public enum VirtualMachineGuestOsIdentifier {
     rhel7Guest("rhel7Guest"),
     rhel7_64Guest("rhel7_64Guest"),
     rhel8_64Guest("rhel8_64Guest"),
+    rhel9_64Guest("rhel9_64Guest"),
     sjdsGuest("sjdsGuest"),
     sles10Guest("sles10Guest"),
     sles10_64Guest("sles10_64Guest"),
@@ -144,6 +161,7 @@ public enum VirtualMachineGuestOsIdentifier {
     sles12Guest("sles12Guest"),
     sles12_64Guest("sles12_64Guest"),
     sles15_64Guest("sles15_64Guest"),
+    sles16_64Guest("sles16_64Guest"),
     sles64Guest("sles64Guest"),
     slesGuest("slesGuest"),
     solaris10Guest("solaris10Guest"),
@@ -163,6 +181,7 @@ public enum VirtualMachineGuestOsIdentifier {
     vmkernel5Guest("vmkernel5Guest"),
     vmkernel6Guest("vmkernel6Guest"),
     vmkernel65Guest("vmkernel65Guest"),
+    vmkernel7Guest("vmkernel7Guest"),
     vmkernelGuest("vmkernelGuest"),
     vmwarePhoton64Guest("vmwarePhoton64Guest"),
     win2000AdvServGuest("win2000AdvServGuest"),
@@ -171,6 +190,8 @@ public enum VirtualMachineGuestOsIdentifier {
     win31Guest("win31Guest"),
     win95Guest("win95Guest"),
     win98Guest("win98Guest"),
+    windows2019srv_64Guest("windows2019srv_64Guest"),
+    windows2019srvNext_64Guest("windows2019srvNext_64Guest"),
     windows7Guest("windows7Guest"),
     windows7Server64Guest("windows7Server64Guest"),
     windows7_64Guest("windows7_64Guest"),

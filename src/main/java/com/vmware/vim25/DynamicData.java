@@ -39,7 +39,11 @@ package com.vmware.vim25;
  * @author Steve Jin (http://www.doublecloud.org)
  * @version 5.1
  */
-
 public class DynamicData {
+
+    @Override
+    public String toString() {
+        return "";
+    }
 
 }

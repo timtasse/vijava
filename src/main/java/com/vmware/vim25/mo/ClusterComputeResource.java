@@ -37,6 +37,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * The ClusterComputeResource data object aggregates the compute resources of
@@ -460,7 +461,6 @@ public class ClusterComputeResource extends ComputeResource {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<ClusterComputeResourceValidationResultBase> validateHCIConfiguration(
             final ClusterComputeResourceHCIConfigSpec hciConfigSpec, final List<ManagedObjectReference> hosts)
             throws InvalidState, RuntimeFault {
@@ -468,13 +468,27 @@ public class ClusterComputeResource extends ComputeResource {
                 new Argument("hciConfigSpec", ClusterComputeResourceHCIConfigSpec.class, hciConfigSpec),
                 new Argument("hosts", "ManagedObjectReference[]", hosts));
         try {
-            return (List<ClusterComputeResourceValidationResultBase>) this.getVimService().getWsc()
-                    .invoke("ValidateHCIConfiguration", params, "List.ClusterComputeResourceValidationResultBase");
+            return this.getVimService().getWsc()
+                    .invokeWithListReturn("ValidateHCIConfiguration", params, ClusterComputeResourceValidationResultBase.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof InvalidState) {
                 throw (InvalidState) cause;
             }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public List<Datastore> getSystemVMsRestrictedDatastores() throws RuntimeFault {
+        try {
+            final List<ManagedObjectReference> dsList = this.getVimService().getWsc().
+                    invokeWithListReturn("GetSystemVMsRestrictedDatastores", this.getSingleSelfArgumentList(), ManagedObjectReference.class);
+            return dsList.stream().map(mor -> new Datastore(this.getServerConnection(), mor)).collect(Collectors.toList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {
                 throw (RuntimeFault) cause;
             }

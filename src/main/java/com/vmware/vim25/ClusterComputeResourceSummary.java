@@ -30,13 +30,14 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * The ClusterComputeResourceSummary data object encapsulates runtime properties of a ClusterComputeResource.
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.1
+ * @version 7.0.1.1
  */
 public class ClusterComputeResourceSummary extends ComputeResourceSummary {
 
@@ -53,6 +54,8 @@ public class ClusterComputeResourceSummary extends ComputeResourceSummary {
     private String currentEVCGraphicsModeKey;
     private ClusterDasData dasData;
     private String clusterMaintenanceModeStatus;
+    private ClusterComputeResourceVcsHealthStatus vcsHealthStatus;
+    private ClusterComputeResourceVcsSlots[] vcsSlots;
 
     @Override
     public String toString() {
@@ -69,6 +72,8 @@ public class ClusterComputeResourceSummary extends ComputeResourceSummary {
                 ", currentEVCGraphicsModeKey='" + currentEVCGraphicsModeKey + '\'' +
                 ", dasData=" + dasData +
                 ", clusterMaintenanceModeStatus='" + clusterMaintenanceModeStatus + '\'' +
+                ", vcsHealthStatus=" + vcsHealthStatus +
+                ", vcsSlots=" + Arrays.toString(vcsSlots) +
                 "} " + super.toString();
     }
 
@@ -106,27 +111,27 @@ public class ClusterComputeResourceSummary extends ComputeResourceSummary {
         this.currentFailoverLevel = currentFailoverLevel;
     }
 
-    public void setAdmissionControlInfo(ClusterDasAdmissionControlInfo admissionControlInfo) {
+    public void setAdmissionControlInfo(final ClusterDasAdmissionControlInfo admissionControlInfo) {
         this.admissionControlInfo = admissionControlInfo;
     }
 
-    public void setNumVmotions(int numVmotions) {
+    public void setNumVmotions(final int numVmotions) {
         this.numVmotions = numVmotions;
     }
 
-    public void setTargetBalance(Integer targetBalance) {
+    public void setTargetBalance(final Integer targetBalance) {
         this.targetBalance = targetBalance;
     }
 
-    public void setCurrentBalance(Integer currentBalance) {
+    public void setCurrentBalance(final Integer currentBalance) {
         this.currentBalance = currentBalance;
     }
 
-    public void setCurrentEVCModeKey(String currentEVCModeKey) {
+    public void setCurrentEVCModeKey(final String currentEVCModeKey) {
         this.currentEVCModeKey = currentEVCModeKey;
     }
 
-    public void setDasData(ClusterDasData dasData) {
+    public void setDasData(final ClusterDasData dasData) {
         this.dasData = dasData;
     }
 
@@ -168,6 +173,22 @@ public class ClusterComputeResourceSummary extends ComputeResourceSummary {
 
     public void setClusterMaintenanceModeStatus(final String clusterMaintenanceModeStatus) {
         this.clusterMaintenanceModeStatus = clusterMaintenanceModeStatus;
+    }
+
+    public ClusterComputeResourceVcsHealthStatus getVcsHealthStatus() {
+        return vcsHealthStatus;
+    }
+
+    public void setVcsHealthStatus(final ClusterComputeResourceVcsHealthStatus vcsHealthStatus) {
+        this.vcsHealthStatus = vcsHealthStatus;
+    }
+
+    public List<ClusterComputeResourceVcsSlots> getVcsSlots() {
+        return Arrays.asList(vcsSlots);
+    }
+
+    public void setVcsSlots(final List<ClusterComputeResourceVcsSlots> vcsSlots) {
+        this.vcsSlots = vcsSlots.toArray(new ClusterComputeResourceVcsSlots[0]);
     }
 
 }

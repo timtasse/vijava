@@ -358,31 +358,6 @@ public class VimStub {
         wsc.invoke("DeleteDirectory", paras, null);
     }
 
-    public DiagnosticManagerLogDescriptor[] queryDescriptions(final ManagedObjectReference _this, final ManagedObjectReference host) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("host", "ManagedObjectReference", host);
-        return (DiagnosticManagerLogDescriptor[]) wsc.invoke("QueryDescriptions", paras, "DiagnosticManagerLogDescriptor[]");
-    }
-
-    public DiagnosticManagerLogHeader browseDiagnosticLog(final ManagedObjectReference _this, final ManagedObjectReference host, final String key, final int start, final int lines) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[5];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("host", "ManagedObjectReference", host);
-        paras[2] = new Argument("key", "String", key);
-        paras[3] = new Argument("start", "int", start);
-        paras[4] = new Argument("lines", "int", lines);
-        return (DiagnosticManagerLogHeader) wsc.invoke("BrowseDiagnosticLog", paras, "DiagnosticManagerLogHeader");
-    }
-
-    public ManagedObjectReference generateLogBundles_Task(final ManagedObjectReference _this, final boolean includeDefault, final ManagedObjectReference[] host) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("includeDefault", "boolean", includeDefault);
-        paras[2] = new Argument("host", "ManagedObjectReference[]", host);
-        return (ManagedObjectReference) wsc.invoke("GenerateLogBundles_Task", paras, "ManagedObjectReference");
-    }
-
     public VirtualMachineConfigOptionDescriptor[] queryConfigOptionDescriptor(final ManagedObjectReference _this) throws java.rmi.RemoteException {
         final Argument[] paras = new Argument[1];
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
@@ -1574,38 +1549,6 @@ public class VimStub {
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
         paras[1] = new Argument("datastorePath", "String", datastorePath);
         wsc.invoke("DeleteFile", paras, null);
-    }
-
-    public void updateDateTimeConfig(final ManagedObjectReference _this, final HostDateTimeConfig config) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("config", "HostDateTimeConfig", config);
-        wsc.invoke("UpdateDateTimeConfig", paras, null);
-    }
-
-    public HostDateTimeSystemTimeZone[] queryAvailableTimeZones(final ManagedObjectReference _this) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        return (HostDateTimeSystemTimeZone[]) wsc.invoke("QueryAvailableTimeZones", paras, "HostDateTimeSystemTimeZone[]");
-    }
-
-    public Calendar queryDateTime(final ManagedObjectReference _this) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        return (Calendar) wsc.invoke("QueryDateTime", paras, "Calendar");
-    }
-
-    public void updateDateTime(final ManagedObjectReference _this, final Calendar dateTime) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("dateTime", "Calendar", dateTime);
-        wsc.invoke("UpdateDateTime", paras, null);
-    }
-
-    public void refreshDateTimeSystem(final ManagedObjectReference _this) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        wsc.invoke("RefreshDateTimeSystem", paras, null);
     }
 
     public HostDiagnosticPartition[] queryAvailablePartition(final ManagedObjectReference _this) throws java.rmi.RemoteException {

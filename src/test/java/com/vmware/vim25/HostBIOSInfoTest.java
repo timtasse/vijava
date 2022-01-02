@@ -17,7 +17,7 @@ import java.util.Optional;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.*;
 
 /**
  * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 28.03.18.
@@ -59,9 +59,19 @@ public class HostBIOSInfoTest {
     }
 
     @Test
+    public void testTicket() throws Exception {
+        final SessionManagerHttpServiceRequestSpec spec = new SessionManagerHttpServiceRequestSpec();
+        spec.setUrl("https://127.0.0.1:8080/cgi-bin/vm-support.cgi?n=val");
+        final SessionManagerGenericServiceTicket ticket = this.instance.getSessionManager().acquireGenericServiceTicket(spec);
+        LOGGER.debug("{}", ticket);
+        assertNotNull(ticket);
+    }
+
+    @Test
     public void testCapability() throws Exception {
         final Capability capability = this.instance.getCapability();
         LOGGER.debug(capability.toString());
+        assertNotNull(capability);
     }
 
     @Test
@@ -69,19 +79,32 @@ public class HostBIOSInfoTest {
         final List<VmwareDistributedVirtualSwitch> switches = Optional.ofNullable(new InventoryNavigator(this.instance.getRootFolder()).searchManagedEntities(VmwareDistributedVirtualSwitch.class.getSimpleName()))
                 .stream().flatMap(Arrays::stream)
                 .map(VmwareDistributedVirtualSwitch.class::cast)
+                .filter(sw -> !"Switch_bak-esx".equals(sw.getName()))
                 .collect(Collectors.toList());
+        assertFalse(switches.isEmpty());
         LOGGER.debug(switches.get(0).getName());
         LOGGER.debug("{}", switches.get(0).queryUsedVlanIds());
-
+        final VMwareDVSConfigInfo config = (VMwareDVSConfigInfo) switches.get(0).getConfig();
+        assertNotNull(config);
+        final VMwareDvsLacpGroupConfig lacpGroupConfig = Arrays.asList(config.lacpGroupConfig).get(0);
+        assertNotNull(lacpGroupConfig);
+        assertEquals(lacpGroupConfig.getUplinkNum().intValue(), 2);
+        assertEquals(lacpGroupConfig.getTimeoutMode(), VMwareUplinkLacpTimeoutMode.fast);
+        LOGGER.debug("lacpGroupConfig: {}", lacpGroupConfig);
     }
 
     @Test
     public void testSummary() throws Exception {
         final VirtualMachine vm = this.getVirtualMachine();
+        assertNotNull(vm);
+        assertNotNull(vm.getSummary());
+        assertNotNull(vm.getSummary().getConfig());
         LOGGER.debug("{}", vm.getSummary().getConfig());
         final ClusterComputeResource cluster = (ClusterComputeResource) new InventoryNavigator(this.instance.getRootFolder())
                 .searchManagedEntity(ClusterComputeResource.class.getSimpleName(), "pi-esx-1");
+        assertNotNull(cluster);
         final ComputeResourceSummary summary = cluster.getSummary();
+        assertNotNull(summary);
         LOGGER.debug("{}", summary);
     }
 
@@ -120,12 +143,16 @@ public class HostBIOSInfoTest {
         LOGGER.debug("{}", vm);
         final VirtualMachineTicket ticket = vm.acquireTicket(VirtualMachineTicketType.mks);
         LOGGER.debug("{}", ticket);
+        assertNotNull(ticket);
         LOGGER.debug("vmrc://{}:{}/?mksticket={}&thumbprint={}&path={}", ticket.getHost(), ticket.getPort(), ticket.getTicket(), ticket.getSslThumbprint().replace(":", "%3A"), ticket.getCfgFile());
         final VirtualMachineTicket webTicket = vm.acquireTicket(VirtualMachineTicketType.webmks);
         LOGGER.debug("{}", webTicket);
+        assertNotNull(webTicket);
         //Thread.sleep(40000);
         final VirtualMachineConfigInfo config = vm.getConfig();
+        assertNotNull(config);
         final VirtualMachineGuestIntegrityInfo integrityInfo = config.getGuestIntegrityInfo();
+        assertNotNull(integrityInfo);
         LOGGER.debug("IntegrityInfo enabled={}", integrityInfo.isEnabled());
         LOGGER.debug("vmxConfigChecksum={}", config.getVmxConfigChecksum());
         LOGGER.debug("forkConfigInfo={}", config.getForkConfigInfo());
@@ -311,7 +338,8 @@ public class HostBIOSInfoTest {
         LOGGER.debug("provisioningNicSelectionSupported={}", capability.getProvisioningNicSelectionSupported());
         LOGGER.debug("turnDiskLocatorLedSupported={}", capability.getTurnDiskLocatorLedSupported());
         LOGGER.debug("virtualVolumeDatastoreSupported={}", capability.getVirtualVolumeDatastoreSupported());
-        final HostBIOSInfo biosInfo = host.getHardware().getBiosInfo();
+        final HostHardwareInfo hardware = host.getHardware();
+        final HostBIOSInfo biosInfo = hardware.getBiosInfo();
         LOGGER.debug("Vendor: {}", biosInfo.getVendor());
         LOGGER.debug("BIOS releasedate: {}", biosInfo.getReleaseDate().getTime());
         LOGGER.debug("BIOS Version: {}", biosInfo.getBiosVersion());
@@ -320,6 +348,8 @@ public class HostBIOSInfoTest {
         assertNotNull(biosInfo, "HostBIOSInfo is null");
         assertNotNull(biosInfo.getBiosVersion(), "BIOSVersion is null");
         assertNotNull(biosInfo.getReleaseDate());
+        LOGGER.debug("{}", hardware.getCpuPkg());
+        assertNotNull(hardware.getCpuPkg());
         try {
             accessManager.changeAccessMode("test", false, HostAccessMode.accessAdmin);
         } catch (final UserNotFound e) {
@@ -339,16 +369,6 @@ public class HostBIOSInfoTest {
 //        LOGGER.debug(statsNew.toString());
 //        this.testSpeed(true, accessManager);
 //        this.testSpeed(false, accessManager);
-    }
-
-    @Test
-    public void test() {
-        final Base64.Decoder decoder = Base64.getDecoder();
-        final byte[] decode = decoder.decode("BCoABAEDhAIgD2AA//uLFwOOyACsDWAJQRoQByAHMAcAAAAQEBDsAIQAUHJvYyAxAEFNRABBTUQgT3B0ZXJvbih0bSkgUHJvY2Vzc29yIDYzNzggICAgICAgICAgICAgICAgICAAAA==");
-        //Charset.availableCharsets().forEach((key, charset) -> LOGGER.debug(new String(decode, charset)));
-        LOGGER.debug(new String(decode));
-        LOGGER.debug(new String(decoder.decode("BCgABAEDhAITDwQA//uLFwCOAAC4CygKQQEQByAH//8AAAACAgIEAFByb2MgMQBBTUQAAA==")));
-        //LOGGER.debug(new String(decode, StandardCharsets.UTF_16));
     }
 
     @Test(enabled = false)

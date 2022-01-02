@@ -8,16 +8,19 @@ package com.vmware.vim25;
  * "NVM Express over Fabrics 1.0", Section 5, "Discovery service"
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 7.0.3
  * @since 7.0
  */
 public class HostNvmeDiscoverSpec extends HostNvmeSpec {
 
     private Boolean autoConnect;
+    private Boolean rootDiscoveryController;
 
     @Override
     public String toString() {
         return "HostNvmeDiscoverSpec{" +
                 "autoConnect=" + autoConnect +
+                ", rootDiscoveryController=" + rootDiscoveryController +
                 "} " + super.toString();
     }
 
@@ -27,6 +30,14 @@ public class HostNvmeDiscoverSpec extends HostNvmeSpec {
 
     public void setAutoConnect(final Boolean autoConnect) {
         this.autoConnect = autoConnect;
+    }
+
+    public Boolean getRootDiscoveryController() {
+        return rootDiscoveryController;
+    }
+
+    public void setRootDiscoveryController(final Boolean rootDiscoveryController) {
+        this.rootDiscoveryController = rootDiscoveryController;
     }
 
 }

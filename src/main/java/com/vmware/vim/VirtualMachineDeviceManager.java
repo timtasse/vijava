@@ -129,11 +129,11 @@ public class VirtualMachineDeviceManager {
         floppy.key = -1;
 
         VirtualDeviceConfigSpec floppySpec = new VirtualDeviceConfigSpec();
-        floppySpec.operation = VirtualDeviceConfigSpecOperation.add;
+        floppySpec.setOperation(VirtualDeviceConfigSpecOperation.add);
         if (newFloppyImagePath != null) {
-            floppySpec.fileOperation = VirtualDeviceConfigSpecFileOperation.create;
+            floppySpec.setFileOperation(VirtualDeviceConfigSpecFileOperation.create);
         }
-        floppySpec.device = floppy;
+        floppySpec.setDevice(floppy);
 
         VirtualMachineConfigSpec config = new VirtualMachineConfigSpec();
         config.setDeviceChange(new VirtualDeviceConfigSpec[]{floppySpec});
@@ -141,7 +141,7 @@ public class VirtualMachineDeviceManager {
         VirtualIDEController controller = getFirstAvailableController(VirtualIDEController.class);
 
         if (controller != null) {
-            config.getDeviceChange()[0].device.controllerKey = controller.key;
+            config.getDeviceChange()[0].getDevice().setControllerKey(controller.key);
         } else {
             throw new RuntimeException("No available IDE controller for floppy drive.");
         }
@@ -211,8 +211,8 @@ public class VirtualMachineDeviceManager {
         cdrom.key = -1;
 
         VirtualDeviceConfigSpec cdSpec = new VirtualDeviceConfigSpec();
-        cdSpec.operation = VirtualDeviceConfigSpecOperation.add;
-        cdSpec.device = cdrom;
+        cdSpec.setOperation(VirtualDeviceConfigSpecOperation.add);
+        cdSpec.setDevice(cdrom);
 
         VirtualMachineConfigSpec config = new VirtualMachineConfigSpec();
         config.setDeviceChange(new VirtualDeviceConfigSpec[]{cdSpec});
@@ -220,7 +220,7 @@ public class VirtualMachineDeviceManager {
         VirtualIDEController controller = getFirstAvailableController(VirtualIDEController.class);
 
         if (controller != null) {
-            config.getDeviceChange()[0].device.controllerKey = controller.key;
+            config.getDeviceChange()[0].getDevice().setControllerKey(controller.key);
         } else {
             throw new RuntimeException("No free IDE controller for addtional CD Drive.");
         }
@@ -526,8 +526,8 @@ public class VirtualMachineDeviceManager {
         device.connectable.setStartConnected(startConnected);
         device.key = -1;
 
-        result.operation = VirtualDeviceConfigSpecOperation.add;
-        result.device = device;
+        result.setOperation(VirtualDeviceConfigSpecOperation.add);
+        result.setDevice(device);
 
         return result;
     }
@@ -631,8 +631,8 @@ public class VirtualMachineDeviceManager {
                         if (controller.key == device.controllerKey) {
                             if (controller.device.length == 1 && controller.device[0] == device.key) {
                                 VirtualDeviceConfigSpec controllerSpec = new VirtualDeviceConfigSpec();
-                                controllerSpec.operation = VirtualDeviceConfigSpecOperation.remove;
-                                controllerSpec.device = controller;
+                                controllerSpec.setOperation(VirtualDeviceConfigSpecOperation.remove);
+                                controllerSpec.setDevice(controller);
                                 configSpecList.add(controllerSpec);
                             }
                             break;
@@ -649,8 +649,8 @@ public class VirtualMachineDeviceManager {
                         if (controller.key == device.controllerKey) {
                             if (controller.device.length == 1 && controller.device[0] == device.key) {
                                 VirtualDeviceConfigSpec controllerSpec = new VirtualDeviceConfigSpec();
-                                controllerSpec.operation = VirtualDeviceConfigSpecOperation.remove;
-                                controllerSpec.device = controller;
+                                controllerSpec.setOperation(VirtualDeviceConfigSpecOperation.remove);
+                                controllerSpec.setDevice(controller);
                                 configSpecList.add(controllerSpec);
                             }
                             break;
@@ -661,10 +661,10 @@ public class VirtualMachineDeviceManager {
                 }
 
                 VirtualDeviceConfigSpec deviceSpec = new VirtualDeviceConfigSpec();
-                deviceSpec.operation = VirtualDeviceConfigSpecOperation.remove;
-                deviceSpec.device = device;
+                deviceSpec.setOperation(VirtualDeviceConfigSpecOperation.remove);
+                deviceSpec.setDevice(device);
                 if (destroyDeviceBacking) {
-                    deviceSpec.fileOperation = VirtualDeviceConfigSpecFileOperation.destroy;
+                    deviceSpec.setFileOperation(VirtualDeviceConfigSpecFileOperation.destroy);
                 }
 
                 configSpecList.add(deviceSpec);

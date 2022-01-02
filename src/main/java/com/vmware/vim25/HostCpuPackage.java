@@ -29,74 +29,90 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.List;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
+@SuppressWarnings("unused")
 public class HostCpuPackage extends DynamicData {
-  public short index;
-  public String vendor;
-  public long hz;
-  public long busHz;
-  public String description;
-  public short[] threadId;
-  public HostCpuIdInfo[] cpuFeature;
 
-  public short getIndex() {
-    return this.index;
-  }
+    private short index;
+    private String vendor;
+    private long hz;
+    private long busHz;
+    private String description;
+    private List<Short> threadId;
+    private List<HostCpuIdInfo> cpuFeature;
 
-  public String getVendor() {
-    return this.vendor;
-  }
+    @Override
+    public String toString() {
+        return "HostCpuPackage{" +
+                "index=" + index +
+                ", vendor='" + vendor + '\'' +
+                ", hz=" + hz +
+                ", busHz=" + busHz +
+                ", description='" + description + '\'' +
+                ", threadId=" + threadId +
+                ", cpuFeature=" + cpuFeature +
+                "} " + super.toString();
+    }
 
-  public long getHz() {
-    return this.hz;
-  }
+    public short getIndex() {
+        return this.index;
+    }
 
-  public long getBusHz() {
-    return this.busHz;
-  }
+    public void setIndex(final short index) {
+        this.index = index;
+    }
 
-  public String getDescription() {
-    return this.description;
-  }
+    public String getVendor() {
+        return this.vendor;
+    }
 
-  public short[] getThreadId() {
-    return this.threadId;
-  }
+    public void setVendor(final String vendor) {
+        this.vendor = vendor;
+    }
 
-  public HostCpuIdInfo[] getCpuFeature() {
-    return this.cpuFeature;
-  }
+    public long getHz() {
+        return this.hz;
+    }
 
-  public void setIndex(short index) {
-    this.index=index;
-  }
+    public void setHz(final long hz) {
+        this.hz = hz;
+    }
 
-  public void setVendor(String vendor) {
-    this.vendor=vendor;
-  }
+    public long getBusHz() {
+        return this.busHz;
+    }
 
-  public void setHz(long hz) {
-    this.hz=hz;
-  }
+    public void setBusHz(final long busHz) {
+        this.busHz = busHz;
+    }
 
-  public void setBusHz(long busHz) {
-    this.busHz=busHz;
-  }
+    public String getDescription() {
+        return this.description;
+    }
 
-  public void setDescription(String description) {
-    this.description=description;
-  }
+    public void setDescription(final String description) {
+        this.description = description;
+    }
 
-  public void setThreadId(short[] threadId) {
-    this.threadId=threadId;
-  }
+    public List<HostCpuIdInfo> getCpuFeature() {
+        return cpuFeature;
+    }
 
-  public void setCpuFeature(HostCpuIdInfo[] cpuFeature) {
-    this.cpuFeature=cpuFeature;
-  }
+    public void setCpuFeature(final List<HostCpuIdInfo> cpuFeature) {
+        this.cpuFeature = cpuFeature;
+    }
+
+    public List<Short> getThreadId() {
+        return threadId;
+    }
+
+    public void setThreadId(final List<Short> threadId) {
+        this.threadId = threadId;
+    }
+
 }
