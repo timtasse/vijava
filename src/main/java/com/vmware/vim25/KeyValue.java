@@ -29,15 +29,17 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.io.Serializable;
+
 /**
 * @author Steve Jin (http://www.doublecloud.org)
 * @version 5.1
 */
+@SuppressWarnings("unused")
+public class KeyValue extends DynamicData implements Serializable {
 
-@SuppressWarnings("all")
-public class KeyValue extends DynamicData {
-  public String key;
-  public String value;
+  private String key;
+  private String value;
 
   public String getKey() {
     return this.key;
@@ -47,11 +49,11 @@ public class KeyValue extends DynamicData {
     return this.value;
   }
 
-  public void setKey(String key) {
+  public void setKey(final String key) {
     this.key=key;
   }
 
-  public void setValue(String value) {
+  public void setValue(final String value) {
     this.value=value;
   }
 }

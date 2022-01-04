@@ -934,7 +934,7 @@ public class HostSystem extends ManagedEntity {
     }
 
     public HostVFlashManager getHostVFlashManager() {
-        final ManagedObjectReference mor = this.getConfigManager().getVFlashManager();
+        final ManagedObjectReference mor = this.getConfigManager().getvFlashManager();
         if (mor == null) {
             return null;
         }

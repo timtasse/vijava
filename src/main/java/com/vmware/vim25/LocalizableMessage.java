@@ -29,16 +29,18 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.io.Serializable;
+
 /**
 * @author Steve Jin (http://www.doublecloud.org)
 * @version 5.1
 */
+@SuppressWarnings("unused")
+public class LocalizableMessage extends DynamicData implements Serializable {
 
-@SuppressWarnings("all")
-public class LocalizableMessage extends DynamicData {
-  public String key;
-  public KeyAnyValue[] arg;
-  public String message;
+  private String key;
+  private KeyAnyValue[] arg;
+  private String message;
 
   public String getKey() {
     return this.key;
@@ -52,15 +54,15 @@ public class LocalizableMessage extends DynamicData {
     return this.message;
   }
 
-  public void setKey(String key) {
+  public void setKey(final String key) {
     this.key=key;
   }
 
-  public void setArg(KeyAnyValue[] arg) {
+  public void setArg(final KeyAnyValue[] arg) {
     this.arg=arg;
   }
 
-  public void setMessage(String message) {
+  public void setMessage(final String message) {
     this.message=message;
   }
 }

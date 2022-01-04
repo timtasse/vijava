@@ -29,29 +29,31 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.io.Serializable;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
+@SuppressWarnings("unused")
+public class VirtualDiskId extends DynamicData implements Serializable {
 
-@SuppressWarnings("all")
-public class VirtualDiskId extends DynamicData {
-  public ManagedObjectReference vm;
-  public int diskId;
+    private ManagedObjectReference vm;
+    private int diskId;
 
-  public ManagedObjectReference getVm() {
-    return this.vm;
-  }
+    public ManagedObjectReference getVm() {
+        return this.vm;
+    }
 
-  public int getDiskId() {
-    return this.diskId;
-  }
+    public void setVm(final ManagedObjectReference vm) {
+        this.vm = vm;
+    }
 
-  public void setVm(ManagedObjectReference vm) {
-    this.vm=vm;
-  }
+    public int getDiskId() {
+        return this.diskId;
+    }
 
-  public void setDiskId(int diskId) {
-    this.diskId=diskId;
-  }
+    public void setDiskId(final int diskId) {
+        this.diskId = diskId;
+    }
 }

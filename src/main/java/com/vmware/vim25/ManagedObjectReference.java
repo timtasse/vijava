@@ -29,13 +29,14 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.io.Serializable;
+
 /**
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
  * @version 6.5
  */
-
-public class ManagedObjectReference {
+public class ManagedObjectReference extends DynamicData implements Serializable {
 
     private String val;
     private String type;
@@ -59,7 +60,7 @@ public class ManagedObjectReference {
         return val;
     }
 
-    public void setVal(String val) {
+    public void setVal(final String val) {
         this.val = val;
     }
 
@@ -67,7 +68,7 @@ public class ManagedObjectReference {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 

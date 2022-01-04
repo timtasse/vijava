@@ -36,6 +36,7 @@ package com.vmware.vim25;
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @version 7.0
  */
+@SuppressWarnings("unused")
 public class HostConfigManager extends DynamicData {
 
     private ManagedObjectReference accountManager;
@@ -83,7 +84,7 @@ public class HostConfigManager extends DynamicData {
         return this.cpuScheduler;
     }
 
-    public void setCpuScheduler(ManagedObjectReference cpuScheduler) {
+    public void setCpuScheduler(final ManagedObjectReference cpuScheduler) {
         this.cpuScheduler = cpuScheduler;
     }
 
@@ -91,7 +92,7 @@ public class HostConfigManager extends DynamicData {
         return this.datastoreSystem;
     }
 
-    public void setDatastoreSystem(ManagedObjectReference datastoreSystem) {
+    public void setDatastoreSystem(final ManagedObjectReference datastoreSystem) {
         this.datastoreSystem = datastoreSystem;
     }
 
@@ -99,7 +100,7 @@ public class HostConfigManager extends DynamicData {
         return this.memoryManager;
     }
 
-    public void setMemoryManager(ManagedObjectReference memoryManager) {
+    public void setMemoryManager(final ManagedObjectReference memoryManager) {
         this.memoryManager = memoryManager;
     }
 
@@ -107,7 +108,7 @@ public class HostConfigManager extends DynamicData {
         return this.storageSystem;
     }
 
-    public void setStorageSystem(ManagedObjectReference storageSystem) {
+    public void setStorageSystem(final ManagedObjectReference storageSystem) {
         this.storageSystem = storageSystem;
     }
 
@@ -115,7 +116,7 @@ public class HostConfigManager extends DynamicData {
         return this.networkSystem;
     }
 
-    public void setNetworkSystem(ManagedObjectReference networkSystem) {
+    public void setNetworkSystem(final ManagedObjectReference networkSystem) {
         this.networkSystem = networkSystem;
     }
 
@@ -125,7 +126,7 @@ public class HostConfigManager extends DynamicData {
     }
 
     @Deprecated
-    public void setVmotionSystem(ManagedObjectReference vmotionSystem) {
+    public void setVmotionSystem(final ManagedObjectReference vmotionSystem) {
         this.vmotionSystem = vmotionSystem;
     }
 
@@ -133,7 +134,7 @@ public class HostConfigManager extends DynamicData {
         return this.virtualNicManager;
     }
 
-    public void setVirtualNicManager(ManagedObjectReference virtualNicManager) {
+    public void setVirtualNicManager(final ManagedObjectReference virtualNicManager) {
         this.virtualNicManager = virtualNicManager;
     }
 
@@ -141,7 +142,7 @@ public class HostConfigManager extends DynamicData {
         return this.serviceSystem;
     }
 
-    public void setServiceSystem(ManagedObjectReference serviceSystem) {
+    public void setServiceSystem(final ManagedObjectReference serviceSystem) {
         this.serviceSystem = serviceSystem;
     }
 
@@ -149,7 +150,7 @@ public class HostConfigManager extends DynamicData {
         return this.firewallSystem;
     }
 
-    public void setFirewallSystem(ManagedObjectReference firewallSystem) {
+    public void setFirewallSystem(final ManagedObjectReference firewallSystem) {
         this.firewallSystem = firewallSystem;
     }
 
@@ -157,7 +158,7 @@ public class HostConfigManager extends DynamicData {
         return this.advancedOption;
     }
 
-    public void setAdvancedOption(ManagedObjectReference advancedOption) {
+    public void setAdvancedOption(final ManagedObjectReference advancedOption) {
         this.advancedOption = advancedOption;
     }
 
@@ -165,7 +166,7 @@ public class HostConfigManager extends DynamicData {
         return this.diagnosticSystem;
     }
 
-    public void setDiagnosticSystem(ManagedObjectReference diagnosticSystem) {
+    public void setDiagnosticSystem(final ManagedObjectReference diagnosticSystem) {
         this.diagnosticSystem = diagnosticSystem;
     }
 
@@ -173,7 +174,7 @@ public class HostConfigManager extends DynamicData {
         return this.autoStartManager;
     }
 
-    public void setAutoStartManager(ManagedObjectReference autoStartManager) {
+    public void setAutoStartManager(final ManagedObjectReference autoStartManager) {
         this.autoStartManager = autoStartManager;
     }
 
@@ -181,7 +182,7 @@ public class HostConfigManager extends DynamicData {
         return this.snmpSystem;
     }
 
-    public void setSnmpSystem(ManagedObjectReference snmpSystem) {
+    public void setSnmpSystem(final ManagedObjectReference snmpSystem) {
         this.snmpSystem = snmpSystem;
     }
 
@@ -189,7 +190,7 @@ public class HostConfigManager extends DynamicData {
         return this.dateTimeSystem;
     }
 
-    public void setDateTimeSystem(ManagedObjectReference dateTimeSystem) {
+    public void setDateTimeSystem(final ManagedObjectReference dateTimeSystem) {
         this.dateTimeSystem = dateTimeSystem;
     }
 
@@ -197,7 +198,7 @@ public class HostConfigManager extends DynamicData {
         return this.patchManager;
     }
 
-    public void setPatchManager(ManagedObjectReference patchManager) {
+    public void setPatchManager(final ManagedObjectReference patchManager) {
         this.patchManager = patchManager;
     }
 
@@ -205,7 +206,7 @@ public class HostConfigManager extends DynamicData {
         return this.imageConfigManager;
     }
 
-    public void setImageConfigManager(ManagedObjectReference imageConfigManager) {
+    public void setImageConfigManager(final ManagedObjectReference imageConfigManager) {
         this.imageConfigManager = imageConfigManager;
     }
 
@@ -213,7 +214,7 @@ public class HostConfigManager extends DynamicData {
         return this.bootDeviceSystem;
     }
 
-    public void setBootDeviceSystem(ManagedObjectReference bootDeviceSystem) {
+    public void setBootDeviceSystem(final ManagedObjectReference bootDeviceSystem) {
         this.bootDeviceSystem = bootDeviceSystem;
     }
 
@@ -221,7 +222,7 @@ public class HostConfigManager extends DynamicData {
         return this.firmwareSystem;
     }
 
-    public void setFirmwareSystem(ManagedObjectReference firmwareSystem) {
+    public void setFirmwareSystem(final ManagedObjectReference firmwareSystem) {
         this.firmwareSystem = firmwareSystem;
     }
 
@@ -229,7 +230,7 @@ public class HostConfigManager extends DynamicData {
         return this.healthStatusSystem;
     }
 
-    public void setHealthStatusSystem(ManagedObjectReference healthStatusSystem) {
+    public void setHealthStatusSystem(final ManagedObjectReference healthStatusSystem) {
         this.healthStatusSystem = healthStatusSystem;
     }
 
@@ -237,7 +238,7 @@ public class HostConfigManager extends DynamicData {
         return this.pciPassthruSystem;
     }
 
-    public void setPciPassthruSystem(ManagedObjectReference pciPassthruSystem) {
+    public void setPciPassthruSystem(final ManagedObjectReference pciPassthruSystem) {
         this.pciPassthruSystem = pciPassthruSystem;
     }
 
@@ -245,7 +246,7 @@ public class HostConfigManager extends DynamicData {
         return this.licenseManager;
     }
 
-    public void setLicenseManager(ManagedObjectReference licenseManager) {
+    public void setLicenseManager(final ManagedObjectReference licenseManager) {
         this.licenseManager = licenseManager;
     }
 
@@ -253,7 +254,7 @@ public class HostConfigManager extends DynamicData {
         return this.kernelModuleSystem;
     }
 
-    public void setKernelModuleSystem(ManagedObjectReference kernelModuleSystem) {
+    public void setKernelModuleSystem(final ManagedObjectReference kernelModuleSystem) {
         this.kernelModuleSystem = kernelModuleSystem;
     }
 
@@ -261,7 +262,7 @@ public class HostConfigManager extends DynamicData {
         return this.authenticationManager;
     }
 
-    public void setAuthenticationManager(ManagedObjectReference authenticationManager) {
+    public void setAuthenticationManager(final ManagedObjectReference authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
 
@@ -269,7 +270,7 @@ public class HostConfigManager extends DynamicData {
         return this.powerSystem;
     }
 
-    public void setPowerSystem(ManagedObjectReference powerSystem) {
+    public void setPowerSystem(final ManagedObjectReference powerSystem) {
         this.powerSystem = powerSystem;
     }
 
@@ -277,7 +278,7 @@ public class HostConfigManager extends DynamicData {
         return this.cacheConfigurationManager;
     }
 
-    public void setCacheConfigurationManager(ManagedObjectReference cacheConfigurationManager) {
+    public void setCacheConfigurationManager(final ManagedObjectReference cacheConfigurationManager) {
         this.cacheConfigurationManager = cacheConfigurationManager;
     }
 
@@ -285,7 +286,7 @@ public class HostConfigManager extends DynamicData {
         return this.esxAgentHostManager;
     }
 
-    public void setEsxAgentHostManager(ManagedObjectReference esxAgentHostManager) {
+    public void setEsxAgentHostManager(final ManagedObjectReference esxAgentHostManager) {
         this.esxAgentHostManager = esxAgentHostManager;
     }
 
@@ -293,23 +294,15 @@ public class HostConfigManager extends DynamicData {
         return this.iscsiManager;
     }
 
-    public void setIscsiManager(ManagedObjectReference iscsiManager) {
+    public void setIscsiManager(final ManagedObjectReference iscsiManager) {
         this.iscsiManager = iscsiManager;
-    }
-
-    public ManagedObjectReference getVFlashManager() {
-        return this.vFlashManager;
-    }
-
-    public void setVFlashManager(ManagedObjectReference vFlashManager) {
-        this.vFlashManager = vFlashManager;
     }
 
     public ManagedObjectReference getVsanSystem() {
         return this.vsanSystem;
     }
 
-    public void setVsanSystem(ManagedObjectReference vsanSystem) {
+    public void setVsanSystem(final ManagedObjectReference vsanSystem) {
         this.vsanSystem = vsanSystem;
     }
 
@@ -317,7 +310,7 @@ public class HostConfigManager extends DynamicData {
         return this.graphicsManager;
     }
 
-    public void setGraphicsManager(ManagedObjectReference graphicsManager) {
+    public void setGraphicsManager(final ManagedObjectReference graphicsManager) {
         this.graphicsManager = graphicsManager;
     }
 
@@ -325,7 +318,7 @@ public class HostConfigManager extends DynamicData {
         return this.vsanInternalSystem;
     }
 
-    public void setVsanInternalSystem(ManagedObjectReference vsanInternalSystem) {
+    public void setVsanInternalSystem(final ManagedObjectReference vsanInternalSystem) {
         this.vsanInternalSystem = vsanInternalSystem;
     }
 
