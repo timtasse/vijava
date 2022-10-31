@@ -55,7 +55,7 @@ public class SpecialTest {
         final HostSystem host = (HostSystem) new InventoryNavigator(this.instance.getRootFolder()).searchManagedEntity(HostSystem.class.getSimpleName(), "pi-esx20-2.vmware.freenet-rz.de");
         LOGGER.debug(host.getName());
         final StorageQueryManager storageQueryManager = this.instance.getStorageQueryManager();
-        LOGGER.debug(storageQueryManager.queryHostsWithAttachedLun("naa.6005076801808711700000000000093d").stream().map(HostSystem::getName).collect(Collectors.joining(",")));
+        LOGGER.debug(storageQueryManager.queryHostsWithAttachedLun("naa.600507681080044c08000000000000c9").stream().map(HostSystem::getName).collect(Collectors.joining(",")));
         for (ScsiLun scsiLun : host.getHostStorageSystem().getStorageDeviceInfo().getScsiLun()) {
             LOGGER.debug(scsiLun.getDisplayName());
             LOGGER.debug(scsiLun.getUuid());
@@ -66,8 +66,8 @@ public class SpecialTest {
 
     @Test
     public void testAlarm() throws Exception {
-        final StoragePod pod = (StoragePod) new InventoryNavigator(this.instance.getRootFolder()).searchManagedEntity(StoragePod.class.getSimpleName(), "svc1-iox-pi2-silber-1");
-        final ManagedObjectReference mor = ManagedObjectReference.create("StoragePod", "group-p73059");
+        final StoragePod pod = (StoragePod) new InventoryNavigator(this.instance.getRootFolder()).searchManagedEntity(StoragePod.class.getSimpleName(), "fs9200-pi2-silber-2");
+        final ManagedObjectReference mor = ManagedObjectReference.create("StoragePod", "group-p73060");
         final ManagedEntity me = new ManagedEntity(this.instance.getServerConnection(), mor);
         LOGGER.debug(me.getName());
         LOGGER.debug(me.getRealName());

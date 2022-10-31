@@ -29,38 +29,57 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.1
+ */
 public class ObjectSpec extends DynamicData {
-  public ManagedObjectReference obj;
-  public Boolean skip;
-  public SelectionSpec[] selectSet;
 
-  public ManagedObjectReference getObj() {
-    return this.obj;
-  }
+    private ManagedObjectReference obj;
+    private Boolean skip;
+    private SelectionSpec[] selectSet;
 
-  public Boolean getSkip() {
-    return this.skip;
-  }
+    public static ObjectSpec create(final ManagedObjectReference obj, final Boolean skip, final SelectionSpec[] selectSet) {
+        final ObjectSpec spec = new ObjectSpec();
+        spec.obj = obj;
+        spec.skip = skip;
+        spec.selectSet = selectSet;
+        return spec;
+    }
 
-  public SelectionSpec[] getSelectSet() {
-    return this.selectSet;
-  }
+    @Override
+    public String toString() {
+        return "ObjectSpec{" +
+                "obj=" + obj +
+                ", skip=" + skip +
+                ", selectSet=" + Arrays.toString(selectSet) +
+                "} " + super.toString();
+    }
 
-  public void setObj(ManagedObjectReference obj) {
-    this.obj=obj;
-  }
+    public ManagedObjectReference getObj() {
+        return this.obj;
+    }
 
-  public void setSkip(Boolean skip) {
-    this.skip=skip;
-  }
+    public void setObj(final ManagedObjectReference obj) {
+        this.obj = obj;
+    }
 
-  public void setSelectSet(SelectionSpec[] selectSet) {
-    this.selectSet=selectSet;
-  }
+    public Boolean getSkip() {
+        return this.skip;
+    }
+
+    public void setSkip(final Boolean skip) {
+        this.skip = skip;
+    }
+
+    public SelectionSpec[] getSelectSet() {
+        return this.selectSet;
+    }
+
+    public void setSelectSet(final SelectionSpec[] selectSet) {
+        this.selectSet = selectSet;
+    }
 }

@@ -30,28 +30,37 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class ClusterAction extends DynamicData {
-  public String type;
-  public ManagedObjectReference target;
 
-  public String getType() {
-    return this.type;
-  }
+    private String type;
+    private ManagedObjectReference target;
 
-  public ManagedObjectReference getTarget() {
-    return this.target;
-  }
+    @Override
+    public String toString() {
+        return "ClusterAction{" +
+                "type='" + type + '\'' +
+                ", target=" + target +
+                "} " + super.toString();
+    }
 
-  public void setType(String type) {
-    this.type=type;
-  }
+    public String getType() {
+        return this.type;
+    }
 
-  public void setTarget(ManagedObjectReference target) {
-    this.target=target;
-  }
+    public void setType(final String type) {
+        this.type = type;
+    }
+
+    public ManagedObjectReference getTarget() {
+        return this.target;
+    }
+
+    public void setTarget(final ManagedObjectReference target) {
+        this.target = target;
+    }
 }

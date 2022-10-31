@@ -29,38 +29,50 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class StoragePlacementResult extends DynamicData {
-  public ClusterRecommendation[] recommendations;
-  public ClusterDrsFaults drsFault;
-  public ManagedObjectReference task;
 
-  public ClusterRecommendation[] getRecommendations() {
-    return this.recommendations;
-  }
+    private ClusterRecommendation[] recommendations;
+    private ClusterDrsFaults drsFault;
+    private ManagedObjectReference task;
 
-  public ClusterDrsFaults getDrsFault() {
-    return this.drsFault;
-  }
+    @Override
+    public String toString() {
+        return "StoragePlacementResult{" +
+                "recommendations=" + Arrays.toString(recommendations) +
+                ", drsFault=" + drsFault +
+                ", task=" + task +
+                "} " + super.toString();
+    }
 
-  public ManagedObjectReference getTask() {
-    return this.task;
-  }
+    public ClusterRecommendation[] getRecommendations() {
+        return this.recommendations;
+    }
 
-  public void setRecommendations(ClusterRecommendation[] recommendations) {
-    this.recommendations=recommendations;
-  }
+    public void setRecommendations(final ClusterRecommendation[] recommendations) {
+        this.recommendations = recommendations;
+    }
 
-  public void setDrsFault(ClusterDrsFaults drsFault) {
-    this.drsFault=drsFault;
-  }
+    public ClusterDrsFaults getDrsFault() {
+        return this.drsFault;
+    }
 
-  public void setTask(ManagedObjectReference task) {
-    this.task=task;
-  }
+    public void setDrsFault(final ClusterDrsFaults drsFault) {
+        this.drsFault = drsFault;
+    }
+
+    public ManagedObjectReference getTask() {
+        return this.task;
+    }
+
+    public void setTask(final ManagedObjectReference task) {
+        this.task = task;
+    }
 }

@@ -71,6 +71,7 @@ public abstract class WSClient {
     protected static final String SOAP_ACTION_V70 = "urn:vim25/7.0.0.0";
     protected static final String SOAP_ACTION_V701 = "urn:vim25/7.0.1.0";
     protected static final String SOAP_ACTION_V702 = "urn:vim25/7.0.2.0";
+    protected static final String SOAP_ACTION_V703 = "urn:vim25/7.0.3.0";
 
     private final URL baseUrl;
     private final URI baseUri;
@@ -143,6 +144,8 @@ public abstract class WSClient {
       "6.7.2"     vSphere 6.7u3
       "7.0"       vSphere 7.0
       "7.0.1"     vSphere 7.0u1
+      "7.0.2"     vSphere 7.0u2
+      "7.0.3"     vSphere 7.0u3
       ===============================================*/
     public void setSoapActionOnApiVersion(final String apiVersion) {
         switch (apiVersion) {
@@ -184,6 +187,9 @@ public abstract class WSClient {
                 break;
             case "7.0.2.0":
                 soapAction = SOAP_ACTION_V702;
+                break;
+            case "7.0.3.0":
+                soapAction = SOAP_ACTION_V703;
                 break;
             default:
                 soapAction = SOAP_ACTION_V70;

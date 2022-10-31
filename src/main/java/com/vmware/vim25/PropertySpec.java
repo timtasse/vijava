@@ -29,38 +29,57 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.1
+ */
 public class PropertySpec extends DynamicData {
-  public String type;
-  public Boolean all;
-  public String[] pathSet;
 
-  public String getType() {
-    return this.type;
-  }
+    private String type;
+    private Boolean all;
+    private String[] pathSet;
 
-  public Boolean getAll() {
-    return this.all;
-  }
+    public static PropertySpec create(final String type, final boolean allProp, final String[] pathSet) {
+        final PropertySpec spec = new PropertySpec();
+        spec.type = type;
+        spec.all = allProp;
+        spec.pathSet = pathSet;
+        return spec;
+    }
 
-  public String[] getPathSet() {
-    return this.pathSet;
-  }
+    @Override
+    public String toString() {
+        return "PropertySpec{" +
+                "type='" + type + '\'' +
+                ", all=" + all +
+                ", pathSet=" + Arrays.toString(pathSet) +
+                "} " + super.toString();
+    }
 
-  public void setType(String type) {
-    this.type=type;
-  }
+    public String getType() {
+        return this.type;
+    }
 
-  public void setAll(Boolean all) {
-    this.all=all;
-  }
+    public void setType(final String type) {
+        this.type = type;
+    }
 
-  public void setPathSet(String[] pathSet) {
-    this.pathSet=pathSet;
-  }
+    public Boolean getAll() {
+        return this.all;
+    }
+
+    public void setAll(final Boolean all) {
+        this.all = all;
+    }
+
+    public String[] getPathSet() {
+        return this.pathSet;
+    }
+
+    public void setPathSet(final String[] pathSet) {
+        this.pathSet = pathSet;
+    }
 }

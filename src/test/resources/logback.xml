@@ -9,6 +9,7 @@
 
     <logger name="org.apache.http" level="INFO"/>
     <logger name="sun.net.www.protocol.http.HttpURLConnection" level="WARN"/>
+    <logger name="com.vmware.vim25.ws.XmlGen" level="INFO"/>
 
     <root level="debug">
         <appender-ref ref="STDOUT"/>

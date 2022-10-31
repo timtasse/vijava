@@ -35,23 +35,37 @@ package com.vmware.vim25;
  * @version 6.5
  */
 
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class StoragePlacementAction extends ClusterAction {
 
-    public ManagedObjectReference vm;
-    public VirtualMachineRelocateSpec relocateSpec;
-    public ManagedObjectReference destination;
-    public Float spaceUtilBefore;
-    public Float spaceUtilAfter;
-    public Float ioLatencyBefore;
-    public Float spaceDemandAfter;
-    public Float spaceDemandBefore;
+    private ManagedObjectReference vm;
+    private VirtualMachineRelocateSpec relocateSpec;
+    private ManagedObjectReference destination;
+    private Float spaceUtilBefore;
+    private Float spaceUtilAfter;
+    private Float ioLatencyBefore;
+    private Float spaceDemandAfter;
+    private Float spaceDemandBefore;
+
+    @Override
+    public String toString() {
+        return "StoragePlacementAction{" +
+                "vm=" + vm +
+                ", relocateSpec=" + relocateSpec +
+                ", destination=" + destination +
+                ", spaceUtilBefore=" + spaceUtilBefore +
+                ", spaceUtilAfter=" + spaceUtilAfter +
+                ", ioLatencyBefore=" + ioLatencyBefore +
+                ", spaceDemandAfter=" + spaceDemandAfter +
+                ", spaceDemandBefore=" + spaceDemandBefore +
+                "} " + super.toString();
+    }
 
     public ManagedObjectReference getVm() {
         return this.vm;
     }
 
-    public void setVm(ManagedObjectReference vm) {
+    public void setVm(final ManagedObjectReference vm) {
         this.vm = vm;
     }
 
@@ -59,7 +73,7 @@ public class StoragePlacementAction extends ClusterAction {
         return this.relocateSpec;
     }
 
-    public void setRelocateSpec(VirtualMachineRelocateSpec relocateSpec) {
+    public void setRelocateSpec(final VirtualMachineRelocateSpec relocateSpec) {
         this.relocateSpec = relocateSpec;
     }
 
@@ -67,7 +81,7 @@ public class StoragePlacementAction extends ClusterAction {
         return this.destination;
     }
 
-    public void setDestination(ManagedObjectReference destination) {
+    public void setDestination(final ManagedObjectReference destination) {
         this.destination = destination;
     }
 
@@ -75,7 +89,7 @@ public class StoragePlacementAction extends ClusterAction {
         return this.spaceUtilBefore;
     }
 
-    public void setSpaceUtilBefore(Float spaceUtilBefore) {
+    public void setSpaceUtilBefore(final Float spaceUtilBefore) {
         this.spaceUtilBefore = spaceUtilBefore;
     }
 
@@ -83,7 +97,7 @@ public class StoragePlacementAction extends ClusterAction {
         return this.spaceUtilAfter;
     }
 
-    public void setSpaceUtilAfter(Float spaceUtilAfter) {
+    public void setSpaceUtilAfter(final Float spaceUtilAfter) {
         this.spaceUtilAfter = spaceUtilAfter;
     }
 
@@ -91,7 +105,7 @@ public class StoragePlacementAction extends ClusterAction {
         return this.ioLatencyBefore;
     }
 
-    public void setIoLatencyBefore(Float ioLatencyBefore) {
+    public void setIoLatencyBefore(final Float ioLatencyBefore) {
         this.ioLatencyBefore = ioLatencyBefore;
     }
 

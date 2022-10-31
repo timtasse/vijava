@@ -19,6 +19,25 @@ Here an example:</br>
 
 ## Changelog
 
+#### 7.0.3-2.7.2
+  * some rework of old Classes
+  * some dependency updates
+
+#### 7.0.3-2.7.1
+  * logback updated to new version
+  * some rework of old classes
+
+#### 7.0.3-2.7.0
+  * API Version 7.0.3 first implementation
+  * minor changes in XML deserialization
+
+#### 7.0.2-2.6.0
+  * API Version 7.0.2 fully implemented
+  * some dependency updates
+
+#### 7.0.1-2.6.0
+  * socket and connect timeouts implemented
+
 #### 7.0.1-2.5.4
   * changed the Version for the SoapAction Header in SOAP Calls (it has 4 digits from 7.0 and above)
 
@@ -33,7 +52,7 @@ Here an example:</br>
 #### 7.0.1-2.5.1
   * VirtualMachineConfigSummary.hwVersion is now implemented
   * DateFormatter is now thread-safe handled
-  * a non existing field is now only logged as Error Level Message and not throws a NoSuchFieldException
+  * a non-existing field is now only logged as Error Level Message and not throws a NoSuchFieldException
 
 #### 7.0.1-2.5
   * API Version up to 7.0.1 is fully implemented, but not fully tested (i do not have enough features in test environment)

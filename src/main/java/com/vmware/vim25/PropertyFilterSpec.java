@@ -29,38 +29,71 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.1
+ */
 public class PropertyFilterSpec extends DynamicData {
-  public PropertySpec[] propSet;
-  public ObjectSpec[] objectSet;
-  public Boolean reportMissingObjectsInResults;
 
-  public PropertySpec[] getPropSet() {
-    return this.propSet;
-  }
+    private PropertySpec[] propSet;
+    private ObjectSpec[] objectSet;
+    private Boolean reportMissingObjectsInResults;
 
-  public ObjectSpec[] getObjectSet() {
-    return this.objectSet;
-  }
+    public static PropertyFilterSpec create(final ObjectSpec objectSet, final PropertySpec... propSet) {
+        return create(new ObjectSpec[] {objectSet}, propSet);
+    }
 
-  public Boolean getReportMissingObjectsInResults() {
-    return this.reportMissingObjectsInResults;
-  }
+    public static PropertyFilterSpec create(final ObjectSpec[] objectSet, final PropertySpec... propSet) {
+        final PropertyFilterSpec spec = new PropertyFilterSpec();
+        spec.objectSet = objectSet;
+        spec.propSet = propSet;
+        return spec;
+    }
 
-  public void setPropSet(PropertySpec[] propSet) {
-    this.propSet=propSet;
-  }
+    public static PropertyFilterSpec createDefault(final ManagedObjectReference mor, final String... properties) {
+        final ObjectSpec objectSpec = new ObjectSpec();
+        objectSpec.setObj(mor);
+        objectSpec.setSkip(Boolean.FALSE);
+        final PropertySpec propertySpec = new PropertySpec();
+        propertySpec.setType(mor.getType());
+        propertySpec.setAll(properties == null || properties.length == 0);
+        propertySpec.setPathSet(properties);
+        return create(objectSpec, propertySpec);
+    }
 
-  public void setObjectSet(ObjectSpec[] objectSet) {
-    this.objectSet=objectSet;
-  }
+    @Override
+    public String toString() {
+        return "PropertyFilterSpec{" +
+                "propSet=" + Arrays.toString(propSet) +
+                ", objectSet=" + Arrays.toString(objectSet) +
+                ", reportMissingObjectsInResults=" + reportMissingObjectsInResults +
+                "} " + super.toString();
+    }
 
-  public void setReportMissingObjectsInResults(Boolean reportMissingObjectsInResults) {
-    this.reportMissingObjectsInResults=reportMissingObjectsInResults;
-  }
+    public PropertySpec[] getPropSet() {
+        return this.propSet;
+    }
+
+    public void setPropSet(final PropertySpec[] propSet) {
+        this.propSet = propSet;
+    }
+
+    public ObjectSpec[] getObjectSet() {
+        return this.objectSet;
+    }
+
+    public void setObjectSet(final ObjectSpec[] objectSet) {
+        this.objectSet = objectSet;
+    }
+
+    public Boolean getReportMissingObjectsInResults() {
+        return this.reportMissingObjectsInResults;
+    }
+
+    public void setReportMissingObjectsInResults(final Boolean reportMissingObjectsInResults) {
+        this.reportMissingObjectsInResults = reportMissingObjectsInResults;
+    }
 }

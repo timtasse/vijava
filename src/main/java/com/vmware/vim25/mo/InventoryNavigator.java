@@ -61,7 +61,7 @@ public class InventoryNavigator {
      * @throws InvalidProperty
      */
     public ManagedEntity[] searchManagedEntities(String[][] typeinfo, boolean recurse) throws InvalidProperty, RuntimeFault, RemoteException {
-        ObjectContent[] ocs = retrieveObjectContents(typeinfo, recurse);
+        final ObjectContent[] ocs = retrieveObjectContents(typeinfo, recurse);
         return createManagedEntities(ocs);
     }
 
@@ -70,10 +70,10 @@ public class InventoryNavigator {
             return null;
         }
 
-        PropertyCollector pc = rootEntity.getServerConnection().getServiceInstance().getPropertyCollector();
+        final PropertyCollector pc = rootEntity.getServerConnection().getServiceInstance().getPropertyCollector();
 
         if (recurse && selectionSpecs == null) {
-            AboutInfo ai = rootEntity.getServerConnection().getServiceInstance().getAboutInfo();
+            final AboutInfo ai = rootEntity.getServerConnection().getServiceInstance().getAboutInfo();
             // changed API Version to check only the first number, more future ready
             if (Integer.parseInt(String.valueOf(ai.getApiVersion().charAt(0))) >= 4) {
                 selectionSpecs = PropertyCollectorUtil.buildFullTraversalV4();
@@ -82,18 +82,12 @@ public class InventoryNavigator {
             }
         }
 
-        PropertySpec[] propertySpecs = PropertyCollectorUtil.buildPropertySpecArray(typeinfo);
+        final PropertySpec[] propertySpecs = PropertyCollectorUtil.buildPropertySpecArray(typeinfo);
 
-        ObjectSpec os = new ObjectSpec();
-        os.setObj(rootEntity.getMOR());
-        os.setSkip(Boolean.FALSE);
-        os.setSelectSet(selectionSpecs);
+        final ObjectSpec os = ObjectSpec.create(rootEntity.getMOR(), Boolean.FALSE, selectionSpecs);
 
-        PropertyFilterSpec spec = new PropertyFilterSpec();
-        spec.setObjectSet(new ObjectSpec[]{os});
-        spec.setPropSet(propertySpecs);
+        final PropertyFilterSpec spec = PropertyFilterSpec.create(os, propertySpecs);
 
-//        return pc.retrieveProperties(new PropertyFilterSpec[]{spec});
         final RetrieveOptions retrieveOptions = new RetrieveOptions();
         retrieveOptions.setMaxObjects(1000);
 
@@ -101,7 +95,6 @@ public class InventoryNavigator {
         RetrieveResult result = pc.retrievePropertiesEx(new PropertyFilterSpec[]{spec}, retrieveOptions);
         allObjects.addAll(Arrays.asList(result.getObjects()));
         while (result.getToken() != null) {
-            //LOGGER.debug("Objectcount: {}", result.getObjects().length);
             result = pc.continueRetrievePropertiesEx(result.getToken());
             allObjects.addAll(Arrays.asList(result.getObjects()));
         }

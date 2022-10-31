@@ -30,15 +30,11 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo.util;
 
 import com.vmware.vim25.*;
-import com.vmware.vim25.mo.ManagedObject;
-import com.vmware.vim25.mo.PropertyCollector;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
-import java.rmi.RemoteException;
 import java.util.Arrays;
-import java.util.Hashtable;
 import java.util.List;
 
 
@@ -51,107 +47,29 @@ public class PropertyCollectorUtil {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PropertyCollectorUtil.class);
 
-    final public static Object NULL = new Object();
+    //final public static Object NULL = new Object();
 
-    /**
-     * Retrieves properties from multiple managed objects.
-     *
-     * @param mos       the array of managed objects which could be of single type or mixed types. When they are mix-typed,
-     *                  the moType must be super type of all these managed objects.
-     * @param moType    the type of the managed object. This managed object type must have all the properties defined as
-     *                  in propPaths.
-     * @param propPaths the array of property path which has dot as separator, for example, "name", "guest.toolsStatus".
-     * @return an array of Hashtable whose order is the same as the mos array. Each Hashtable has the properties for
-     * one managed object. Note: some of the properties you want to retrieve might not be set, and therefore you don't
-     * have an entry in the Hashtable at all. In other words, it's possible for you to get null for a property from the
-     * resulted Hashtable.
-     * @throws InvalidProperty
-     * @throws RuntimeFault
-     * @throws RemoteException
-     */
-    public static Hashtable[] retrieveProperties(ManagedObject[] mos, String moType, String[] propPaths)
-            throws InvalidProperty, RuntimeFault, RemoteException {
-        if (mos == null) {
-            throw new IllegalArgumentException("Managed object array cannot be null.");
-        }
-        if (mos.length == 0 || mos[0] == null) {
-            return new Hashtable[]{};
-        }
-
-        PropertyCollector pc = mos[0].getServerConnection().getServiceInstance().getPropertyCollector();
-        ObjectSpec[] oss = new ObjectSpec[mos.length];
-        for (int i = 0; i < oss.length; i++) {
-            oss[i] = new ObjectSpec();
-            oss[i].setObj(mos[i].getMOR());
-        }
-
-        PropertySpec pSpec = createPropertySpec(moType, false, propPaths);
-
-        PropertyFilterSpec pfs = new PropertyFilterSpec();
-        pfs.setObjectSet(oss);
-        pfs.setPropSet(new PropertySpec[]{pSpec});
-
-        ObjectContent[] objs = pc.retrievePropertiesEx(new PropertyFilterSpec[]{pfs}, new RetrieveOptions()).getObjects();
-
-        Hashtable[] pTables = new Hashtable[mos.length];
-
-        for (int i = 0; objs != null && i < objs.length && objs[i] != null; i++) {
-            DynamicProperty[] props = objs[i].getPropSet();
-            ManagedObjectReference mor = objs[i].getObj();
-
-            int index;
-            if (mor.getType().equals(mos[i].getMOR().getType()) &&
-                    mor.getVal().equals(mos[i].getMOR().getVal())) {
-                index = i;
-            } else {
-                index = findIndex(mos, mor);
-                if (index == -1)
-                    throw new RuntimeException("Unexpected managed object in result: " + mor.getType() + ":" + mor.getVal());
-            }
-            pTables[index] = new Hashtable();
-            for (int j = 0; props != null && j < props.length; j++) {
-                Object obj = convertProperty(props[j].getVal());
-                if (obj == null) {
-                    obj = NULL;
-                }
-                pTables[index].put(props[j].getName(), obj);
-            }
-        }
-        return pTables;
-    }
-
-    private static int findIndex(ManagedObject[] mos, ManagedObjectReference mor) {
-        for (int i = 0; i < mos.length; i++) {
-            if (mor.getType().equals(mos[i].getMOR().getType()) &&
-                    mor.getVal().equals(mos[i].getMOR().getVal()))
-                return i;
-        }
-        return -1;
-    }
-
-    public static Object convertProperty(Object dynaPropVal) {
+    public static Object convertProperty(final Object dynaPropVal) {
         Object propertyValue = null;
 
-        Class propClass = dynaPropVal.getClass();
-        String propName = propClass.getName();
-        if (propName.indexOf("ArrayOf") != -1) //Check the dynamic propery for ArrayOfXXX object
+        final Class<?> propClass = dynaPropVal.getClass();
+        final String propName = propClass.getName();
+        if (propName.contains("ArrayOf")) //Check the dynamic propery for ArrayOfXXX object
         {
-            String methodName = propName.substring(propName.indexOf("ArrayOf") + "ArrayOf".length());
+            final String methodName = propName.substring(propName.indexOf("ArrayOf") + "ArrayOf".length());
             // If object is ArrayOfXXX object, then get the XXX[] by invoking getXXX() on the object. For Ex:
             // ArrayOfManagedObjectReference.getManagedObjectReference() returns ManagedObjectReference[] array.
             try {
-                Method getMethod = null;
+                Method getMethod;
                 try {
-                    getMethod = propClass.getMethod("get" + methodName, (Class[]) null);
-                } catch (NoSuchMethodException nsme) {
-                    getMethod = propClass.getMethod("get_" + methodName.toLowerCase(), (Class[]) null);
+                    getMethod = propClass.getMethod("get" + methodName, (Class<?>[]) null);
+                } catch (final NoSuchMethodException nsme) {
+                    getMethod = propClass.getMethod("get_" + methodName.toLowerCase(), (Class<?>[]) null);
                 }
                 propertyValue = getMethod.invoke(dynaPropVal, (Object[]) null);
-            } catch (Exception e) {
+            } catch (final Exception e) {
                 LOGGER.error("ReflectionError in Method {} in Class {}", methodName, propClass.getSimpleName(), e);
             }
-        } else if (dynaPropVal.getClass().isArray()) { //Handle the case of an unwrapped array being deserialized.
-            propertyValue = dynaPropVal;
         } else {
             propertyValue = dynaPropVal;
         }
@@ -159,24 +77,8 @@ public class PropertyCollectorUtil {
         return propertyValue;
     }
 
-    public static ObjectSpec creatObjectSpec(ManagedObjectReference mor, boolean skip, SelectionSpec[] selSet) {
-        ObjectSpec oSpec = new ObjectSpec();
-        oSpec.setObj(mor);
-        oSpec.setSkip(skip);
-        oSpec.setSelectSet(selSet);
-        return oSpec;
-    }
-
-    public static PropertySpec createPropertySpec(String type, boolean allProp, String[] pathSet) {
-        PropertySpec pSpec = new PropertySpec();
-        pSpec.setType(type);
-        pSpec.setAll(allProp); //whether or not all properties of the object are read. If this property is set to true, the pathSet property is ignored.
-        pSpec.setPathSet(pathSet);
-        return pSpec;
-    }
-
-    public static SelectionSpec[] createSelectionSpec(String[] names) {
-        SelectionSpec[] sss = new SelectionSpec[names.length];
+    public static SelectionSpec[] createSelectionSpec(final String[] names) {
+        final SelectionSpec[] sss = new SelectionSpec[names.length];
         for (int i = 0; i < names.length; i++) {
             sss[i] = new SelectionSpec();
             sss[i].setName(names[i]);
@@ -184,12 +86,12 @@ public class PropertyCollectorUtil {
         return sss;
     }
 
-    public static TraversalSpec createTraversalSpec(String name, String type, String path, String[] selectPath) {
+    public static TraversalSpec createTraversalSpec(final String name, final String type, final String path, final String[] selectPath) {
         return createTraversalSpec(name, type, path, createSelectionSpec(selectPath));
     }
 
-    public static TraversalSpec createTraversalSpec(String name, String type, String path, SelectionSpec[] selectSet) {
-        TraversalSpec ts = new TraversalSpec();
+    public static TraversalSpec createTraversalSpec(final String name, final String type, final String path, final SelectionSpec[] selectSet) {
+        final TraversalSpec ts = new TraversalSpec();
         ts.setName(name);
         ts.setType(type);
         ts.setPath(path);
@@ -205,7 +107,7 @@ public class PropertyCollectorUtil {
      * @param typeProplists 2D array of type and properties to retrieve
      * @return Array of container filter specs
      */
-    public static PropertySpec[] buildPropertySpecArray(String[][] typeProplists) {
+    public static PropertySpec[] buildPropertySpecArray(final String[][] typeProplists) {
         PropertySpec[] pSpecs = new PropertySpec[typeProplists.length];
 
         for (int i = 0; i < typeProplists.length; i++) {
@@ -215,8 +117,7 @@ public class PropertyCollectorUtil {
                 props[j] = typeProplists[i][j + 1];
             }
 
-            boolean all = (props.length == 0) ? true : false;
-            pSpecs[i] = createPropertySpec(type, all, props);
+            pSpecs[i] = PropertySpec.create(type, props.length == 0, props);
         }
         return pSpecs;
     }

@@ -190,19 +190,28 @@ public enum VirtualMachineGuestOsIdentifier {
     win31Guest("win31Guest"),
     win95Guest("win95Guest"),
     win98Guest("win98Guest"),
+    // Windows 2019
     windows2019srv_64Guest("windows2019srv_64Guest"),
+    // Windows 2022
     windows2019srvNext_64Guest("windows2019srvNext_64Guest"),
     windows7Guest("windows7Guest"),
+    // Windows 2008 R2
     windows7Server64Guest("windows7Server64Guest"),
     windows7_64Guest("windows7_64Guest"),
     windows8Guest("windows8Guest"),
+    // Windows 2012
     windows8Server64Guest("windows8Server64Guest"),
     windows8_64Guest("windows8_64Guest"),
+    // Windows 10 32Bit
     windows9Guest("windows9Guest"),
+    // Windows 2016
     windows9Server64Guest("windows9Server64Guest"),
+    // Windows 10 64Bit
     windows9_64Guest("windows9_64Guest"),
     windowsHyperVGuest("windowsHyperVGuest"),
+    // Windows 2008 64Bit
     winLonghorn64Guest("winLonghorn64Guest"),
+    // Windows 2008 32Bit
     winLonghornGuest("winLonghornGuest"),
     winMeGuest("winMeGuest"),
     winNetBusinessGuest("winNetBusinessGuest"),

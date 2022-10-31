@@ -40,7 +40,7 @@ import java.rmi.RemoteException;
  *
  * @author Steve JIN (http://www.doublecloud.org)
  */
-
+@SuppressWarnings("unused")
 public class AuthorizationManager extends ManagedObject {
 
     public AuthorizationManager(final ServerConnection sc, final ManagedObjectReference mor) {
@@ -48,17 +48,17 @@ public class AuthorizationManager extends ManagedObject {
     }
 
     public AuthorizationDescription getDescription() {
-        return (AuthorizationDescription) getCurrentProperty("description");
+        return getCurrentProperty("description", AuthorizationDescription.class);
 
     }
 
     public AuthorizationPrivilege[] getPrivilegeList() {
-        return (AuthorizationPrivilege[]) getCurrentProperty("privilegeList");
+        return getCurrentProperty("privilegeList", AuthorizationPrivilege[].class);
 
     }
 
     public AuthorizationRole[] getRoleList() {
-        return (AuthorizationRole[]) getCurrentProperty("roleList");
+        return getCurrentProperty("roleList", AuthorizationRole[].class);
 
     }
 

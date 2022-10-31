@@ -73,10 +73,10 @@ public abstract class ManagedObject {
 
     /**
      * Constructor that reuse exiting web service connection
-     * Use this contructor when you can re-use existing web service connection.
+     * Use this constructor when you can re-use existing web service connection.
      *
-     * @param serverConnection
-     * @param mor
+     * @param serverConnection the existing ServerConnection
+     * @param mor the ManagedObjectReference
      */
     public ManagedObject(final ServerConnection serverConnection, final ManagedObjectReference mor) {
         this.serverConnection = serverConnection;
@@ -94,7 +94,7 @@ public abstract class ManagedObject {
     /**
      * get the ManagedObjectReference object pointing to the managed object
      *
-     * @return
+     * @return the ManagedObjectReference
      */
     public ManagedObjectReference getMOR() {
         return this.mor;
@@ -103,7 +103,7 @@ public abstract class ManagedObject {
     /**
      * Get the web service
      *
-     * @return
+     * @return the VimService
      */
     protected VimStub getVimService() {
         return serverConnection.getVimService();
@@ -121,7 +121,7 @@ public abstract class ManagedObject {
     /**
      * Set up the ServerConnection, only when it hasn't been set yet.
      *
-     * @param sc
+     * @param sc the established ServerConnection
      */
     protected void setServerConnection(final ServerConnection sc) {
         if (this.serverConnection == null) {
@@ -130,17 +130,7 @@ public abstract class ManagedObject {
     }
 
     protected ObjectContent retrieveObjectProperties(final String[] properties) {
-        final ObjectSpec oSpec = PropertyCollectorUtil.creatObjectSpec(
-                getMOR(), Boolean.FALSE, null);
-
-        final PropertySpec pSpec = PropertyCollectorUtil.createPropertySpec(
-                getMOR().getType(),
-                properties == null || properties.length == 0, //if true, all props of this obj are to be read regardless of propName
-                properties);
-
-        final PropertyFilterSpec pfSpec = new PropertyFilterSpec();
-        pfSpec.setObjectSet(new ObjectSpec[]{oSpec});
-        pfSpec.setPropSet(new PropertySpec[]{pSpec});
+        final PropertyFilterSpec pfSpec = PropertyFilterSpec.createDefault(this.mor, properties);
 
         final PropertyCollector pc = getServerConnection().getServiceInstance().getPropertyCollector();
 
@@ -159,12 +149,9 @@ public abstract class ManagedObject {
 
     /**
      * @param propertyName The property name of current managed object
-     * @return it will return either an array of related data objects, or an data object itself.
+     * @return it will return either an array of related data objects, or a data object itself.
      * ManagedObjectReference objects are data objects!!!
-     * @throws RemoteException
-     * @throws RuntimeFault
-     * @throws InvalidProperty
-     * @
+     * @throws RemoteException any Exception is wrapped in a RemoteException
      */
     protected Object getCurrentProperty(final String propertyName) {
         final ObjectContent objContent = retrieveObjectProperties(new String[]{propertyName});
@@ -312,100 +299,7 @@ public abstract class ManagedObject {
         return MorUtil.createExactManagedObject(getServerConnection(), thisMor);
     }
 
-    /**
-     * Handle Updates for a single object.
-     * waits till expected values of properties to check are reached
-     * Destroys the ObjectFilter when done.
-     *
-     * @param filterProps  Properties list to filter
-     * @param endWaitProps Properties list to check for expected values
-     *                     these be properties of a property in the filter properties list
-     * @param expectedVals values for properties to end the wait
-     * @return true indicating expected values were met, and false otherwise
-     * @throws RemoteException
-     * @throws RuntimeFault
-     * @throws InvalidProperty
-     */
-    protected Object[] waitForValues(final String[] filterProps, final String[] endWaitProps, final Object[][] expectedVals) throws InvalidProperty, RuntimeFault, RemoteException {
-        String version = "";
-        final Object[] endVals = new Object[endWaitProps.length];
-        final Object[] filterVals = new Object[filterProps.length];
-
-        final ObjectSpec oSpec = PropertyCollectorUtil.creatObjectSpec(
-                getMOR(), Boolean.FALSE, null);
-
-        final PropertySpec pSpec = PropertyCollectorUtil.createPropertySpec(
-                getMOR().getType(),
-                filterProps.length == 0, //if true, all props of this obj are to be read regardless of propName
-                filterProps);
-
-        final PropertyFilterSpec spec = new PropertyFilterSpec();
-        spec.setObjectSet(new ObjectSpec[]{oSpec});
-        spec.setPropSet(new PropertySpec[]{pSpec});
-
-        final PropertyCollector pc = serverConnection.getServiceInstance().getPropertyCollector();
-        final PropertyFilter pf = pc.createFilter(spec, true);
-
-        boolean reached = false;
-
-        while (!reached) {
-            final UpdateSet updateset = pc.waitForUpdatesEx(version, null);
-            if (updateset == null) {
-                continue;
-            }
-            version = updateset.getVersion();
-            final PropertyFilterUpdate[] filtupary = updateset.getFilterSet();
-            if (filtupary == null) {
-                continue;
-            }
-
-            // Make this code more general purpose when PropCol changes later.
-            for (final PropertyFilterUpdate filtup : filtupary) {
-                if (filtup == null) {
-                    continue;
-                }
-                final ObjectUpdate[] objupary = filtup.getObjectSet();
-                for (int j = 0; objupary != null && j < objupary.length; j++) {
-                    final ObjectUpdate objup = objupary[j];
-                    if (objup == null) {
-                        continue;
-                    }
-                    final PropertyChange[] propchgary = objup.getChangeSet();
-                    for (int k = 0; propchgary != null && k < propchgary.length; k++) {
-                        final PropertyChange propchg = propchgary[k];
-                        updateValues(endWaitProps, endVals, propchg);
-                        updateValues(filterProps, filterVals, propchg);
-                    }
-                }
-            }
-
-            // Check if the expected values have been reached and exit the loop if done.
-            // Also exit the WaitForUpdates loop if this is the case.
-            for (int chgi = 0; chgi < endVals.length && !reached; chgi++) {
-                for (int vali = 0; vali < expectedVals[chgi].length && !reached; vali++) {
-                    final Object expctdval = expectedVals[chgi][vali];
-                    reached = expctdval.equals(endVals[chgi]);
-                }
-            }
-        }
-
-        pf.destroyPropertyFilter();
-
-        return filterVals;
-    }
-
-    private void updateValues(final String[] props, final Object[] vals, final PropertyChange propchg) {
-        for (int i = 0; i < props.length; i++) {
-            if (propchg.getName().lastIndexOf(props[i]) >= 0) {
-                if (propchg.getOp() == PropertyChangeOp.remove) {
-                    vals[i] = "";
-                } else {
-                    vals[i] = propchg.getVal();
-                }
-            }
-        }
-    }
-
+    @Override
     public String toString() {
         return mor.getType() + ":" + mor.getVal() + " @ " + getServerConnection().getUrl();
     }

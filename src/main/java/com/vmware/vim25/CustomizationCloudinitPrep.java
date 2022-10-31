@@ -19,6 +19,13 @@ public class CustomizationCloudinitPrep extends CustomizationIdentitySettings {
                 "} " + super.toString();
     }
 
+    /**
+     * Metadata includes the network, instance id and hostname that cloud-init processes to configure the VM.
+     * It is in json or yaml format. The max size of the metadata is 524288 bytes.
+     * See detail information about Instance Metadata.
+     * @see https://cloudinit.readthedocs.io/en/latest/topics/instancedata.html
+     * @return Metadata
+     */
     public String getMetadata() {
         return metadata;
     }
@@ -27,6 +34,12 @@ public class CustomizationCloudinitPrep extends CustomizationIdentitySettings {
         this.metadata = metadata;
     }
 
+    /**
+     * Userdata is the user custom content that cloud-init processes to configure the VM.
+     * The max size of the userdata is 524288 bytes. See detail information about User-Data formats.
+     * @see https://cloudinit.readthedocs.io/en/latest/topics/format.html
+     * @return Userdata
+     */
     public String getUserdata() {
         return userdata;
     }
