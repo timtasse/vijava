@@ -30,28 +30,36 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class CustomizationAdapterMapping extends DynamicData {
-  public String macAddress;
-  public CustomizationIPSettings adapter;
+    private String macAddress;
+    private CustomizationIPSettings adapter;
 
-  public String getMacAddress() {
-    return this.macAddress;
-  }
+    @Override
+    public String toString() {
+        return "CustomizationAdapterMapping{" +
+                "macAddress='" + macAddress + '\'' +
+                ", adapter=" + adapter +
+                '}';
+    }
 
-  public CustomizationIPSettings getAdapter() {
-    return this.adapter;
-  }
+    public String getMacAddress() {
+        return this.macAddress;
+    }
 
-  public void setMacAddress(String macAddress) {
-    this.macAddress=macAddress;
-  }
+    public CustomizationIPSettings getAdapter() {
+        return this.adapter;
+    }
 
-  public void setAdapter(CustomizationIPSettings adapter) {
-    this.adapter=adapter;
-  }
+    public void setMacAddress(String macAddress) {
+        this.macAddress = macAddress;
+    }
+
+    public void setAdapter(CustomizationIPSettings adapter) {
+        this.adapter = adapter;
+    }
 }

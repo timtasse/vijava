@@ -29,56 +29,71 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class CustomizationSpec extends DynamicData {
-  public CustomizationOptions options;
-  public CustomizationIdentitySettings identity;
-  public CustomizationGlobalIPSettings globalIPSettings;
-  public CustomizationAdapterMapping[] nicSettingMap;
-  public byte[] encryptionKey;
 
-  public CustomizationOptions getOptions() {
-    return this.options;
-  }
+    private CustomizationOptions options;
+    private CustomizationIdentitySettings identity;
+    private CustomizationGlobalIPSettings globalIPSettings;
+    private CustomizationAdapterMapping[] nicSettingMap;
+    private byte[] encryptionKey;
 
-  public CustomizationIdentitySettings getIdentity() {
-    return this.identity;
-  }
+    @Override
+    public String toString() {
+        return "CustomizationSpec{" +
+                "options=" + options +
+                ", identity=" + identity +
+                ", globalIPSettings=" + globalIPSettings +
+                ", nicSettingMap=" + Arrays.toString(nicSettingMap) +
+                ", encryptionKey=" + Arrays.toString(encryptionKey) +
+                '}';
+    }
 
-  public CustomizationGlobalIPSettings getGlobalIPSettings() {
-    return this.globalIPSettings;
-  }
+    public CustomizationOptions getOptions() {
+        return this.options;
+    }
 
-  public CustomizationAdapterMapping[] getNicSettingMap() {
-    return this.nicSettingMap;
-  }
+    public CustomizationIdentitySettings getIdentity() {
+        return this.identity;
+    }
 
-  public byte[] getEncryptionKey() {
-    return this.encryptionKey;
-  }
+    public CustomizationGlobalIPSettings getGlobalIPSettings() {
+        return this.globalIPSettings;
+    }
 
-  public void setOptions(CustomizationOptions options) {
-    this.options=options;
-  }
+    public CustomizationAdapterMapping[] getNicSettingMap() {
+        return this.nicSettingMap;
+    }
 
-  public void setIdentity(CustomizationIdentitySettings identity) {
-    this.identity=identity;
-  }
+    public byte[] getEncryptionKey() {
+        return this.encryptionKey;
+    }
 
-  public void setGlobalIPSettings(CustomizationGlobalIPSettings globalIPSettings) {
-    this.globalIPSettings=globalIPSettings;
-  }
+    public void setOptions(final CustomizationOptions options) {
+        this.options = options;
+    }
 
-  public void setNicSettingMap(CustomizationAdapterMapping[] nicSettingMap) {
-    this.nicSettingMap=nicSettingMap;
-  }
+    public void setIdentity(final CustomizationIdentitySettings identity) {
+        this.identity = identity;
+    }
 
-  public void setEncryptionKey(byte[] encryptionKey) {
-    this.encryptionKey=encryptionKey;
-  }
+    public void setGlobalIPSettings(final CustomizationGlobalIPSettings globalIPSettings) {
+        this.globalIPSettings = globalIPSettings;
+    }
+
+    public void setNicSettingMap(final CustomizationAdapterMapping[] nicSettingMap) {
+        this.nicSettingMap = nicSettingMap;
+    }
+
+    public void setEncryptionKey(final byte[] encryptionKey) {
+        this.encryptionKey = encryptionKey;
+    }
+
 }

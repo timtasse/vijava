@@ -29,29 +29,39 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class CustomizationGlobalIPSettings extends DynamicData {
-  public String[] dnsSuffixList;
-  public String[] dnsServerList;
+    private String[] dnsSuffixList;
+    private String[] dnsServerList;
 
-  public String[] getDnsSuffixList() {
-    return this.dnsSuffixList;
-  }
+    @Override
+    public String toString() {
+        return "CustomizationGlobalIPSettings{" +
+                "dnsSuffixList=" + Arrays.toString(dnsSuffixList) +
+                ", dnsServerList=" + Arrays.toString(dnsServerList) +
+                '}';
+    }
 
-  public String[] getDnsServerList() {
-    return this.dnsServerList;
-  }
+    public String[] getDnsSuffixList() {
+        return this.dnsSuffixList;
+    }
 
-  public void setDnsSuffixList(String[] dnsSuffixList) {
-    this.dnsSuffixList=dnsSuffixList;
-  }
+    public String[] getDnsServerList() {
+        return this.dnsServerList;
+    }
 
-  public void setDnsServerList(String[] dnsServerList) {
-    this.dnsServerList=dnsServerList;
-  }
+    public void setDnsSuffixList(String[] dnsSuffixList) {
+        this.dnsSuffixList = dnsSuffixList;
+    }
+
+    public void setDnsServerList(String[] dnsServerList) {
+        this.dnsServerList = dnsServerList;
+    }
 }
