@@ -2,3 +2,4 @@
 /workspace.xml
 /sonarlint-state.xml
 /sonarlint/
+!/jpa-buddy.xml
