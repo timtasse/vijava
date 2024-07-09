@@ -72,7 +72,7 @@ Here an example:</br>
 
 You can use this library for connecting to a ESX or vCenter Server.
 The entrypoint is the ServiceInstance class, there you find all other methods and classes.
-To use the library it is very helpful to look in the official API documentation, currently it is found under [All APIs in Version 7.0](https://code.vmware.com/web/sdk/7.0/vsphere-management) and more precise [direct to vSphere Web Services API](https://code.vmware.com/apis/1067/vsphere)
+To use the library it is very helpful to look in the official API documentation, currently it is found under [latest vSphere Web Services API](https://developer.broadcom.com/xapis/vsphere-web-services-api/latest/)
 
 Here is a short code snippet
 ```java
