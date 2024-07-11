@@ -36,17 +36,17 @@ import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.doublecloud.ws.util.ReflectUtil;
 import org.doublecloud.ws.util.TypeUtil;
+import org.xml.sax.SAXException;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.lang.reflect.*;
 import java.rmi.RemoteException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The XML serialization/de-serialization engine.
@@ -55,9 +55,9 @@ import java.util.*;
  * @author Stefan Dilk
  */
 
-final class XmlGenDom extends XmlGen {
-    private final static int getNumberOfSameTags(final List<Element> subNodes, final int sizeOfSubNodes,
-                                                 final int from, final String tagName) {
+public final class XmlGenDom extends XmlGen {
+    private static int getNumberOfSameTags(final List<Element> subNodes, final int sizeOfSubNodes,
+                                           final int from, final String tagName) {
         int numOfTags = 1;
         for (int j = from + 1; j < sizeOfSubNodes; j++) {
             if (subNodes.get(j).getName().equals(tagName)) {
@@ -69,25 +69,16 @@ final class XmlGenDom extends XmlGen {
         return numOfTags;
     }
 
-    private static <T> List<T> createList(final Class<?> type, final int length) {
-        return new ArrayList<>(length);
-    }
-
     Element parseInputStreamXML(final InputStream is) throws RemoteException {
         if (is == null) {
             return null;
         }
-        final SAXReader reader = new SAXReader();
-        try {
+        try (is) {
+            final SAXReader reader = new SAXReader();
+            reader.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
             return reader.read(is).getRootElement().element(SoapConsts.BODY_QNAME);
-        } catch (DocumentException e) {
+        } catch (final DocumentException | IOException | SAXException e) {
             throw new RemoteException("VI SDK invoke exception:" + e, e);
-        } finally {
-            try {
-                is.close();
-            } catch (final IOException e) {
-                // NOTHING
-            }
         }
     }
 
@@ -96,7 +87,9 @@ final class XmlGenDom extends XmlGen {
         if (body == null) {
             return null;
         }
-        //LOGGER.debug(body.asXML());
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace(body.asXML());
+        }
         final Element fault = body.element(SoapConsts.FAULT_QNAME);
         if (fault != null) {
             final SoapFaultException sfe = this.parseSoapFault(fault);
@@ -112,11 +105,7 @@ final class XmlGenDom extends XmlGen {
         if (returnType == null) {
             return null;
         }
-        try {
-            return parseXmlElement(returnType, resp);
-        } catch (final Exception e) {
-            throw new RemoteException("Exception in WSClient.invoke:", e);
-        }
+        return parseXmlElement(returnType, resp);
     }
 
     private SoapFaultException parseSoapFault(final Element root) {
@@ -141,7 +130,7 @@ final class XmlGenDom extends XmlGen {
         return sfe;
     }
 
-    private Object parseXmlElement(final String type, final Element root) throws Exception {
+    private Object parseXmlElement(final String type, final Element root) {
         final List<Element> subNodes = root.elements();
 
         if (subNodes.isEmpty()) {
@@ -178,13 +167,12 @@ final class XmlGenDom extends XmlGen {
                 }
                 return morList;
             } else {
-                final Class<?> clazz = TypeUtil.getVimClass(arrayItemTypeName);
-                final List<Object> list = createList(clazz, subNodes.size());
-                for (final Element e : subNodes) {
-                    final String xsiType = e.attributeValue(SoapConsts.XSI_TYPE);
-                    list.add(parseVimClassFromElement(TypeUtil.getVimClass(xsiType == null ? arrayItemTypeName : xsiType), e));
-                }
-                return list;
+                return subNodes.stream()
+                        .map(e -> {
+                            final String xsiType = e.attributeValue(SoapConsts.XSI_TYPE);
+                            return parseVimClassFromElement(TypeUtil.getVimClass(xsiType == null ? arrayItemTypeName : xsiType), e);
+                        })
+                        .collect(Collectors.toList());
             }
         } else if (type.endsWith("[]")) { // array type
             final String arrayItemTypeName = type.substring(0, type.length() - 2);
@@ -207,8 +195,13 @@ final class XmlGenDom extends XmlGen {
      * Handle single VIM Data Object except MOR
      */
     @SuppressWarnings("all")
-    private Object parseVimClassFromElement(final Class<?> clazz, final Element node) throws Exception {
-        final Object obj = clazz.getDeclaredConstructor().newInstance();
+    private Object parseVimClassFromElement(final Class<?> clazz, final Element node) {
+        final Object obj;
+        try {
+            obj = clazz.getDeclaredConstructor().newInstance();
+        } catch (InstantiationException | IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
+            throw new RuntimeException(e);
+        }
 
         final List<Element> subNodes = node.elements();
         final int sizeOfSubNodes = subNodes.size();
@@ -350,8 +343,8 @@ final class XmlGenDom extends XmlGen {
                         field.set(obj, o);
                     }
                 }
-            } catch (final NoSuchFieldException exc) {
-                LOGGER.error("Field {} could not found on Class {}", tagName, clazz.getSimpleName(), exc);
+            } catch (final NoSuchFieldException | IllegalAccessException exc) {
+                LOGGER.error("Field {} could not found or accessed on Class {}", tagName, clazz.getSimpleName(), exc);
             }
         }
         return obj;
@@ -360,27 +353,27 @@ final class XmlGenDom extends XmlGen {
     private static List<?> arrayToList(final Object array) {
         if (array instanceof int[]) {
             final var val = (int[]) array;
-            return Arrays.asList(val);
+            return List.of(val);
         }
         if (array instanceof short[]) {
             final var val = (short[]) array;
-            return Arrays.asList(val);
+            return List.of(val);
         }
         if (array instanceof byte[]) {
             final var val = (byte[]) array;
-            return Arrays.asList(val);
+            return List.of(val);
         }
         if (array instanceof long[]) {
             final var val = (long[]) array;
-            return Arrays.asList(val);
+            return List.of(val);
         }
         if (array instanceof float[]) {
             final var val = (float[]) array;
-            return Arrays.asList(val);
+            return List.of(val);
         }
         if (array instanceof boolean[]) {
             final var val = (boolean[]) array;
-            return Arrays.asList(val);
+            return List.of(val);
         }
         if (array instanceof String[]) {
             final var val = (String[]) array;
@@ -399,7 +392,7 @@ final class XmlGenDom extends XmlGen {
         Field field;
         try {
             field = clazz.getField(name);
-        } catch (NoSuchFieldException e) {
+        } catch (final NoSuchFieldException e) {
             field = this.getFieldRecursive(clazz, name);
         }
         if (!field.isAccessible()) {
@@ -411,7 +404,7 @@ final class XmlGenDom extends XmlGen {
     private Field getFieldRecursive(final Class<?> clazz, final String name) throws NoSuchFieldException {
         try {
             return clazz.getDeclaredField(name);
-        } catch (NoSuchFieldException e) {
+        } catch (final NoSuchFieldException e) {
             final Class<?> superclass = clazz.getSuperclass();
             if (superclass == null) {
                 throw e;
