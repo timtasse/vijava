@@ -40,6 +40,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.rmi.RemoteException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -57,13 +58,13 @@ public abstract class XmlGen {
     2018-04-19T14:50:47.00073Z
     2018-04-19T14:51:47.00068Z
      */
-    public static DateFormat getDateFormat() {
+    static DateFormat getDateFormat() {
         final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSX");
         dateFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
         return dateFormat;
     }
 
-    public static String generateSoapMethod(final String methodName, final List<Argument> paras, final String vimNameSpace) {
+    static String generateSoapMethod(final String methodName, final List<Argument> paras, final String vimNameSpace) {
         final StringBuilder sb = new StringBuilder();
         sb.append(SoapConsts.SOAP_HEADER);
         sb.append(SoapConsts.TAG_START);
@@ -204,6 +205,6 @@ public abstract class XmlGen {
         }
     }
 
-    public abstract Object fromXML(String returnType, InputStream in) throws Exception;
+    abstract Object fromXML(String returnType, InputStream in) throws RemoteException;
 
 }

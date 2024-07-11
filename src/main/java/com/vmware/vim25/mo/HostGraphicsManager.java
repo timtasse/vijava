@@ -34,7 +34,9 @@ import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * This managed object manages the graphics state of the host.
@@ -44,30 +46,30 @@ import java.util.List;
  * @since 5.5
  * @version 7.0.3
  */
+@SuppressWarnings("unused")
 public class HostGraphicsManager extends ExtensibleManagedObject {
 
     public HostGraphicsManager(final ServerConnection serverConnection, final ManagedObjectReference mor) {
         super(serverConnection, mor);
     }
 
-    public HostGraphicsConfig graphicsConfig() {
-        return getCurrentProperty("graphicsConfig", HostGraphicsConfig.class);
+    public HostGraphicsConfig getGraphicsConfig() {
+        return this.getCurrentProperty("graphicsConfig", HostGraphicsConfig.class);
     }
 
-    public HostGraphicsInfo[] getGraphicsInfo() {
-        return getCurrentProperty("graphicsInfo", HostGraphicsInfo[].class);
+    public List<HostGraphicsInfo> getGraphicsInfo() {
+        final var val = Optional.ofNullable(this.getCurrentProperty("graphicsInfo", HostGraphicsInfo[].class));
+        return val.map(List::of).orElse(Collections.emptyList());
     }
 
-    public String[] getSharedPassthruGpuTypes() {
-        return getCurrentProperty("sharedPassthruGpuTypes", String[].class);
+    public List<String> getSharedPassthruGpuTypes() {
+        final var val = Optional.ofNullable(this.getCurrentProperty("sharedPassthruGpuTypes", String[].class));
+        return val.map(List::of).orElse(Collections.emptyList());
     }
 
-    public HostSharedGpuCapabilities[] sharedGpuCapabilities() {
-        return this.getCurrentProperty("sharedGpuCapabilities", HostSharedGpuCapabilities[].class);
-    }
-
-    public String[] sharedPassthruGpuTypes() {
-        return this.getCurrentProperty("sharedPassthruGpuTypes", String[].class);
+    public List<HostSharedGpuCapabilities> getSharedGpuCapabilities() {
+        final var val = Optional.ofNullable(this.getCurrentProperty("sharedGpuCapabilities", HostSharedGpuCapabilities[].class));
+        return val.map(List::of).orElse(Collections.emptyList());
     }
 
     public boolean isSharedGraphicsActive() throws RuntimeFault {

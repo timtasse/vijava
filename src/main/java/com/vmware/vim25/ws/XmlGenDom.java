@@ -56,6 +56,7 @@ import java.util.stream.Collectors;
  */
 
 public final class XmlGenDom extends XmlGen {
+
     private static int getNumberOfSameTags(final List<Element> subNodes, final int sizeOfSubNodes,
                                            final int from, final String tagName) {
         int numOfTags = 1;
@@ -82,7 +83,8 @@ public final class XmlGenDom extends XmlGen {
         }
     }
 
-    public Object fromXML(final String returnType, final InputStream is) throws RemoteException {
+    @Override
+    Object fromXML(final String returnType, final InputStream is) throws RemoteException {
         final Element body = this.parseInputStreamXML(is);
         if (body == null) {
             return null;
