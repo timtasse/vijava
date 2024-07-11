@@ -117,34 +117,14 @@ public class ReflectUtil {
             return toFloatArray(values);
         } else if ("boolean[]".equalsIgnoreCase(type)) {
             return toBooleanArray(values);
+        } else if ("byte[][]".equalsIgnoreCase(type)) {
+            return values.stream().map(v -> toByteArray(List.of(v))).toArray(byte[][]::new);
         } else {
             throw new RuntimeException("Unexpected Type at getObjectArray: " + type);
         }
     }
 
     private static byte[] toByteArray(List<String> values) {
-        if (values.stream().anyMatch(s -> s.length() > 16)) {
-            // Handle array of base64Binary
-            byte[][] arrays = new byte[values.size()][];
-            int length = 0;
-            for (int i = 0; i < values.size(); i++) {
-                final byte[] test = tryBase64Decode(values.get(i));
-                if (test != null) {
-                    arrays[i] = test;
-                    length += arrays[i].length;
-                }
-            }
-
-            byte[] ret = new byte[length];
-            int offset = 0;
-            for (int i = 0; i < arrays.length; i++) {
-                System.arraycopy(arrays[i], 0, ret, offset, arrays[i].length);
-                offset += arrays[i].length;
-            }
-
-            return ret;
-        }
-
         if(values.size() == 1) {
             final byte[] test = tryBase64Decode(values.get(0));
             if (test != null) {

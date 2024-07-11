@@ -93,11 +93,14 @@ final class XmlGenDom extends XmlGen {
 
     public Object fromXML(final String returnType, final InputStream is) throws RemoteException {
         final Element body = this.parseInputStreamXML(is);
+        if (body == null) {
+            return null;
+        }
         //LOGGER.debug(body.asXML());
         final Element fault = body.element(SoapConsts.FAULT_QNAME);
         if (fault != null) {
             final SoapFaultException sfe = this.parseSoapFault(fault);
-            if (sfe != null && sfe.detail != null) {
+            if (sfe.detail != null) {
                 throw (RemoteException) sfe.detail;
             } else {
                 throw sfe;
@@ -111,7 +114,7 @@ final class XmlGenDom extends XmlGen {
         }
         try {
             return parseXmlElement(returnType, resp);
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new RemoteException("Exception in WSClient.invoke:", e);
         }
     }
@@ -124,15 +127,14 @@ final class XmlGenDom extends XmlGen {
         sfe.setFaultActor(root.elementText("faultactor"));
 
         final Element detailE = root.element("detail");
-        if (detailE != null) {
-            if (detailE.nodeCount() > 0) {
-                final Element faultE = (Element) detailE.node(0);
-                final String faultTypeName = faultE.attributeValue(SoapConsts.XSI_TYPE);
-                if (faultTypeName != null) {
-                    try {
-                        sfe.detail = (Throwable) parseVimClassFromElement(TypeUtil.getVimClass(faultTypeName), faultE);
-                    } catch (Exception e) {
-                    }
+        if (detailE != null && detailE.nodeCount() > 0) {
+            final Element faultE = (Element) detailE.node(0);
+            final String faultTypeName = faultE.attributeValue(SoapConsts.XSI_TYPE);
+            if (faultTypeName != null) {
+                try {
+                    sfe.detail = (Throwable) parseVimClassFromElement(TypeUtil.getVimClass(faultTypeName), faultE);
+                } catch (final Exception ignored) {
+                    // no further information available
                 }
             }
         }
@@ -171,14 +173,14 @@ final class XmlGenDom extends XmlGen {
             final String arrayItemTypeName = type.substring(5);
             if ("ManagedObjectReference".equals(arrayItemTypeName)) {
                 final List<ManagedObjectReference> morList = new ArrayList<>(subNodes.size());
-                for (Element e : subNodes) {
+                for (final Element e : subNodes) {
                     morList.add(ManagedObjectReference.create(e.attributeValue("type"), e.getText()));
                 }
                 return morList;
             } else {
                 final Class<?> clazz = TypeUtil.getVimClass(arrayItemTypeName);
                 final List<Object> list = createList(clazz, subNodes.size());
-                for (Element e : subNodes) {
+                for (final Element e : subNodes) {
                     final String xsiType = e.attributeValue(SoapConsts.XSI_TYPE);
                     list.add(parseVimClassFromElement(TypeUtil.getVimClass(xsiType == null ? arrayItemTypeName : xsiType), e));
                 }
@@ -204,7 +206,7 @@ final class XmlGenDom extends XmlGen {
     /**
      * Handle single VIM Data Object except MOR
      */
-    @SuppressWarnings({"unchecked", "rawtypes"})
+    @SuppressWarnings("all")
     private Object parseVimClassFromElement(final Class<?> clazz, final Element node) throws Exception {
         final Object obj = clazz.getDeclaredConstructor().newInstance();
 
@@ -289,16 +291,21 @@ final class XmlGenDom extends XmlGen {
                         if (xsiType != null) {
                             fTrueType = xsiType.substring("xsd:".length()) + "[]";
                         } else {
-                            fTrueType = fRealType.getSimpleName();
-                            if (!fTrueType.endsWith("[]")) {
-                                fTrueType = fTrueType + "[]";
+                            if (isFieldArray) {
+                                fTrueType = field.getType().getSimpleName();
+                            } else {
+                                fTrueType = fRealType.getSimpleName() + "[]";
                             }
                         }
-                        final Object array = ReflectUtil.getObjectArray(fTrueType, values);
-                        if (isList) {
-                            field.set(obj, Arrays.asList(array));
+                        if (isList && fRealType == String.class) {
+                            field.set(obj, values);
                         } else {
-                            field.set(obj, array);
+                            final Object array = ReflectUtil.getObjectArray(fTrueType, values);
+                            if (isList) {
+                                field.set(obj, arrayToList(array));
+                            } else {
+                                field.set(obj, array);
+                            }
                         }
                         i = i + sizeOfFieldArray - 1;
                     } else {
@@ -348,6 +355,38 @@ final class XmlGenDom extends XmlGen {
             }
         }
         return obj;
+    }
+
+    private static List<?> arrayToList(final Object array) {
+        if (array instanceof int[]) {
+            final var val = (int[]) array;
+            return Arrays.asList(val);
+        }
+        if (array instanceof short[]) {
+            final var val = (short[]) array;
+            return Arrays.asList(val);
+        }
+        if (array instanceof byte[]) {
+            final var val = (byte[]) array;
+            return Arrays.asList(val);
+        }
+        if (array instanceof long[]) {
+            final var val = (long[]) array;
+            return Arrays.asList(val);
+        }
+        if (array instanceof float[]) {
+            final var val = (float[]) array;
+            return Arrays.asList(val);
+        }
+        if (array instanceof boolean[]) {
+            final var val = (boolean[]) array;
+            return Arrays.asList(val);
+        }
+        if (array instanceof String[]) {
+            final var val = (String[]) array;
+            return Arrays.asList(val);
+        }
+        throw new IllegalArgumentException("Unsupported array type: " + array.getClass());
     }
 
     private Field getField(final Class<?> clazz, final String tagName) throws NoSuchFieldException {

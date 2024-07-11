@@ -1,5 +1,7 @@
 package com.vmware.vim25;
 
+import java.util.List;
+
 /**
  * This data object type represents a TPM 2.0 module in a virtual machine.
  *
@@ -9,22 +11,22 @@ package com.vmware.vim25;
  */
 public class VirtualTPM extends VirtualDevice {
 
-    private byte[] endorsementKeyCertificateSigningRequest;
-    private byte[] endorsementKeyCertificate;
+    private List<String> endorsementKeyCertificateSigningRequest;
+    private List<String> endorsementKeyCertificate;
 
-    public byte[] getEndorsementKeyCertificate() {
+    public List<String> getEndorsementKeyCertificate() {
         return endorsementKeyCertificate;
     }
 
-    public void setEndorsementKeyCertificate(final byte[] endorsementKeyCertificate) {
+    public void setEndorsementKeyCertificate(final List<String> endorsementKeyCertificate) {
         this.endorsementKeyCertificate = endorsementKeyCertificate;
     }
 
-    public byte[] getEndorsementKeyCertificateSigningRequest() {
+    public List<String> getEndorsementKeyCertificateSigningRequest() {
         return endorsementKeyCertificateSigningRequest;
     }
 
-    public void setEndorsementKeyCertificateSigningRequest(final byte[] endorsementKeyCertificateSigningRequest) {
+    public void setEndorsementKeyCertificateSigningRequest(final List<String> endorsementKeyCertificateSigningRequest) {
         this.endorsementKeyCertificateSigningRequest = endorsementKeyCertificateSigningRequest;
     }
 

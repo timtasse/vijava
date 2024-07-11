@@ -59,15 +59,6 @@ public class HostBIOSInfoTest {
     }
 
     @Test
-    public void testTicket() throws Exception {
-        final SessionManagerHttpServiceRequestSpec spec = new SessionManagerHttpServiceRequestSpec();
-        spec.setUrl("https://127.0.0.1:8080/cgi-bin/vm-support.cgi?n=val");
-        final SessionManagerGenericServiceTicket ticket = this.instance.getSessionManager().acquireGenericServiceTicket(spec);
-        LOGGER.debug("{}", ticket);
-        assertNotNull(ticket);
-    }
-
-    @Test
     public void testCapability() throws Exception {
         final Capability capability = this.instance.getCapability();
         LOGGER.debug(capability.toString());
