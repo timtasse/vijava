@@ -29,47 +29,53 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.List;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 public class TraversalSpec extends SelectionSpec {
-  public String type;
-  public String path;
-  public Boolean skip;
-  public SelectionSpec[] selectSet;
 
-  public String getType() {
-    return this.type;
-  }
+    private String type;
+    private String path;
+    private Boolean skip;
+    private SelectionSpec[] selectSet;
 
-  public String getPath() {
-    return this.path;
-  }
+    public String getType() {
+        return this.type;
+    }
 
-  public Boolean getSkip() {
-    return this.skip;
-  }
+    public String getPath() {
+        return this.path;
+    }
 
-  public SelectionSpec[] getSelectSet() {
-    return this.selectSet;
-  }
+    public Boolean getSkip() {
+        return this.skip;
+    }
 
-  public void setType(String type) {
-    this.type=type;
-  }
+    public SelectionSpec[] getSelectSet() {
+        return this.selectSet;
+    }
 
-  public void setPath(String path) {
-    this.path=path;
-  }
+    public void setType(final String type) {
+        this.type = type;
+    }
 
-  public void setSkip(Boolean skip) {
-    this.skip=skip;
-  }
+    public void setPath(final String path) {
+        this.path = path;
+    }
 
-  public void setSelectSet(SelectionSpec[] selectSet) {
-    this.selectSet=selectSet;
-  }
+    public void setSkip(final Boolean skip) {
+        this.skip = skip;
+    }
+
+    public void setSelectSet(final SelectionSpec[] selectSet) {
+        this.selectSet = selectSet;
+    }
+
+    public void setSelectSet(final List<SelectionSpec> selectSet) {
+        this.selectSet = selectSet.toArray(new SelectionSpec[0]);
+    }
+
 }

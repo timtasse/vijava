@@ -1,19 +1,40 @@
 package com.vmware.vim25;
 
+import java.util.List;
+
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 28.03.18.
- *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @since 6.0
+ * @version 6.0.0
  */
 public class ClusterEVCManagerEVCState extends DynamicData {
 
-    public String currentEVCModeKey;
-    public HostFeatureCapability[] featureCapability;
-    public HostFeatureMask[] featureMask;
-    public VirtualMachineFeatureRequirement[] featureRequirement;
-    public HostCpuIdInfo[] guaranteedCPUFeatures;
-    public EVCMode[] supportedEVCMode;
+    private List<EVCMode> supportedEVCMode = List.of();
+    private String currentEVCModeKey;
+    @Deprecated
+    private List<HostCpuIdInfo> guaranteedCPUFeatures = List.of();
+    private List<HostFeatureCapability> featureCapability = List.of();
+    private List<HostFeatureMask> featureMask = List.of();
+    private List<VirtualMachineFeatureRequirement> featureRequirement = List.of();
+
+    @Override
+    public String toString() {
+        return "ClusterEVCManagerEVCState{" +
+                "supportedEVCMode=" + supportedEVCMode +
+                ", currentEVCModeKey='" + currentEVCModeKey + '\'' +
+                ", guaranteedCPUFeatures=" + guaranteedCPUFeatures +
+                ", featureCapability=" + featureCapability +
+                ", featureMask=" + featureMask +
+                ", featureRequirement=" + featureRequirement +
+                '}';
+    }
+
+    public List<EVCMode> getSupportedEVCMode() {
+        return supportedEVCMode;
+    }
+
+    public void setSupportedEVCMode(final List<EVCMode> supportedEVCMode) {
+        this.supportedEVCMode = supportedEVCMode;
+    }
 
     public String getCurrentEVCModeKey() {
         return currentEVCModeKey;
@@ -23,43 +44,36 @@ public class ClusterEVCManagerEVCState extends DynamicData {
         this.currentEVCModeKey = currentEVCModeKey;
     }
 
-    public HostFeatureCapability[] getFeatureCapability() {
-        return featureCapability;
-    }
-
-    public void setFeatureCapability(final HostFeatureCapability[] featureCapability) {
-        this.featureCapability = featureCapability;
-    }
-
-    public HostFeatureMask[] getFeatureMask() {
-        return featureMask;
-    }
-
-    public void setFeatureMask(final HostFeatureMask[] featureMask) {
-        this.featureMask = featureMask;
-    }
-
-    public VirtualMachineFeatureRequirement[] getFeatureRequirement() {
-        return featureRequirement;
-    }
-
-    public void setFeatureRequirement(final VirtualMachineFeatureRequirement[] featureRequirement) {
-        this.featureRequirement = featureRequirement;
-    }
-
-    public HostCpuIdInfo[] getGuaranteedCPUFeatures() {
+    public List<HostCpuIdInfo> getGuaranteedCPUFeatures() {
         return guaranteedCPUFeatures;
     }
 
-    public void setGuaranteedCPUFeatures(final HostCpuIdInfo[] guaranteedCPUFeatures) {
+    public void setGuaranteedCPUFeatures(final List<HostCpuIdInfo> guaranteedCPUFeatures) {
         this.guaranteedCPUFeatures = guaranteedCPUFeatures;
     }
 
-    public EVCMode[] getSupportedEVCMode() {
-        return supportedEVCMode;
+    public List<HostFeatureCapability> getFeatureCapability() {
+        return featureCapability;
     }
 
-    public void setSupportedEVCMode(final EVCMode[] supportedEVCMode) {
-        this.supportedEVCMode = supportedEVCMode;
+    public void setFeatureCapability(final List<HostFeatureCapability> featureCapability) {
+        this.featureCapability = featureCapability;
     }
+
+    public List<HostFeatureMask> getFeatureMask() {
+        return featureMask;
+    }
+
+    public void setFeatureMask(final List<HostFeatureMask> featureMask) {
+        this.featureMask = featureMask;
+    }
+
+    public List<VirtualMachineFeatureRequirement> getFeatureRequirement() {
+        return featureRequirement;
+    }
+
+    public void setFeatureRequirement(final List<VirtualMachineFeatureRequirement> featureRequirement) {
+        this.featureRequirement = featureRequirement;
+    }
+
 }

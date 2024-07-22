@@ -52,9 +52,8 @@ import java.util.stream.Collectors;
  * The XML serialization/de-serialization engine.
  *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
-
 public final class XmlGenDom extends XmlGen {
 
     private static int getNumberOfSameTags(final List<Element> subNodes, final int sizeOfSubNodes,
@@ -355,33 +354,65 @@ public final class XmlGenDom extends XmlGen {
     private static List<?> arrayToList(final Object array) {
         if (array instanceof int[]) {
             final var val = (int[]) array;
-            return List.of(val);
+            return Arrays.stream(val).boxed().collect(Collectors.toList());
         }
         if (array instanceof short[]) {
             final var val = (short[]) array;
-            return List.of(val);
+            return shortToShortList(val);
         }
         if (array instanceof byte[]) {
             final var val = (byte[]) array;
-            return List.of(val);
+            return byteToByteList(val);
         }
         if (array instanceof long[]) {
             final var val = (long[]) array;
-            return List.of(val);
+            return Arrays.stream(val).boxed().collect(Collectors.toList());
         }
         if (array instanceof float[]) {
             final var val = (float[]) array;
-            return List.of(val);
+            return floatToFloatList(val);
         }
         if (array instanceof boolean[]) {
             final var val = (boolean[]) array;
-            return List.of(val);
+            return booleanToBooleanList(val);
         }
         if (array instanceof String[]) {
             final var val = (String[]) array;
             return Arrays.asList(val);
         }
         throw new IllegalArgumentException("Unsupported array type: " + array.getClass());
+    }
+
+    private static List<Short> shortToShortList(final short[] input){
+        final List<Short> output = new ArrayList<>(input.length);
+        for (final short i : input) {
+            output.add(i);
+        }
+        return output;
+    }
+
+    private static List<Byte> byteToByteList(final byte[] input){
+        final List<Byte> output = new ArrayList<>(input.length);
+        for (final byte i : input) {
+            output.add(i);
+        }
+        return output;
+    }
+
+    private static List<Float> floatToFloatList(final float[] input){
+        final List<Float> output = new ArrayList<>(input.length);
+        for (final float i : input) {
+            output.add(i);
+        }
+        return output;
+    }
+
+    private static List<Boolean> booleanToBooleanList(final boolean[] input){
+        final List<Boolean> output = new ArrayList<>(input.length);
+        for (final boolean i : input) {
+            output.add(i);
+        }
+        return output;
     }
 
     private Field getField(final Class<?> clazz, final String tagName) throws NoSuchFieldException {

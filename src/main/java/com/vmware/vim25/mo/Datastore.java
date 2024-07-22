@@ -98,7 +98,7 @@ public class Datastore extends ManagedEntity {
     }
 
     public List<VirtualMachine> getVms() {
-        return Arrays.asList(getVms("vm"));
+        return getVms("vm");
     }
 
     public StoragePlacementResult datastoreEnterMaintenanceMode() throws InvalidState, RuntimeFault {

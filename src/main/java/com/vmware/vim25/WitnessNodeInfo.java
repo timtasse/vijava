@@ -1,15 +1,15 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * The WitnessNodeInfo class defines configuration information for the Witness node in the cluster
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.5
  */
 public class WitnessNodeInfo extends DynamicData {
 
-    public String biosUuid;
-    public CustomizationIPSettings ipSettings;
+    private CustomizationIPSettings ipSettings;
+    private String biosUuid;
 
     public String getBiosUuid() {
         return biosUuid;

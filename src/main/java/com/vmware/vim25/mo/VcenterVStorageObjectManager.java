@@ -233,7 +233,7 @@ public class VcenterVStorageObjectManager extends VStorageObjectManagerBase {
             throws InvalidDatastore, InvalidState, NotFound, RuntimeFault, RemoteException {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("datastore", ManagedObjectReference.class, datastore));
-        return this.getVimService().getWsc().invoke("RetrieveVStorageInfrastructureObjectPolicy", params, vslmInfrastructureObjectPolicy.class);
+        return this.getVimService().getWsc().invokeWithListReturn("RetrieveVStorageInfrastructureObjectPolicy", params, vslmInfrastructureObjectPolicy.class);
     }
 
     public List<vslmInfrastructureObjectPolicy> retrieveVStorageInfrastructureObjectPolicy(final Datastore datastore)

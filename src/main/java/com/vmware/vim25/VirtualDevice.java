@@ -30,73 +30,112 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * VirtualDevice is the base data object type for devices in a virtual machine.
+ * This type contains enough information about a virtual device to allow clients to display devices they do not recognize.
+ * For example, a client with an older version than the server to which it connects may see a device without knowing what it is.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.1
+ */
+@SuppressWarnings("unused")
 public class VirtualDevice extends DynamicData {
-  public int key;
-  public Description deviceInfo;
-  public VirtualDeviceBackingInfo backing;
-  public VirtualDeviceConnectInfo connectable;
-  public VirtualDeviceBusSlotInfo slotInfo;
-  public Integer controllerKey;
-  public Integer unitNumber;
 
-  public int getKey() {
-    return this.key;
-  }
+    private int key;
+    private Description deviceInfo;
+    private VirtualDeviceBackingInfo backing;
+    private VirtualDeviceConnectInfo connectable;
+    private VirtualDeviceBusSlotInfo slotInfo;
+    private Integer controllerKey;
+    private Integer unitNumber;
+    private Integer numaNode;
+    private VirtualDeviceDeviceGroupInfo deviceGroupInfo;
 
-  public Description getDeviceInfo() {
-    return this.deviceInfo;
-  }
+    @Override
+    public String toString() {
+        return "VirtualDevice{" +
+                "key=" + key +
+                ", deviceInfo=" + deviceInfo +
+                ", backing=" + backing +
+                ", connectable=" + connectable +
+                ", slotInfo=" + slotInfo +
+                ", controllerKey=" + controllerKey +
+                ", unitNumber=" + unitNumber +
+                ", numaNode=" + numaNode +
+                ", deviceGroupInfo=" + deviceGroupInfo +
+                '}';
+    }
 
-  public VirtualDeviceBackingInfo getBacking() {
-    return this.backing;
-  }
+    public int getKey() {
+        return key;
+    }
 
-  public VirtualDeviceConnectInfo getConnectable() {
-    return this.connectable;
-  }
+    public void setKey(final int key) {
+        this.key = key;
+    }
 
-  public VirtualDeviceBusSlotInfo getSlotInfo() {
-    return this.slotInfo;
-  }
+    public Description getDeviceInfo() {
+        return deviceInfo;
+    }
 
-  public Integer getControllerKey() {
-    return this.controllerKey;
-  }
+    public void setDeviceInfo(final Description deviceInfo) {
+        this.deviceInfo = deviceInfo;
+    }
 
-  public Integer getUnitNumber() {
-    return this.unitNumber;
-  }
+    public VirtualDeviceBackingInfo getBacking() {
+        return backing;
+    }
 
-  public void setKey(int key) {
-    this.key=key;
-  }
+    public void setBacking(final VirtualDeviceBackingInfo backing) {
+        this.backing = backing;
+    }
 
-  public void setDeviceInfo(Description deviceInfo) {
-    this.deviceInfo=deviceInfo;
-  }
+    public VirtualDeviceConnectInfo getConnectable() {
+        return connectable;
+    }
 
-  public void setBacking(VirtualDeviceBackingInfo backing) {
-    this.backing=backing;
-  }
+    public void setConnectable(final VirtualDeviceConnectInfo connectable) {
+        this.connectable = connectable;
+    }
 
-  public void setConnectable(VirtualDeviceConnectInfo connectable) {
-    this.connectable=connectable;
-  }
+    public VirtualDeviceBusSlotInfo getSlotInfo() {
+        return slotInfo;
+    }
 
-  public void setSlotInfo(VirtualDeviceBusSlotInfo slotInfo) {
-    this.slotInfo=slotInfo;
-  }
+    public void setSlotInfo(final VirtualDeviceBusSlotInfo slotInfo) {
+        this.slotInfo = slotInfo;
+    }
 
-  public void setControllerKey(Integer controllerKey) {
-    this.controllerKey=controllerKey;
-  }
+    public Integer getControllerKey() {
+        return controllerKey;
+    }
 
-  public void setUnitNumber(Integer unitNumber) {
-    this.unitNumber=unitNumber;
-  }
+    public void setControllerKey(final Integer controllerKey) {
+        this.controllerKey = controllerKey;
+    }
+
+    public Integer getUnitNumber() {
+        return unitNumber;
+    }
+
+    public void setUnitNumber(final Integer unitNumber) {
+        this.unitNumber = unitNumber;
+    }
+
+    public Integer getNumaNode() {
+        return numaNode;
+    }
+
+    public void setNumaNode(final Integer numaNode) {
+        this.numaNode = numaNode;
+    }
+
+    public VirtualDeviceDeviceGroupInfo getDeviceGroupInfo() {
+        return deviceGroupInfo;
+    }
+
+    public void setDeviceGroupInfo(final VirtualDeviceDeviceGroupInfo deviceGroupInfo) {
+        this.deviceGroupInfo = deviceGroupInfo;
+    }
+
 }

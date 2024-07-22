@@ -33,135 +33,187 @@ package com.vmware.vim25;
  * This data object type contains information about the operation/capabilities of a virtual machine
  *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 7.0.2
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
  */
 @SuppressWarnings("unused")
 public class VirtualMachineCapability extends DynamicData {
 
-    private boolean bootOptionsSupported;
-    private boolean bootRetryOptionsSupported;
-    private boolean changeTrackingSupported;
-    private boolean consolePreferencesSupported;
-    private boolean cpuFeatureMaskSupported;
-    @Deprecated
-    private boolean disableSnapshotsSupported;
-    private Boolean diskOnlySnapshotOnSuspendedVMSupported;
-    private boolean diskSharesSupported;
-    private boolean featureRequirementSupported;
-    private boolean guestAutoLockSupported;
-    private boolean hostBasedReplicationSupported;
-    private boolean lockSnapshotsSupported;
-    private boolean memoryReservationLockSupported;
-    private boolean memorySnapshotsSupported;
-    private boolean multipleCoresPerSocketSupported;
+    private boolean snapshotOperationsSupported;
     private boolean multipleSnapshotsSupported;
-    private boolean nestedHVSupported;
-    private boolean npivWwnOnNonRdmVmSupported;
-    private Boolean perVmEvcSupported;
+    private boolean snapshotConfigSupported;
     private boolean poweredOffSnapshotsSupported;
-    private boolean poweredOnMonitorTypeChangeSupported;
+    private boolean memorySnapshotsSupported;
+    private boolean revertToSnapshotSupported;
     private boolean quiescedSnapshotsSupported;
     @Deprecated
-    private boolean recordReplaySupported;
-    private boolean revertToSnapshotSupported;
+    private boolean disableSnapshotsSupported;
+    private boolean lockSnapshotsSupported;
+    private boolean consolePreferencesSupported;
+    private boolean cpuFeatureMaskSupported;
     private boolean s1AcpiManagementSupported;
-    private Boolean secureBootSupported;
-    private boolean seSparseDiskSupported;
-    private boolean settingDisplayTopologySupported;
     private boolean settingScreenResolutionSupported;
-    private boolean settingVideoRamSizeSupported;
-    private boolean snapshotConfigSupported;
-    private boolean snapshotOperationsSupported;
-    private boolean swapPlacementSupported;
     private boolean toolsAutoUpdateSupported;
-    private boolean toolsSyncTimeSupported;
-    private Boolean virtualExecUsageIgnored;
-    private Boolean virtualMmuUsageIgnored;
-    private boolean virtualMmuUsageSupported;
-    private boolean vmNpivWwnDisableSupported;
     private boolean vmNpivWwnSupported;
-    private boolean vmNpivWwnUpdateSupported;
-    private boolean vPMCSupported;
+    private boolean npivWwnOnNonRdmVmSupported;
+    private Boolean vmNpivWwnDisableSupported;
+    private Boolean vmNpivWwnUpdateSupported;
+    private boolean swapPlacementSupported;
+    private boolean toolsSyncTimeSupported;
+    private boolean virtualMmuUsageSupported;
+    private boolean diskSharesSupported;
+    private boolean bootOptionsSupported;
+    private Boolean bootRetryOptionsSupported;
+    private boolean settingVideoRamSizeSupported;
+    private Boolean settingDisplayTopologySupported;
+    @Deprecated
+    private Boolean recordReplaySupported;
+    private Boolean changeTrackingSupported;
+    private Boolean multipleCoresPerSocketSupported;
+    private Boolean hostBasedReplicationSupported;
+    private Boolean guestAutoLockSupported;
+    private Boolean memoryReservationLockSupported;
+    private Boolean featureRequirementSupported;
+    private Boolean poweredOnMonitorTypeChangeSupported;
+    private Boolean seSparseDiskSupported;
+    private Boolean nestedHVSupported;
+    private Boolean vPMCSupported;
+    private Boolean secureBootSupported;
+    private Boolean perVmEvcSupported;
+    private Boolean virtualMmuUsageIgnored;
+    private Boolean virtualExecUsageIgnored;
+    private Boolean diskOnlySnapshotOnSuspendedVMSupported;
+    private Boolean suspendToMemorySupported;
     private Boolean toolsSyncTimeAllowSupported;
     private Boolean sevSupported;
     private Boolean pmemFailoverSupported;
-    private Boolean suspendToMemorySupported;
+    private Boolean requireSgxAttestationSupported;
+    private Boolean changeModeDisksSupported;
 
     @Override
     public String toString() {
         return "VirtualMachineCapability{" +
-                "bootOptionsSupported=" + bootOptionsSupported +
-                ", bootRetryOptionsSupported=" + bootRetryOptionsSupported +
-                ", changeTrackingSupported=" + changeTrackingSupported +
+                "snapshotOperationsSupported=" + snapshotOperationsSupported +
+                ", multipleSnapshotsSupported=" + multipleSnapshotsSupported +
+                ", snapshotConfigSupported=" + snapshotConfigSupported +
+                ", poweredOffSnapshotsSupported=" + poweredOffSnapshotsSupported +
+                ", memorySnapshotsSupported=" + memorySnapshotsSupported +
+                ", revertToSnapshotSupported=" + revertToSnapshotSupported +
+                ", quiescedSnapshotsSupported=" + quiescedSnapshotsSupported +
+                ", disableSnapshotsSupported=" + disableSnapshotsSupported +
+                ", lockSnapshotsSupported=" + lockSnapshotsSupported +
                 ", consolePreferencesSupported=" + consolePreferencesSupported +
                 ", cpuFeatureMaskSupported=" + cpuFeatureMaskSupported +
-                ", disableSnapshotsSupported=" + disableSnapshotsSupported +
-                ", diskOnlySnapshotOnSuspendedVMSupported=" + diskOnlySnapshotOnSuspendedVMSupported +
-                ", diskSharesSupported=" + diskSharesSupported +
-                ", featureRequirementSupported=" + featureRequirementSupported +
-                ", guestAutoLockSupported=" + guestAutoLockSupported +
-                ", hostBasedReplicationSupported=" + hostBasedReplicationSupported +
-                ", lockSnapshotsSupported=" + lockSnapshotsSupported +
-                ", memoryReservationLockSupported=" + memoryReservationLockSupported +
-                ", memorySnapshotsSupported=" + memorySnapshotsSupported +
-                ", multipleCoresPerSocketSupported=" + multipleCoresPerSocketSupported +
-                ", multipleSnapshotsSupported=" + multipleSnapshotsSupported +
-                ", nestedHVSupported=" + nestedHVSupported +
-                ", npivWwnOnNonRdmVmSupported=" + npivWwnOnNonRdmVmSupported +
-                ", perVmEvcSupported=" + perVmEvcSupported +
-                ", poweredOffSnapshotsSupported=" + poweredOffSnapshotsSupported +
-                ", poweredOnMonitorTypeChangeSupported=" + poweredOnMonitorTypeChangeSupported +
-                ", quiescedSnapshotsSupported=" + quiescedSnapshotsSupported +
-                ", recordReplaySupported=" + recordReplaySupported +
-                ", revertToSnapshotSupported=" + revertToSnapshotSupported +
                 ", s1AcpiManagementSupported=" + s1AcpiManagementSupported +
-                ", secureBootSupported=" + secureBootSupported +
-                ", seSparseDiskSupported=" + seSparseDiskSupported +
-                ", settingDisplayTopologySupported=" + settingDisplayTopologySupported +
                 ", settingScreenResolutionSupported=" + settingScreenResolutionSupported +
-                ", settingVideoRamSizeSupported=" + settingVideoRamSizeSupported +
-                ", snapshotConfigSupported=" + snapshotConfigSupported +
-                ", snapshotOperationsSupported=" + snapshotOperationsSupported +
-                ", swapPlacementSupported=" + swapPlacementSupported +
                 ", toolsAutoUpdateSupported=" + toolsAutoUpdateSupported +
-                ", toolsSyncTimeSupported=" + toolsSyncTimeSupported +
-                ", virtualExecUsageIgnored=" + virtualExecUsageIgnored +
-                ", virtualMmuUsageIgnored=" + virtualMmuUsageIgnored +
-                ", virtualMmuUsageSupported=" + virtualMmuUsageSupported +
-                ", vmNpivWwnDisableSupported=" + vmNpivWwnDisableSupported +
                 ", vmNpivWwnSupported=" + vmNpivWwnSupported +
+                ", npivWwnOnNonRdmVmSupported=" + npivWwnOnNonRdmVmSupported +
+                ", vmNpivWwnDisableSupported=" + vmNpivWwnDisableSupported +
                 ", vmNpivWwnUpdateSupported=" + vmNpivWwnUpdateSupported +
+                ", swapPlacementSupported=" + swapPlacementSupported +
+                ", toolsSyncTimeSupported=" + toolsSyncTimeSupported +
+                ", virtualMmuUsageSupported=" + virtualMmuUsageSupported +
+                ", diskSharesSupported=" + diskSharesSupported +
+                ", bootOptionsSupported=" + bootOptionsSupported +
+                ", bootRetryOptionsSupported=" + bootRetryOptionsSupported +
+                ", settingVideoRamSizeSupported=" + settingVideoRamSizeSupported +
+                ", settingDisplayTopologySupported=" + settingDisplayTopologySupported +
+                ", recordReplaySupported=" + recordReplaySupported +
+                ", changeTrackingSupported=" + changeTrackingSupported +
+                ", multipleCoresPerSocketSupported=" + multipleCoresPerSocketSupported +
+                ", hostBasedReplicationSupported=" + hostBasedReplicationSupported +
+                ", guestAutoLockSupported=" + guestAutoLockSupported +
+                ", memoryReservationLockSupported=" + memoryReservationLockSupported +
+                ", featureRequirementSupported=" + featureRequirementSupported +
+                ", poweredOnMonitorTypeChangeSupported=" + poweredOnMonitorTypeChangeSupported +
+                ", seSparseDiskSupported=" + seSparseDiskSupported +
+                ", nestedHVSupported=" + nestedHVSupported +
                 ", vPMCSupported=" + vPMCSupported +
+                ", secureBootSupported=" + secureBootSupported +
+                ", perVmEvcSupported=" + perVmEvcSupported +
+                ", virtualMmuUsageIgnored=" + virtualMmuUsageIgnored +
+                ", virtualExecUsageIgnored=" + virtualExecUsageIgnored +
+                ", diskOnlySnapshotOnSuspendedVMSupported=" + diskOnlySnapshotOnSuspendedVMSupported +
+                ", suspendToMemorySupported=" + suspendToMemorySupported +
                 ", toolsSyncTimeAllowSupported=" + toolsSyncTimeAllowSupported +
                 ", sevSupported=" + sevSupported +
                 ", pmemFailoverSupported=" + pmemFailoverSupported +
-                ", suspendToMemorySupported=" + suspendToMemorySupported +
+                ", requireSgxAttestationSupported=" + requireSgxAttestationSupported +
+                ", changeModeDisksSupported=" + changeModeDisksSupported +
                 '}';
     }
 
-    public boolean isBootOptionsSupported() {
-        return bootOptionsSupported;
+    public boolean isSnapshotOperationsSupported() {
+        return snapshotOperationsSupported;
     }
 
-    public void setBootOptionsSupported(final boolean bootOptionsSupported) {
-        this.bootOptionsSupported = bootOptionsSupported;
+    public void setSnapshotOperationsSupported(final boolean snapshotOperationsSupported) {
+        this.snapshotOperationsSupported = snapshotOperationsSupported;
     }
 
-    public boolean isBootRetryOptionsSupported() {
-        return bootRetryOptionsSupported;
+    public boolean isMultipleSnapshotsSupported() {
+        return multipleSnapshotsSupported;
     }
 
-    public void setBootRetryOptionsSupported(final boolean bootRetryOptionsSupported) {
-        this.bootRetryOptionsSupported = bootRetryOptionsSupported;
+    public void setMultipleSnapshotsSupported(final boolean multipleSnapshotsSupported) {
+        this.multipleSnapshotsSupported = multipleSnapshotsSupported;
     }
 
-    public boolean isChangeTrackingSupported() {
-        return changeTrackingSupported;
+    public boolean isSnapshotConfigSupported() {
+        return snapshotConfigSupported;
     }
 
-    public void setChangeTrackingSupported(final boolean changeTrackingSupported) {
-        this.changeTrackingSupported = changeTrackingSupported;
+    public void setSnapshotConfigSupported(final boolean snapshotConfigSupported) {
+        this.snapshotConfigSupported = snapshotConfigSupported;
+    }
+
+    public boolean isPoweredOffSnapshotsSupported() {
+        return poweredOffSnapshotsSupported;
+    }
+
+    public void setPoweredOffSnapshotsSupported(final boolean poweredOffSnapshotsSupported) {
+        this.poweredOffSnapshotsSupported = poweredOffSnapshotsSupported;
+    }
+
+    public boolean isMemorySnapshotsSupported() {
+        return memorySnapshotsSupported;
+    }
+
+    public void setMemorySnapshotsSupported(final boolean memorySnapshotsSupported) {
+        this.memorySnapshotsSupported = memorySnapshotsSupported;
+    }
+
+    public boolean isRevertToSnapshotSupported() {
+        return revertToSnapshotSupported;
+    }
+
+    public void setRevertToSnapshotSupported(final boolean revertToSnapshotSupported) {
+        this.revertToSnapshotSupported = revertToSnapshotSupported;
+    }
+
+    public boolean isQuiescedSnapshotsSupported() {
+        return quiescedSnapshotsSupported;
+    }
+
+    public void setQuiescedSnapshotsSupported(final boolean quiescedSnapshotsSupported) {
+        this.quiescedSnapshotsSupported = quiescedSnapshotsSupported;
+    }
+
+    public boolean isDisableSnapshotsSupported() {
+        return disableSnapshotsSupported;
+    }
+
+    public void setDisableSnapshotsSupported(final boolean disableSnapshotsSupported) {
+        this.disableSnapshotsSupported = disableSnapshotsSupported;
+    }
+
+    public boolean isLockSnapshotsSupported() {
+        return lockSnapshotsSupported;
+    }
+
+    public void setLockSnapshotsSupported(final boolean lockSnapshotsSupported) {
+        this.lockSnapshotsSupported = lockSnapshotsSupported;
     }
 
     public boolean isConsolePreferencesSupported() {
@@ -180,188 +232,12 @@ public class VirtualMachineCapability extends DynamicData {
         this.cpuFeatureMaskSupported = cpuFeatureMaskSupported;
     }
 
-    public boolean isDisableSnapshotsSupported() {
-        return disableSnapshotsSupported;
-    }
-
-    public void setDisableSnapshotsSupported(final boolean disableSnapshotsSupported) {
-        this.disableSnapshotsSupported = disableSnapshotsSupported;
-    }
-
-    public Boolean getDiskOnlySnapshotOnSuspendedVMSupported() {
-        return diskOnlySnapshotOnSuspendedVMSupported;
-    }
-
-    public void setDiskOnlySnapshotOnSuspendedVMSupported(final Boolean diskOnlySnapshotOnSuspendedVMSupported) {
-        this.diskOnlySnapshotOnSuspendedVMSupported = diskOnlySnapshotOnSuspendedVMSupported;
-    }
-
-    public boolean isDiskSharesSupported() {
-        return diskSharesSupported;
-    }
-
-    public void setDiskSharesSupported(final boolean diskSharesSupported) {
-        this.diskSharesSupported = diskSharesSupported;
-    }
-
-    public boolean isFeatureRequirementSupported() {
-        return featureRequirementSupported;
-    }
-
-    public void setFeatureRequirementSupported(final boolean featureRequirementSupported) {
-        this.featureRequirementSupported = featureRequirementSupported;
-    }
-
-    public boolean isGuestAutoLockSupported() {
-        return guestAutoLockSupported;
-    }
-
-    public void setGuestAutoLockSupported(final boolean guestAutoLockSupported) {
-        this.guestAutoLockSupported = guestAutoLockSupported;
-    }
-
-    public boolean isHostBasedReplicationSupported() {
-        return hostBasedReplicationSupported;
-    }
-
-    public void setHostBasedReplicationSupported(final boolean hostBasedReplicationSupported) {
-        this.hostBasedReplicationSupported = hostBasedReplicationSupported;
-    }
-
-    public boolean isLockSnapshotsSupported() {
-        return lockSnapshotsSupported;
-    }
-
-    public void setLockSnapshotsSupported(final boolean lockSnapshotsSupported) {
-        this.lockSnapshotsSupported = lockSnapshotsSupported;
-    }
-
-    public boolean isMemoryReservationLockSupported() {
-        return memoryReservationLockSupported;
-    }
-
-    public void setMemoryReservationLockSupported(final boolean memoryReservationLockSupported) {
-        this.memoryReservationLockSupported = memoryReservationLockSupported;
-    }
-
-    public boolean isMemorySnapshotsSupported() {
-        return memorySnapshotsSupported;
-    }
-
-    public void setMemorySnapshotsSupported(final boolean memorySnapshotsSupported) {
-        this.memorySnapshotsSupported = memorySnapshotsSupported;
-    }
-
-    public boolean isMultipleCoresPerSocketSupported() {
-        return multipleCoresPerSocketSupported;
-    }
-
-    public void setMultipleCoresPerSocketSupported(final boolean multipleCoresPerSocketSupported) {
-        this.multipleCoresPerSocketSupported = multipleCoresPerSocketSupported;
-    }
-
-    public boolean isMultipleSnapshotsSupported() {
-        return multipleSnapshotsSupported;
-    }
-
-    public void setMultipleSnapshotsSupported(final boolean multipleSnapshotsSupported) {
-        this.multipleSnapshotsSupported = multipleSnapshotsSupported;
-    }
-
-    public boolean isNestedHVSupported() {
-        return nestedHVSupported;
-    }
-
-    public void setNestedHVSupported(final boolean nestedHVSupported) {
-        this.nestedHVSupported = nestedHVSupported;
-    }
-
-    public boolean isNpivWwnOnNonRdmVmSupported() {
-        return npivWwnOnNonRdmVmSupported;
-    }
-
-    public void setNpivWwnOnNonRdmVmSupported(final boolean npivWwnOnNonRdmVmSupported) {
-        this.npivWwnOnNonRdmVmSupported = npivWwnOnNonRdmVmSupported;
-    }
-
-    public Boolean getPerVmEvcSupported() {
-        return perVmEvcSupported;
-    }
-
-    public void setPerVmEvcSupported(final Boolean perVmEvcSupported) {
-        this.perVmEvcSupported = perVmEvcSupported;
-    }
-
-    public boolean isPoweredOffSnapshotsSupported() {
-        return poweredOffSnapshotsSupported;
-    }
-
-    public void setPoweredOffSnapshotsSupported(final boolean poweredOffSnapshotsSupported) {
-        this.poweredOffSnapshotsSupported = poweredOffSnapshotsSupported;
-    }
-
-    public boolean isPoweredOnMonitorTypeChangeSupported() {
-        return poweredOnMonitorTypeChangeSupported;
-    }
-
-    public void setPoweredOnMonitorTypeChangeSupported(final boolean poweredOnMonitorTypeChangeSupported) {
-        this.poweredOnMonitorTypeChangeSupported = poweredOnMonitorTypeChangeSupported;
-    }
-
-    public boolean isQuiescedSnapshotsSupported() {
-        return quiescedSnapshotsSupported;
-    }
-
-    public void setQuiescedSnapshotsSupported(final boolean quiescedSnapshotsSupported) {
-        this.quiescedSnapshotsSupported = quiescedSnapshotsSupported;
-    }
-
-    public boolean isRecordReplaySupported() {
-        return recordReplaySupported;
-    }
-
-    public void setRecordReplaySupported(final boolean recordReplaySupported) {
-        this.recordReplaySupported = recordReplaySupported;
-    }
-
-    public boolean isRevertToSnapshotSupported() {
-        return revertToSnapshotSupported;
-    }
-
-    public void setRevertToSnapshotSupported(final boolean revertToSnapshotSupported) {
-        this.revertToSnapshotSupported = revertToSnapshotSupported;
-    }
-
     public boolean isS1AcpiManagementSupported() {
         return s1AcpiManagementSupported;
     }
 
     public void setS1AcpiManagementSupported(final boolean s1AcpiManagementSupported) {
         this.s1AcpiManagementSupported = s1AcpiManagementSupported;
-    }
-
-    public Boolean getSecureBootSupported() {
-        return secureBootSupported;
-    }
-
-    public void setSecureBootSupported(final Boolean secureBootSupported) {
-        this.secureBootSupported = secureBootSupported;
-    }
-
-    public boolean isSeSparseDiskSupported() {
-        return seSparseDiskSupported;
-    }
-
-    public void setSeSparseDiskSupported(final boolean seSparseDiskSupported) {
-        this.seSparseDiskSupported = seSparseDiskSupported;
-    }
-
-    public boolean isSettingDisplayTopologySupported() {
-        return settingDisplayTopologySupported;
-    }
-
-    public void setSettingDisplayTopologySupported(final boolean settingDisplayTopologySupported) {
-        this.settingDisplayTopologySupported = settingDisplayTopologySupported;
     }
 
     public boolean isSettingScreenResolutionSupported() {
@@ -372,84 +248,12 @@ public class VirtualMachineCapability extends DynamicData {
         this.settingScreenResolutionSupported = settingScreenResolutionSupported;
     }
 
-    public boolean isSettingVideoRamSizeSupported() {
-        return settingVideoRamSizeSupported;
-    }
-
-    public void setSettingVideoRamSizeSupported(final boolean settingVideoRamSizeSupported) {
-        this.settingVideoRamSizeSupported = settingVideoRamSizeSupported;
-    }
-
-    public boolean isSnapshotConfigSupported() {
-        return snapshotConfigSupported;
-    }
-
-    public void setSnapshotConfigSupported(final boolean snapshotConfigSupported) {
-        this.snapshotConfigSupported = snapshotConfigSupported;
-    }
-
-    public boolean isSnapshotOperationsSupported() {
-        return snapshotOperationsSupported;
-    }
-
-    public void setSnapshotOperationsSupported(final boolean snapshotOperationsSupported) {
-        this.snapshotOperationsSupported = snapshotOperationsSupported;
-    }
-
-    public boolean isSwapPlacementSupported() {
-        return swapPlacementSupported;
-    }
-
-    public void setSwapPlacementSupported(final boolean swapPlacementSupported) {
-        this.swapPlacementSupported = swapPlacementSupported;
-    }
-
     public boolean isToolsAutoUpdateSupported() {
         return toolsAutoUpdateSupported;
     }
 
     public void setToolsAutoUpdateSupported(final boolean toolsAutoUpdateSupported) {
         this.toolsAutoUpdateSupported = toolsAutoUpdateSupported;
-    }
-
-    public boolean isToolsSyncTimeSupported() {
-        return toolsSyncTimeSupported;
-    }
-
-    public void setToolsSyncTimeSupported(final boolean toolsSyncTimeSupported) {
-        this.toolsSyncTimeSupported = toolsSyncTimeSupported;
-    }
-
-    public Boolean getVirtualExecUsageIgnored() {
-        return virtualExecUsageIgnored;
-    }
-
-    public void setVirtualExecUsageIgnored(final Boolean virtualExecUsageIgnored) {
-        this.virtualExecUsageIgnored = virtualExecUsageIgnored;
-    }
-
-    public Boolean getVirtualMmuUsageIgnored() {
-        return virtualMmuUsageIgnored;
-    }
-
-    public void setVirtualMmuUsageIgnored(final Boolean virtualMmuUsageIgnored) {
-        this.virtualMmuUsageIgnored = virtualMmuUsageIgnored;
-    }
-
-    public boolean isVirtualMmuUsageSupported() {
-        return virtualMmuUsageSupported;
-    }
-
-    public void setVirtualMmuUsageSupported(final boolean virtualMmuUsageSupported) {
-        this.virtualMmuUsageSupported = virtualMmuUsageSupported;
-    }
-
-    public boolean isVmNpivWwnDisableSupported() {
-        return vmNpivWwnDisableSupported;
-    }
-
-    public void setVmNpivWwnDisableSupported(final boolean vmNpivWwnDisableSupported) {
-        this.vmNpivWwnDisableSupported = vmNpivWwnDisableSupported;
     }
 
     public boolean isVmNpivWwnSupported() {
@@ -460,20 +264,228 @@ public class VirtualMachineCapability extends DynamicData {
         this.vmNpivWwnSupported = vmNpivWwnSupported;
     }
 
-    public boolean isVmNpivWwnUpdateSupported() {
+    public boolean isNpivWwnOnNonRdmVmSupported() {
+        return npivWwnOnNonRdmVmSupported;
+    }
+
+    public void setNpivWwnOnNonRdmVmSupported(final boolean npivWwnOnNonRdmVmSupported) {
+        this.npivWwnOnNonRdmVmSupported = npivWwnOnNonRdmVmSupported;
+    }
+
+    public Boolean getVmNpivWwnDisableSupported() {
+        return vmNpivWwnDisableSupported;
+    }
+
+    public void setVmNpivWwnDisableSupported(final Boolean vmNpivWwnDisableSupported) {
+        this.vmNpivWwnDisableSupported = vmNpivWwnDisableSupported;
+    }
+
+    public Boolean getVmNpivWwnUpdateSupported() {
         return vmNpivWwnUpdateSupported;
     }
 
-    public void setVmNpivWwnUpdateSupported(final boolean vmNpivWwnUpdateSupported) {
+    public void setVmNpivWwnUpdateSupported(final Boolean vmNpivWwnUpdateSupported) {
         this.vmNpivWwnUpdateSupported = vmNpivWwnUpdateSupported;
     }
 
-    public boolean isvPMCSupported() {
+    public boolean isSwapPlacementSupported() {
+        return swapPlacementSupported;
+    }
+
+    public void setSwapPlacementSupported(final boolean swapPlacementSupported) {
+        this.swapPlacementSupported = swapPlacementSupported;
+    }
+
+    public boolean isToolsSyncTimeSupported() {
+        return toolsSyncTimeSupported;
+    }
+
+    public void setToolsSyncTimeSupported(final boolean toolsSyncTimeSupported) {
+        this.toolsSyncTimeSupported = toolsSyncTimeSupported;
+    }
+
+    public boolean isVirtualMmuUsageSupported() {
+        return virtualMmuUsageSupported;
+    }
+
+    public void setVirtualMmuUsageSupported(final boolean virtualMmuUsageSupported) {
+        this.virtualMmuUsageSupported = virtualMmuUsageSupported;
+    }
+
+    public boolean isDiskSharesSupported() {
+        return diskSharesSupported;
+    }
+
+    public void setDiskSharesSupported(final boolean diskSharesSupported) {
+        this.diskSharesSupported = diskSharesSupported;
+    }
+
+    public boolean isBootOptionsSupported() {
+        return bootOptionsSupported;
+    }
+
+    public void setBootOptionsSupported(final boolean bootOptionsSupported) {
+        this.bootOptionsSupported = bootOptionsSupported;
+    }
+
+    public Boolean getBootRetryOptionsSupported() {
+        return bootRetryOptionsSupported;
+    }
+
+    public void setBootRetryOptionsSupported(final Boolean bootRetryOptionsSupported) {
+        this.bootRetryOptionsSupported = bootRetryOptionsSupported;
+    }
+
+    public boolean isSettingVideoRamSizeSupported() {
+        return settingVideoRamSizeSupported;
+    }
+
+    public void setSettingVideoRamSizeSupported(final boolean settingVideoRamSizeSupported) {
+        this.settingVideoRamSizeSupported = settingVideoRamSizeSupported;
+    }
+
+    public Boolean getSettingDisplayTopologySupported() {
+        return settingDisplayTopologySupported;
+    }
+
+    public void setSettingDisplayTopologySupported(final Boolean settingDisplayTopologySupported) {
+        this.settingDisplayTopologySupported = settingDisplayTopologySupported;
+    }
+
+    public Boolean getRecordReplaySupported() {
+        return recordReplaySupported;
+    }
+
+    public void setRecordReplaySupported(final Boolean recordReplaySupported) {
+        this.recordReplaySupported = recordReplaySupported;
+    }
+
+    public Boolean getChangeTrackingSupported() {
+        return changeTrackingSupported;
+    }
+
+    public void setChangeTrackingSupported(final Boolean changeTrackingSupported) {
+        this.changeTrackingSupported = changeTrackingSupported;
+    }
+
+    public Boolean getMultipleCoresPerSocketSupported() {
+        return multipleCoresPerSocketSupported;
+    }
+
+    public void setMultipleCoresPerSocketSupported(final Boolean multipleCoresPerSocketSupported) {
+        this.multipleCoresPerSocketSupported = multipleCoresPerSocketSupported;
+    }
+
+    public Boolean getHostBasedReplicationSupported() {
+        return hostBasedReplicationSupported;
+    }
+
+    public void setHostBasedReplicationSupported(final Boolean hostBasedReplicationSupported) {
+        this.hostBasedReplicationSupported = hostBasedReplicationSupported;
+    }
+
+    public Boolean getGuestAutoLockSupported() {
+        return guestAutoLockSupported;
+    }
+
+    public void setGuestAutoLockSupported(final Boolean guestAutoLockSupported) {
+        this.guestAutoLockSupported = guestAutoLockSupported;
+    }
+
+    public Boolean getMemoryReservationLockSupported() {
+        return memoryReservationLockSupported;
+    }
+
+    public void setMemoryReservationLockSupported(final Boolean memoryReservationLockSupported) {
+        this.memoryReservationLockSupported = memoryReservationLockSupported;
+    }
+
+    public Boolean getFeatureRequirementSupported() {
+        return featureRequirementSupported;
+    }
+
+    public void setFeatureRequirementSupported(final Boolean featureRequirementSupported) {
+        this.featureRequirementSupported = featureRequirementSupported;
+    }
+
+    public Boolean getPoweredOnMonitorTypeChangeSupported() {
+        return poweredOnMonitorTypeChangeSupported;
+    }
+
+    public void setPoweredOnMonitorTypeChangeSupported(final Boolean poweredOnMonitorTypeChangeSupported) {
+        this.poweredOnMonitorTypeChangeSupported = poweredOnMonitorTypeChangeSupported;
+    }
+
+    public Boolean getSeSparseDiskSupported() {
+        return seSparseDiskSupported;
+    }
+
+    public void setSeSparseDiskSupported(final Boolean seSparseDiskSupported) {
+        this.seSparseDiskSupported = seSparseDiskSupported;
+    }
+
+    public Boolean getNestedHVSupported() {
+        return nestedHVSupported;
+    }
+
+    public void setNestedHVSupported(final Boolean nestedHVSupported) {
+        this.nestedHVSupported = nestedHVSupported;
+    }
+
+    public Boolean getvPMCSupported() {
         return vPMCSupported;
     }
 
-    public void setvPMCSupported(final boolean vPMCSupported) {
+    public void setvPMCSupported(final Boolean vPMCSupported) {
         this.vPMCSupported = vPMCSupported;
+    }
+
+    public Boolean getSecureBootSupported() {
+        return secureBootSupported;
+    }
+
+    public void setSecureBootSupported(final Boolean secureBootSupported) {
+        this.secureBootSupported = secureBootSupported;
+    }
+
+    public Boolean getPerVmEvcSupported() {
+        return perVmEvcSupported;
+    }
+
+    public void setPerVmEvcSupported(final Boolean perVmEvcSupported) {
+        this.perVmEvcSupported = perVmEvcSupported;
+    }
+
+    public Boolean getVirtualMmuUsageIgnored() {
+        return virtualMmuUsageIgnored;
+    }
+
+    public void setVirtualMmuUsageIgnored(final Boolean virtualMmuUsageIgnored) {
+        this.virtualMmuUsageIgnored = virtualMmuUsageIgnored;
+    }
+
+    public Boolean getVirtualExecUsageIgnored() {
+        return virtualExecUsageIgnored;
+    }
+
+    public void setVirtualExecUsageIgnored(final Boolean virtualExecUsageIgnored) {
+        this.virtualExecUsageIgnored = virtualExecUsageIgnored;
+    }
+
+    public Boolean getDiskOnlySnapshotOnSuspendedVMSupported() {
+        return diskOnlySnapshotOnSuspendedVMSupported;
+    }
+
+    public void setDiskOnlySnapshotOnSuspendedVMSupported(final Boolean diskOnlySnapshotOnSuspendedVMSupported) {
+        this.diskOnlySnapshotOnSuspendedVMSupported = diskOnlySnapshotOnSuspendedVMSupported;
+    }
+
+    public Boolean getSuspendToMemorySupported() {
+        return suspendToMemorySupported;
+    }
+
+    public void setSuspendToMemorySupported(final Boolean suspendToMemorySupported) {
+        this.suspendToMemorySupported = suspendToMemorySupported;
     }
 
     public Boolean getToolsSyncTimeAllowSupported() {
@@ -500,12 +512,20 @@ public class VirtualMachineCapability extends DynamicData {
         this.pmemFailoverSupported = pmemFailoverSupported;
     }
 
-    public Boolean getSuspendToMemorySupported() {
-        return suspendToMemorySupported;
+    public Boolean getRequireSgxAttestationSupported() {
+        return requireSgxAttestationSupported;
     }
 
-    public void setSuspendToMemorySupported(final Boolean suspendToMemorySupported) {
-        this.suspendToMemorySupported = suspendToMemorySupported;
+    public void setRequireSgxAttestationSupported(final Boolean requireSgxAttestationSupported) {
+        this.requireSgxAttestationSupported = requireSgxAttestationSupported;
+    }
+
+    public Boolean getChangeModeDisksSupported() {
+        return changeModeDisksSupported;
+    }
+
+    public void setChangeModeDisksSupported(final Boolean changeModeDisksSupported) {
+        this.changeModeDisksSupported = changeModeDisksSupported;
     }
 
 }

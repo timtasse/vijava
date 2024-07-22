@@ -29,7 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Specifies the capabilities of the particular host.
@@ -37,7 +37,7 @@ import java.util.Arrays;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.3
+ * @version 8.0.0
  */
 @SuppressWarnings("unused")
 public class HostCapability extends DynamicData {
@@ -83,11 +83,11 @@ public class HostCapability extends DynamicData {
     @Deprecated
     private String replayUnsupportedReason;
     @Deprecated
-    private String[] replayCompatibilityIssues;
+    private List<String> replayCompatibilityIssues = List.of();
     private Boolean smpFtSupported;
     @Deprecated
-    private String[] ftCompatibilityIssues;
-    private String[] smpFtCompatibilityIssues;
+    private List<String> ftCompatibilityIssues = List.of();
+    private List<String> smpFtCompatibilityIssues = List.of();
     private Integer maxVcpusPerFtVm;
     private Boolean loginBySSLThumbprintSupported;
     private Boolean cloneFromSnapshotSupported;
@@ -97,13 +97,13 @@ public class HostCapability extends DynamicData {
     private String tpmVersion;
     private Boolean txtEnabled;
     @Deprecated
-    private HostCpuIdInfo[] supportedCpuFeature;
+    private List<HostCpuIdInfo> supportedCpuFeature = List.of();
     private Boolean virtualExecUsageSupported;
     private Boolean storageIORMSupported;
     private Boolean vmDirectPathGen2Supported;
-    private String[] vmDirectPathGen2UnsupportedReason;
+    private List<String> vmDirectPathGen2UnsupportedReason = List.of();
     private String vmDirectPathGen2UnsupportedReasonExtended;
-    private int[] supportedVmfsMajorVersion;
+    private List<Integer> supportedVmfsMajorVersion = List.of();
     private Boolean vStorageCapable;
     private Boolean snapshotRelayoutSupported;
     private Boolean firewallIpRulesSupported;
@@ -179,9 +179,14 @@ public class HostCapability extends DynamicData {
     private Boolean nvmeBatchOperationsSupported;
     private Boolean pMemFailoverSupported;
     private Boolean hostConfigEncryptionSupported;
+    private Integer maxSupportedSimultaneousThreads;
     private Boolean ptpConfigSupported;
     private Integer maxSupportedPtpPorts;
+    private Boolean sgxRegistrationSupported;
     private Boolean pMemIndependentSnapshotSupported;
+    private Boolean iommuSLDirtyCapable;
+    private Boolean ultralowFixedUnmapSupported;
+    private Boolean nvmeVvolSupported;
 
     @Override
     public String toString() {
@@ -223,10 +228,10 @@ public class HostCapability extends DynamicData {
                 ", recordReplaySupported=" + recordReplaySupported +
                 ", ftSupported=" + ftSupported +
                 ", replayUnsupportedReason='" + replayUnsupportedReason + '\'' +
-                ", replayCompatibilityIssues=" + Arrays.toString(replayCompatibilityIssues) +
+                ", replayCompatibilityIssues=" + replayCompatibilityIssues +
                 ", smpFtSupported=" + smpFtSupported +
-                ", ftCompatibilityIssues=" + Arrays.toString(ftCompatibilityIssues) +
-                ", smpFtCompatibilityIssues=" + Arrays.toString(smpFtCompatibilityIssues) +
+                ", ftCompatibilityIssues=" + ftCompatibilityIssues +
+                ", smpFtCompatibilityIssues=" + smpFtCompatibilityIssues +
                 ", maxVcpusPerFtVm=" + maxVcpusPerFtVm +
                 ", loginBySSLThumbprintSupported=" + loginBySSLThumbprintSupported +
                 ", cloneFromSnapshotSupported=" + cloneFromSnapshotSupported +
@@ -235,13 +240,13 @@ public class HostCapability extends DynamicData {
                 ", tpmSupported=" + tpmSupported +
                 ", tpmVersion='" + tpmVersion + '\'' +
                 ", txtEnabled=" + txtEnabled +
-                ", supportedCpuFeature=" + Arrays.toString(supportedCpuFeature) +
+                ", supportedCpuFeature=" + supportedCpuFeature +
                 ", virtualExecUsageSupported=" + virtualExecUsageSupported +
                 ", storageIORMSupported=" + storageIORMSupported +
                 ", vmDirectPathGen2Supported=" + vmDirectPathGen2Supported +
-                ", vmDirectPathGen2UnsupportedReason=" + Arrays.toString(vmDirectPathGen2UnsupportedReason) +
+                ", vmDirectPathGen2UnsupportedReason=" + vmDirectPathGen2UnsupportedReason +
                 ", vmDirectPathGen2UnsupportedReasonExtended='" + vmDirectPathGen2UnsupportedReasonExtended + '\'' +
-                ", supportedVmfsMajorVersion=" + Arrays.toString(supportedVmfsMajorVersion) +
+                ", supportedVmfsMajorVersion=" + supportedVmfsMajorVersion +
                 ", vStorageCapable=" + vStorageCapable +
                 ", snapshotRelayoutSupported=" + snapshotRelayoutSupported +
                 ", firewallIpRulesSupported=" + firewallIpRulesSupported +
@@ -317,10 +322,15 @@ public class HostCapability extends DynamicData {
                 ", nvmeBatchOperationsSupported=" + nvmeBatchOperationsSupported +
                 ", pMemFailoverSupported=" + pMemFailoverSupported +
                 ", hostConfigEncryptionSupported=" + hostConfigEncryptionSupported +
+                ", maxSupportedSimultaneousThreads=" + maxSupportedSimultaneousThreads +
                 ", ptpConfigSupported=" + ptpConfigSupported +
                 ", maxSupportedPtpPorts=" + maxSupportedPtpPorts +
+                ", sgxRegistrationSupported=" + sgxRegistrationSupported +
                 ", pMemIndependentSnapshotSupported=" + pMemIndependentSnapshotSupported +
-                "} " + super.toString();
+                ", iommuSLDirtyCapable=" + iommuSLDirtyCapable +
+                ", ultralowFixedUnmapSupported=" + ultralowFixedUnmapSupported +
+                ", nvmeVvolSupported=" + nvmeVvolSupported +
+                '}';
     }
 
     public boolean isRecursiveResourcePoolsSupported() {
@@ -619,11 +629,11 @@ public class HostCapability extends DynamicData {
         this.replayUnsupportedReason = replayUnsupportedReason;
     }
 
-    public String[] getReplayCompatibilityIssues() {
+    public List<String> getReplayCompatibilityIssues() {
         return replayCompatibilityIssues;
     }
 
-    public void setReplayCompatibilityIssues(final String[] replayCompatibilityIssues) {
+    public void setReplayCompatibilityIssues(final List<String> replayCompatibilityIssues) {
         this.replayCompatibilityIssues = replayCompatibilityIssues;
     }
 
@@ -635,19 +645,19 @@ public class HostCapability extends DynamicData {
         this.smpFtSupported = smpFtSupported;
     }
 
-    public String[] getFtCompatibilityIssues() {
+    public List<String> getFtCompatibilityIssues() {
         return ftCompatibilityIssues;
     }
 
-    public void setFtCompatibilityIssues(final String[] ftCompatibilityIssues) {
+    public void setFtCompatibilityIssues(final List<String> ftCompatibilityIssues) {
         this.ftCompatibilityIssues = ftCompatibilityIssues;
     }
 
-    public String[] getSmpFtCompatibilityIssues() {
+    public List<String> getSmpFtCompatibilityIssues() {
         return smpFtCompatibilityIssues;
     }
 
-    public void setSmpFtCompatibilityIssues(final String[] smpFtCompatibilityIssues) {
+    public void setSmpFtCompatibilityIssues(final List<String> smpFtCompatibilityIssues) {
         this.smpFtCompatibilityIssues = smpFtCompatibilityIssues;
     }
 
@@ -715,11 +725,11 @@ public class HostCapability extends DynamicData {
         this.txtEnabled = txtEnabled;
     }
 
-    public HostCpuIdInfo[] getSupportedCpuFeature() {
+    public List<HostCpuIdInfo> getSupportedCpuFeature() {
         return supportedCpuFeature;
     }
 
-    public void setSupportedCpuFeature(final HostCpuIdInfo[] supportedCpuFeature) {
+    public void setSupportedCpuFeature(final List<HostCpuIdInfo> supportedCpuFeature) {
         this.supportedCpuFeature = supportedCpuFeature;
     }
 
@@ -747,11 +757,11 @@ public class HostCapability extends DynamicData {
         this.vmDirectPathGen2Supported = vmDirectPathGen2Supported;
     }
 
-    public String[] getVmDirectPathGen2UnsupportedReason() {
+    public List<String> getVmDirectPathGen2UnsupportedReason() {
         return vmDirectPathGen2UnsupportedReason;
     }
 
-    public void setVmDirectPathGen2UnsupportedReason(final String[] vmDirectPathGen2UnsupportedReason) {
+    public void setVmDirectPathGen2UnsupportedReason(final List<String> vmDirectPathGen2UnsupportedReason) {
         this.vmDirectPathGen2UnsupportedReason = vmDirectPathGen2UnsupportedReason;
     }
 
@@ -763,11 +773,11 @@ public class HostCapability extends DynamicData {
         this.vmDirectPathGen2UnsupportedReasonExtended = vmDirectPathGen2UnsupportedReasonExtended;
     }
 
-    public int[] getSupportedVmfsMajorVersion() {
+    public List<Integer> getSupportedVmfsMajorVersion() {
         return supportedVmfsMajorVersion;
     }
 
-    public void setSupportedVmfsMajorVersion(final int[] supportedVmfsMajorVersion) {
+    public void setSupportedVmfsMajorVersion(final List<Integer> supportedVmfsMajorVersion) {
         this.supportedVmfsMajorVersion = supportedVmfsMajorVersion;
     }
 
@@ -1219,12 +1229,28 @@ public class HostCapability extends DynamicData {
         this.quickBootSupported = quickBootSupported;
     }
 
+    public Boolean getEncryptedFtSupported() {
+        return encryptedFtSupported;
+    }
+
+    public void setEncryptedFtSupported(final Boolean encryptedFtSupported) {
+        this.encryptedFtSupported = encryptedFtSupported;
+    }
+
     public Boolean getAssignableHardwareSupported() {
         return assignableHardwareSupported;
     }
 
     public void setAssignableHardwareSupported(final Boolean assignableHardwareSupported) {
         this.assignableHardwareSupported = assignableHardwareSupported;
+    }
+
+    public Boolean getSuspendToMemorySupported() {
+        return suspendToMemorySupported;
+    }
+
+    public void setSuspendToMemorySupported(final Boolean suspendToMemorySupported) {
+        this.suspendToMemorySupported = suspendToMemorySupported;
     }
 
     public Boolean getUseFeatureReqsForOldHWv() {
@@ -1299,30 +1325,6 @@ public class HostCapability extends DynamicData {
         this.ahDeviceHintsSupported = ahDeviceHintsSupported;
     }
 
-    public Boolean getAssignHwPciConfigSupported() {
-        return assignHwPciConfigSupported;
-    }
-
-    public void setAssignHwPciConfigSupported(final Boolean assignHwPciConfigSupported) {
-        this.assignHwPciConfigSupported = assignHwPciConfigSupported;
-    }
-
-    public Boolean getpMemFailoverSupported() {
-        return pMemFailoverSupported;
-    }
-
-    public void setpMemFailoverSupported(final Boolean pMemFailoverSupported) {
-        this.pMemFailoverSupported = pMemFailoverSupported;
-    }
-
-    public Boolean getHostConfigEncryptionSupported() {
-        return hostConfigEncryptionSupported;
-    }
-
-    public void setHostConfigEncryptionSupported(final Boolean hostConfigEncryptionSupported) {
-        this.hostConfigEncryptionSupported = hostConfigEncryptionSupported;
-    }
-
     public Boolean getNvmeOverTcpSupported() {
         return nvmeOverTcpSupported;
     }
@@ -1337,6 +1339,14 @@ public class HostCapability extends DynamicData {
 
     public void setNvmeStorageFabricServicesSupported(final Boolean nvmeStorageFabricServicesSupported) {
         this.nvmeStorageFabricServicesSupported = nvmeStorageFabricServicesSupported;
+    }
+
+    public Boolean getAssignHwPciConfigSupported() {
+        return assignHwPciConfigSupported;
+    }
+
+    public void setAssignHwPciConfigSupported(final Boolean assignHwPciConfigSupported) {
+        this.assignHwPciConfigSupported = assignHwPciConfigSupported;
     }
 
     public Boolean getTimeConfigSupported() {
@@ -1355,6 +1365,30 @@ public class HostCapability extends DynamicData {
         this.nvmeBatchOperationsSupported = nvmeBatchOperationsSupported;
     }
 
+    public Boolean getpMemFailoverSupported() {
+        return pMemFailoverSupported;
+    }
+
+    public void setpMemFailoverSupported(final Boolean pMemFailoverSupported) {
+        this.pMemFailoverSupported = pMemFailoverSupported;
+    }
+
+    public Boolean getHostConfigEncryptionSupported() {
+        return hostConfigEncryptionSupported;
+    }
+
+    public void setHostConfigEncryptionSupported(final Boolean hostConfigEncryptionSupported) {
+        this.hostConfigEncryptionSupported = hostConfigEncryptionSupported;
+    }
+
+    public Integer getMaxSupportedSimultaneousThreads() {
+        return maxSupportedSimultaneousThreads;
+    }
+
+    public void setMaxSupportedSimultaneousThreads(final Integer maxSupportedSimultaneousThreads) {
+        this.maxSupportedSimultaneousThreads = maxSupportedSimultaneousThreads;
+    }
+
     public Boolean getPtpConfigSupported() {
         return ptpConfigSupported;
     }
@@ -1371,6 +1405,14 @@ public class HostCapability extends DynamicData {
         this.maxSupportedPtpPorts = maxSupportedPtpPorts;
     }
 
+    public Boolean getSgxRegistrationSupported() {
+        return sgxRegistrationSupported;
+    }
+
+    public void setSgxRegistrationSupported(final Boolean sgxRegistrationSupported) {
+        this.sgxRegistrationSupported = sgxRegistrationSupported;
+    }
+
     public Boolean getpMemIndependentSnapshotSupported() {
         return pMemIndependentSnapshotSupported;
     }
@@ -1379,20 +1421,27 @@ public class HostCapability extends DynamicData {
         this.pMemIndependentSnapshotSupported = pMemIndependentSnapshotSupported;
     }
 
-    public Boolean getEncryptedFtSupported() {
-        return encryptedFtSupported;
+    public Boolean getIommuSLDirtyCapable() {
+        return iommuSLDirtyCapable;
     }
 
-    public void setEncryptedFtSupported(final Boolean encryptedFtSupported) {
-        this.encryptedFtSupported = encryptedFtSupported;
+    public void setIommuSLDirtyCapable(final Boolean iommuSLDirtyCapable) {
+        this.iommuSLDirtyCapable = iommuSLDirtyCapable;
     }
 
-    public Boolean getSuspendToMemorySupported() {
-        return suspendToMemorySupported;
+    public Boolean getUltralowFixedUnmapSupported() {
+        return ultralowFixedUnmapSupported;
     }
 
-    public void setSuspendToMemorySupported(final Boolean suspendToMemorySupported) {
-        this.suspendToMemorySupported = suspendToMemorySupported;
+    public void setUltralowFixedUnmapSupported(final Boolean ultralowFixedUnmapSupported) {
+        this.ultralowFixedUnmapSupported = ultralowFixedUnmapSupported;
     }
 
+    public Boolean getNvmeVvolSupported() {
+        return nvmeVvolSupported;
+    }
+
+    public void setNvmeVvolSupported(final Boolean nvmeVvolSupported) {
+        this.nvmeVvolSupported = nvmeVvolSupported;
+    }
 }

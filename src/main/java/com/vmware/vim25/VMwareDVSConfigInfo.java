@@ -29,77 +29,96 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-/**
- * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
- */
+import java.util.List;
 
-@SuppressWarnings("all")
+/**
+ * This class defines the VMware specific configuration for DistributedVirtualSwitch.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
+ */
+@SuppressWarnings("unused")
 public class VMwareDVSConfigInfo extends DVSConfigInfo {
 
-    public VMwareVspanSession[] vspanSession;
-    public VMwareDVSPvlanMapEntry[] pvlanConfig;
-    public int maxMtu;
-    public LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig;
-    public VMwareIpfixConfig ipfixConfig;
-    public VMwareDvsLacpGroupConfig[] lacpGroupConfig;
-    public String lacpApiVersion;
-    public String multicastFilteringMode;
+    private List<VMwareVspanSession> vspanSession = List.of();
+    private List<VMwareDVSPvlanMapEntry> pvlanConfig = List.of();
+    private int maxMtu;
+    private LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig;
+    private VMwareIpfixConfig ipfixConfig;
+    private List<VMwareDvsLacpGroupConfig> lacpGroupConfig = List.of();
+    private String lacpApiVersion;
+    private String multicastFilteringMode;
+    private String networkOffloadSpecId;
 
-    public VMwareVspanSession[] getVspanSession() {
-        return this.vspanSession;
+    @Override
+    public String toString() {
+        return "VMwareDVSConfigInfo{" +
+                "vspanSession=" + vspanSession +
+                ", pvlanConfig=" + pvlanConfig +
+                ", maxMtu=" + maxMtu +
+                ", linkDiscoveryProtocolConfig=" + linkDiscoveryProtocolConfig +
+                ", ipfixConfig=" + ipfixConfig +
+                ", lacpGroupConfig=" + lacpGroupConfig +
+                ", lacpApiVersion='" + lacpApiVersion + '\'' +
+                ", multicastFilteringMode='" + multicastFilteringMode + '\'' +
+                ", networkOffloadSpecId='" + networkOffloadSpecId + '\'' +
+                '}';
     }
 
-    public void setVspanSession(VMwareVspanSession[] vspanSession) {
+    public List<VMwareVspanSession> getVspanSession() {
+        return vspanSession;
+    }
+
+    public void setVspanSession(final List<VMwareVspanSession> vspanSession) {
         this.vspanSession = vspanSession;
     }
 
-    public VMwareDVSPvlanMapEntry[] getPvlanConfig() {
-        return this.pvlanConfig;
+    public List<VMwareDVSPvlanMapEntry> getPvlanConfig() {
+        return pvlanConfig;
     }
 
-    public void setPvlanConfig(VMwareDVSPvlanMapEntry[] pvlanConfig) {
+    public void setPvlanConfig(final List<VMwareDVSPvlanMapEntry> pvlanConfig) {
         this.pvlanConfig = pvlanConfig;
     }
 
     public int getMaxMtu() {
-        return this.maxMtu;
+        return maxMtu;
     }
 
-    public void setMaxMtu(int maxMtu) {
+    public void setMaxMtu(final int maxMtu) {
         this.maxMtu = maxMtu;
     }
 
     public LinkDiscoveryProtocolConfig getLinkDiscoveryProtocolConfig() {
-        return this.linkDiscoveryProtocolConfig;
+        return linkDiscoveryProtocolConfig;
     }
 
-    public void setLinkDiscoveryProtocolConfig(LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig) {
+    public void setLinkDiscoveryProtocolConfig(final LinkDiscoveryProtocolConfig linkDiscoveryProtocolConfig) {
         this.linkDiscoveryProtocolConfig = linkDiscoveryProtocolConfig;
     }
 
     public VMwareIpfixConfig getIpfixConfig() {
-        return this.ipfixConfig;
+        return ipfixConfig;
     }
 
-    public void setIpfixConfig(VMwareIpfixConfig ipfixConfig) {
+    public void setIpfixConfig(final VMwareIpfixConfig ipfixConfig) {
         this.ipfixConfig = ipfixConfig;
     }
 
-    public VMwareDvsLacpGroupConfig[] getLacpGroupConfig() {
-        return this.lacpGroupConfig;
+    public List<VMwareDvsLacpGroupConfig> getLacpGroupConfig() {
+        return lacpGroupConfig;
     }
 
-    public void setLacpGroupConfig(VMwareDvsLacpGroupConfig[] lacpGroupConfig) {
+    public void setLacpGroupConfig(final List<VMwareDvsLacpGroupConfig> lacpGroupConfig) {
         this.lacpGroupConfig = lacpGroupConfig;
     }
 
     public String getLacpApiVersion() {
-        return this.lacpApiVersion;
+        return lacpApiVersion;
     }
 
-    public void setLacpApiVersion(String lacpApiVersion) {
+    public void setLacpApiVersion(final String lacpApiVersion) {
         this.lacpApiVersion = lacpApiVersion;
     }
 
@@ -110,4 +129,13 @@ public class VMwareDVSConfigInfo extends DVSConfigInfo {
     public void setMulticastFilteringMode(final String multicastFilteringMode) {
         this.multicastFilteringMode = multicastFilteringMode;
     }
+
+    public String getNetworkOffloadSpecId() {
+        return networkOffloadSpecId;
+    }
+
+    public void setNetworkOffloadSpecId(final String networkOffloadSpecId) {
+        this.networkOffloadSpecId = networkOffloadSpecId;
+    }
+
 }

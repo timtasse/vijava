@@ -30,28 +30,51 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The VsanClusterConfigInfo data object contains configuration data for the VSAN service in a cluster.
+ * This data object is used both for specifying cluster-wide settings when updating the VSAN service,
+ * and as an output datatype when retrieving current cluster-wide VSAN service settings.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
+ */
 public class VsanClusterConfigInfo extends DynamicData {
-  public Boolean enabled;
-  public VsanClusterConfigInfoHostDefaultInfo defaultConfig;
 
-  public Boolean getEnabled() {
-    return this.enabled;
-  }
+    private Boolean enabled;
+    private VsanClusterConfigInfoHostDefaultInfo defaultConfig;
+    private Boolean vsanEsaEnabled;
 
-  public VsanClusterConfigInfoHostDefaultInfo getDefaultConfig() {
-    return this.defaultConfig;
-  }
+    @Override
+    public String toString() {
+        return "VsanClusterConfigInfo{" +
+                "enabled=" + enabled +
+                ", defaultConfig=" + defaultConfig +
+                ", vsanEsaEnabled=" + vsanEsaEnabled +
+                '}';
+    }
 
-  public void setEnabled(Boolean enabled) {
-    this.enabled=enabled;
-  }
+    public Boolean getEnabled() {
+        return enabled;
+    }
 
-  public void setDefaultConfig(VsanClusterConfigInfoHostDefaultInfo defaultConfig) {
-    this.defaultConfig=defaultConfig;
-  }
+    public void setEnabled(final Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public VsanClusterConfigInfoHostDefaultInfo getDefaultConfig() {
+        return defaultConfig;
+    }
+
+    public void setDefaultConfig(final VsanClusterConfigInfoHostDefaultInfo defaultConfig) {
+        this.defaultConfig = defaultConfig;
+    }
+
+    public Boolean getVsanEsaEnabled() {
+        return vsanEsaEnabled;
+    }
+
+    public void setVsanEsaEnabled(final Boolean vsanEsaEnabled) {
+        this.vsanEsaEnabled = vsanEsaEnabled;
+    }
+
 }

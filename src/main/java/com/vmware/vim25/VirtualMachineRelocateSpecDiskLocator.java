@@ -32,6 +32,8 @@ package com.vmware.vim25;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.doublecloud.ws.util.TypeUtil.asNullSafeList;
+
 /**
  * The DiskLocator data object type specifies a virtual disk device (by ID) and a datastore locator for the disk's storage.
  *
@@ -112,7 +114,7 @@ public class VirtualMachineRelocateSpecDiskLocator extends DynamicData {
     }
 
     public List<VirtualMachineBaseIndependentFilterSpec> getFilterSpec() {
-        return Arrays.asList(filterSpec);
+        return asNullSafeList(filterSpec);
     }
 
     public void setFilterSpec(final List<VirtualMachineBaseIndependentFilterSpec> filterSpec) {

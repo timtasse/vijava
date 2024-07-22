@@ -30,25 +30,36 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * This data object type contains the options for the virtual ethernet card data object type.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @version 6.5
  */
-
-@SuppressWarnings("all")
 public class VirtualEthernetCardOption extends VirtualDeviceOption {
 
-    public ChoiceOption supportedOUI;
-    public ChoiceOption macType;
-    public BoolOption wakeOnLanEnabled;
-    public BoolOption uptCompatibilityEnabled;
-    public boolean vmDirectPathGen2Supported;
+    private ChoiceOption supportedOUI;
+    private ChoiceOption macType;
+    private BoolOption wakeOnLanEnabled;
+    private boolean vmDirectPathGen2Supported;
+    private BoolOption uptCompatibilityEnabled;
+
+    @Override
+    public String toString() {
+        return "VirtualEthernetCardOption{" +
+                "supportedOUI=" + supportedOUI +
+                ", macType=" + macType +
+                ", wakeOnLanEnabled=" + wakeOnLanEnabled +
+                ", vmDirectPathGen2Supported=" + vmDirectPathGen2Supported +
+                ", uptCompatibilityEnabled=" + uptCompatibilityEnabled +
+                "} " + super.toString();
+    }
 
     public ChoiceOption getSupportedOUI() {
         return this.supportedOUI;
     }
 
-    public void setSupportedOUI(ChoiceOption supportedOUI) {
+    public void setSupportedOUI(final ChoiceOption supportedOUI) {
         this.supportedOUI = supportedOUI;
     }
 
@@ -56,7 +67,7 @@ public class VirtualEthernetCardOption extends VirtualDeviceOption {
         return this.macType;
     }
 
-    public void setMacType(ChoiceOption macType) {
+    public void setMacType(final ChoiceOption macType) {
         this.macType = macType;
     }
 
@@ -64,7 +75,7 @@ public class VirtualEthernetCardOption extends VirtualDeviceOption {
         return this.wakeOnLanEnabled;
     }
 
-    public void setWakeOnLanEnabled(BoolOption wakeOnLanEnabled) {
+    public void setWakeOnLanEnabled(final BoolOption wakeOnLanEnabled) {
         this.wakeOnLanEnabled = wakeOnLanEnabled;
     }
 
@@ -80,7 +91,8 @@ public class VirtualEthernetCardOption extends VirtualDeviceOption {
         return vmDirectPathGen2Supported;
     }
 
-    public void setVmDirectPathGen2Supported(boolean vmDirectPathGen2Supported) {
+    public void setVmDirectPathGen2Supported(final boolean vmDirectPathGen2Supported) {
         this.vmDirectPathGen2Supported = vmDirectPathGen2Supported;
     }
+
 }

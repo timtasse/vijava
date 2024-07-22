@@ -52,6 +52,13 @@ public class ObjectContent extends DynamicData {
                 "} " + super.toString();
     }
 
+    public String tryGetName() {
+        if (this.propSet == null || this.propSet.length == 0 || this.propSet[0] == null) {
+            return null;
+        }
+        return (String) this.propSet[0].getVal();
+    }
+
     public ManagedObjectReference getObj() {
         return this.obj;
     }

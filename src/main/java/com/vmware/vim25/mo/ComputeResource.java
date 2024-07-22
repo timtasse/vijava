@@ -59,7 +59,7 @@ public class ComputeResource extends ManagedEntity {
     }
 
     public List<Datastore> getDatastores() {
-        return Arrays.asList(getDatastores("datastore"));
+        return getDatastores("datastore");
     }
 
     public EnvironmentBrowser getEnvironmentBrowser() {
@@ -67,11 +67,11 @@ public class ComputeResource extends ManagedEntity {
     }
 
     public List<HostSystem> getHosts() {
-        return Arrays.asList(getHosts("host"));
+        return getHosts("host");
     }
 
     public List<Network> getNetworks() {
-        return Arrays.asList(getNetworks("network"));
+        return getNetworks("network");
     }
 
     public ResourcePool getResourcePool() {

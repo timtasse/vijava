@@ -29,65 +29,113 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.List;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The VirtualHardware data object type contains the complete configuration of the hardware in a virtual machine.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
+ */
+@SuppressWarnings("unused")
 public class VirtualHardware extends DynamicData {
-  public int numCPU;
-  public Integer numCoresPerSocket;
-  public int memoryMB;
-  public Boolean virtualICH7MPresent;
-  public Boolean virtualSMCPresent;
-  public VirtualDevice[] device;
 
-  public int getNumCPU() {
-    return this.numCPU;
-  }
+    private int numCPU;
+    private Integer numCoresPerSocket;
+    private Boolean autoCoresPerSocket;
+    private int memoryMB;
+    private Boolean virtualICH7MPresent;
+    private Boolean virtualSMCPresent;
+    private List<VirtualDevice> device;
+    private VirtualHardwareMotherboardLayout motherboardLayout;
+    private Integer simultaneousThreads;
 
-  public Integer getNumCoresPerSocket() {
-    return this.numCoresPerSocket;
-  }
+    @Override
+    public String toString() {
+        return "VirtualHardware{" +
+                "numCPU=" + numCPU +
+                ", numCoresPerSocket=" + numCoresPerSocket +
+                ", autoCoresPerSocket=" + autoCoresPerSocket +
+                ", memoryMB=" + memoryMB +
+                ", virtualICH7MPresent=" + virtualICH7MPresent +
+                ", virtualSMCPresent=" + virtualSMCPresent +
+                ", device=" + device +
+                ", motherboardLayout=" + motherboardLayout +
+                ", simultaneousThreads=" + simultaneousThreads +
+                '}';
+    }
 
-  public int getMemoryMB() {
-    return this.memoryMB;
-  }
+    public int getNumCPU() {
+        return numCPU;
+    }
 
-  public Boolean getVirtualICH7MPresent() {
-    return this.virtualICH7MPresent;
-  }
+    public void setNumCPU(final int numCPU) {
+        this.numCPU = numCPU;
+    }
 
-  public Boolean getVirtualSMCPresent() {
-    return this.virtualSMCPresent;
-  }
+    public Integer getNumCoresPerSocket() {
+        return numCoresPerSocket;
+    }
 
-  public VirtualDevice[] getDevice() {
-    return this.device;
-  }
+    public void setNumCoresPerSocket(final Integer numCoresPerSocket) {
+        this.numCoresPerSocket = numCoresPerSocket;
+    }
 
-  public void setNumCPU(int numCPU) {
-    this.numCPU=numCPU;
-  }
+    public Boolean getAutoCoresPerSocket() {
+        return autoCoresPerSocket;
+    }
 
-  public void setNumCoresPerSocket(Integer numCoresPerSocket) {
-    this.numCoresPerSocket=numCoresPerSocket;
-  }
+    public void setAutoCoresPerSocket(final Boolean autoCoresPerSocket) {
+        this.autoCoresPerSocket = autoCoresPerSocket;
+    }
 
-  public void setMemoryMB(int memoryMB) {
-    this.memoryMB=memoryMB;
-  }
+    public int getMemoryMB() {
+        return memoryMB;
+    }
 
-  public void setVirtualICH7MPresent(Boolean virtualICH7MPresent) {
-    this.virtualICH7MPresent=virtualICH7MPresent;
-  }
+    public void setMemoryMB(final int memoryMB) {
+        this.memoryMB = memoryMB;
+    }
 
-  public void setVirtualSMCPresent(Boolean virtualSMCPresent) {
-    this.virtualSMCPresent=virtualSMCPresent;
-  }
+    public Boolean getVirtualICH7MPresent() {
+        return virtualICH7MPresent;
+    }
 
-  public void setDevice(VirtualDevice[] device) {
-    this.device=device;
-  }
+    public void setVirtualICH7MPresent(final Boolean virtualICH7MPresent) {
+        this.virtualICH7MPresent = virtualICH7MPresent;
+    }
+
+    public Boolean getVirtualSMCPresent() {
+        return virtualSMCPresent;
+    }
+
+    public void setVirtualSMCPresent(final Boolean virtualSMCPresent) {
+        this.virtualSMCPresent = virtualSMCPresent;
+    }
+
+    public List<VirtualDevice> getDevice() {
+        return device;
+    }
+
+    public void setDevice(final List<VirtualDevice> device) {
+        this.device = device;
+    }
+
+    public VirtualHardwareMotherboardLayout getMotherboardLayout() {
+        return motherboardLayout;
+    }
+
+    public void setMotherboardLayout(final VirtualHardwareMotherboardLayout motherboardLayout) {
+        this.motherboardLayout = motherboardLayout;
+    }
+
+    public Integer getSimultaneousThreads() {
+        return simultaneousThreads;
+    }
+
+    public void setSimultaneousThreads(final Integer simultaneousThreads) {
+        this.simultaneousThreads = simultaneousThreads;
+    }
+
 }

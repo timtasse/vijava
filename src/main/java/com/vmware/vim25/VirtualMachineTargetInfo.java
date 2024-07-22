@@ -29,29 +29,44 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.List;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The TargetInfo specified a value that can be used in the device backings
+ * to connect the virtual machine to a physical (or logical) host device.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.1
+ */
+@SuppressWarnings("unused")
 public class VirtualMachineTargetInfo extends DynamicData {
-  public String name;
-  public String[] configurationTag;
 
-  public String getName() {
-    return this.name;
-  }
+    public String name;
+    public List<String> configurationTag = List.of();
 
-  public String[] getConfigurationTag() {
-    return this.configurationTag;
-  }
+    @Override
+    public String toString() {
+        return "VirtualMachineTargetInfo{" +
+                "name='" + name + '\'' +
+                ", configurationTag=" + configurationTag +
+                "} ";
+    }
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setConfigurationTag(String[] configurationTag) {
-    this.configurationTag=configurationTag;
-  }
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public List<String> getConfigurationTag() {
+        return configurationTag;
+    }
+
+    public void setConfigurationTag(final List<String> configurationTag) {
+        this.configurationTag = configurationTag;
+    }
+
 }

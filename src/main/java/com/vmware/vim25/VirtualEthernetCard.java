@@ -30,26 +30,39 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * The VirtualEthernetCard data object contains the properties of an Ethernet adapter attached to a virtual machine.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @version 6.5
  */
-
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class VirtualEthernetCard extends VirtualDevice {
 
-    public String addressType;
-    public String macAddress;
-    public Boolean wakeOnLanEnabled;
-    public VirtualEthernetCardResourceAllocation resourceAllocation;
-    public String externalId;
-    public Boolean uptCompatibilityEnabled;
+    private String addressType;
+    private String macAddress;
+    private Boolean wakeOnLanEnabled;
+    private VirtualEthernetCardResourceAllocation resourceAllocation;
+    private String externalId;
+    private Boolean uptCompatibilityEnabled;
+
+    @Override
+    public String toString() {
+        return "VirtualEthernetCard{" +
+                "addressType='" + addressType + '\'' +
+                ", macAddress='" + macAddress + '\'' +
+                ", wakeOnLanEnabled=" + wakeOnLanEnabled +
+                ", resourceAllocation=" + resourceAllocation +
+                ", externalId='" + externalId + '\'' +
+                ", uptCompatibilityEnabled=" + uptCompatibilityEnabled +
+                "} " + super.toString();
+    }
 
     public String getAddressType() {
         return this.addressType;
     }
 
-    public void setAddressType(String addressType) {
+    public void setAddressType(final String addressType) {
         this.addressType = addressType;
     }
 
@@ -57,7 +70,7 @@ public class VirtualEthernetCard extends VirtualDevice {
         return this.macAddress;
     }
 
-    public void setMacAddress(String macAddress) {
+    public void setMacAddress(final String macAddress) {
         this.macAddress = macAddress;
     }
 
@@ -65,7 +78,7 @@ public class VirtualEthernetCard extends VirtualDevice {
         return wakeOnLanEnabled;
     }
 
-    public void setWakeOnLanEnabled(boolean wakeOnLanEnabled) {
+    public void setWakeOnLanEnabled(final boolean wakeOnLanEnabled) {
         this.wakeOnLanEnabled = wakeOnLanEnabled;
     }
 
@@ -92,4 +105,5 @@ public class VirtualEthernetCard extends VirtualDevice {
     public void setResourceAllocation(final VirtualEthernetCardResourceAllocation resourceAllocation) {
         this.resourceAllocation = resourceAllocation;
     }
+
 }

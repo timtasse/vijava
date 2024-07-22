@@ -30,10 +30,12 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * Specification for a virtual machine cloning operation.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @version 5.1
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
  */
-
 @SuppressWarnings("unused")
 public class VirtualMachineCloneSpec extends DynamicData {
 
@@ -44,6 +46,7 @@ public class VirtualMachineCloneSpec extends DynamicData {
     private boolean powerOn;
     private ManagedObjectReference snapshot;
     private Boolean memory;
+    private String tpmProvisionPolicy;
 
     @Override
     public String toString() {
@@ -55,62 +58,72 @@ public class VirtualMachineCloneSpec extends DynamicData {
                 ", powerOn=" + powerOn +
                 ", snapshot=" + snapshot +
                 ", memory=" + memory +
+                ", tpmProvisionPolicy='" + tpmProvisionPolicy + '\'' +
                 '}';
     }
 
     public VirtualMachineRelocateSpec getLocation() {
-        return this.location;
+        return location;
     }
 
-    public boolean isTemplate() {
-        return this.template;
-    }
-
-    public VirtualMachineConfigSpec getConfig() {
-        return this.config;
-    }
-
-    public CustomizationSpec getCustomization() {
-        return this.customization;
-    }
-
-    public boolean isPowerOn() {
-        return this.powerOn;
-    }
-
-    public ManagedObjectReference getSnapshot() {
-        return this.snapshot;
-    }
-
-    public Boolean getMemory() {
-        return this.memory;
-    }
-
-    public void setLocation(VirtualMachineRelocateSpec location) {
+    public void setLocation(final VirtualMachineRelocateSpec location) {
         this.location = location;
     }
 
-    public void setTemplate(boolean template) {
+    public boolean isTemplate() {
+        return template;
+    }
+
+    public void setTemplate(final boolean template) {
         this.template = template;
     }
 
-    public void setConfig(VirtualMachineConfigSpec config) {
+    public VirtualMachineConfigSpec getConfig() {
+        return config;
+    }
+
+    public void setConfig(final VirtualMachineConfigSpec config) {
         this.config = config;
     }
 
-    public void setCustomization(CustomizationSpec customization) {
+    public CustomizationSpec getCustomization() {
+        return customization;
+    }
+
+    public void setCustomization(final CustomizationSpec customization) {
         this.customization = customization;
     }
 
-    public void setPowerOn(boolean powerOn) {
+    public boolean isPowerOn() {
+        return powerOn;
+    }
+
+    public void setPowerOn(final boolean powerOn) {
         this.powerOn = powerOn;
     }
 
-    public void setSnapshot(ManagedObjectReference snapshot) {
+    public ManagedObjectReference getSnapshot() {
+        return snapshot;
+    }
+
+    public void setSnapshot(final ManagedObjectReference snapshot) {
         this.snapshot = snapshot;
     }
 
-    public void setMemory(Boolean memory) {
+    public Boolean getMemory() {
+        return memory;
+    }
+
+    public void setMemory(final Boolean memory) {
         this.memory = memory;
     }
+
+    public String getTpmProvisionPolicy() {
+        return tpmProvisionPolicy;
+    }
+
+    public void setTpmProvisionPolicy(final String tpmProvisionPolicy) {
+        this.tpmProvisionPolicy = tpmProvisionPolicy;
+    }
+
 }

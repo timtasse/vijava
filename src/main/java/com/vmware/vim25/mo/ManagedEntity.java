@@ -30,14 +30,20 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import static org.doublecloud.ws.util.TypeUtil.asNullSafeList;
 
 /**
  * ManagedEntity represents the managed objects that can be listed in the inventory tree.
  *
  * @author Steve JIN (http://www.doublecloud.org)
- * @author Stefan Dilk
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
 @SuppressWarnings("unused")
 public class ManagedEntity extends ExtensibleManagedObject {
@@ -52,8 +58,6 @@ public class ManagedEntity extends ExtensibleManagedObject {
         return getCurrentProperty("name", String.class);
     }
 
-    /* =========================Accessors=================================*/
-
     /**
      * @since SDK4.0
      */
@@ -62,28 +66,28 @@ public class ManagedEntity extends ExtensibleManagedObject {
         return aae != null && aae;
     }
 
-    public Event[] getConfigIssue() {
-        return (Event[]) getCurrentProperty("configIssue");
+    public List<Event> getConfigIssue() {
+        return asNullSafeList(getCurrentProperty("configIssue", Event[].class));
     }
 
     public ManagedEntityStatus getConfigStatus() {
-        return (ManagedEntityStatus) getCurrentProperty("configStatus");
+        return getCurrentProperty("configStatus", ManagedEntityStatus.class);
     }
 
-    public CustomFieldValue[] getCustomValue() {
-        return (CustomFieldValue[]) getCurrentProperty("customValue");
+    public List<CustomFieldValue> getCustomValue() {
+        return asNullSafeList(getCurrentProperty("customValue", CustomFieldValue[].class));
     }
 
-    public AlarmState[] getDeclaredAlarmState() {
-        return (AlarmState[]) getCurrentProperty("declaredAlarmState");
+    public List<AlarmState> getDeclaredAlarmState() {
+        return asNullSafeList(getCurrentProperty("declaredAlarmState", AlarmState[].class));
     }
 
-    public String[] getDisabledMethod() {
-        return (String[]) getCurrentProperty("disabledMethod");
+    public List<String> getDisabledMethod() {
+        return asNullSafeList(getCurrentProperty("disabledMethod", String[].class));
     }
 
-    public int[] getEffectiveRole() {
-        return (int[]) getCurrentProperty("effectiveRole");
+    public List<Integer> getEffectiveRole() {
+        return Arrays.stream(getCurrentProperty("effectiveRole", int[].class)).boxed().collect(Collectors.toList());
     }
 
     public String getName() {
@@ -98,47 +102,79 @@ public class ManagedEntity extends ExtensibleManagedObject {
     }
 
     public ManagedEntityStatus getOverallStatus() {
-        return (ManagedEntityStatus) getCurrentProperty("overallStatus");
+        return getCurrentProperty("overallStatus", ManagedEntityStatus.class);
     }
 
     public ManagedEntity getParent() {
         return (ManagedEntity) this.getManagedObject("parent");
     }
 
-    public Permission[] getPermission() {
-        return (Permission[]) getCurrentProperty("permission");
+    public List<Permission> getPermission() {
+        return asNullSafeList(getCurrentProperty("permission", Permission[].class));
     }
 
-    public Task[] getRecentTasks() {
+    public List<Task> getRecentTasks() {
         return getTasks("recentTask");
     }
 
     /**
      * @since SDK4.0
      */
-    public Tag[] getTag() {
-        return (Tag[]) getCurrentProperty("tag");
+    public List<Tag> getTag() {
+        return asNullSafeList(getCurrentProperty("tag", Tag[].class));
     }
 
-    public AlarmState[] getTriggeredAlarmState() {
-        return (AlarmState[]) getCurrentProperty("triggeredAlarmState");
+    public List<AlarmState> getTriggeredAlarmState() {
+        return asNullSafeList(getCurrentProperty("triggeredAlarmState", AlarmState[].class));
     }
 
-    /* =========================Methods=================================*/
-
-    public Task destroy_Task() throws VimFault, RuntimeFault, RemoteException {
-        final ManagedObjectReference taskMor = getVimService().destroy_Task(getMOR());
-        return new Task(getServerConnection(), taskMor);
+    public Task destroy_Task() throws VimFault, RuntimeFault {
+        try {
+            final var mor = this.getVimService().getWsc().invoke("Destroy_Task", this.getSingleSelfArgumentList(), ManagedObjectReference.class);
+            return new Task(getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof VimFault) {
+                throw (VimFault) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void reload() throws RuntimeFault, RemoteException {
-        getVimService().reload(getMOR());
+    public void reload() throws RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("Reload", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Task rename_Task(final String name) throws InvalidName, DuplicateName, RuntimeFault, RemoteException {
-        final ManagedObjectReference taskMor = getVimService().rename_Task(getMOR(), name);
-        return new Task(getServerConnection(), taskMor);
+    public Task rename_Task(final String name) throws InvalidName, DuplicateName, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("newName", String.class, name));
+        try {
+            final var mor = this.getVimService().getWsc().invoke("Rename_Task", params, ManagedObjectReference.class);
+            return new Task(getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
-
 
 }

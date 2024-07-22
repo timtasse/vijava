@@ -29,7 +29,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * The DVSFeatureCapability data object represents the capabilities supported by a DistributedVirtualSwitch.
@@ -39,34 +39,34 @@ import java.util.Arrays;
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @version 6.7
  */
-
+@SuppressWarnings("unused")
 public class DVSFeatureCapability extends DynamicData {
 
-    private DVSBackupRestoreCapability backupRestoreCapability;
-    private DVSHealthCheckCapability healthCheckCapability;
-    private Boolean macLearningSupported;
-    private Boolean networkFilterSupported;
-    private DVSNetworkResourceManagementCapability networkResourceManagementCapability;
     private boolean networkResourceManagementSupported;
+    private Boolean vmDirectPathGen2Supported;
+    private List<String> nicTeamingPolicy = List.of();
     private Integer networkResourcePoolHighShareValue;
-    private String[] nicTeamingPolicy;
+    private DVSNetworkResourceManagementCapability networkResourceManagementCapability;
+    private DVSHealthCheckCapability healthCheckCapability;
     private DVSRollbackCapability rollbackCapability;
-    private boolean vmDirectPathGen2Supported;
+    private DVSBackupRestoreCapability backupRestoreCapability;
+    private Boolean networkFilterSupported;
+    private Boolean macLearningSupported;
 
     @Override
     public String toString() {
         return "DVSFeatureCapability{" +
-                "backupRestoreCapability=" + backupRestoreCapability +
-                ", healthCheckCapability=" + healthCheckCapability +
-                ", macLearningSupported=" + macLearningSupported +
-                ", networkFilterSupported=" + networkFilterSupported +
-                ", networkResourceManagementCapability=" + networkResourceManagementCapability +
-                ", networkResourceManagementSupported=" + networkResourceManagementSupported +
-                ", networkResourcePoolHighShareValue=" + networkResourcePoolHighShareValue +
-                ", nicTeamingPolicy=" + Arrays.toString(nicTeamingPolicy) +
-                ", rollbackCapability=" + rollbackCapability +
+                "networkResourceManagementSupported=" + networkResourceManagementSupported +
                 ", vmDirectPathGen2Supported=" + vmDirectPathGen2Supported +
-                "} " + super.toString();
+                ", nicTeamingPolicy=" + nicTeamingPolicy +
+                ", networkResourcePoolHighShareValue=" + networkResourcePoolHighShareValue +
+                ", networkResourceManagementCapability=" + networkResourceManagementCapability +
+                ", healthCheckCapability=" + healthCheckCapability +
+                ", rollbackCapability=" + rollbackCapability +
+                ", backupRestoreCapability=" + backupRestoreCapability +
+                ", networkFilterSupported=" + networkFilterSupported +
+                ", macLearningSupported=" + macLearningSupported +
+                '}';
     }
 
     public DVSBackupRestoreCapability getBackupRestoreCapability() {
@@ -125,11 +125,11 @@ public class DVSFeatureCapability extends DynamicData {
         this.networkResourcePoolHighShareValue = networkResourcePoolHighShareValue;
     }
 
-    public String[] getNicTeamingPolicy() {
+    public List<String> getNicTeamingPolicy() {
         return nicTeamingPolicy;
     }
 
-    public void setNicTeamingPolicy(final String[] nicTeamingPolicy) {
+    public void setNicTeamingPolicy(final List<String> nicTeamingPolicy) {
         this.nicTeamingPolicy = nicTeamingPolicy;
     }
 

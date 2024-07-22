@@ -30,10 +30,30 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The VirtualVmxnet3Option data object type contains the options for the VirtualVmxnet3 data object type.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
+ */
+@SuppressWarnings("unused")
 public class VirtualVmxnet3Option extends VirtualVmxnetOption {
+
+    private BoolOption uptv2Enabled;
+
+    @Override
+    public String toString() {
+        return "VirtualVmxnet3Option{" +
+                "uptv2Enabled=" + uptv2Enabled +
+                "} " + super.toString();
+    }
+
+    public BoolOption getUptv2Enabled() {
+        return uptv2Enabled;
+    }
+
+    public void setUptv2Enabled(final BoolOption uptv2Enabled) {
+        this.uptv2Enabled = uptv2Enabled;
+    }
+
 }

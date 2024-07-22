@@ -30,10 +30,11 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The VirtualVmxnetOption data object type contains the options for the VirtualVmxnet data object type.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.1
+ */
 public class VirtualVmxnetOption extends VirtualEthernetCardOption {
 }

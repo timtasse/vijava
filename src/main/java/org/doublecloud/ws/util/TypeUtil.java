@@ -131,4 +131,13 @@ public final class TypeUtil {
 
         throw new RuntimeException("Unknown data type during serialization:" + type);
     }
+
+    @SafeVarargs
+    public static <T> List<T> asNullSafeList(final T... values) {
+        if (values == null) {
+            return List.of();
+        }
+        return Arrays.asList(values);
+    }
+
 }

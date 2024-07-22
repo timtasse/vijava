@@ -29,171 +29,110 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * The RuntimeInfo data object type provides information about the execution state and history of a virtual machine.
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.2
+ * @version 8.0.0
  */
 @SuppressWarnings("unused")
 public class VirtualMachineRuntimeInfo extends DynamicData {
 
-    private Calendar bootTime;
-    private Boolean cleanPowerOff;
-    private VirtualMachineConnectionState connectionState;
-    private boolean consolidationNeeded;
-    private String cryptoState;
-    private VirtualMachineRuntimeInfoDasProtectionState dasVmProtection;
-    private VirtualMachineDeviceRuntimeInfo[] device;
-    private VirtualMachineFaultToleranceState faultToleranceState;
-    private HostFeatureMask[] featureMask;
-    private VirtualMachineFeatureRequirement[] featureRequirement;
+    private List<VirtualMachineDeviceRuntimeInfo> device;
     private ManagedObjectReference host;
-    private Boolean instantCloneFrozen;
-    private Integer maxCpuUsage;
-    private Integer maxMemoryUsage;
+    private VirtualMachineConnectionState connectionState;
+    private VirtualMachinePowerState powerState;
+    private Boolean vmFailoverInProgress;
+    private VirtualMachineFaultToleranceState faultToleranceState;
+    private VirtualMachineRuntimeInfoDasProtectionState dasVmProtection;
+    private boolean toolsInstallerMounted;
+    private Calendar suspendTime;
+    private Calendar bootTime;
+    private Long suspendInterval;
+    private VirtualMachineQuestionInfo question;
+    /**
+     * @deprecated As of vSphere API 4.1, use the PerformanceManager memory overhead counter to get this value.
+     */
     @Deprecated
     private Long memoryOverhead;
-    private String minRequiredEVCModeKey;
-    private String needSecondaryReason;
+    private Integer maxCpuUsage;
+    private Integer maxMemoryUsage;
     private int numMksConnections;
-    private VirtualMachineFeatureRequirement[] offlineFeatureRequirement;
-    private boolean onlineStandby;
-    private Boolean paused;
-    private VirtualMachinePowerState powerState;
-    private VirtualMachineQuestionInfo question;
-    private Boolean quiescedForkParent;
+    /**
+     * @deprecated as of vSphere API 6.0
+     */
     @Deprecated
     private VirtualMachineRecordReplayState recordReplayState;
-    private Boolean snapshotInBackground;
-    private Long suspendInterval;
-    private Calendar suspendTime;
-    private boolean toolsInstallerMounted;
+    private Boolean cleanPowerOff;
+    private String needSecondaryReason;
+    private Boolean onlineStandby;
+    private String minRequiredEVCModeKey;
+    private Boolean consolidationNeeded;
+    private List<VirtualMachineFeatureRequirement> offlineFeatureRequirement;
+    private List<VirtualMachineFeatureRequirement> featureRequirement;
+    private List<HostFeatureMask> featureMask;
+    /**
+     * @deprecated since vSphere 7.0 because vFlash Read Cache end of availability.
+     */
     @Deprecated
     private Long vFlashCacheAllocation;
-    private Boolean vmFailoverInProgress;
+    private Boolean paused;
+    private Boolean snapshotInBackground;
+    private Boolean quiescedForkParent;
+    private Boolean instantCloneFrozen;
+    private VirtualMachineCryptoState cryptoState;
     private Boolean suspendedToMemory;
+    private Long opNotificationTimeout;
 
     @Override
     public String toString() {
         return "VirtualMachineRuntimeInfo{" +
-                "bootTime=" + bootTime +
-                ", cleanPowerOff=" + cleanPowerOff +
-                ", connectionState=" + connectionState +
-                ", consolidationNeeded=" + consolidationNeeded +
-                ", cryptoState='" + cryptoState + '\'' +
-                ", dasVmProtection=" + dasVmProtection +
-                ", device=" + Arrays.toString(device) +
-                ", faultToleranceState=" + faultToleranceState +
-                ", featureMask=" + Arrays.toString(featureMask) +
-                ", featureRequirement=" + Arrays.toString(featureRequirement) +
+                "device=" + device +
                 ", host=" + host +
-                ", instantCloneFrozen=" + instantCloneFrozen +
+                ", connectionState=" + connectionState +
+                ", powerState=" + powerState +
+                ", vmFailoverInProgress=" + vmFailoverInProgress +
+                ", faultToleranceState=" + faultToleranceState +
+                ", dasVmProtection=" + dasVmProtection +
+                ", toolsInstallerMounted=" + toolsInstallerMounted +
+                ", suspendTime=" + suspendTime +
+                ", bootTime=" + bootTime +
+                ", suspendInterval=" + suspendInterval +
+                ", question=" + question +
+                ", memoryOverhead=" + memoryOverhead +
                 ", maxCpuUsage=" + maxCpuUsage +
                 ", maxMemoryUsage=" + maxMemoryUsage +
-                ", memoryOverhead=" + memoryOverhead +
-                ", minRequiredEVCModeKey='" + minRequiredEVCModeKey + '\'' +
-                ", needSecondaryReason='" + needSecondaryReason + '\'' +
                 ", numMksConnections=" + numMksConnections +
-                ", offlineFeatureRequirement=" + Arrays.toString(offlineFeatureRequirement) +
-                ", onlineStandby=" + onlineStandby +
-                ", paused=" + paused +
-                ", powerState=" + powerState +
-                ", question=" + question +
-                ", quiescedForkParent=" + quiescedForkParent +
                 ", recordReplayState=" + recordReplayState +
-                ", snapshotInBackground=" + snapshotInBackground +
-                ", suspendInterval=" + suspendInterval +
-                ", suspendTime=" + suspendTime +
-                ", toolsInstallerMounted=" + toolsInstallerMounted +
+                ", cleanPowerOff=" + cleanPowerOff +
+                ", needSecondaryReason='" + needSecondaryReason + '\'' +
+                ", onlineStandby=" + onlineStandby +
+                ", minRequiredEVCModeKey='" + minRequiredEVCModeKey + '\'' +
+                ", consolidationNeeded=" + consolidationNeeded +
+                ", offlineFeatureRequirement=" + offlineFeatureRequirement +
+                ", featureRequirement=" + featureRequirement +
+                ", featureMask=" + featureMask +
                 ", vFlashCacheAllocation=" + vFlashCacheAllocation +
-                ", vmFailoverInProgress=" + vmFailoverInProgress +
+                ", paused=" + paused +
+                ", snapshotInBackground=" + snapshotInBackground +
+                ", quiescedForkParent=" + quiescedForkParent +
+                ", instantCloneFrozen=" + instantCloneFrozen +
+                ", cryptoState=" + cryptoState +
                 ", suspendedToMemory=" + suspendedToMemory +
+                ", opNotificationTimeout=" + opNotificationTimeout +
                 '}';
     }
 
-    public Calendar getBootTime() {
-        return bootTime;
-    }
-
-    public void setBootTime(final Calendar bootTime) {
-        this.bootTime = bootTime;
-    }
-
-    public Boolean getCleanPowerOff() {
-        return cleanPowerOff;
-    }
-
-    public void setCleanPowerOff(final Boolean cleanPowerOff) {
-        this.cleanPowerOff = cleanPowerOff;
-    }
-
-    public VirtualMachineConnectionState getConnectionState() {
-        return connectionState;
-    }
-
-    public void setConnectionState(final VirtualMachineConnectionState connectionState) {
-        this.connectionState = connectionState;
-    }
-
-    public boolean isConsolidationNeeded() {
-        return consolidationNeeded;
-    }
-
-    public void setConsolidationNeeded(final boolean consolidationNeeded) {
-        this.consolidationNeeded = consolidationNeeded;
-    }
-
-    public String getCryptoState() {
-        return cryptoState;
-    }
-
-    public void setCryptoState(final String cryptoState) {
-        this.cryptoState = cryptoState;
-    }
-
-    public VirtualMachineRuntimeInfoDasProtectionState getDasVmProtection() {
-        return dasVmProtection;
-    }
-
-    public void setDasVmProtection(final VirtualMachineRuntimeInfoDasProtectionState dasVmProtection) {
-        this.dasVmProtection = dasVmProtection;
-    }
-
-    public VirtualMachineDeviceRuntimeInfo[] getDevice() {
+    public List<VirtualMachineDeviceRuntimeInfo> getDevice() {
         return device;
     }
 
-    public void setDevice(final VirtualMachineDeviceRuntimeInfo[] device) {
+    public void setDevice(final List<VirtualMachineDeviceRuntimeInfo> device) {
         this.device = device;
-    }
-
-    public VirtualMachineFaultToleranceState getFaultToleranceState() {
-        return faultToleranceState;
-    }
-
-    public void setFaultToleranceState(final VirtualMachineFaultToleranceState faultToleranceState) {
-        this.faultToleranceState = faultToleranceState;
-    }
-
-    public HostFeatureMask[] getFeatureMask() {
-        return featureMask;
-    }
-
-    public void setFeatureMask(final HostFeatureMask[] featureMask) {
-        this.featureMask = featureMask;
-    }
-
-    public VirtualMachineFeatureRequirement[] getFeatureRequirement() {
-        return featureRequirement;
-    }
-
-    public void setFeatureRequirement(final VirtualMachineFeatureRequirement[] featureRequirement) {
-        this.featureRequirement = featureRequirement;
     }
 
     public ManagedObjectReference getHost() {
@@ -204,12 +143,92 @@ public class VirtualMachineRuntimeInfo extends DynamicData {
         this.host = host;
     }
 
-    public Boolean getInstantCloneFrozen() {
-        return instantCloneFrozen;
+    public VirtualMachineConnectionState getConnectionState() {
+        return connectionState;
     }
 
-    public void setInstantCloneFrozen(final Boolean instantCloneFrozen) {
-        this.instantCloneFrozen = instantCloneFrozen;
+    public void setConnectionState(final VirtualMachineConnectionState connectionState) {
+        this.connectionState = connectionState;
+    }
+
+    public VirtualMachinePowerState getPowerState() {
+        return powerState;
+    }
+
+    public void setPowerState(final VirtualMachinePowerState powerState) {
+        this.powerState = powerState;
+    }
+
+    public Boolean getVmFailoverInProgress() {
+        return vmFailoverInProgress;
+    }
+
+    public void setVmFailoverInProgress(final Boolean vmFailoverInProgress) {
+        this.vmFailoverInProgress = vmFailoverInProgress;
+    }
+
+    public VirtualMachineFaultToleranceState getFaultToleranceState() {
+        return faultToleranceState;
+    }
+
+    public void setFaultToleranceState(final VirtualMachineFaultToleranceState faultToleranceState) {
+        this.faultToleranceState = faultToleranceState;
+    }
+
+    public VirtualMachineRuntimeInfoDasProtectionState getDasVmProtection() {
+        return dasVmProtection;
+    }
+
+    public void setDasVmProtection(final VirtualMachineRuntimeInfoDasProtectionState dasVmProtection) {
+        this.dasVmProtection = dasVmProtection;
+    }
+
+    public boolean isToolsInstallerMounted() {
+        return toolsInstallerMounted;
+    }
+
+    public void setToolsInstallerMounted(final boolean toolsInstallerMounted) {
+        this.toolsInstallerMounted = toolsInstallerMounted;
+    }
+
+    public Calendar getSuspendTime() {
+        return suspendTime;
+    }
+
+    public void setSuspendTime(final Calendar suspendTime) {
+        this.suspendTime = suspendTime;
+    }
+
+    public Calendar getBootTime() {
+        return bootTime;
+    }
+
+    public void setBootTime(final Calendar bootTime) {
+        this.bootTime = bootTime;
+    }
+
+    public Long getSuspendInterval() {
+        return suspendInterval;
+    }
+
+    public void setSuspendInterval(final Long suspendInterval) {
+        this.suspendInterval = suspendInterval;
+    }
+
+    public VirtualMachineQuestionInfo getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(final VirtualMachineQuestionInfo question) {
+        this.question = question;
+    }
+
+    public Long getMemoryOverhead() {
+        return memoryOverhead;
+    }
+
+    public void setMemoryOverhead(final Long memoryOverhead) {
+        this.memoryOverhead = memoryOverhead;
     }
 
     public Integer getMaxCpuUsage() {
@@ -228,84 +247,12 @@ public class VirtualMachineRuntimeInfo extends DynamicData {
         this.maxMemoryUsage = maxMemoryUsage;
     }
 
-    public Long getMemoryOverhead() {
-        return memoryOverhead;
-    }
-
-    public void setMemoryOverhead(final Long memoryOverhead) {
-        this.memoryOverhead = memoryOverhead;
-    }
-
-    public String getMinRequiredEVCModeKey() {
-        return minRequiredEVCModeKey;
-    }
-
-    public void setMinRequiredEVCModeKey(final String minRequiredEVCModeKey) {
-        this.minRequiredEVCModeKey = minRequiredEVCModeKey;
-    }
-
-    public String getNeedSecondaryReason() {
-        return needSecondaryReason;
-    }
-
-    public void setNeedSecondaryReason(final String needSecondaryReason) {
-        this.needSecondaryReason = needSecondaryReason;
-    }
-
     public int getNumMksConnections() {
         return numMksConnections;
     }
 
     public void setNumMksConnections(final int numMksConnections) {
         this.numMksConnections = numMksConnections;
-    }
-
-    public VirtualMachineFeatureRequirement[] getOfflineFeatureRequirement() {
-        return offlineFeatureRequirement;
-    }
-
-    public void setOfflineFeatureRequirement(final VirtualMachineFeatureRequirement[] offlineFeatureRequirement) {
-        this.offlineFeatureRequirement = offlineFeatureRequirement;
-    }
-
-    public boolean isOnlineStandby() {
-        return onlineStandby;
-    }
-
-    public void setOnlineStandby(final boolean onlineStandby) {
-        this.onlineStandby = onlineStandby;
-    }
-
-    public Boolean getPaused() {
-        return paused;
-    }
-
-    public void setPaused(final Boolean paused) {
-        this.paused = paused;
-    }
-
-    public VirtualMachinePowerState getPowerState() {
-        return powerState;
-    }
-
-    public void setPowerState(final VirtualMachinePowerState powerState) {
-        this.powerState = powerState;
-    }
-
-    public VirtualMachineQuestionInfo getQuestion() {
-        return question;
-    }
-
-    public void setQuestion(final VirtualMachineQuestionInfo question) {
-        this.question = question;
-    }
-
-    public Boolean getQuiescedForkParent() {
-        return quiescedForkParent;
-    }
-
-    public void setQuiescedForkParent(final Boolean quiescedForkParent) {
-        this.quiescedForkParent = quiescedForkParent;
     }
 
     public VirtualMachineRecordReplayState getRecordReplayState() {
@@ -316,36 +263,68 @@ public class VirtualMachineRuntimeInfo extends DynamicData {
         this.recordReplayState = recordReplayState;
     }
 
-    public Boolean getSnapshotInBackground() {
-        return snapshotInBackground;
+    public Boolean getCleanPowerOff() {
+        return cleanPowerOff;
     }
 
-    public void setSnapshotInBackground(final Boolean snapshotInBackground) {
-        this.snapshotInBackground = snapshotInBackground;
+    public void setCleanPowerOff(final Boolean cleanPowerOff) {
+        this.cleanPowerOff = cleanPowerOff;
     }
 
-    public Long getSuspendInterval() {
-        return suspendInterval;
+    public String getNeedSecondaryReason() {
+        return needSecondaryReason;
     }
 
-    public void setSuspendInterval(final Long suspendInterval) {
-        this.suspendInterval = suspendInterval;
+    public void setNeedSecondaryReason(final String needSecondaryReason) {
+        this.needSecondaryReason = needSecondaryReason;
     }
 
-    public Calendar getSuspendTime() {
-        return suspendTime;
+    public Boolean getOnlineStandby() {
+        return onlineStandby;
     }
 
-    public void setSuspendTime(final Calendar suspendTime) {
-        this.suspendTime = suspendTime;
+    public void setOnlineStandby(final Boolean onlineStandby) {
+        this.onlineStandby = onlineStandby;
     }
 
-    public boolean isToolsInstallerMounted() {
-        return toolsInstallerMounted;
+    public String getMinRequiredEVCModeKey() {
+        return minRequiredEVCModeKey;
     }
 
-    public void setToolsInstallerMounted(final boolean toolsInstallerMounted) {
-        this.toolsInstallerMounted = toolsInstallerMounted;
+    public void setMinRequiredEVCModeKey(final String minRequiredEVCModeKey) {
+        this.minRequiredEVCModeKey = minRequiredEVCModeKey;
+    }
+
+    public Boolean getConsolidationNeeded() {
+        return consolidationNeeded;
+    }
+
+    public void setConsolidationNeeded(final Boolean consolidationNeeded) {
+        this.consolidationNeeded = consolidationNeeded;
+    }
+
+    public List<VirtualMachineFeatureRequirement> getOfflineFeatureRequirement() {
+        return offlineFeatureRequirement;
+    }
+
+    public void setOfflineFeatureRequirement(final List<VirtualMachineFeatureRequirement> offlineFeatureRequirement) {
+        this.offlineFeatureRequirement = offlineFeatureRequirement;
+    }
+
+    public List<VirtualMachineFeatureRequirement> getFeatureRequirement() {
+        return featureRequirement;
+    }
+
+    public void setFeatureRequirement(final List<VirtualMachineFeatureRequirement> featureRequirement) {
+        this.featureRequirement = featureRequirement;
+    }
+
+    public List<HostFeatureMask> getFeatureMask() {
+        return featureMask;
+    }
+
+    public void setFeatureMask(final List<HostFeatureMask> featureMask) {
+        this.featureMask = featureMask;
     }
 
     public Long getvFlashCacheAllocation() {
@@ -356,12 +335,44 @@ public class VirtualMachineRuntimeInfo extends DynamicData {
         this.vFlashCacheAllocation = vFlashCacheAllocation;
     }
 
-    public Boolean getVmFailoverInProgress() {
-        return vmFailoverInProgress;
+    public Boolean getPaused() {
+        return paused;
     }
 
-    public void setVmFailoverInProgress(final Boolean vmFailoverInProgress) {
-        this.vmFailoverInProgress = vmFailoverInProgress;
+    public void setPaused(final Boolean paused) {
+        this.paused = paused;
+    }
+
+    public Boolean getSnapshotInBackground() {
+        return snapshotInBackground;
+    }
+
+    public void setSnapshotInBackground(final Boolean snapshotInBackground) {
+        this.snapshotInBackground = snapshotInBackground;
+    }
+
+    public Boolean getQuiescedForkParent() {
+        return quiescedForkParent;
+    }
+
+    public void setQuiescedForkParent(final Boolean quiescedForkParent) {
+        this.quiescedForkParent = quiescedForkParent;
+    }
+
+    public Boolean getInstantCloneFrozen() {
+        return instantCloneFrozen;
+    }
+
+    public void setInstantCloneFrozen(final Boolean instantCloneFrozen) {
+        this.instantCloneFrozen = instantCloneFrozen;
+    }
+
+    public VirtualMachineCryptoState getCryptoState() {
+        return cryptoState;
+    }
+
+    public void setCryptoState(final VirtualMachineCryptoState cryptoState) {
+        this.cryptoState = cryptoState;
     }
 
     public Boolean getSuspendedToMemory() {
@@ -370,6 +381,14 @@ public class VirtualMachineRuntimeInfo extends DynamicData {
 
     public void setSuspendedToMemory(final Boolean suspendedToMemory) {
         this.suspendedToMemory = suspendedToMemory;
+    }
+
+    public Long getOpNotificationTimeout() {
+        return opNotificationTimeout;
+    }
+
+    public void setOpNotificationTimeout(final Long opNotificationTimeout) {
+        this.opNotificationTimeout = opNotificationTimeout;
     }
 
 }

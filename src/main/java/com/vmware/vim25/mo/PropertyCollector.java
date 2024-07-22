@@ -30,99 +30,238 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * The managed object class corresponding to the one defined in VI SDK API reference.
  *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
-
 public class PropertyCollector extends ManagedObject {
 
-    public PropertyCollector(ServerConnection serverConnection, ManagedObjectReference mor) {
+    public PropertyCollector(final ServerConnection serverConnection, final ManagedObjectReference mor) {
         super(serverConnection, mor);
     }
 
-    public PropertyFilter[] getFilters() {
-        return getFilter("filter");
+    public List<PropertyFilter> getFilters() {
+        return Arrays.stream(this.getManagedObjects("filter"))
+                .map(PropertyFilter.class::cast)
+                .collect(Collectors.toList());
     }
 
     /**
      * @since SDK4.1
      */
-    public void cancelRetrievePropertiesEx(String token) throws InvalidProperty, RuntimeFault, RemoteException {
-        getVimService().cancelRetrievePropertiesEx(getMOR(), token);
+    public void cancelRetrievePropertiesEx(final String token) throws InvalidProperty, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("token", String.class, token));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("CancelRetrievePropertiesEx", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidProperty) {
+                throw (InvalidProperty) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void cancelWaitForUpdates() throws RuntimeFault, RemoteException {
-        getVimService().cancelWaitForUpdates(getMOR());
-    }
-
-    /**
-     * @since SDK4.1
-     */
-    public RetrieveResult continueRetrievePropertiesEx(String token) throws InvalidProperty, RuntimeFault, RemoteException {
-        return getVimService().continueRetrievePropertiesEx(getMOR(), token);
-    }
-
-    public UpdateSet checkForUpdates(String version) throws InvalidCollectorVersion, RuntimeFault, RemoteException {
-        return getVimService().checkForUpdates(getMOR(), version);
-    }
-
-    public PropertyFilter createFilter(PropertyFilterSpec spec, boolean partialUpdates) throws InvalidProperty, RuntimeFault, RemoteException {
-        ManagedObjectReference mor = getVimService().createFilter(getMOR(), spec, partialUpdates);
-        return new PropertyFilter(getServerConnection(), mor);
-    }
-
-    /**
-     * @since SDK4.1
-     */
-    public PropertyCollector createPropertyCollector() throws RuntimeFault, RemoteException {
-        ManagedObjectReference mor = getVimService().createPropertyCollector(getMOR());
-        return new PropertyCollector(getServerConnection(), mor);
+    public void cancelWaitForUpdates() throws RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("CancelWaitForUpdates", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
     /**
      * @since SDK4.1
      */
-    public void destroyPropertyCollector() throws RuntimeFault, RemoteException {
-        getVimService().destroyPropertyCollector(getMOR());
+    public RetrieveResult continueRetrievePropertiesEx(final String token) throws InvalidProperty, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("token", String.class, token));
+        try {
+            return this.getVimService().getWsc().invoke("ContinueRetrievePropertiesEx", params, RetrieveResult.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidProperty) {
+                throw (InvalidProperty) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    /**
+     * @deprecated As of vSphere API 4.1, use WaitForUpdatesEx with a maxWaitSeconds of 0
+     */
+    @Deprecated
+    public UpdateSet checkForUpdates(final String version) throws InvalidCollectorVersion, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("version", String.class, version));
+        try {
+            return this.getVimService().getWsc().invoke("CheckForUpdates", params, UpdateSet.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidCollectorVersion) {
+                throw (InvalidCollectorVersion) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public PropertyFilter createFilter(final PropertyFilterSpec spec, final boolean partialUpdates) throws InvalidProperty, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("spec", PropertyFilterSpec.class, spec),
+                Argument.fromBasicType("partialUpdates", partialUpdates));
+        try {
+            final var mor = this.getVimService().getWsc().invoke("CreateFilter", params, ManagedObjectReference.class);
+            return new PropertyFilter(getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidProperty) {
+                throw (InvalidProperty) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    /**
+     * @since SDK4.1
+     */
+    public PropertyCollector createPropertyCollector() throws RuntimeFault {
+        try {
+            final var mor = this.getVimService().getWsc().invoke("CreatePropertyCollector", this.getSingleSelfArgumentList(), ManagedObjectReference.class);
+            return new PropertyCollector(getServerConnection(), mor);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    /**
+     * @since SDK4.1
+     */
+    public void destroyPropertyCollector() throws RuntimeFault {
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("DestroyPropertyCollector", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
     /**
      * @deprecated as of SDK4.1
      */
-    public ObjectContent[] retrieveProperties(PropertyFilterSpec[] specSet) throws InvalidProperty, RuntimeFault, RemoteException {
-        return getVimService().retrieveProperties(getMOR(), specSet);
+    @Deprecated
+    public ObjectContent[] retrieveProperties(final PropertyFilterSpec[] specSet) throws InvalidProperty, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("specSet", PropertyFilterSpec[].class, specSet));
+        try {
+            return this.getVimService().getWsc().invoke("RetrieveProperties", params, ObjectContent[].class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidProperty) {
+                throw (InvalidProperty) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+
     }
 
     /**
      * @since SDK4.1
      */
-    public RetrieveResult retrievePropertiesEx(PropertyFilterSpec[] specSet, RetrieveOptions options) throws InvalidProperty, RuntimeFault, RemoteException {
-        if (options == null) {
-            return getVimService().retrievePropertiesEx(getMOR(), specSet, new RetrieveOptions());
+    public RetrieveResult retrievePropertiesEx(final List<PropertyFilterSpec> specSet, final RetrieveOptions options) throws InvalidProperty, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("specSet", PropertyFilterSpec[].class, specSet),
+                new Argument("options", RetrieveOptions.class, options == null ? new RetrieveOptions() : options));
+        try {
+            return this.getVimService().getWsc().invoke("RetrievePropertiesEx", params, RetrieveResult.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidProperty) {
+                throw (InvalidProperty) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
-        return getVimService().retrievePropertiesEx(getMOR(), specSet, options);
     }
 
     /**
      * @deprecated as of SDK4.1
      */
-    public UpdateSet waitForUpdates(String version) throws InvalidCollectorVersion, RuntimeFault, RemoteException {
-        return getVimService().waitForUpdates(getMOR(), version);
+    @Deprecated
+    public UpdateSet waitForUpdates(final String version) throws InvalidCollectorVersion, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("version", String.class, version));
+        try {
+            return this.getVimService().getWsc().invoke("WaitForUpdates", params, UpdateSet.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidCollectorVersion) {
+                throw (InvalidCollectorVersion) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+
     }
 
     /**
      * @since SDK4.1
      */
-    public UpdateSet waitForUpdatesEx(String version, WaitOptions options) throws InvalidCollectorVersion, RuntimeFault, RemoteException {
-        if (options == null) {
-            return getVimService().waitForUpdatesEx(getMOR(), version, new WaitOptions());
+    public UpdateSet waitForUpdatesEx(final String version, final WaitOptions options) throws InvalidCollectorVersion, RuntimeFault, RemoteException {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("version", String.class, version),
+                new Argument("options", WaitOptions.class, options == null ? new WaitOptions() : options));
+        try {
+            return this.getVimService().getWsc().invoke("WaitForUpdatesEx", params, UpdateSet.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidCollectorVersion) {
+                throw (InvalidCollectorVersion) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
         }
-        return getVimService().waitForUpdatesEx(getMOR(), version, options);
     }
 
 }

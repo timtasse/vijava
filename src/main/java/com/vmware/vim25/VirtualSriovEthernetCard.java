@@ -30,28 +30,51 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The VirtualSriovEthernetCard data object defines the properties of a SR-IOV enabled Ethernet card attached to a virtual machine.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
+ * @since 5.5
+ */
+@SuppressWarnings("unused")
 public class VirtualSriovEthernetCard extends VirtualEthernetCard {
-  public Boolean allowGuestOSMtuChange;
-  public VirtualSriovEthernetCardSriovBackingInfo sriovBacking;
 
-  public Boolean getAllowGuestOSMtuChange() {
-    return this.allowGuestOSMtuChange;
-  }
+    private Boolean allowGuestOSMtuChange;
+    private VirtualSriovEthernetCardSriovBackingInfo sriovBacking;
+    private VirtualPCIPassthroughDvxBackingInfo dvxBackingInfo;
 
-  public VirtualSriovEthernetCardSriovBackingInfo getSriovBacking() {
-    return this.sriovBacking;
-  }
+    @Override
+    public String toString() {
+        return "VirtualSriovEthernetCard{" +
+                "allowGuestOSMtuChange=" + allowGuestOSMtuChange +
+                ", sriovBacking=" + sriovBacking +
+                ", dvxBackingInfo=" + dvxBackingInfo +
+                "} " + super.toString();
+    }
 
-  public void setAllowGuestOSMtuChange(Boolean allowGuestOSMtuChange) {
-    this.allowGuestOSMtuChange=allowGuestOSMtuChange;
-  }
+    public VirtualPCIPassthroughDvxBackingInfo getDvxBackingInfo() {
+        return dvxBackingInfo;
+    }
 
-  public void setSriovBacking(VirtualSriovEthernetCardSriovBackingInfo sriovBacking) {
-    this.sriovBacking=sriovBacking;
-  }
+    public void setDvxBackingInfo(final VirtualPCIPassthroughDvxBackingInfo dvxBackingInfo) {
+        this.dvxBackingInfo = dvxBackingInfo;
+    }
+
+    public Boolean getAllowGuestOSMtuChange() {
+        return this.allowGuestOSMtuChange;
+    }
+
+    public void setAllowGuestOSMtuChange(final Boolean allowGuestOSMtuChange) {
+        this.allowGuestOSMtuChange = allowGuestOSMtuChange;
+    }
+
+    public VirtualSriovEthernetCardSriovBackingInfo getSriovBacking() {
+        return this.sriovBacking;
+    }
+
+    public void setSriovBacking(final VirtualSriovEthernetCardSriovBackingInfo sriovBacking) {
+        this.sriovBacking = sriovBacking;
+    }
+
 }

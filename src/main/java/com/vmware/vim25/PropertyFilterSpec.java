@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Steve Jin (http://www.doublecloud.org)
@@ -41,6 +42,10 @@ public class PropertyFilterSpec extends DynamicData {
     private PropertySpec[] propSet;
     private ObjectSpec[] objectSet;
     private Boolean reportMissingObjectsInResults;
+
+    public static PropertyFilterSpec create(final ObjectSpec objectSet, final List<PropertySpec> propSet) {
+        return create(new ObjectSpec[] {objectSet}, propSet.toArray(new PropertySpec[0]));
+    }
 
     public static PropertyFilterSpec create(final ObjectSpec objectSet, final PropertySpec... propSet) {
         return create(new ObjectSpec[] {objectSet}, propSet);

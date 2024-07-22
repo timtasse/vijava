@@ -6,21 +6,41 @@ package com.vmware.vim25;
  * At present, this interface is only used to implement vGPU.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.2
+ * @version 8.0.0
  * @since 6.0
  */
 @SuppressWarnings("unused")
 public class VirtualPCIPassthroughVmiopBackingInfo extends VirtualPCIPassthroughPluginBackingInfo {
 
     private String vgpu;
+    private Integer vgpuMigrateDataSizeMB;
     private Boolean migrateSupported;
+    private Boolean enhancedMigrateCapability;
 
     @Override
     public String toString() {
         return "VirtualPCIPassthroughVmiopBackingInfo{" +
                 "vgpu='" + vgpu + '\'' +
+                ", vgpuMigrateDataSizeMB=" + vgpuMigrateDataSizeMB +
                 ", migrateSupported=" + migrateSupported +
-                "} " + super.toString();
+                ", enhancedMigrateCapability=" + enhancedMigrateCapability +
+                "} ";
+    }
+
+    public Integer getVgpuMigrateDataSizeMB() {
+        return vgpuMigrateDataSizeMB;
+    }
+
+    public void setVgpuMigrateDataSizeMB(final Integer vgpuMigrateDataSizeMB) {
+        this.vgpuMigrateDataSizeMB = vgpuMigrateDataSizeMB;
+    }
+
+    public Boolean getEnhancedMigrateCapability() {
+        return enhancedMigrateCapability;
+    }
+
+    public void setEnhancedMigrateCapability(final Boolean enhancedMigrateCapability) {
+        this.enhancedMigrateCapability = enhancedMigrateCapability;
     }
 
     public String getVgpu() {

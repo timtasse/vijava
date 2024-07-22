@@ -32,6 +32,8 @@ package com.vmware.vim25;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.doublecloud.ws.util.TypeUtil.asNullSafeList;
+
 /**
  * This data object type contains information about a disk in a virtual machine.
  * The virtual disk backing object types describe the different virtual disk backings available. The disk format version in each case describes the version of the format that is used.
@@ -154,7 +156,7 @@ public class VirtualDisk extends VirtualDevice {
     }
 
     public List<VirtualMachineBaseIndependentFilterSpec> getIndependentFilters() {
-        return Arrays.asList(independentFilters);
+        return asNullSafeList(independentFilters);
     }
 
     public void setIndependentFilters(final List<VirtualMachineBaseIndependentFilterSpec> independentFilters) {

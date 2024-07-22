@@ -30,55 +30,81 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The HostMountInfo data object provides information related to a configured mount point.
+ * This object does not include information about the mounted file system. (See HostFileSystemMountInfo.)
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
+ */
+@SuppressWarnings("unused")
 public class HostMountInfo extends DynamicData {
-  public String path;
-  public String accessMode;
-  public Boolean mounted;
-  public Boolean accessible;
-  public String inaccessibleReason;
 
-  public String getPath() {
-    return this.path;
-  }
+    private String path;
+    private String accessMode;
+    private Boolean mounted;
+    private Boolean accessible;
+    private HostMountInfoInaccessibleReason inaccessibleReason;
+    private HostMountInfoMountFailedReason mountFailedReason;
 
-  public String getAccessMode() {
-    return this.accessMode;
-  }
+    @Override
+    public String toString() {
+        return "HostMountInfo{" +
+                "path='" + path + '\'' +
+                ", accessMode='" + accessMode + '\'' +
+                ", mounted=" + mounted +
+                ", accessible=" + accessible +
+                ", inaccessibleReason=" + inaccessibleReason +
+                ", mountFailedReason=" + mountFailedReason +
+                '}';
+    }
 
-  public Boolean getMounted() {
-    return this.mounted;
-  }
+    public String getPath() {
+        return path;
+    }
 
-  public Boolean getAccessible() {
-    return this.accessible;
-  }
+    public void setPath(final String path) {
+        this.path = path;
+    }
 
-  public String getInaccessibleReason() {
-    return this.inaccessibleReason;
-  }
+    public String getAccessMode() {
+        return accessMode;
+    }
 
-  public void setPath(String path) {
-    this.path=path;
-  }
+    public void setAccessMode(final String accessMode) {
+        this.accessMode = accessMode;
+    }
 
-  public void setAccessMode(String accessMode) {
-    this.accessMode=accessMode;
-  }
+    public Boolean getMounted() {
+        return mounted;
+    }
 
-  public void setMounted(Boolean mounted) {
-    this.mounted=mounted;
-  }
+    public void setMounted(final Boolean mounted) {
+        this.mounted = mounted;
+    }
 
-  public void setAccessible(Boolean accessible) {
-    this.accessible=accessible;
-  }
+    public Boolean getAccessible() {
+        return accessible;
+    }
 
-  public void setInaccessibleReason(String inaccessibleReason) {
-    this.inaccessibleReason=inaccessibleReason;
-  }
+    public void setAccessible(final Boolean accessible) {
+        this.accessible = accessible;
+    }
+
+    public HostMountInfoInaccessibleReason getInaccessibleReason() {
+        return inaccessibleReason;
+    }
+
+    public void setInaccessibleReason(final HostMountInfoInaccessibleReason inaccessibleReason) {
+        this.inaccessibleReason = inaccessibleReason;
+    }
+
+    public HostMountInfoMountFailedReason getMountFailedReason() {
+        return mountFailedReason;
+    }
+
+    public void setMountFailedReason(final HostMountInfoMountFailedReason mountFailedReason) {
+        this.mountFailedReason = mountFailedReason;
+    }
+
 }

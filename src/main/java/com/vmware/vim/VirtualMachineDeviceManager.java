@@ -98,21 +98,21 @@ public class VirtualMachineDeviceManager {
         }
 
         VirtualFloppy floppy = new VirtualFloppy();
-        floppy.connectable = new VirtualDeviceConnectInfo();
-        floppy.connectable.setStartConnected(startConnected);
+        floppy.setConnectable(new VirtualDeviceConnectInfo());
+        floppy.getConnectable().setStartConnected(startConnected);
 
         if (hostDevice != null) {
             VirtualFloppyDeviceBackingInfo backing = new VirtualFloppyDeviceBackingInfo();
             backing.deviceName = hostDevice;
-            floppy.backing = backing;
+            floppy.setBacking(backing);
         } else if (floppyImagePath != null) {
             VirtualFloppyImageBackingInfo backing = new VirtualFloppyImageBackingInfo();
             backing.fileName = floppyImagePath;
-            floppy.backing = backing;
+            floppy.setBacking(backing);
         } else if (newFloppyImagePath != null) {
             VirtualFloppyImageBackingInfo backing = new VirtualFloppyImageBackingInfo();
             backing.fileName = newFloppyImagePath;
-            floppy.backing = backing;
+            floppy.setBacking(backing);
         } else {
             // The VIM API doesn't allow for the possibility of adding a drive
             // without hooking it up to something. In an ideal world, I'd probably
@@ -121,12 +121,12 @@ public class VirtualMachineDeviceManager {
             // as not connected.
             VirtualFloppyRemoteDeviceBackingInfo backing = new VirtualFloppyRemoteDeviceBackingInfo();
             backing.deviceName = "";
-            floppy.backing = backing;
-            floppy.connectable.setStartConnected(false);
-            floppy.connectable.setConnected(false);
+            floppy.setBacking(backing);
+            floppy.getConnectable().setStartConnected(false);
+            floppy.getConnectable().setConnected(false);
         }
 
-        floppy.key = -1;
+        floppy.setKey(-1);
 
         VirtualDeviceConfigSpec floppySpec = new VirtualDeviceConfigSpec();
         floppySpec.setOperation(VirtualDeviceConfigSpecOperation.add);
@@ -136,36 +136,18 @@ public class VirtualMachineDeviceManager {
         floppySpec.setDevice(floppy);
 
         VirtualMachineConfigSpec config = new VirtualMachineConfigSpec();
-        config.setDeviceChange(new VirtualDeviceConfigSpec[]{floppySpec});
+        config.setDeviceChange(List.of(floppySpec));
 
         VirtualIDEController controller = getFirstAvailableController(VirtualIDEController.class);
 
         if (controller != null) {
-            config.getDeviceChange()[0].getDevice().setControllerKey(controller.key);
+            config.getDeviceChange().get(0).getDevice().setControllerKey(controller.getKey());
         } else {
             throw new RuntimeException("No available IDE controller for floppy drive.");
         }
 
         return vm.reconfigVM(config);
     }
-
-    /*############################################################
-    PassthroughDevice Management
-    ############################################################*/
-    //TODO: All of these 3 methods
-    //type: either SCSI or PCI (4.0 and higher)
-    public String getPassThroughDevice(String type) {
-        return "";
-    }
-
-    public void addPassthroughDevice() {
-
-    }
-
-    public void removePassthroughDevice() {
-
-    }
-
 
     /*############################################################
     CD/DVC Drive Management
@@ -185,19 +167,19 @@ public class VirtualMachineDeviceManager {
         }
 
         VirtualCdrom cdrom = new VirtualCdrom();
-        cdrom.connectable = new VirtualDeviceConnectInfo();
-        cdrom.connectable.setAllowGuestControl(true);
-        cdrom.connectable.setStartConnected(startConnected);
+        cdrom.setConnectable(new VirtualDeviceConnectInfo());
+        cdrom.getConnectable().setAllowGuestControl(true);
+        cdrom.getConnectable().setStartConnected(startConnected);
 
         if (hostDevice != null) {
             validateCdromHostDevice(hostDevice);
             VirtualCdromAtapiBackingInfo backing = new VirtualCdromAtapiBackingInfo();
             backing.deviceName = hostDevice;
-            cdrom.backing = backing;
+            cdrom.setBacking(backing);
         } else if (isoPath != null) {
             VirtualCdromIsoBackingInfo backing = new VirtualCdromIsoBackingInfo();
             backing.fileName = isoPath;
-            cdrom.backing = backing;
+            cdrom.setBacking(backing);
         } else {
             // We don't allow adding a CD drive without hooking it up to something.
             // In an ideal world, you may want an ISO backing without having to specify a valid ISO
@@ -205,22 +187,22 @@ public class VirtualMachineDeviceManager {
             VirtualCdromRemotePassthroughBackingInfo backing = new VirtualCdromRemotePassthroughBackingInfo();
             backing.exclusive = true;
             backing.deviceName = "";
-            cdrom.backing = backing;
+            cdrom.setBacking(backing);
         }
 
-        cdrom.key = -1;
+        cdrom.setKey(-1);
 
         VirtualDeviceConfigSpec cdSpec = new VirtualDeviceConfigSpec();
         cdSpec.setOperation(VirtualDeviceConfigSpecOperation.add);
         cdSpec.setDevice(cdrom);
 
         VirtualMachineConfigSpec config = new VirtualMachineConfigSpec();
-        config.setDeviceChange(new VirtualDeviceConfigSpec[]{cdSpec});
+        config.setDeviceChange(List.of(cdSpec));
 
         VirtualIDEController controller = getFirstAvailableController(VirtualIDEController.class);
 
         if (controller != null) {
-            config.getDeviceChange()[0].getDevice().setControllerKey(controller.key);
+            config.getDeviceChange().get(0).getDevice().setControllerKey(controller.getKey());
         } else {
             throw new RuntimeException("No free IDE controller for addtional CD Drive.");
         }
@@ -274,7 +256,7 @@ public class VirtualMachineDeviceManager {
         VirtualSCSIController scsiController = getFirstAvailableController(VirtualSCSIController.class);
         int unitNumber = getFirstFreeUnitNumberForController(scsiController);
         VirtualDisk disk = new VirtualDisk();
-        disk.setControllerKey(scsiController.key);
+        disk.setControllerKey(scsiController.getKey());
         disk.setUnitNumber(unitNumber);
         disk.setBacking(diskfileBacking);
         disk.setCapacityInBytes(1048576L * diskSizeMB);
@@ -284,9 +266,8 @@ public class VirtualMachineDeviceManager {
         diskSpec.setFileOperation(VirtualDeviceConfigSpecFileOperation.create);
         diskSpec.setDevice(disk);
         VirtualDeviceConfigSpec vdiskSpec = diskSpec;
-        VirtualDeviceConfigSpec[] vdiskSpecArray = {vdiskSpec};
 
-        vmConfigSpec.setDeviceChange(vdiskSpecArray);
+        vmConfigSpec.setDeviceChange(List.of(vdiskSpec));
         Task task = vm.reconfigVM(vmConfigSpec);
 
         task.waitForTask(200, 100);
@@ -296,8 +277,7 @@ public class VirtualMachineDeviceManager {
         VirtualMachineConfigSpec vmConfigSpec = new VirtualMachineConfigSpec();
 
         VirtualDeviceConfigSpec diskSpec = new VirtualDeviceConfigSpec();
-        VirtualDeviceConfigSpec[] vdiskSpecArray = {diskSpec};
-        vmConfigSpec.setDeviceChange(vdiskSpecArray);
+        vmConfigSpec.setDeviceChange(List.of(diskSpec));
 
         VirtualDiskFlatVer2BackingInfo diskfileBacking = new VirtualDiskFlatVer2BackingInfo();
         diskfileBacking.setFileName(diskFilePath);
@@ -308,7 +288,7 @@ public class VirtualMachineDeviceManager {
         int unitNumber = getFirstFreeUnitNumberForController(scsiController);
 
         VirtualDisk disk = new VirtualDisk();
-        disk.setControllerKey(scsiController.key);
+        disk.setControllerKey(scsiController.getKey());
         disk.setUnitNumber(unitNumber);
         disk.setBacking(diskfileBacking);
         //Unlike required by API ref, the capacityKB is optional. So skip setCapacityInKB() method.
@@ -325,9 +305,9 @@ public class VirtualMachineDeviceManager {
     public VirtualDisk findHardDisk(String diskName) {
         VirtualDevice[] devices = getAllVirtualDevices();
 
-        for (int i = 0; i < devices.length; i++) {
-            if (devices[i] instanceof VirtualDisk) {
-                VirtualDisk vDisk = (VirtualDisk) devices[i];
+        for (final VirtualDevice device : devices) {
+            if (device instanceof VirtualDisk) {
+                VirtualDisk vDisk = (VirtualDisk) device;
                 if (diskName.equalsIgnoreCase(vDisk.getDeviceInfo().getLabel())) {
                     return vDisk;
                 }
@@ -355,8 +335,8 @@ public class VirtualMachineDeviceManager {
             }
 
             for (VirtualDevice device : devices) {
-                if (device.controllerKey != null && device.controllerKey == controller.key) {
-                    usedNodeList.add(device.unitNumber);
+                if (device.getControllerKey() != null && device.getControllerKey() == controller.getKey()) {
+                    usedNodeList.add(device.getUnitNumber());
                 }
             }
             for (int i = 0; i < maxNodes; i++) {
@@ -399,7 +379,7 @@ public class VirtualMachineDeviceManager {
         VirtualDeviceConfigSpec nicSpec = createNicSpec(type, networkName, macAddress, wakeOnLan, startConnected, configTarget);
 
         VirtualMachineConfigSpec vmConfigSpec = new VirtualMachineConfigSpec();
-        vmConfigSpec.setDeviceChange(new VirtualDeviceConfigSpec[]{nicSpec});
+        vmConfigSpec.setDeviceChange(List.of(nicSpec));
         Task task = vm.reconfigVM(vmConfigSpec);
 
         task.waitForTask(200, 100);
@@ -449,7 +429,7 @@ public class VirtualMachineDeviceManager {
         }
     }
 
-    private static NetworkSummary getHostNetworkSummaryByName(String networkName, VirtualMachineNetworkInfo[] hostNetworkList) {
+    private static NetworkSummary getHostNetworkSummaryByName(String networkName, List<VirtualMachineNetworkInfo> hostNetworkList) {
         NetworkSummary result = null;
         boolean isNetworkExistingOnHost = false;
 
@@ -472,7 +452,7 @@ public class VirtualMachineDeviceManager {
         return result;
     }
 
-    private static DistributedVirtualPortgroupInfo findDVPortgroupInfo(DistributedVirtualPortgroupInfo[] hostDistributedVirtualPortgroupInfo,
+    private static DistributedVirtualPortgroupInfo findDVPortgroupInfo(List<DistributedVirtualPortgroupInfo> hostDistributedVirtualPortgroupInfo,
                                                                        String portgroupName) {
         DistributedVirtualPortgroupInfo result = null;
 
@@ -513,18 +493,18 @@ public class VirtualMachineDeviceManager {
         }
 
         if (macAddress == null) {
-            device.addressType = "generated";
+            device.setAddressType("generated");
         } else {
-            device.addressType = "manual";
-            device.macAddress = macAddress;
+            device.setAddressType("manual");
+            device.setMacAddress(macAddress);
         }
-        device.wakeOnLanEnabled = wakeOnLan;
+        device.setWakeOnLanEnabled(wakeOnLan);
 
-        device.backing = nicBacking;
-        device.connectable = new VirtualDeviceConnectInfo();
-        device.connectable.setConnected(true);
-        device.connectable.setStartConnected(startConnected);
-        device.key = -1;
+        device.setBacking(nicBacking);
+        device.setConnectable(new VirtualDeviceConnectInfo());
+        device.getConnectable().setConnected(true);
+        device.getConnectable().setStartConnected(startConnected);
+        device.setKey(-1);
 
         result.setOperation(VirtualDeviceConfigSpecOperation.add);
         result.setDevice(device);
@@ -534,13 +514,13 @@ public class VirtualMachineDeviceManager {
 
     // Check network adapter type if it's supported by the guest OS
     private static VirtualNetworkAdapterType validateNicType(GuestOsDescriptor[] guestOsDescriptorList,
-                                                             String guestId, VirtualNetworkAdapterType adapterType) throws DeviceNotSupported {
+                                                             VirtualMachineGuestOsIdentifier guestId, VirtualNetworkAdapterType adapterType) throws DeviceNotSupported {
         VirtualNetworkAdapterType result = adapterType;
 
         GuestOsDescriptor guestOsInfo = null;
 
         for (GuestOsDescriptor desc : guestOsDescriptorList) {
-            if (desc.getId().equalsIgnoreCase(guestId)) {
+            if (desc.getId().equalsIgnoreCase(guestId.name())) {
                 guestOsInfo = desc;
                 break;
             }
@@ -580,8 +560,8 @@ public class VirtualMachineDeviceManager {
 
         if ((ethernetCardType == null || ethernetCardType.isEmpty()) &&
                 (guestOsInfo.getSupportedEthernetCard() != null) &&
-                ((guestOsInfo.getSupportedEthernetCard().length > 0))) {
-            ethernetCardType = guestOsInfo.getSupportedEthernetCard()[0];
+                ((guestOsInfo.getSupportedEthernetCard().size() > 0))) {
+            ethernetCardType = guestOsInfo.getSupportedEthernetCard().get(0);
         }
         return GetNetworkAdapterTypeByApiType(ethernetCardType);
     }
@@ -628,8 +608,8 @@ public class VirtualMachineDeviceManager {
                 if (device instanceof VirtualDisk && powerState == VirtualMachinePowerState.poweredOff) {
                     List<VirtualSCSIController> contollerList = getVirtualDevicesOfType(VirtualSCSIController.class);
                     for (VirtualSCSIController controller : contollerList) {
-                        if (controller.key == device.controllerKey) {
-                            if (controller.device.length == 1 && controller.device[0] == device.key) {
+                        if (controller.getKey() == device.getControllerKey()) {
+                            if (controller.device.length == 1 && controller.device[0] == device.getKey()) {
                                 VirtualDeviceConfigSpec controllerSpec = new VirtualDeviceConfigSpec();
                                 controllerSpec.setOperation(VirtualDeviceConfigSpecOperation.remove);
                                 controllerSpec.setDevice(controller);
@@ -643,11 +623,10 @@ public class VirtualMachineDeviceManager {
                 //region Usb controller removal.
                 // If the device's SCSI controller will get free after device removal, also remove the controller.
                 if (device instanceof VirtualUSB) {
-                    //TODO remove duplication of this and above section of code
                     List<VirtualUSBController> contollerList = getVirtualDevicesOfType(VirtualUSBController.class);
                     for (VirtualUSBController controller : contollerList) {
-                        if (controller.key == device.controllerKey) {
-                            if (controller.device.length == 1 && controller.device[0] == device.key) {
+                        if (controller.getKey() == device.getControllerKey()) {
+                            if (controller.device.length == 1 && controller.device[0] == device.getKey()) {
                                 VirtualDeviceConfigSpec controllerSpec = new VirtualDeviceConfigSpec();
                                 controllerSpec.setOperation(VirtualDeviceConfigSpecOperation.remove);
                                 controllerSpec.setDevice(controller);
@@ -673,12 +652,9 @@ public class VirtualMachineDeviceManager {
             }
         }
 
-        if (configSpecList.size() > 0) {
+        if (!configSpecList.isEmpty()) {
             VirtualMachineConfigSpec config = new VirtualMachineConfigSpec();
-            config.setDeviceChange(new VirtualDeviceConfigSpec[configSpecList.size()]);
-            for (int i = 0; i < configSpecList.size(); i++) {
-                config.getDeviceChange()[i] = configSpecList.get(i);
-            }
+            config.setDeviceChange(configSpecList);
             Task task = vm.reconfigVM(config);
             return task;
         }

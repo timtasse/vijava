@@ -29,8 +29,8 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * The ConfigInfo data object type encapsulates the configuration settings and virtual hardware for a virtual machine.
@@ -38,7 +38,7 @@ import java.util.Calendar;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.3
+ * @version 8.0.0
  */
 @SuppressWarnings("unused")
 public class VirtualMachineConfigInfo extends DynamicData {
@@ -51,16 +51,16 @@ public class VirtualMachineConfigInfo extends DynamicData {
     private String uuid;
     private Calendar createDate;
     private String instanceUuid;
-    private long[] npivNodeWorldWideName;
-    private long[] npivPortWorldWideName;
-    private String npivWorldWideNameType;
+    private List<Long> npivNodeWorldWideName = List.of();
+    private List<Long> npivPortWorldWideName = List.of();
+    private VirtualMachineConfigInfoNpivWwnType npivWorldWideNameType;
     private Short npivDesiredNodeWwns;
     private Short npivDesiredPortWwns;
     private Boolean npivTemporaryDisabled;
     private Boolean npivOnNonRdmDisks;
     private String locationId;
     private boolean template;
-    private String guestId;
+    private VirtualMachineGuestOsIdentifier guestId;
     private String alternateGuestName;
     private String annotation;
     private VirtualMachineFileInfo files;
@@ -68,8 +68,9 @@ public class VirtualMachineConfigInfo extends DynamicData {
     private VirtualMachineFlagInfo flags;
     private VirtualMachineConsolePreferences consolePreferences;
     private VirtualMachineDefaultPowerOpInfo defaultPowerOps;
+    private Boolean rebootPowerOff;
     private VirtualHardware hardware;
-    private VirtualMachineVcpuConfig[] vcpuConfig;
+    private List<VirtualMachineVcpuConfig> vcpuConfig = List.of();
     private ResourceAllocationInfo cpuAllocation;
     private ResourceAllocationInfo memoryAllocation;
     private LatencySensitivity latencySensitivity;
@@ -79,21 +80,27 @@ public class VirtualMachineConfigInfo extends DynamicData {
     private Long hotPlugMemoryLimit;
     private Long hotPlugMemoryIncrementSize;
     private VirtualMachineAffinityInfo cpuAffinity;
+    /**
+     * @deprecated since vSphere 6.0
+     */
     @Deprecated
     private VirtualMachineAffinityInfo memoryAffinity;
+    /**
+     * @deprecated from vSphere 5.5, shaping policy on VM is not supported.
+     */
     @Deprecated
     private VirtualMachineNetworkShaperInfo networkShaper;
-    private OptionValue[] extraConfig;
-    private HostCpuIdInfo[] cpuFeatureMask;
-    private VirtualMachineConfigInfoDatastoreUrlPair[] datastoreUrl;
-    private String swapPlacement;
+    private List<OptionValue> extraConfig;
+    private List<HostCpuIdInfo> cpuFeatureMask;
+    private List<VirtualMachineConfigInfoDatastoreUrlPair> datastoreUrl;
+    private VirtualMachineConfigInfoSwapPlacementType swapPlacement;
     private VirtualMachineBootOptions bootOptions;
     private FaultToleranceConfigInfo ftInfo;
     private ReplicationConfigSpec repConfig;
     private VmConfigInfo vAppConfig;
     private Boolean vAssertsEnabled;
     private Boolean changeTrackingEnabled;
-    private String firmware;
+    private GuestOsDescriptorFirmwareType firmware;
     private Integer maxMksConnections;
     private Boolean guestAutoLockEnabled;
     private ManagedByInfo managedBy;
@@ -104,21 +111,26 @@ public class VirtualMachineConfigInfo extends DynamicData {
     private ScheduledHardwareUpgradeInfo scheduledHardwareUpgradeInfo;
     private VirtualMachineForkConfigInfo forkConfigInfo;
     private Long vFlashCacheReservation;
-    private byte[] vmxConfigChecksum;
+    private String vmxConfigChecksum;
     private Boolean messageBusTunnelEnabled;
     private String vmStorageObjectId;
     private String swapStorageObjectId;
     private CryptoKeyId keyId;
     private VirtualMachineGuestIntegrityInfo guestIntegrityInfo;
-    private String migrateEncryption;
+    private VirtualMachineConfigSpecEncryptedVMotionModes migrateEncryption;
     private VirtualMachineSgxInfo sgxInfo;
     private VirtualMachineContentLibraryItemInfo contentLibItemInfo;
     private VirtualMachineConfigSpecEncryptedFtModes ftEncryptionMode;
     private VirtualMachineGuestMonitoringModeInfo guestMonitoringModeInfo;
     private Boolean sevEnabled;
+    private VirtualMachineVirtualNumaInfo numaInfo;
     private Boolean pmemFailoverEnabled;
+    private Boolean vmxStatsCollectionEnabled;
     private Boolean vmOpNotificationToAppEnabled;
+    private Long vmOpNotificationTimeout;
+    private VirtualMachineVirtualDeviceSwap deviceSwap;
     private VirtualMachineVirtualPMem pmem;
+    private VirtualMachineVirtualDeviceGroups deviceGroups;
 
     @Override
     public String toString() {
@@ -131,16 +143,16 @@ public class VirtualMachineConfigInfo extends DynamicData {
                 ", uuid='" + uuid + '\'' +
                 ", createDate=" + createDate +
                 ", instanceUuid='" + instanceUuid + '\'' +
-                ", npivNodeWorldWideName=" + Arrays.toString(npivNodeWorldWideName) +
-                ", npivPortWorldWideName=" + Arrays.toString(npivPortWorldWideName) +
-                ", npivWorldWideNameType='" + npivWorldWideNameType + '\'' +
+                ", npivNodeWorldWideName=" + npivNodeWorldWideName +
+                ", npivPortWorldWideName=" + npivPortWorldWideName +
+                ", npivWorldWideNameType=" + npivWorldWideNameType +
                 ", npivDesiredNodeWwns=" + npivDesiredNodeWwns +
                 ", npivDesiredPortWwns=" + npivDesiredPortWwns +
                 ", npivTemporaryDisabled=" + npivTemporaryDisabled +
                 ", npivOnNonRdmDisks=" + npivOnNonRdmDisks +
                 ", locationId='" + locationId + '\'' +
                 ", template=" + template +
-                ", guestId='" + guestId + '\'' +
+                ", guestId=" + guestId +
                 ", alternateGuestName='" + alternateGuestName + '\'' +
                 ", annotation='" + annotation + '\'' +
                 ", files=" + files +
@@ -148,8 +160,9 @@ public class VirtualMachineConfigInfo extends DynamicData {
                 ", flags=" + flags +
                 ", consolePreferences=" + consolePreferences +
                 ", defaultPowerOps=" + defaultPowerOps +
+                ", rebootPowerOff=" + rebootPowerOff +
                 ", hardware=" + hardware +
-                ", vcpuConfig=" + Arrays.toString(vcpuConfig) +
+                ", vcpuConfig=" + vcpuConfig +
                 ", cpuAllocation=" + cpuAllocation +
                 ", memoryAllocation=" + memoryAllocation +
                 ", latencySensitivity=" + latencySensitivity +
@@ -161,17 +174,17 @@ public class VirtualMachineConfigInfo extends DynamicData {
                 ", cpuAffinity=" + cpuAffinity +
                 ", memoryAffinity=" + memoryAffinity +
                 ", networkShaper=" + networkShaper +
-                ", extraConfig=" + Arrays.toString(extraConfig) +
-                ", cpuFeatureMask=" + Arrays.toString(cpuFeatureMask) +
-                ", datastoreUrl=" + Arrays.toString(datastoreUrl) +
-                ", swapPlacement='" + swapPlacement + '\'' +
+                ", extraConfig=" + extraConfig +
+                ", cpuFeatureMask=" + cpuFeatureMask +
+                ", datastoreUrl=" + datastoreUrl +
+                ", swapPlacement=" + swapPlacement +
                 ", bootOptions=" + bootOptions +
                 ", ftInfo=" + ftInfo +
                 ", repConfig=" + repConfig +
                 ", vAppConfig=" + vAppConfig +
                 ", vAssertsEnabled=" + vAssertsEnabled +
                 ", changeTrackingEnabled=" + changeTrackingEnabled +
-                ", firmware='" + firmware + '\'' +
+                ", firmware=" + firmware +
                 ", maxMksConnections=" + maxMksConnections +
                 ", guestAutoLockEnabled=" + guestAutoLockEnabled +
                 ", managedBy=" + managedBy +
@@ -182,54 +195,27 @@ public class VirtualMachineConfigInfo extends DynamicData {
                 ", scheduledHardwareUpgradeInfo=" + scheduledHardwareUpgradeInfo +
                 ", forkConfigInfo=" + forkConfigInfo +
                 ", vFlashCacheReservation=" + vFlashCacheReservation +
-                ", vmxConfigChecksum=" + Arrays.toString(vmxConfigChecksum) +
+                ", vmxConfigChecksum='" + vmxConfigChecksum + '\'' +
                 ", messageBusTunnelEnabled=" + messageBusTunnelEnabled +
                 ", vmStorageObjectId='" + vmStorageObjectId + '\'' +
                 ", swapStorageObjectId='" + swapStorageObjectId + '\'' +
                 ", keyId=" + keyId +
                 ", guestIntegrityInfo=" + guestIntegrityInfo +
-                ", migrateEncryption='" + migrateEncryption + '\'' +
+                ", migrateEncryption=" + migrateEncryption +
                 ", sgxInfo=" + sgxInfo +
                 ", contentLibItemInfo=" + contentLibItemInfo +
                 ", ftEncryptionMode=" + ftEncryptionMode +
                 ", guestMonitoringModeInfo=" + guestMonitoringModeInfo +
                 ", sevEnabled=" + sevEnabled +
+                ", numaInfo=" + numaInfo +
                 ", pmemFailoverEnabled=" + pmemFailoverEnabled +
+                ", vmxStatsCollectionEnabled=" + vmxStatsCollectionEnabled +
                 ", vmOpNotificationToAppEnabled=" + vmOpNotificationToAppEnabled +
+                ", vmOpNotificationTimeout=" + vmOpNotificationTimeout +
+                ", deviceSwap=" + deviceSwap +
                 ", pmem=" + pmem +
-                "} " + super.toString();
-    }
-
-    public String getAlternateGuestName() {
-        return alternateGuestName;
-    }
-
-    public void setAlternateGuestName(final String alternateGuestName) {
-        this.alternateGuestName = alternateGuestName;
-    }
-
-    public String getAnnotation() {
-        return annotation;
-    }
-
-    public void setAnnotation(final String annotation) {
-        this.annotation = annotation;
-    }
-
-    public VirtualMachineBootOptions getBootOptions() {
-        return bootOptions;
-    }
-
-    public void setBootOptions(final VirtualMachineBootOptions bootOptions) {
-        this.bootOptions = bootOptions;
-    }
-
-    public Boolean getChangeTrackingEnabled() {
-        return changeTrackingEnabled;
-    }
-
-    public void setChangeTrackingEnabled(final Boolean changeTrackingEnabled) {
-        this.changeTrackingEnabled = changeTrackingEnabled;
+                ", deviceGroups=" + deviceGroups +
+                '}';
     }
 
     public String getChangeVersion() {
@@ -238,286 +224,6 @@ public class VirtualMachineConfigInfo extends DynamicData {
 
     public void setChangeVersion(final String changeVersion) {
         this.changeVersion = changeVersion;
-    }
-
-    public VirtualMachineConsolePreferences getConsolePreferences() {
-        return consolePreferences;
-    }
-
-    public void setConsolePreferences(final VirtualMachineConsolePreferences consolePreferences) {
-        this.consolePreferences = consolePreferences;
-    }
-
-    public VirtualMachineAffinityInfo getCpuAffinity() {
-        return cpuAffinity;
-    }
-
-    public void setCpuAffinity(final VirtualMachineAffinityInfo cpuAffinity) {
-        this.cpuAffinity = cpuAffinity;
-    }
-
-    public ResourceAllocationInfo getCpuAllocation() {
-        return cpuAllocation;
-    }
-
-    public void setCpuAllocation(final ResourceAllocationInfo cpuAllocation) {
-        this.cpuAllocation = cpuAllocation;
-    }
-
-    public HostCpuIdInfo[] getCpuFeatureMask() {
-        return cpuFeatureMask;
-    }
-
-    public void setCpuFeatureMask(final HostCpuIdInfo[] cpuFeatureMask) {
-        this.cpuFeatureMask = cpuFeatureMask;
-    }
-
-    public Boolean getCpuHotAddEnabled() {
-        return cpuHotAddEnabled;
-    }
-
-    public void setCpuHotAddEnabled(final Boolean cpuHotAddEnabled) {
-        this.cpuHotAddEnabled = cpuHotAddEnabled;
-    }
-
-    public Boolean getCpuHotRemoveEnabled() {
-        return cpuHotRemoveEnabled;
-    }
-
-    public void setCpuHotRemoveEnabled(final Boolean cpuHotRemoveEnabled) {
-        this.cpuHotRemoveEnabled = cpuHotRemoveEnabled;
-    }
-
-    public Calendar getCreateDate() {
-        return createDate;
-    }
-
-    public void setCreateDate(final Calendar createDate) {
-        this.createDate = createDate;
-    }
-
-    public VirtualMachineConfigInfoDatastoreUrlPair[] getDatastoreUrl() {
-        return datastoreUrl;
-    }
-
-    public void setDatastoreUrl(final VirtualMachineConfigInfoDatastoreUrlPair[] datastoreUrl) {
-        this.datastoreUrl = datastoreUrl;
-    }
-
-    public VirtualMachineDefaultPowerOpInfo getDefaultPowerOps() {
-        return defaultPowerOps;
-    }
-
-    public void setDefaultPowerOps(final VirtualMachineDefaultPowerOpInfo defaultPowerOps) {
-        this.defaultPowerOps = defaultPowerOps;
-    }
-
-    public OptionValue[] getExtraConfig() {
-        return extraConfig;
-    }
-
-    public void setExtraConfig(final OptionValue[] extraConfig) {
-        this.extraConfig = extraConfig;
-    }
-
-    public VirtualMachineFileInfo getFiles() {
-        return files;
-    }
-
-    public void setFiles(final VirtualMachineFileInfo files) {
-        this.files = files;
-    }
-
-    public String getFirmware() {
-        return firmware;
-    }
-
-    public void setFirmware(final String firmware) {
-        this.firmware = firmware;
-    }
-
-    public VirtualMachineFlagInfo getFlags() {
-        return flags;
-    }
-
-    public void setFlags(final VirtualMachineFlagInfo flags) {
-        this.flags = flags;
-    }
-
-    public VirtualMachineForkConfigInfo getForkConfigInfo() {
-        return forkConfigInfo;
-    }
-
-    public void setForkConfigInfo(final VirtualMachineForkConfigInfo forkConfigInfo) {
-        this.forkConfigInfo = forkConfigInfo;
-    }
-
-    public FaultToleranceConfigInfo getFtInfo() {
-        return ftInfo;
-    }
-
-    public void setFtInfo(final FaultToleranceConfigInfo ftInfo) {
-        this.ftInfo = ftInfo;
-    }
-
-    public Boolean getGuestAutoLockEnabled() {
-        return guestAutoLockEnabled;
-    }
-
-    public void setGuestAutoLockEnabled(final Boolean guestAutoLockEnabled) {
-        this.guestAutoLockEnabled = guestAutoLockEnabled;
-    }
-
-    public String getGuestFullName() {
-        return guestFullName;
-    }
-
-    public void setGuestFullName(final String guestFullName) {
-        this.guestFullName = guestFullName;
-    }
-
-    public String getGuestId() {
-        return guestId;
-    }
-
-    public void setGuestId(final String guestId) {
-        this.guestId = guestId;
-    }
-
-    public VirtualMachineGuestIntegrityInfo getGuestIntegrityInfo() {
-        return guestIntegrityInfo;
-    }
-
-    public void setGuestIntegrityInfo(final VirtualMachineGuestIntegrityInfo guestIntegrityInfo) {
-        this.guestIntegrityInfo = guestIntegrityInfo;
-    }
-
-    public VirtualHardware getHardware() {
-        return hardware;
-    }
-
-    public void setHardware(final VirtualHardware hardware) {
-        this.hardware = hardware;
-    }
-
-    public Long getHotPlugMemoryIncrementSize() {
-        return hotPlugMemoryIncrementSize;
-    }
-
-    public void setHotPlugMemoryIncrementSize(final Long hotPlugMemoryIncrementSize) {
-        this.hotPlugMemoryIncrementSize = hotPlugMemoryIncrementSize;
-    }
-
-    public Long getHotPlugMemoryLimit() {
-        return hotPlugMemoryLimit;
-    }
-
-    public void setHotPlugMemoryLimit(final Long hotPlugMemoryLimit) {
-        this.hotPlugMemoryLimit = hotPlugMemoryLimit;
-    }
-
-    public VirtualMachineConfigInfoOverheadInfo getInitialOverhead() {
-        return initialOverhead;
-    }
-
-    public void setInitialOverhead(final VirtualMachineConfigInfoOverheadInfo initialOverhead) {
-        this.initialOverhead = initialOverhead;
-    }
-
-    public String getInstanceUuid() {
-        return instanceUuid;
-    }
-
-    public void setInstanceUuid(final String instanceUuid) {
-        this.instanceUuid = instanceUuid;
-    }
-
-    public CryptoKeyId getKeyId() {
-        return keyId;
-    }
-
-    public void setKeyId(final CryptoKeyId keyId) {
-        this.keyId = keyId;
-    }
-
-    public LatencySensitivity getLatencySensitivity() {
-        return latencySensitivity;
-    }
-
-    public void setLatencySensitivity(final LatencySensitivity latencySensitivity) {
-        this.latencySensitivity = latencySensitivity;
-    }
-
-    public String getLocationId() {
-        return locationId;
-    }
-
-    public void setLocationId(final String locationId) {
-        this.locationId = locationId;
-    }
-
-    public ManagedByInfo getManagedBy() {
-        return managedBy;
-    }
-
-    public void setManagedBy(final ManagedByInfo managedBy) {
-        this.managedBy = managedBy;
-    }
-
-    public Integer getMaxMksConnections() {
-        return maxMksConnections;
-    }
-
-    public void setMaxMksConnections(final Integer maxMksConnections) {
-        this.maxMksConnections = maxMksConnections;
-    }
-
-    public VirtualMachineAffinityInfo getMemoryAffinity() {
-        return memoryAffinity;
-    }
-
-    public void setMemoryAffinity(final VirtualMachineAffinityInfo memoryAffinity) {
-        this.memoryAffinity = memoryAffinity;
-    }
-
-    public ResourceAllocationInfo getMemoryAllocation() {
-        return memoryAllocation;
-    }
-
-    public void setMemoryAllocation(final ResourceAllocationInfo memoryAllocation) {
-        this.memoryAllocation = memoryAllocation;
-    }
-
-    public Boolean getMemoryHotAddEnabled() {
-        return memoryHotAddEnabled;
-    }
-
-    public void setMemoryHotAddEnabled(final Boolean memoryHotAddEnabled) {
-        this.memoryHotAddEnabled = memoryHotAddEnabled;
-    }
-
-    public Boolean getMemoryReservationLockedToMax() {
-        return memoryReservationLockedToMax;
-    }
-
-    public void setMemoryReservationLockedToMax(final Boolean memoryReservationLockedToMax) {
-        this.memoryReservationLockedToMax = memoryReservationLockedToMax;
-    }
-
-    public Boolean getMessageBusTunnelEnabled() {
-        return messageBusTunnelEnabled;
-    }
-
-    public void setMessageBusTunnelEnabled(final Boolean messageBusTunnelEnabled) {
-        this.messageBusTunnelEnabled = messageBusTunnelEnabled;
-    }
-
-    public String getMigrateEncryption() {
-        return migrateEncryption;
-    }
-
-    public void setMigrateEncryption(final String migrateEncryption) {
-        this.migrateEncryption = migrateEncryption;
     }
 
     public Calendar getModified() {
@@ -536,20 +242,68 @@ public class VirtualMachineConfigInfo extends DynamicData {
         this.name = name;
     }
 
-    public Boolean getNestedHVEnabled() {
-        return nestedHVEnabled;
+    public String getGuestFullName() {
+        return guestFullName;
     }
 
-    public void setNestedHVEnabled(final Boolean nestedHVEnabled) {
-        this.nestedHVEnabled = nestedHVEnabled;
+    public void setGuestFullName(final String guestFullName) {
+        this.guestFullName = guestFullName;
     }
 
-    public VirtualMachineNetworkShaperInfo getNetworkShaper() {
-        return networkShaper;
+    public String getVersion() {
+        return version;
     }
 
-    public void setNetworkShaper(final VirtualMachineNetworkShaperInfo networkShaper) {
-        this.networkShaper = networkShaper;
+    public void setVersion(final String version) {
+        this.version = version;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(final String uuid) {
+        this.uuid = uuid;
+    }
+
+    public Calendar getCreateDate() {
+        return createDate;
+    }
+
+    public void setCreateDate(final Calendar createDate) {
+        this.createDate = createDate;
+    }
+
+    public String getInstanceUuid() {
+        return instanceUuid;
+    }
+
+    public void setInstanceUuid(final String instanceUuid) {
+        this.instanceUuid = instanceUuid;
+    }
+
+    public List<Long> getNpivNodeWorldWideName() {
+        return npivNodeWorldWideName;
+    }
+
+    public void setNpivNodeWorldWideName(final List<Long> npivNodeWorldWideName) {
+        this.npivNodeWorldWideName = npivNodeWorldWideName;
+    }
+
+    public List<Long> getNpivPortWorldWideName() {
+        return npivPortWorldWideName;
+    }
+
+    public void setNpivPortWorldWideName(final List<Long> npivPortWorldWideName) {
+        this.npivPortWorldWideName = npivPortWorldWideName;
+    }
+
+    public VirtualMachineConfigInfoNpivWwnType getNpivWorldWideNameType() {
+        return npivWorldWideNameType;
+    }
+
+    public void setNpivWorldWideNameType(final VirtualMachineConfigInfoNpivWwnType npivWorldWideNameType) {
+        this.npivWorldWideNameType = npivWorldWideNameType;
     }
 
     public Short getNpivDesiredNodeWwns() {
@@ -568,12 +322,12 @@ public class VirtualMachineConfigInfo extends DynamicData {
         this.npivDesiredPortWwns = npivDesiredPortWwns;
     }
 
-    public long[] getNpivNodeWorldWideName() {
-        return npivNodeWorldWideName;
+    public Boolean getNpivTemporaryDisabled() {
+        return npivTemporaryDisabled;
     }
 
-    public void setNpivNodeWorldWideName(final long[] npivNodeWorldWideName) {
-        this.npivNodeWorldWideName = npivNodeWorldWideName;
+    public void setNpivTemporaryDisabled(final Boolean npivTemporaryDisabled) {
+        this.npivTemporaryDisabled = npivTemporaryDisabled;
     }
 
     public Boolean getNpivOnNonRdmDisks() {
@@ -584,60 +338,12 @@ public class VirtualMachineConfigInfo extends DynamicData {
         this.npivOnNonRdmDisks = npivOnNonRdmDisks;
     }
 
-    public long[] getNpivPortWorldWideName() {
-        return npivPortWorldWideName;
+    public String getLocationId() {
+        return locationId;
     }
 
-    public void setNpivPortWorldWideName(final long[] npivPortWorldWideName) {
-        this.npivPortWorldWideName = npivPortWorldWideName;
-    }
-
-    public Boolean getNpivTemporaryDisabled() {
-        return npivTemporaryDisabled;
-    }
-
-    public void setNpivTemporaryDisabled(final Boolean npivTemporaryDisabled) {
-        this.npivTemporaryDisabled = npivTemporaryDisabled;
-    }
-
-    public String getNpivWorldWideNameType() {
-        return npivWorldWideNameType;
-    }
-
-    public void setNpivWorldWideNameType(final String npivWorldWideNameType) {
-        this.npivWorldWideNameType = npivWorldWideNameType;
-    }
-
-    public ReplicationConfigSpec getRepConfig() {
-        return repConfig;
-    }
-
-    public void setRepConfig(final ReplicationConfigSpec repConfig) {
-        this.repConfig = repConfig;
-    }
-
-    public ScheduledHardwareUpgradeInfo getScheduledHardwareUpgradeInfo() {
-        return scheduledHardwareUpgradeInfo;
-    }
-
-    public void setScheduledHardwareUpgradeInfo(final ScheduledHardwareUpgradeInfo scheduledHardwareUpgradeInfo) {
-        this.scheduledHardwareUpgradeInfo = scheduledHardwareUpgradeInfo;
-    }
-
-    public String getSwapPlacement() {
-        return swapPlacement;
-    }
-
-    public void setSwapPlacement(final String swapPlacement) {
-        this.swapPlacement = swapPlacement;
-    }
-
-    public String getSwapStorageObjectId() {
-        return swapStorageObjectId;
-    }
-
-    public void setSwapStorageObjectId(final String swapStorageObjectId) {
-        this.swapStorageObjectId = swapStorageObjectId;
+    public void setLocationId(final String locationId) {
+        this.locationId = locationId;
     }
 
     public boolean isTemplate() {
@@ -648,6 +354,38 @@ public class VirtualMachineConfigInfo extends DynamicData {
         this.template = template;
     }
 
+    public VirtualMachineGuestOsIdentifier getGuestId() {
+        return guestId;
+    }
+
+    public void setGuestId(final VirtualMachineGuestOsIdentifier guestId) {
+        this.guestId = guestId;
+    }
+
+    public String getAlternateGuestName() {
+        return alternateGuestName;
+    }
+
+    public void setAlternateGuestName(final String alternateGuestName) {
+        this.alternateGuestName = alternateGuestName;
+    }
+
+    public String getAnnotation() {
+        return annotation;
+    }
+
+    public void setAnnotation(final String annotation) {
+        this.annotation = annotation;
+    }
+
+    public VirtualMachineFileInfo getFiles() {
+        return files;
+    }
+
+    public void setFiles(final VirtualMachineFileInfo files) {
+        this.files = files;
+    }
+
     public ToolsConfigInfo getTools() {
         return tools;
     }
@@ -656,12 +394,196 @@ public class VirtualMachineConfigInfo extends DynamicData {
         this.tools = tools;
     }
 
-    public String getUuid() {
-        return uuid;
+    public VirtualMachineFlagInfo getFlags() {
+        return flags;
     }
 
-    public void setUuid(final String uuid) {
-        this.uuid = uuid;
+    public void setFlags(final VirtualMachineFlagInfo flags) {
+        this.flags = flags;
+    }
+
+    public VirtualMachineConsolePreferences getConsolePreferences() {
+        return consolePreferences;
+    }
+
+    public void setConsolePreferences(final VirtualMachineConsolePreferences consolePreferences) {
+        this.consolePreferences = consolePreferences;
+    }
+
+    public VirtualMachineDefaultPowerOpInfo getDefaultPowerOps() {
+        return defaultPowerOps;
+    }
+
+    public void setDefaultPowerOps(final VirtualMachineDefaultPowerOpInfo defaultPowerOps) {
+        this.defaultPowerOps = defaultPowerOps;
+    }
+
+    public Boolean getRebootPowerOff() {
+        return rebootPowerOff;
+    }
+
+    public void setRebootPowerOff(final Boolean rebootPowerOff) {
+        this.rebootPowerOff = rebootPowerOff;
+    }
+
+    public VirtualHardware getHardware() {
+        return hardware;
+    }
+
+    public void setHardware(final VirtualHardware hardware) {
+        this.hardware = hardware;
+    }
+
+    public List<VirtualMachineVcpuConfig> getVcpuConfig() {
+        return vcpuConfig;
+    }
+
+    public void setVcpuConfig(final List<VirtualMachineVcpuConfig> vcpuConfig) {
+        this.vcpuConfig = vcpuConfig;
+    }
+
+    public ResourceAllocationInfo getCpuAllocation() {
+        return cpuAllocation;
+    }
+
+    public void setCpuAllocation(final ResourceAllocationInfo cpuAllocation) {
+        this.cpuAllocation = cpuAllocation;
+    }
+
+    public ResourceAllocationInfo getMemoryAllocation() {
+        return memoryAllocation;
+    }
+
+    public void setMemoryAllocation(final ResourceAllocationInfo memoryAllocation) {
+        this.memoryAllocation = memoryAllocation;
+    }
+
+    public LatencySensitivity getLatencySensitivity() {
+        return latencySensitivity;
+    }
+
+    public void setLatencySensitivity(final LatencySensitivity latencySensitivity) {
+        this.latencySensitivity = latencySensitivity;
+    }
+
+    public Boolean getMemoryHotAddEnabled() {
+        return memoryHotAddEnabled;
+    }
+
+    public void setMemoryHotAddEnabled(final Boolean memoryHotAddEnabled) {
+        this.memoryHotAddEnabled = memoryHotAddEnabled;
+    }
+
+    public Boolean getCpuHotAddEnabled() {
+        return cpuHotAddEnabled;
+    }
+
+    public void setCpuHotAddEnabled(final Boolean cpuHotAddEnabled) {
+        this.cpuHotAddEnabled = cpuHotAddEnabled;
+    }
+
+    public Boolean getCpuHotRemoveEnabled() {
+        return cpuHotRemoveEnabled;
+    }
+
+    public void setCpuHotRemoveEnabled(final Boolean cpuHotRemoveEnabled) {
+        this.cpuHotRemoveEnabled = cpuHotRemoveEnabled;
+    }
+
+    public Long getHotPlugMemoryLimit() {
+        return hotPlugMemoryLimit;
+    }
+
+    public void setHotPlugMemoryLimit(final Long hotPlugMemoryLimit) {
+        this.hotPlugMemoryLimit = hotPlugMemoryLimit;
+    }
+
+    public Long getHotPlugMemoryIncrementSize() {
+        return hotPlugMemoryIncrementSize;
+    }
+
+    public void setHotPlugMemoryIncrementSize(final Long hotPlugMemoryIncrementSize) {
+        this.hotPlugMemoryIncrementSize = hotPlugMemoryIncrementSize;
+    }
+
+    public VirtualMachineAffinityInfo getCpuAffinity() {
+        return cpuAffinity;
+    }
+
+    public void setCpuAffinity(final VirtualMachineAffinityInfo cpuAffinity) {
+        this.cpuAffinity = cpuAffinity;
+    }
+
+    public VirtualMachineAffinityInfo getMemoryAffinity() {
+        return memoryAffinity;
+    }
+
+    public void setMemoryAffinity(final VirtualMachineAffinityInfo memoryAffinity) {
+        this.memoryAffinity = memoryAffinity;
+    }
+
+    public VirtualMachineNetworkShaperInfo getNetworkShaper() {
+        return networkShaper;
+    }
+
+    public void setNetworkShaper(final VirtualMachineNetworkShaperInfo networkShaper) {
+        this.networkShaper = networkShaper;
+    }
+
+    public List<OptionValue> getExtraConfig() {
+        return extraConfig;
+    }
+
+    public void setExtraConfig(final List<OptionValue> extraConfig) {
+        this.extraConfig = extraConfig;
+    }
+
+    public List<HostCpuIdInfo> getCpuFeatureMask() {
+        return cpuFeatureMask;
+    }
+
+    public void setCpuFeatureMask(final List<HostCpuIdInfo> cpuFeatureMask) {
+        this.cpuFeatureMask = cpuFeatureMask;
+    }
+
+    public List<VirtualMachineConfigInfoDatastoreUrlPair> getDatastoreUrl() {
+        return datastoreUrl;
+    }
+
+    public void setDatastoreUrl(final List<VirtualMachineConfigInfoDatastoreUrlPair> datastoreUrl) {
+        this.datastoreUrl = datastoreUrl;
+    }
+
+    public VirtualMachineConfigInfoSwapPlacementType getSwapPlacement() {
+        return swapPlacement;
+    }
+
+    public void setSwapPlacement(final VirtualMachineConfigInfoSwapPlacementType swapPlacement) {
+        this.swapPlacement = swapPlacement;
+    }
+
+    public VirtualMachineBootOptions getBootOptions() {
+        return bootOptions;
+    }
+
+    public void setBootOptions(final VirtualMachineBootOptions bootOptions) {
+        this.bootOptions = bootOptions;
+    }
+
+    public FaultToleranceConfigInfo getFtInfo() {
+        return ftInfo;
+    }
+
+    public void setFtInfo(final FaultToleranceConfigInfo ftInfo) {
+        this.ftInfo = ftInfo;
+    }
+
+    public ReplicationConfigSpec getRepConfig() {
+        return repConfig;
+    }
+
+    public void setRepConfig(final ReplicationConfigSpec repConfig) {
+        this.repConfig = repConfig;
     }
 
     public VmConfigInfo getvAppConfig() {
@@ -680,36 +602,68 @@ public class VirtualMachineConfigInfo extends DynamicData {
         this.vAssertsEnabled = vAssertsEnabled;
     }
 
-    public String getVersion() {
-        return version;
+    public Boolean getChangeTrackingEnabled() {
+        return changeTrackingEnabled;
     }
 
-    public void setVersion(final String version) {
-        this.version = version;
+    public void setChangeTrackingEnabled(final Boolean changeTrackingEnabled) {
+        this.changeTrackingEnabled = changeTrackingEnabled;
     }
 
-    public Long getvFlashCacheReservation() {
-        return vFlashCacheReservation;
+    public GuestOsDescriptorFirmwareType getFirmware() {
+        return firmware;
     }
 
-    public void setvFlashCacheReservation(final Long vFlashCacheReservation) {
-        this.vFlashCacheReservation = vFlashCacheReservation;
+    public void setFirmware(final GuestOsDescriptorFirmwareType firmware) {
+        this.firmware = firmware;
     }
 
-    public String getVmStorageObjectId() {
-        return vmStorageObjectId;
+    public Integer getMaxMksConnections() {
+        return maxMksConnections;
     }
 
-    public void setVmStorageObjectId(final String vmStorageObjectId) {
-        this.vmStorageObjectId = vmStorageObjectId;
+    public void setMaxMksConnections(final Integer maxMksConnections) {
+        this.maxMksConnections = maxMksConnections;
     }
 
-    public byte[] getVmxConfigChecksum() {
-        return vmxConfigChecksum;
+    public Boolean getGuestAutoLockEnabled() {
+        return guestAutoLockEnabled;
     }
 
-    public void setVmxConfigChecksum(final byte[] vmxConfigChecksum) {
-        this.vmxConfigChecksum = vmxConfigChecksum;
+    public void setGuestAutoLockEnabled(final Boolean guestAutoLockEnabled) {
+        this.guestAutoLockEnabled = guestAutoLockEnabled;
+    }
+
+    public ManagedByInfo getManagedBy() {
+        return managedBy;
+    }
+
+    public void setManagedBy(final ManagedByInfo managedBy) {
+        this.managedBy = managedBy;
+    }
+
+    public Boolean getMemoryReservationLockedToMax() {
+        return memoryReservationLockedToMax;
+    }
+
+    public void setMemoryReservationLockedToMax(final Boolean memoryReservationLockedToMax) {
+        this.memoryReservationLockedToMax = memoryReservationLockedToMax;
+    }
+
+    public VirtualMachineConfigInfoOverheadInfo getInitialOverhead() {
+        return initialOverhead;
+    }
+
+    public void setInitialOverhead(final VirtualMachineConfigInfoOverheadInfo initialOverhead) {
+        this.initialOverhead = initialOverhead;
+    }
+
+    public Boolean getNestedHVEnabled() {
+        return nestedHVEnabled;
+    }
+
+    public void setNestedHVEnabled(final Boolean nestedHVEnabled) {
+        this.nestedHVEnabled = nestedHVEnabled;
     }
 
     public Boolean getvPMCEnabled() {
@@ -720,12 +674,84 @@ public class VirtualMachineConfigInfo extends DynamicData {
         this.vPMCEnabled = vPMCEnabled;
     }
 
-    public VirtualMachineVcpuConfig[] getVcpuConfig() {
-        return vcpuConfig;
+    public ScheduledHardwareUpgradeInfo getScheduledHardwareUpgradeInfo() {
+        return scheduledHardwareUpgradeInfo;
     }
 
-    public void setVcpuConfig(final VirtualMachineVcpuConfig[] vcpuConfig) {
-        this.vcpuConfig = vcpuConfig;
+    public void setScheduledHardwareUpgradeInfo(final ScheduledHardwareUpgradeInfo scheduledHardwareUpgradeInfo) {
+        this.scheduledHardwareUpgradeInfo = scheduledHardwareUpgradeInfo;
+    }
+
+    public VirtualMachineForkConfigInfo getForkConfigInfo() {
+        return forkConfigInfo;
+    }
+
+    public void setForkConfigInfo(final VirtualMachineForkConfigInfo forkConfigInfo) {
+        this.forkConfigInfo = forkConfigInfo;
+    }
+
+    public Long getvFlashCacheReservation() {
+        return vFlashCacheReservation;
+    }
+
+    public void setvFlashCacheReservation(final Long vFlashCacheReservation) {
+        this.vFlashCacheReservation = vFlashCacheReservation;
+    }
+
+    public String getVmxConfigChecksum() {
+        return vmxConfigChecksum;
+    }
+
+    public void setVmxConfigChecksum(final String vmxConfigChecksum) {
+        this.vmxConfigChecksum = vmxConfigChecksum;
+    }
+
+    public Boolean getMessageBusTunnelEnabled() {
+        return messageBusTunnelEnabled;
+    }
+
+    public void setMessageBusTunnelEnabled(final Boolean messageBusTunnelEnabled) {
+        this.messageBusTunnelEnabled = messageBusTunnelEnabled;
+    }
+
+    public String getVmStorageObjectId() {
+        return vmStorageObjectId;
+    }
+
+    public void setVmStorageObjectId(final String vmStorageObjectId) {
+        this.vmStorageObjectId = vmStorageObjectId;
+    }
+
+    public String getSwapStorageObjectId() {
+        return swapStorageObjectId;
+    }
+
+    public void setSwapStorageObjectId(final String swapStorageObjectId) {
+        this.swapStorageObjectId = swapStorageObjectId;
+    }
+
+    public CryptoKeyId getKeyId() {
+        return keyId;
+    }
+
+    public void setKeyId(final CryptoKeyId keyId) {
+        this.keyId = keyId;
+    }
+
+    public VirtualMachineGuestIntegrityInfo getGuestIntegrityInfo() {
+        return guestIntegrityInfo;
+    }
+
+    public void setGuestIntegrityInfo(final VirtualMachineGuestIntegrityInfo guestIntegrityInfo) {
+        this.guestIntegrityInfo = guestIntegrityInfo;
+    }
+
+    public VirtualMachineConfigSpecEncryptedVMotionModes getMigrateEncryption() {
+        return migrateEncryption;
+    }
+
+    public void setMigrateEncryption(final VirtualMachineConfigSpecEncryptedVMotionModes migrateEncryption) {
+        this.migrateEncryption = migrateEncryption;
     }
 
     public VirtualMachineSgxInfo getSgxInfo() {
@@ -744,6 +770,14 @@ public class VirtualMachineConfigInfo extends DynamicData {
         this.contentLibItemInfo = contentLibItemInfo;
     }
 
+    public VirtualMachineConfigSpecEncryptedFtModes getFtEncryptionMode() {
+        return ftEncryptionMode;
+    }
+
+    public void setFtEncryptionMode(final VirtualMachineConfigSpecEncryptedFtModes ftEncryptionMode) {
+        this.ftEncryptionMode = ftEncryptionMode;
+    }
+
     public VirtualMachineGuestMonitoringModeInfo getGuestMonitoringModeInfo() {
         return guestMonitoringModeInfo;
     }
@@ -760,12 +794,12 @@ public class VirtualMachineConfigInfo extends DynamicData {
         this.sevEnabled = sevEnabled;
     }
 
-    public VirtualMachineConfigSpecEncryptedFtModes getFtEncryptionMode() {
-        return ftEncryptionMode;
+    public VirtualMachineVirtualNumaInfo getNumaInfo() {
+        return numaInfo;
     }
 
-    public void setFtEncryptionMode(final VirtualMachineConfigSpecEncryptedFtModes ftEncryptionMode) {
-        this.ftEncryptionMode = ftEncryptionMode;
+    public void setNumaInfo(final VirtualMachineVirtualNumaInfo numaInfo) {
+        this.numaInfo = numaInfo;
     }
 
     public Boolean getPmemFailoverEnabled() {
@@ -776,6 +810,14 @@ public class VirtualMachineConfigInfo extends DynamicData {
         this.pmemFailoverEnabled = pmemFailoverEnabled;
     }
 
+    public Boolean getVmxStatsCollectionEnabled() {
+        return vmxStatsCollectionEnabled;
+    }
+
+    public void setVmxStatsCollectionEnabled(final Boolean vmxStatsCollectionEnabled) {
+        this.vmxStatsCollectionEnabled = vmxStatsCollectionEnabled;
+    }
+
     public Boolean getVmOpNotificationToAppEnabled() {
         return vmOpNotificationToAppEnabled;
     }
@@ -784,12 +826,36 @@ public class VirtualMachineConfigInfo extends DynamicData {
         this.vmOpNotificationToAppEnabled = vmOpNotificationToAppEnabled;
     }
 
+    public Long getVmOpNotificationTimeout() {
+        return vmOpNotificationTimeout;
+    }
+
+    public void setVmOpNotificationTimeout(final Long vmOpNotificationTimeout) {
+        this.vmOpNotificationTimeout = vmOpNotificationTimeout;
+    }
+
+    public VirtualMachineVirtualDeviceSwap getDeviceSwap() {
+        return deviceSwap;
+    }
+
+    public void setDeviceSwap(final VirtualMachineVirtualDeviceSwap deviceSwap) {
+        this.deviceSwap = deviceSwap;
+    }
+
     public VirtualMachineVirtualPMem getPmem() {
         return pmem;
     }
 
     public void setPmem(final VirtualMachineVirtualPMem pmem) {
         this.pmem = pmem;
+    }
+
+    public VirtualMachineVirtualDeviceGroups getDeviceGroups() {
+        return deviceGroups;
+    }
+
+    public void setDeviceGroups(final VirtualMachineVirtualDeviceGroups deviceGroups) {
+        this.deviceGroups = deviceGroups;
     }
 
 }

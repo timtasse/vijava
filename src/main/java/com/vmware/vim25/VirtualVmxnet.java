@@ -30,10 +30,11 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The VirtualVmxnet data object type represents an instance of the Vmxnet virtual Ethernet adapter attached to a virtual machine.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.1
+ */
 public class VirtualVmxnet extends VirtualEthernetCard {
 }

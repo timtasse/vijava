@@ -67,9 +67,9 @@ public class HostBIOSInfoTest {
 
     @Test
     public void testDvs() throws Exception {
-        final List<VmwareDistributedVirtualSwitch> switches = Optional.ofNullable(new InventoryNavigator(this.instance.getRootFolder()).searchManagedEntities(VmwareDistributedVirtualSwitch.class.getSimpleName()))
-                .stream().flatMap(Arrays::stream)
-                .map(VmwareDistributedVirtualSwitch.class::cast)
+        final List<VmwareDistributedVirtualSwitch> switches = new InventoryNavigator(this.instance.getRootFolder())
+                .searchManagedEntities(VmwareDistributedVirtualSwitch.class)
+                .stream()
                 .filter(sw -> !"Switch_bak-esx".equals(sw.getName()))
                 .collect(Collectors.toList());
         assertFalse(switches.isEmpty());
@@ -77,7 +77,7 @@ public class HostBIOSInfoTest {
         LOGGER.debug("{}", switches.get(0).queryUsedVlanIds());
         final VMwareDVSConfigInfo config = (VMwareDVSConfigInfo) switches.get(0).getConfig();
         assertNotNull(config);
-        final VMwareDvsLacpGroupConfig lacpGroupConfig = Arrays.asList(config.lacpGroupConfig).get(0);
+        final VMwareDvsLacpGroupConfig lacpGroupConfig = config.getLacpGroupConfig().get(0);
         assertNotNull(lacpGroupConfig);
         assertEquals(lacpGroupConfig.getUplinkNum().intValue(), 2);
         assertEquals(lacpGroupConfig.getTimeoutMode(), VMwareUplinkLacpTimeoutMode.fast);
@@ -105,8 +105,8 @@ public class HostBIOSInfoTest {
                 .searchManagedEntity(ClusterComputeResource.class.getSimpleName(), "pi-esx-1");
         final ClusterEVCManager evcManager = cluster.getEvcManager();
         LOGGER.debug("EvcManager is from Cluster: {}", evcManager.getManagedCluster().getName());
-        LOGGER.debug("EVCModeKey: {}", evcManager.getEvcState().currentEVCModeKey);
-        Arrays.stream(evcManager.getEvcState().getSupportedEVCMode())
+        LOGGER.debug("EVCModeKey: {}", evcManager.getEvcState().getCurrentEVCModeKey());
+        evcManager.getEvcState().getSupportedEVCMode().stream()
                 .map(val -> val.getKey() + "-" + val.getVendor() + ":" + val.getVendorTier() + "  " + val.getLabel())
                 .forEach(LOGGER::debug);
         assertNotNull(evcManager);
@@ -119,7 +119,7 @@ public class HostBIOSInfoTest {
         final Task task = vm.createSnapshot("test123", "test", false, false);
         task.waitForTask();
         if (task.getTaskInfo().getState() == TaskInfoState.success) {
-            VirtualMachineSnapshot snap =
+            final VirtualMachineSnapshot snap =
                     new VirtualMachineSnapshot(this.instance.getServerConnection(),
                             (ManagedObjectReference) task.getTaskInfo().getResult());
             LOGGER.debug("VM: {} -> {}", snap.getVm().getMOR(), snap.getVm().getName());
@@ -193,7 +193,7 @@ public class HostBIOSInfoTest {
         final List<VirtualMachineSnapshot> rootSnapshot = vm.getRootSnapshot();
         LOGGER.debug("{} - {}", rootSnapshot, rootSnapshot.getClass());
         final EventManager eventManager = this.instance.getEventManager();
-        for (EventDescriptionEventDetail detail : eventManager.getDescription().getEventInfo()) {
+        for (final EventDescriptionEventDetail detail : eventManager.getDescription().getEventInfo()) {
             if (detail.getKey().toLowerCase().contains("freenet")) {
                 LOGGER.debug(detail.toString());
             }
@@ -276,7 +276,7 @@ public class HostBIOSInfoTest {
         try {
             final EventHistoryCollector collector = eventManager.createCollectorForEvents(filterSpec);
             this.printEvents(collector);
-        } catch (RemoteException e) {
+        } catch (final RemoteException e) {
             if (e.getCause() instanceof InvalidRequest) {
                 final InvalidRequest cause = (InvalidRequest) e.getCause();
                 LOGGER.debug(Arrays.toString(cause.faultMessage));
@@ -290,7 +290,7 @@ public class HostBIOSInfoTest {
     void printEvents(final EventHistoryCollector collector) throws RemoteException {
         Event[] events = collector.getLatestPage();
         while ((events == null ? 0 : events.length) > 0) {
-            for (Event event : events) {
+            for (final Event event : events) {
                 if (event instanceof UserLoginSessionEvent || event instanceof UserLogoutSessionEvent) {
                     continue;
                 }
@@ -319,6 +319,8 @@ public class HostBIOSInfoTest {
         final HostAccessManager accessManager = host.getHostAccessManager();
         LOGGER.debug("LockdownMode={}", accessManager.getLockdownMode());
         final HostCapability capability = host.getCapability();
+        LOGGER.debug("supportedVmfsMajorVersion={}", capability.getSupportedVmfsMajorVersion());
+        LOGGER.debug("smpFtCompatibilityIssues={}", capability.getSmpFtCompatibilityIssues());
         LOGGER.debug("cpuHwMmuSupported={}", capability.getCpuHwMmuSupported());
         LOGGER.debug("cryptoSupported={}", capability.getCryptoSupported());
         LOGGER.debug("encryptedVMotionSupported={}", capability.getEncryptedVMotionSupported());
@@ -344,7 +346,7 @@ public class HostBIOSInfoTest {
         try {
             accessManager.changeAccessMode("test", false, HostAccessMode.accessAdmin);
         } catch (final UserNotFound e) {
-            LOGGER.debug("User {} not found", e.getPrincipal(), e);
+            LOGGER.debug("User {} not found", e.getPrincipal());
         } catch (final Exception e) {
             LOGGER.debug("Error in changeAccessMode", e);
         }
@@ -362,46 +364,54 @@ public class HostBIOSInfoTest {
 //        this.testSpeed(false, accessManager);
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true)
     public void testNicChange() throws Exception {
-        final VirtualMachine vm = this.getVirtualMachine();
-        final VirtualDevice[] devices = vm.getConfig().getHardware().getDevice();
+        final VirtualMachine vm = this.getVirtualMachine("pxeboot_test");
+        LOGGER.debug("{}", vm.getConfig().getExtraConfig());
+        final OptionValue value = new OptionValue();
+        value.setKey("sched.mem.maxmemctl");
+        value.setValue(0);
+        final var devices = vm.getConfig().getHardware().getDevice();
         VirtualEthernetCard nic = null;
-        for (VirtualDevice device : devices) {
+        for (final VirtualDevice device : devices) {
             if (device instanceof VirtualEthernetCard) {
-                final VirtualEthernetCard ethernetCard = VirtualEthernetCard.class.cast(device);
+                final VirtualEthernetCard ethernetCard = (VirtualEthernetCard) device;
                 if (ethernetCard.getKey() == 4000) {
                     nic = ethernetCard;
                 }
             }
         }
-        LOGGER.debug(nic.resourceAllocation.toString());
-        LOGGER.debug(nic.resourceAllocation.share.toString());
-        LOGGER.debug(nic.resourceAllocation.share.level.name());
-        LOGGER.debug(String.valueOf(nic.resourceAllocation.share.shares));
-        final SharesLevel level = nic.resourceAllocation.share.level;
-        nic.resourceAllocation.share.level = SharesLevel.low;
+        if (nic == null) {
+            fail("NIC not found");
+        }
+        LOGGER.debug(nic.getResourceAllocation().toString());
+        LOGGER.debug(nic.getResourceAllocation().getShare().toString());
+        LOGGER.debug(nic.getResourceAllocation().getShare().getLevel().name());
+        LOGGER.debug(String.valueOf(nic.getResourceAllocation().getShare().getShares()));
+        final SharesLevel level = nic.getResourceAllocation().getShare().getLevel();
+        nic.getResourceAllocation().getShare().setLevel(SharesLevel.low);
         final VirtualDeviceConfigSpec deviceConfigSpec = new VirtualDeviceConfigSpec();
         deviceConfigSpec.setDevice(nic);
         deviceConfigSpec.setOperation(VirtualDeviceConfigSpecOperation.edit);
         final VirtualMachineConfigSpec configSpec = new VirtualMachineConfigSpec();
-        configSpec.setDeviceChange(new VirtualDeviceConfigSpec[]{deviceConfigSpec});
+        configSpec.setExtraConfig(List.of(value));
+        configSpec.setDeviceChange(List.of(deviceConfigSpec));
         final Task task = vm.reconfigVM(configSpec);
         task.waitForTask();
-        nic.resourceAllocation.share.level = level;
+        //Thread.sleep(10000);
+        nic.getResourceAllocation().getShare().setLevel(level);
         final Task task1 = vm.reconfigVM(configSpec);
         task1.waitForTask();
-        final List<VirtualDeviceConfigSpec> specsList = Arrays.stream(devices).peek(dev -> LOGGER.debug("{} : {}", dev.getClass().getSimpleName(), dev.key))
-                .filter(dev -> dev.key >= 500 && dev.key != 600 && dev.key != 700)
+        final List<VirtualDeviceConfigSpec> specsList = devices.stream().peek(dev -> LOGGER.debug("{} : {}", dev.getClass().getSimpleName(), dev.getKey()))
+                .filter(dev -> dev.getKey() >= 500 && dev.getKey() != 600 && dev.getKey() != 700)
                 .map(dev -> {
                     final VirtualDeviceConfigSpec spec = new VirtualDeviceConfigSpec();
                     spec.setDevice(dev);
                     spec.setOperation(VirtualDeviceConfigSpecOperation.edit);
                     return spec;
                 }).collect(Collectors.toList());
-        final VirtualDeviceConfigSpec[] specs = specsList.toArray(new VirtualDeviceConfigSpec[specsList.size()]);
         final VirtualMachineConfigSpec configSpec1 = new VirtualMachineConfigSpec();
-        configSpec1.setDeviceChange(specs);
+        configSpec1.setDeviceChange(specsList);
         final Task task2 = vm.reconfigVM(configSpec1);
         task2.waitForTask();
     }

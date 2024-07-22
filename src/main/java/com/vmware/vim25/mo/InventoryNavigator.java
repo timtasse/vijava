@@ -3,13 +3,17 @@ package com.vmware.vim25.mo;
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.util.MorUtil;
 import com.vmware.vim25.mo.util.PropertyCollectorUtil;
+import com.vmware.vim25.ws.TypeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Helper Class for using the PropertyCollector methods
@@ -19,12 +23,12 @@ import java.util.List;
  */
 public class InventoryNavigator {
 
-    private final static Logger LOGGER = LoggerFactory.getLogger(InventoryNavigator.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(InventoryNavigator.class);
 
     private final ManagedEntity rootEntity;
-    private SelectionSpec[] selectionSpecs = null;
+    private List<TraversalSpec> selectionSpecs = null;
 
-    public InventoryNavigator(ManagedEntity rootEntity) {
+    public InventoryNavigator(final ManagedEntity rootEntity) {
         this.rootEntity = rootEntity;
     }
 
@@ -36,17 +40,23 @@ public class InventoryNavigator {
      * @throws RuntimeFault
      * @throws InvalidProperty
      */
-    public ManagedEntity[] searchManagedEntities(boolean recurse) throws InvalidProperty, RuntimeFault, RemoteException {
-        String[][] typeinfo = new String[][]{new String[]{"ManagedEntity",}};
-        return searchManagedEntities(typeinfo, recurse);
+    public List<ManagedEntity> searchManagedEntities(final boolean recurse) throws InvalidProperty, RuntimeFault, RemoteException {
+        return searchManagedEntities(List.of(TypeInfo.create("ManagedEntity", "name")), recurse);
     }
 
     /**
      * Get the first ManagedObjectReference from current node for the specified type
      */
-    public ManagedEntity[] searchManagedEntities(String type) throws InvalidProperty, RuntimeFault, RemoteException {
-        String[][] typeinfo = new String[][]{new String[]{type, "name",},};
-        return searchManagedEntities(typeinfo, true);
+    public List<ManagedEntity> searchManagedEntities(final String type) throws InvalidProperty, RuntimeFault, RemoteException {
+        return searchManagedEntities(List.of(TypeInfo.create(type, "name")), true);
+    }
+
+    public <T extends ManagedEntity> List<T> searchManagedEntities(final Class<T> type) throws InvalidProperty, RuntimeFault, RemoteException {
+        return searchManagedEntities(List.of(TypeInfo.create(type.getSimpleName(), "name")), true)
+                .stream()
+                .filter(m -> type.isAssignableFrom(m.getClass()))
+                .map(type::cast)
+                .collect(Collectors.toList());
     }
 
     /**
@@ -60,14 +70,14 @@ public class InventoryNavigator {
      * @throws RuntimeFault
      * @throws InvalidProperty
      */
-    public ManagedEntity[] searchManagedEntities(String[][] typeinfo, boolean recurse) throws InvalidProperty, RuntimeFault, RemoteException {
-        final ObjectContent[] ocs = retrieveObjectContents(typeinfo, recurse);
+    public List<ManagedEntity> searchManagedEntities(final List<TypeInfo> typeinfo, final boolean recurse) throws InvalidProperty, RuntimeFault, RemoteException {
+        final List<ObjectContent> ocs = retrieveObjectContents(typeinfo, recurse);
         return createManagedEntities(ocs);
     }
 
-    private ObjectContent[] retrieveObjectContents(String[][] typeinfo, boolean recurse) throws InvalidProperty, RuntimeFault, RemoteException {
-        if (typeinfo == null || typeinfo.length == 0) {
-            return null;
+    private List<ObjectContent> retrieveObjectContents(final List<TypeInfo> typeinfo, final boolean recurse) throws InvalidProperty, RuntimeFault, RemoteException {
+        if (typeinfo == null || typeinfo.isEmpty()) {
+            return List.of();
         }
 
         final PropertyCollector pc = rootEntity.getServerConnection().getServiceInstance().getPropertyCollector();
@@ -75,14 +85,14 @@ public class InventoryNavigator {
         if (recurse && selectionSpecs == null) {
             final AboutInfo ai = rootEntity.getServerConnection().getServiceInstance().getAboutInfo();
             // changed API Version to check only the first number, more future ready
-            if (Integer.parseInt(String.valueOf(ai.getApiVersion().charAt(0))) >= 4) {
+            if (Integer.parseInt(ai.getApiVersion().split("\\.", 2)[0]) >= 4) {
                 selectionSpecs = PropertyCollectorUtil.buildFullTraversalV4();
             } else {
                 selectionSpecs = PropertyCollectorUtil.buildFullTraversal();
             }
         }
 
-        final PropertySpec[] propertySpecs = PropertyCollectorUtil.buildPropertySpecArray(typeinfo);
+        final List<PropertySpec> propertySpecs = PropertyCollectorUtil.buildPropertySpecArray(typeinfo);
 
         final ObjectSpec os = ObjectSpec.create(rootEntity.getMOR(), Boolean.FALSE, selectionSpecs);
 
@@ -92,29 +102,22 @@ public class InventoryNavigator {
         retrieveOptions.setMaxObjects(1000);
 
         final List<ObjectContent> allObjects = new ArrayList<>(5000);
-        RetrieveResult result = pc.retrievePropertiesEx(new PropertyFilterSpec[]{spec}, retrieveOptions);
-        allObjects.addAll(Arrays.asList(result.getObjects()));
+        RetrieveResult result = pc.retrievePropertiesEx(List.of(spec), retrieveOptions);
+        allObjects.addAll(result.getObjectList());
         while (result.getToken() != null) {
             result = pc.continueRetrievePropertiesEx(result.getToken());
-            allObjects.addAll(Arrays.asList(result.getObjects()));
+            allObjects.addAll(result.getObjectList());
         }
-        return allObjects.toArray(new ObjectContent[]{});
+        return allObjects;
     }
 
-    private ManagedEntity[] createManagedEntities(ObjectContent[] ocs) {
-        if (ocs == null) {
-            return new ManagedEntity[]{};
+    private List<ManagedEntity> createManagedEntities(final List<ObjectContent> ocs) {
+        if (ocs == null || ocs.isEmpty()) {
+            return List.of();
         }
-        ManagedEntity[] mes = new ManagedEntity[ocs.length];
-
-        for (int i = 0; i < mes.length; i++) {
-            //if (i < 10) {
-            //    LOGGER.debug(ocs[i].toString());
-            //}
-            ManagedObjectReference mor = ocs[i].getObj();
-            mes[i] = MorUtil.createExactManagedEntity(rootEntity.getServerConnection(), mor, (String) ocs[i].getPropSet()[0].getVal());
-        }
-        return mes;
+        return ocs.stream().map(o -> Map.entry(o.getObj(), o.tryGetName()))
+                .map(e -> MorUtil.createExactManagedEntity(this.rootEntity.getServerConnection(), e.getKey(), e.getValue()))
+                .collect(Collectors.toList());
     }
 
     /**
@@ -128,34 +131,33 @@ public class InventoryNavigator {
      * @throws RuntimeFault
      * @throws InvalidProperty
      */
-    public ManagedEntity searchManagedEntity(String type, String name) throws InvalidProperty, RuntimeFault, RemoteException {
-        if (name == null || name.length() == 0) {
+    public ManagedEntity searchManagedEntity(final String type, final String name) throws InvalidProperty, RuntimeFault, RemoteException {
+        if (name == null || name.isEmpty() || type == null || type.isEmpty()) {
             return null;
         }
 
-        if (type == null) {
-            type = "ManagedEntity";
-        }
+        final List<ObjectContent> ocs = retrieveObjectContents(List.of(
+                TypeInfo.create(type, "name")), true);
 
-        String[][] typeinfo = new String[][]{new String[]{type, "name",},};
-        ObjectContent[] ocs = retrieveObjectContents(typeinfo, true);
-
-        if (ocs == null || ocs.length == 0) {
+        if (ocs.isEmpty()) {
             return null;
         }
 
         for (final ObjectContent oc : ocs) {
-            DynamicProperty[] propSet = oc.getPropSet();
+            final String nameInPropSet = oc.tryGetName();
 
-            if (propSet.length > 0) {
-                String nameInPropSet = (String) propSet[0].getVal();
-                if (name.equalsIgnoreCase(nameInPropSet)) {
-                    ManagedObjectReference mor = oc.getObj();
-                    return MorUtil.createExactManagedEntity(rootEntity.getServerConnection(), mor, nameInPropSet);
-                }
+            if (nameInPropSet != null && !nameInPropSet.isEmpty() && name.equalsIgnoreCase(nameInPropSet)) {
+                final ManagedObjectReference mor = oc.getObj();
+                return MorUtil.createExactManagedEntity(rootEntity.getServerConnection(), mor, nameInPropSet);
+
             }
         }
         return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T extends ManagedEntity> T searchManagedEntity(final Class<T> type, final String name) throws RemoteException {
+        return (T) this.searchManagedEntity(type.getSimpleName(), name);
     }
 
 }

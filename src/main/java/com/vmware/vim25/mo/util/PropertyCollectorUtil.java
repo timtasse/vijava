@@ -30,12 +30,15 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.mo.util;
 
 import com.vmware.vim25.*;
+import com.vmware.vim25.ws.TypeInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -77,20 +80,21 @@ public class PropertyCollectorUtil {
         return propertyValue;
     }
 
-    public static SelectionSpec[] createSelectionSpec(final String[] names) {
-        final SelectionSpec[] sss = new SelectionSpec[names.length];
-        for (int i = 0; i < names.length; i++) {
-            sss[i] = new SelectionSpec();
-            sss[i].setName(names[i]);
-        }
-        return sss;
+    public static List<SelectionSpec> createSelectionSpec(final List<String> names) {
+        return names.stream().map(SelectionSpec::create).collect(Collectors.toList());
+//        final SelectionSpec[] sss = new SelectionSpec[names.length];
+//        for (int i = 0; i < names.length; i++) {
+//            sss[i] = new SelectionSpec();
+//            sss[i].setName(names[i]);
+//        }
+//        return sss;
     }
 
-    public static TraversalSpec createTraversalSpec(final String name, final String type, final String path, final String[] selectPath) {
+    public static TraversalSpec createTraversalSpecWithString(final String name, final String type, final String path, final List<String> selectPath) {
         return createTraversalSpec(name, type, path, createSelectionSpec(selectPath));
     }
 
-    public static TraversalSpec createTraversalSpec(final String name, final String type, final String path, final SelectionSpec[] selectSet) {
+    public static TraversalSpec createTraversalSpec(final String name, final String type, final String path, final List<SelectionSpec> selectSet) {
         final TraversalSpec ts = new TraversalSpec();
         ts.setName(name);
         ts.setType(type);
@@ -107,19 +111,21 @@ public class PropertyCollectorUtil {
      * @param typeProplists 2D array of type and properties to retrieve
      * @return Array of container filter specs
      */
-    public static PropertySpec[] buildPropertySpecArray(final String[][] typeProplists) {
-        PropertySpec[] pSpecs = new PropertySpec[typeProplists.length];
+    public static List<PropertySpec> buildPropertySpecArray(final List<TypeInfo> typeProplists) {
 
-        for (int i = 0; i < typeProplists.length; i++) {
-            String type = typeProplists[i][0];
-            String[] props = new String[typeProplists[i].length - 1];
-            for (int j = 0; j < props.length; j++) {
-                props[j] = typeProplists[i][j + 1];
-            }
-
-            pSpecs[i] = PropertySpec.create(type, props.length == 0, props);
-        }
-        return pSpecs;
+        return typeProplists.stream().map(t -> PropertySpec.create(t.getType(), t.getProperties())).collect(Collectors.toList());
+//        PropertySpec[] pSpecs = new PropertySpec[typeProplists.length];
+//
+//        for (int i = 0; i < typeProplists.length; i++) {
+//            String type = typeProplists[i][0];
+//            String[] props = new String[typeProplists[i].length - 1];
+//            for (int j = 0; j < props.length; j++) {
+//                props[j] = typeProplists[i][j + 1];
+//            }
+//
+//            pSpecs[i] = PropertySpec.create(type, props.length == 0, props);
+//        }
+//        return pSpecs;
     }
 
     /**
@@ -131,20 +137,22 @@ public class PropertyCollectorUtil {
      *
      * @return The SelectionSpec[]
      */
-    public static SelectionSpec[] buildFullTraversal() {
-        List<TraversalSpec> tSpecs = buildFullTraversalV2NoFolder();
+    public static List<TraversalSpec> buildFullTraversal() {
+        final List<TraversalSpec> tSpecs = buildFullTraversalV2NoFolder();
 
         // Recurse through the folders
-        TraversalSpec visitFolders = createTraversalSpec("visitFolders",
+        final TraversalSpec visitFolders = createTraversalSpecWithString("visitFolders",
                 "Folder", "childEntity",
-                new String[]{"visitFolders", "dcToHf", "dcToVmf", "crToH", "crToRp", "HToVm", "rpToVm"});
+                List.of("visitFolders", "dcToHf", "dcToVmf", "crToH", "crToRp", "HToVm", "rpToVm"));
 
-        SelectionSpec[] sSpecs = new SelectionSpec[tSpecs.size() + 1];
-        sSpecs[0] = visitFolders;
-        for (int i = 1; i < sSpecs.length; i++)
-            sSpecs[i] = tSpecs.get(i - 1);
-
-        return sSpecs;
+        tSpecs.set(0, visitFolders);
+        return tSpecs;
+//        final SelectionSpec[] sSpecs = new SelectionSpec[tSpecs.size() + 1];
+//        sSpecs[0] = visitFolders;
+//        for (int i = 1; i < sSpecs.length; i++)
+//            sSpecs[i] = tSpecs.get(i - 1);
+//
+//        return sSpecs;
     }
 
     /**
@@ -154,38 +162,38 @@ public class PropertyCollectorUtil {
      */
     private static List<TraversalSpec> buildFullTraversalV2NoFolder() {
         // Recurse through all ResourcePools
-        TraversalSpec rpToRp = createTraversalSpec("rpToRp",
+        final TraversalSpec rpToRp = createTraversalSpecWithString("rpToRp",
                 "ResourcePool", "resourcePool",
-                new String[]{"rpToRp", "rpToVm"});
+                List.of("rpToRp", "rpToVm"));
 
         // Recurse through all ResourcePools
-        TraversalSpec rpToVm = createTraversalSpec("rpToVm",
+        final TraversalSpec rpToVm = createTraversalSpec("rpToVm",
                 "ResourcePool", "vm",
-                new SelectionSpec[]{});
+                List.of());
 
         // Traversal through ResourcePool branch
-        TraversalSpec crToRp = createTraversalSpec("crToRp",
+        final TraversalSpec crToRp = createTraversalSpecWithString("crToRp",
                 "ComputeResource", "resourcePool",
-                new String[]{"rpToRp", "rpToVm"});
+                List.of("rpToRp", "rpToVm"));
 
         // Traversal through host branch
-        TraversalSpec crToH = createTraversalSpec("crToH",
+        final TraversalSpec crToH = createTraversalSpec("crToH",
                 "ComputeResource", "host",
-                new SelectionSpec[]{});
+                List.of());
 
         // Traversal through hostFolder branch
-        TraversalSpec dcToHf = createTraversalSpec("dcToHf",
+        final TraversalSpec dcToHf = createTraversalSpecWithString("dcToHf",
                 "Datacenter", "hostFolder",
-                new String[]{"visitFolders"});
+                List.of("visitFolders"));
 
         // Traversal through vmFolder branch
-        TraversalSpec dcToVmf = createTraversalSpec("dcToVmf",
+        final TraversalSpec dcToVmf = createTraversalSpecWithString("dcToVmf",
                 "Datacenter", "vmFolder",
-                new String[]{"visitFolders"});
+                List.of("visitFolders"));
 
-        TraversalSpec HToVm = createTraversalSpec("HToVm",
+        final TraversalSpec HToVm = createTraversalSpecWithString("HToVm",
                 "HostSystem", "vm",
-                new String[]{"visitFolders"});
+                List.of("visitFolders"));
 
         return Arrays.asList(dcToVmf, dcToHf, crToH, crToRp, rpToRp, HToVm, rpToVm);
     }
@@ -196,41 +204,48 @@ public class PropertyCollectorUtil {
      *
      * @return The SelectionSpec[]
      */
-    public static SelectionSpec[] buildFullTraversalV4() {
-        List<TraversalSpec> tSpecs = buildFullTraversalV2NoFolder();
+    public static List<TraversalSpec> buildFullTraversalV4() {
+        final List<TraversalSpec> tSpecs = buildFullTraversalV2NoFolder();
 
-        TraversalSpec dcToDs = createTraversalSpec("dcToDs",
+        final TraversalSpec dcToDs = createTraversalSpecWithString("dcToDs",
                 "Datacenter", "datastoreFolder",
-                new String[]{"visitFolders"});
+                List.of("visitFolders"));
 
-        TraversalSpec vAppToRp = createTraversalSpec("vAppToRp",
+        final TraversalSpec vAppToRp = createTraversalSpecWithString("vAppToRp",
                 "VirtualApp", "resourcePool",
-                new String[]{"rpToRp", "vAppToRp"});
+                List.of("rpToRp", "vAppToRp"));
 
         /**
          * Copyright 2009 Altor Networks, contribution by Elsa Bignoli
          * @author Elsa Bignoli (elsa@altornetworks.com)
          */
         // Traversal through netFolder branch
-        TraversalSpec dcToNetf = createTraversalSpec("dcToNetf",
+        final TraversalSpec dcToNetf = createTraversalSpecWithString("dcToNetf",
                 "Datacenter", "networkFolder",
-                new String[]{"visitFolders"});
+                List.of("visitFolders"));
 
         // Recurse through the folders
-        TraversalSpec visitFolders = createTraversalSpec("visitFolders",
+        final TraversalSpec visitFolders = createTraversalSpecWithString("visitFolders",
                 "Folder", "childEntity",
-                new String[]{"visitFolders", "dcToHf", "dcToVmf", "dcToDs", "dcToNetf", "crToH", "crToRp", "HToVm", "rpToVm"});
+                List.of("visitFolders", "dcToHf", "dcToVmf", "dcToDs", "dcToNetf", "crToH", "crToRp", "HToVm", "rpToVm"));
 
-        SelectionSpec[] sSpecs = new SelectionSpec[tSpecs.size() + 4];
-        sSpecs[0] = visitFolders;
-        sSpecs[1] = dcToDs;
-        sSpecs[2] = dcToNetf;
-        sSpecs[3] = vAppToRp;
-        for (int i = 4; i < sSpecs.length; i++) {
-            sSpecs[i] = tSpecs.get(i - 4);
-        }
-
-        return sSpecs;
+        final List<TraversalSpec> target = new ArrayList<>();
+        target.add(visitFolders);
+        target.add(dcToDs);
+        target.add(dcToNetf);
+        target.add(vAppToRp);
+        target.addAll(tSpecs);
+        return target;
+//        SelectionSpec[] sSpecs = new SelectionSpec[tSpecs.size() + 4];
+//        sSpecs[0] = visitFolders;
+//        sSpecs[1] = dcToDs;
+//        sSpecs[2] = dcToNetf;
+//        sSpecs[3] = vAppToRp;
+//        for (int i = 4; i < sSpecs.length; i++) {
+//            sSpecs[i] = tSpecs.get(i - 4);
+//        }
+//
+//        return sSpecs;
     }
 
 }

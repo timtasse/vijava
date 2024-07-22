@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Steve Jin (http://www.doublecloud.org)
@@ -42,11 +43,11 @@ public class PropertySpec extends DynamicData {
     private Boolean all;
     private String[] pathSet;
 
-    public static PropertySpec create(final String type, final boolean allProp, final String[] pathSet) {
+    public static PropertySpec create(final String type, final List<String> pathSet) {
         final PropertySpec spec = new PropertySpec();
         spec.type = type;
-        spec.all = allProp;
-        spec.pathSet = pathSet;
+        spec.all = pathSet.isEmpty();
+        spec.pathSet = pathSet.toArray(new String[0]);
         return spec;
     }
 

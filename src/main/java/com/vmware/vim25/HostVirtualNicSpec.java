@@ -35,7 +35,7 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 8.0.0
  */
 public class HostVirtualNicSpec extends DynamicData {
 
@@ -51,6 +51,7 @@ public class HostVirtualNicSpec extends DynamicData {
     private String pinnedPnic;
     private HostVirtualNicIpRouteSpec ipRouteSpec;
     private Boolean systemOwned;
+    private String dpuId;
 
     @Override
     public String toString() {
@@ -67,14 +68,23 @@ public class HostVirtualNicSpec extends DynamicData {
                 ", pinnedPnic='" + pinnedPnic + '\'' +
                 ", ipRouteSpec=" + ipRouteSpec +
                 ", systemOwned=" + systemOwned +
-                "} " + super.toString();
+                ", dpuId='" + dpuId + '\'' +
+                '}';
+    }
+
+    public String getDpuId() {
+        return dpuId;
+    }
+
+    public void setDpuId(final String dpuId) {
+        this.dpuId = dpuId;
     }
 
     public HostIpConfig getIp() {
         return this.ip;
     }
 
-    public void setIp(HostIpConfig ip) {
+    public void setIp(final HostIpConfig ip) {
         this.ip = ip;
     }
 
@@ -82,7 +92,7 @@ public class HostVirtualNicSpec extends DynamicData {
         return this.mac;
     }
 
-    public void setMac(String mac) {
+    public void setMac(final String mac) {
         this.mac = mac;
     }
 
@@ -90,7 +100,7 @@ public class HostVirtualNicSpec extends DynamicData {
         return this.distributedVirtualPort;
     }
 
-    public void setDistributedVirtualPort(DistributedVirtualSwitchPortConnection distributedVirtualPort) {
+    public void setDistributedVirtualPort(final DistributedVirtualSwitchPortConnection distributedVirtualPort) {
         this.distributedVirtualPort = distributedVirtualPort;
     }
 
@@ -98,7 +108,7 @@ public class HostVirtualNicSpec extends DynamicData {
         return this.portgroup;
     }
 
-    public void setPortgroup(String portgroup) {
+    public void setPortgroup(final String portgroup) {
         this.portgroup = portgroup;
     }
 
@@ -106,7 +116,7 @@ public class HostVirtualNicSpec extends DynamicData {
         return this.mtu;
     }
 
-    public void setMtu(Integer mtu) {
+    public void setMtu(final Integer mtu) {
         this.mtu = mtu;
     }
 
@@ -114,7 +124,7 @@ public class HostVirtualNicSpec extends DynamicData {
         return this.netStackInstanceKey;
     }
 
-    public void setNetStackInstanceKey(String netStackInstanceKey) {
+    public void setNetStackInstanceKey(final String netStackInstanceKey) {
         this.netStackInstanceKey = netStackInstanceKey;
     }
 
@@ -122,7 +132,7 @@ public class HostVirtualNicSpec extends DynamicData {
         return tsoEnabled;
     }
 
-    public void setTsoEnabled(Boolean tsoEnabled) {
+    public void setTsoEnabled(final Boolean tsoEnabled) {
         this.tsoEnabled = tsoEnabled;
     }
 
@@ -165,4 +175,5 @@ public class HostVirtualNicSpec extends DynamicData {
     public void setSystemOwned(final Boolean systemOwned) {
         this.systemOwned = systemOwned;
     }
+
 }

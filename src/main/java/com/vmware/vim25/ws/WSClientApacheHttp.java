@@ -32,7 +32,7 @@ public final class WSClientApacheHttp extends WSClient {
     private final BasicCookieStore cookieStore;
 
     WSClientApacheHttp(final URL serverUrl, final boolean ignoreCert, final int connectTimeout, final int socketTimeout) {
-        super(serverUrl, ignoreCert);
+        super(serverUrl);
         this.cookieStore = new BasicCookieStore();
         final HttpClientBuilder httpClientBuilder = HttpClients.custom()
                 .setDefaultCookieStore(cookieStore);

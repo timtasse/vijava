@@ -30,59 +30,75 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * The VsanHostConfigInfo data object contains host-specific settings for the VSAN service.
+ * This data object is used both for specifying settings for updating the VSAN service,
+ * and as an output datatype when retrieving current VSAN service settings.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
  */
-
-@SuppressWarnings("all")
 public class VsanHostConfigInfo extends DynamicData {
 
-    public Boolean enabled;
-    public ManagedObjectReference hostSystem;
-    public VsanHostConfigInfoClusterInfo clusterInfo;
-    public VsanHostConfigInfoStorageInfo storageInfo;
-    public VsanHostConfigInfoNetworkInfo networkInfo;
-    public VsanHostFaultDomainInfo faultDomainInfo;
+    private Boolean enabled;
+    private ManagedObjectReference hostSystem;
+    private VsanHostConfigInfoClusterInfo clusterInfo;
+    private VsanHostConfigInfoStorageInfo storageInfo;
+    private VsanHostConfigInfoNetworkInfo networkInfo;
+    private VsanHostFaultDomainInfo faultDomainInfo;
+    private Boolean vsanEsaEnabled;
 
-    public ManagedObjectReference getHostSystem() {
-        return this.hostSystem;
+    @Override
+    public String toString() {
+        return "VsanHostConfigInfo{" +
+                "enabled=" + enabled +
+                ", hostSystem=" + hostSystem +
+                ", clusterInfo=" + clusterInfo +
+                ", storageInfo=" + storageInfo +
+                ", networkInfo=" + networkInfo +
+                ", faultDomainInfo=" + faultDomainInfo +
+                ", vsanEsaEnabled=" + vsanEsaEnabled +
+                '}';
     }
 
-    public void setHostSystem(ManagedObjectReference hostSystem) {
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(final Boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public ManagedObjectReference getHostSystem() {
+        return hostSystem;
+    }
+
+    public void setHostSystem(final ManagedObjectReference hostSystem) {
         this.hostSystem = hostSystem;
     }
 
     public VsanHostConfigInfoClusterInfo getClusterInfo() {
-        return this.clusterInfo;
+        return clusterInfo;
     }
 
-    public void setClusterInfo(VsanHostConfigInfoClusterInfo clusterInfo) {
+    public void setClusterInfo(final VsanHostConfigInfoClusterInfo clusterInfo) {
         this.clusterInfo = clusterInfo;
     }
 
     public VsanHostConfigInfoStorageInfo getStorageInfo() {
-        return this.storageInfo;
+        return storageInfo;
     }
 
-    public void setStorageInfo(VsanHostConfigInfoStorageInfo storageInfo) {
+    public void setStorageInfo(final VsanHostConfigInfoStorageInfo storageInfo) {
         this.storageInfo = storageInfo;
     }
 
     public VsanHostConfigInfoNetworkInfo getNetworkInfo() {
-        return this.networkInfo;
+        return networkInfo;
     }
 
-    public void setNetworkInfo(VsanHostConfigInfoNetworkInfo networkInfo) {
+    public void setNetworkInfo(final VsanHostConfigInfoNetworkInfo networkInfo) {
         this.networkInfo = networkInfo;
-    }
-
-    public Boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(Boolean enabled) {
-        this.enabled = enabled;
     }
 
     public VsanHostFaultDomainInfo getFaultDomainInfo() {
@@ -92,4 +108,13 @@ public class VsanHostConfigInfo extends DynamicData {
     public void setFaultDomainInfo(final VsanHostFaultDomainInfo faultDomainInfo) {
         this.faultDomainInfo = faultDomainInfo;
     }
+
+    public Boolean getVsanEsaEnabled() {
+        return vsanEsaEnabled;
+    }
+
+    public void setVsanEsaEnabled(final Boolean vsanEsaEnabled) {
+        this.vsanEsaEnabled = vsanEsaEnabled;
+    }
+
 }

@@ -90,7 +90,7 @@ public class HostSystem extends ManagedEntity {
     }
 
     public List<Datastore> getDatastores() {
-        return Arrays.asList(getDatastores("datastore"));
+        return getDatastores("datastore");
     }
 
     public HostDatastoreBrowser getDatastoreBrowser() {
@@ -106,7 +106,7 @@ public class HostSystem extends ManagedEntity {
     }
 
     public List<Network> getNetworks() {
-        return Arrays.asList(getNetworks("network"));
+        return getNetworks("network");
     }
 
     public ApplyHostProfileConfigurationSpec getPrecheckRemediationResult() {
@@ -134,7 +134,7 @@ public class HostSystem extends ManagedEntity {
     }
 
     public List<VirtualMachine> getVms() {
-        return Arrays.asList(getVms("vm"));
+        return getVms("vm");
     }
 
     public HostServiceTicket acquireCimServicesTicket() throws RuntimeFault {

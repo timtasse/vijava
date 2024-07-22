@@ -98,7 +98,10 @@ public abstract class XmlGen {
         }
 
         if (obj instanceof List<?>) {
-            handleArrays(sb, tagName, type, ((List<?>)obj).toArray());
+            final List<?> list = (List<?>) obj;
+            if (!list.isEmpty()) {
+                handleArrays(sb, tagName, type, list.toArray());
+            }
             return;
         }
 

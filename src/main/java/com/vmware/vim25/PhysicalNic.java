@@ -29,23 +29,26 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * This data object type describes the physical network adapter as seen by the primary operating system.
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 8.0.0
  */
+@SuppressWarnings("unused")
 public class PhysicalNic extends DynamicData {
 
     private String key;
     private String device;
     private String pci;
     private String driver;
+    private String driverVersion;
+    private String firmwareVersion;
     private PhysicalNicLinkInfo linkSpeed;
-    private PhysicalNicLinkInfo[] validLinkSpecification;
+    private List<PhysicalNicLinkInfo> validLinkSpecification;
     private PhysicalNicSpec spec;
     private boolean wakeOnLanSupported;
     private String mac;
@@ -53,11 +56,12 @@ public class PhysicalNic extends DynamicData {
     private Boolean vmDirectPathGen2Supported;
     private String vmDirectPathGen2SupportedMode;
     private Boolean resourcePoolSchedulerAllowed;
-    private String[] resourcePoolSchedulerDisallowedReason;
+    private List<PhysicalNicResourcePoolSchedulerDisallowedReason> resourcePoolSchedulerDisallowedReason;
     private Boolean autoNegotiateSupported;
     private Boolean enhancedNetworkingStackSupported;
     private Boolean ensInterruptSupported;
     private String rdmaDevice;
+    private String dpuId;
 
     @Override
     public String toString() {
@@ -66,8 +70,10 @@ public class PhysicalNic extends DynamicData {
                 ", device='" + device + '\'' +
                 ", pci='" + pci + '\'' +
                 ", driver='" + driver + '\'' +
+                ", driverVersion='" + driverVersion + '\'' +
+                ", firmwareVersion='" + firmwareVersion + '\'' +
                 ", linkSpeed=" + linkSpeed +
-                ", validLinkSpecification=" + Arrays.toString(validLinkSpecification) +
+                ", validLinkSpecification=" + validLinkSpecification +
                 ", spec=" + spec +
                 ", wakeOnLanSupported=" + wakeOnLanSupported +
                 ", mac='" + mac + '\'' +
@@ -75,131 +81,148 @@ public class PhysicalNic extends DynamicData {
                 ", vmDirectPathGen2Supported=" + vmDirectPathGen2Supported +
                 ", vmDirectPathGen2SupportedMode='" + vmDirectPathGen2SupportedMode + '\'' +
                 ", resourcePoolSchedulerAllowed=" + resourcePoolSchedulerAllowed +
-                ", resourcePoolSchedulerDisallowedReason=" + Arrays.toString(resourcePoolSchedulerDisallowedReason) +
+                ", resourcePoolSchedulerDisallowedReason=" + resourcePoolSchedulerDisallowedReason +
                 ", autoNegotiateSupported=" + autoNegotiateSupported +
                 ", enhancedNetworkingStackSupported=" + enhancedNetworkingStackSupported +
                 ", ensInterruptSupported=" + ensInterruptSupported +
                 ", rdmaDevice='" + rdmaDevice + '\'' +
-                "} " + super.toString();
+                ", dpuId='" + dpuId + '\'' +
+                '}';
     }
 
     public String getKey() {
-        return this.key;
+        return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(final String key) {
         this.key = key;
     }
 
     public String getDevice() {
-        return this.device;
+        return device;
     }
 
-    public void setDevice(String device) {
+    public void setDevice(final String device) {
         this.device = device;
     }
 
     public String getPci() {
-        return this.pci;
+        return pci;
     }
 
-    public void setPci(String pci) {
+    public void setPci(final String pci) {
         this.pci = pci;
     }
 
     public String getDriver() {
-        return this.driver;
+        return driver;
     }
 
-    public void setDriver(String driver) {
+    public void setDriver(final String driver) {
         this.driver = driver;
     }
 
-    public PhysicalNicLinkInfo getLinkSpeed() {
-        return this.linkSpeed;
+    public String getDriverVersion() {
+        return driverVersion;
     }
 
-    public void setLinkSpeed(PhysicalNicLinkInfo linkSpeed) {
+    public void setDriverVersion(final String driverVersion) {
+        this.driverVersion = driverVersion;
+    }
+
+    public String getFirmwareVersion() {
+        return firmwareVersion;
+    }
+
+    public void setFirmwareVersion(final String firmwareVersion) {
+        this.firmwareVersion = firmwareVersion;
+    }
+
+    public PhysicalNicLinkInfo getLinkSpeed() {
+        return linkSpeed;
+    }
+
+    public void setLinkSpeed(final PhysicalNicLinkInfo linkSpeed) {
         this.linkSpeed = linkSpeed;
     }
 
-    public PhysicalNicLinkInfo[] getValidLinkSpecification() {
-        return this.validLinkSpecification;
+    public List<PhysicalNicLinkInfo> getValidLinkSpecification() {
+        return validLinkSpecification;
     }
 
-    public void setValidLinkSpecification(PhysicalNicLinkInfo[] validLinkSpecification) {
+    public void setValidLinkSpecification(final List<PhysicalNicLinkInfo> validLinkSpecification) {
         this.validLinkSpecification = validLinkSpecification;
     }
 
     public PhysicalNicSpec getSpec() {
-        return this.spec;
+        return spec;
     }
 
-    public void setSpec(PhysicalNicSpec spec) {
+    public void setSpec(final PhysicalNicSpec spec) {
         this.spec = spec;
     }
 
     public boolean isWakeOnLanSupported() {
-        return this.wakeOnLanSupported;
+        return wakeOnLanSupported;
     }
 
-    public void setWakeOnLanSupported(boolean wakeOnLanSupported) {
+    public void setWakeOnLanSupported(final boolean wakeOnLanSupported) {
         this.wakeOnLanSupported = wakeOnLanSupported;
     }
 
     public String getMac() {
-        return this.mac;
+        return mac;
     }
 
-    public void setMac(String mac) {
+    public void setMac(final String mac) {
         this.mac = mac;
     }
 
     public FcoeConfig getFcoeConfiguration() {
-        return this.fcoeConfiguration;
+        return fcoeConfiguration;
     }
 
-    public void setFcoeConfiguration(FcoeConfig fcoeConfiguration) {
+    public void setFcoeConfiguration(final FcoeConfig fcoeConfiguration) {
         this.fcoeConfiguration = fcoeConfiguration;
     }
 
     public Boolean getVmDirectPathGen2Supported() {
-        return this.vmDirectPathGen2Supported;
+        return vmDirectPathGen2Supported;
     }
 
-    public void setVmDirectPathGen2Supported(Boolean vmDirectPathGen2Supported) {
+    public void setVmDirectPathGen2Supported(final Boolean vmDirectPathGen2Supported) {
         this.vmDirectPathGen2Supported = vmDirectPathGen2Supported;
     }
 
     public String getVmDirectPathGen2SupportedMode() {
-        return this.vmDirectPathGen2SupportedMode;
+        return vmDirectPathGen2SupportedMode;
     }
 
-    public void setVmDirectPathGen2SupportedMode(String vmDirectPathGen2SupportedMode) {
+    public void setVmDirectPathGen2SupportedMode(final String vmDirectPathGen2SupportedMode) {
         this.vmDirectPathGen2SupportedMode = vmDirectPathGen2SupportedMode;
     }
 
     public Boolean getResourcePoolSchedulerAllowed() {
-        return this.resourcePoolSchedulerAllowed;
+        return resourcePoolSchedulerAllowed;
     }
 
-    public void setResourcePoolSchedulerAllowed(Boolean resourcePoolSchedulerAllowed) {
+    public void setResourcePoolSchedulerAllowed(final Boolean resourcePoolSchedulerAllowed) {
         this.resourcePoolSchedulerAllowed = resourcePoolSchedulerAllowed;
     }
 
-    public String[] getResourcePoolSchedulerDisallowedReason() {
-        return this.resourcePoolSchedulerDisallowedReason;
+    public List<PhysicalNicResourcePoolSchedulerDisallowedReason> getResourcePoolSchedulerDisallowedReason() {
+        return resourcePoolSchedulerDisallowedReason;
     }
 
-    public void setResourcePoolSchedulerDisallowedReason(String[] resourcePoolSchedulerDisallowedReason) {
+    public void setResourcePoolSchedulerDisallowedReason(final List<PhysicalNicResourcePoolSchedulerDisallowedReason> resourcePoolSchedulerDisallowedReason) {
         this.resourcePoolSchedulerDisallowedReason = resourcePoolSchedulerDisallowedReason;
     }
 
     public Boolean getAutoNegotiateSupported() {
-        return this.autoNegotiateSupported;
+        return autoNegotiateSupported;
     }
 
-    public void setAutoNegotiateSupported(Boolean autoNegotiateSupported) {
+    public void setAutoNegotiateSupported(final Boolean autoNegotiateSupported) {
         this.autoNegotiateSupported = autoNegotiateSupported;
     }
 
@@ -225,6 +248,14 @@ public class PhysicalNic extends DynamicData {
 
     public void setRdmaDevice(final String rdmaDevice) {
         this.rdmaDevice = rdmaDevice;
+    }
+
+    public String getDpuId() {
+        return dpuId;
+    }
+
+    public void setDpuId(final String dpuId) {
+        this.dpuId = dpuId;
     }
 
 }

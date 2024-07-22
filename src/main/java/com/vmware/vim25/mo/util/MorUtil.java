@@ -72,10 +72,10 @@ public final class MorUtil {
         final String moType = mor.getType();
 
         try {
-            final Class moClass = Class.forName(MO_PACKAGE_NAME + "." + moType);
-            Constructor constructor = moClass.getConstructor(
-                    new Class[]{ServerConnection.class, ManagedObjectReference.class});
-            return (ManagedObject) constructor.newInstance(new Object[]{sc, mor});
+            final Class<?> moClass = Class.forName(MO_PACKAGE_NAME + "." + moType);
+            final Constructor<?> constructor = moClass.getConstructor(
+                    ServerConnection.class, ManagedObjectReference.class);
+            return (ManagedObject) constructor.newInstance(sc, mor);
         } catch (final Exception e) {
             LOGGER.error("ReflectionError in createExactManagedObject", e);
             return null;

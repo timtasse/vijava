@@ -30,10 +30,11 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * Runtime state of a device. Subclassed for information that is specific to certain device types.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
+@SuppressWarnings("unused")
 public class VirtualMachineDeviceRuntimeInfoDeviceRuntimeState extends DynamicData {
 }

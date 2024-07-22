@@ -22,7 +22,7 @@ import java.util.List;
 public class WSClientOldJava extends WSClient {
 
     WSClientOldJava(final URL serverUrl, final boolean ignoreCert, final int connectTimeout, final int socketTimeout) {
-        super(serverUrl, ignoreCert);
+        super(serverUrl);
         this.setConnectTimeout(connectTimeout);
         this.setReadTimeout(socketTimeout);
         if (ignoreCert) {

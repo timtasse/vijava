@@ -30,37 +30,40 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * A mask that is applied to a host feature capability.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.1
+ */
+@SuppressWarnings("unused")
 public class HostFeatureMask extends DynamicData {
-  public String key;
-  public String featureName;
-  public String value;
 
-  public String getKey() {
-    return this.key;
-  }
+    private String key;
+    private String featureName;
+    private String value;
 
-  public String getFeatureName() {
-    return this.featureName;
-  }
+    public String getKey() {
+        return this.key;
+    }
 
-  public String getValue() {
-    return this.value;
-  }
+    public String getFeatureName() {
+        return this.featureName;
+    }
 
-  public void setKey(String key) {
-    this.key=key;
-  }
+    public String getValue() {
+        return this.value;
+    }
 
-  public void setFeatureName(String featureName) {
-    this.featureName=featureName;
-  }
+    public void setKey(final String key) {
+        this.key = key;
+    }
 
-  public void setValue(String value) {
-    this.value=value;
-  }
+    public void setFeatureName(final String featureName) {
+        this.featureName = featureName;
+    }
+
+    public void setValue(final String value) {
+        this.value = value;
+    }
 }

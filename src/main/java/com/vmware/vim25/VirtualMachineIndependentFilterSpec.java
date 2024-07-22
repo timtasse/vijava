@@ -3,6 +3,8 @@ package com.vmware.vim25;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.doublecloud.ws.util.TypeUtil.asNullSafeList;
+
 /**
  * The IndependentFilterSpec data object is used to specify the independent filters to be associated with virtual machine disks.
  *
@@ -42,7 +44,7 @@ public class VirtualMachineIndependentFilterSpec extends VirtualMachineBaseIndep
     }
 
     public List<KeyValue> getFilterCapabilities() {
-        return Arrays.asList(filterCapabilities);
+        return asNullSafeList(filterCapabilities);
     }
 
     public void setFilterCapabilities(final List<KeyValue> filterCapabilities) {

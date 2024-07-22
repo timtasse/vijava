@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>de.freenet.cloud</groupId>
     <artifactId>vijava</artifactId>
-    <version>7.0.3-2.8.0</version>
+    <version>8.0.0-3.0.0</version>
     <packaging>jar</packaging>
     <dependencies>
         <dependency>
@@ -19,7 +19,7 @@
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.4.12</version>
+            <version>1.5.6</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
+            <version>4.5.14</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -115,4 +115,11 @@
     </developers>
     <name>VIJava</name>
     <description>Rewritten version of the vijava library</description>
+    <repositories>
+        <repository>
+            <id>maven_central</id>
+            <name>Maven Central</name>
+            <url>https://repo.maven.apache.org/maven2/</url>
+        </repository>
+    </repositories>
 </project>

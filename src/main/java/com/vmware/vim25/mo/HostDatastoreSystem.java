@@ -42,29 +42,29 @@ import java.util.stream.Collectors;
 /**
  * This managed object creates and removes datastores from the host.
  * To a host, a datastore is a storage abstraction that is backed by one of several types of storage volumes:
- *
+ * <p>
  * Local file system
- *   A datastore that is backed by a local file system volume uses a host native local file system such as NTFS or ext3.
- *   The datastore is created by identifying a file path for a directory in which virtual machine data will be stored.
- *   When the datastore is deleted, the mapping from the datastore to the file is deleted. The contents of the directory are not deleted.
+ * A datastore that is backed by a local file system volume uses a host native local file system such as NTFS or ext3.
+ * The datastore is created by identifying a file path for a directory in which virtual machine data will be stored.
+ * When the datastore is deleted, the mapping from the datastore to the file is deleted. The contents of the directory are not deleted.
  * NAS Volume
- *   A datastore that is backed by a network-attached storage device is created by specifying the required data needed to attach the volume to the host.
- *   Destroying the datastore detaches the volume from the host.
+ * A datastore that is backed by a network-attached storage device is created by specifying the required data needed to attach the volume to the host.
+ * Destroying the datastore detaches the volume from the host.
  * VMFS
- *   A datastore that is backed by a VMware File System (VMFS) is created by specifying a disk with unpartitioned space,
- *   the desired disk partition format on the disk, and some VMFS attributes.
- *   An ESX Server system automatically discovers the VMFS volume on attached Logical Unit Numbers (LUNs) on startup and
- *   after re-scanning the host bus adapter. Datastores are automatically created. The datastore label is based on the VMFS volume label.
- *   If there is a conflict with an existing datastore, it is made unique by appending a suffix. The VMFS volume label will be unchanged.
- *
+ * A datastore that is backed by a VMware File System (VMFS) is created by specifying a disk with unpartitioned space,
+ * the desired disk partition format on the disk, and some VMFS attributes.
+ * An ESX Server system automatically discovers the VMFS volume on attached Logical Unit Numbers (LUNs) on startup and
+ * after re-scanning the host bus adapter. Datastores are automatically created. The datastore label is based on the VMFS volume label.
+ * If there is a conflict with an existing datastore, it is made unique by appending a suffix. The VMFS volume label will be unchanged.
+ * <p>
  * Destroying the datastore removes the partitions that compose the VMFS volume.
- *
+ * <p>
  * Datastores are never automatically removed because transient storage connection outages may occur. They must be removed from the host using this interface.
- * @see Datastore
  *
  * @author Steve JIN (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 8.0.0
+ * @see Datastore
  */
 @SuppressWarnings("unused")
 public class HostDatastoreSystem extends ManagedObject {
@@ -325,12 +325,11 @@ public class HostDatastoreSystem extends ManagedObject {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<HostScsiDisk> queryAvailableDisksForVmfs(final Datastore datastore) throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("datastore", ManagedObjectReference.class, datastore == null ? null : datastore.getMOR()));
         try {
-            return (List<HostScsiDisk>) this.getVimService().getWsc().invoke("QueryAvailableDisksForVmfs", params, "List.HostScsiDisk");
+            return this.getVimService().getWsc().invokeWithListReturn("QueryAvailableDisksForVmfs", params, HostScsiDisk.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof NotFound) {
@@ -346,11 +345,10 @@ public class HostDatastoreSystem extends ManagedObject {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<HostUnresolvedVmfsVolume> queryUnresolvedVmfsVolumes() throws RuntimeFault {
         try {
-            return (List<HostUnresolvedVmfsVolume>) this.getVimService().getWsc()
-                    .invoke("QueryUnresolvedVmfsVolumes", this.getSingleSelfArgumentList(), "List.HostUnresolvedVmfsVolume");
+            return this.getVimService().getWsc()
+                    .invokeWithListReturn("QueryUnresolvedVmfsVolumes", this.getSingleSelfArgumentList(), HostUnresolvedVmfsVolume.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {
@@ -360,15 +358,14 @@ public class HostDatastoreSystem extends ManagedObject {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public List<VmfsDatastoreOption> queryVmfsDatastoreCreateOptions(final String devicePath, final int vmfsMajorVersion)
             throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("devicePath", String.class, devicePath),
                 new Argument("vmfsMajorVersion", "int", vmfsMajorVersion));
         try {
-            return (List<VmfsDatastoreOption>) this.getVimService().getWsc()
-                    .invoke("QueryVmfsDatastoreCreateOptions", params, "List.VmfsDatastoreOption");
+            return this.getVimService().getWsc()
+                    .invokeWithListReturn("QueryVmfsDatastoreCreateOptions", params, VmfsDatastoreOption.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof NotFound) {
@@ -392,7 +389,6 @@ public class HostDatastoreSystem extends ManagedObject {
         return this.queryVmfsDatastoreExtendOptions(datastore.getMOR(), devicePath, suppressExpandCandidates);
     }
 
-    @SuppressWarnings("unchecked")
     public List<VmfsDatastoreOption> queryVmfsDatastoreExtendOptions(final ManagedObjectReference datastore, final String devicePath, final Boolean suppressExpandCandidates)
             throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
@@ -400,8 +396,8 @@ public class HostDatastoreSystem extends ManagedObject {
                 new Argument("devicePath", String.class, devicePath),
                 new Argument("suppressExpandCandidates", "boolean", suppressExpandCandidates));
         try {
-            return (List<VmfsDatastoreOption>) this.getVimService().getWsc()
-                    .invoke("QueryVmfsDatastoreExtendOptions", params, "List.VmfsDatastoreOption");
+            return this.getVimService().getWsc()
+                    .invokeWithListReturn("QueryVmfsDatastoreExtendOptions", params, VmfsDatastoreOption.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof NotFound) {
@@ -425,14 +421,13 @@ public class HostDatastoreSystem extends ManagedObject {
         return this.queryVmfsDatastoreExpandOptions(datastore.getMOR());
     }
 
-    @SuppressWarnings("unchecked")
     public List<VmfsDatastoreOption> queryVmfsDatastoreExpandOptions(final ManagedObjectReference datastore)
             throws HostConfigFault, NotFound, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("datastore", ManagedObjectReference.class, datastore));
         try {
-            return (List<VmfsDatastoreOption>) this.getVimService().getWsc()
-                    .invoke("QueryVmfsDatastoreExpandOptions", params, "List.VmfsDatastoreOption");
+            return this.getVimService().getWsc()
+                    .invokeWithListReturn("QueryVmfsDatastoreExpandOptions", params, VmfsDatastoreOption.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof NotFound) {
@@ -532,6 +527,55 @@ public class HostDatastoreSystem extends ManagedObject {
             }
             if (cause instanceof DatastoreNotWritableOnHost) {
                 throw (DatastoreNotWritableOnHost) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public long queryMaxQueueDepth(final Datastore datastore) throws NotFound, RuntimeFault {
+        if (datastore == null) {
+            throw new IllegalArgumentException("datastore must not be null.");
+        }
+        return this.queryMaxQueueDepth(datastore.getMOR());
+    }
+
+    public long queryMaxQueueDepth(final ManagedObjectReference datastore) throws NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("datastore", ManagedObjectReference.class, datastore));
+        try {
+            return this.getVimService().getWsc().invoke("QueryMaxQueueDepth", params, long.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void setMaxQueueDepth(final Datastore datastore, final long maxQdepth) throws NotFound, RuntimeFault {
+        if (datastore == null) {
+            throw new IllegalArgumentException("datastore must not be null.");
+        }
+        this.setMaxQueueDepth(datastore.getMOR(), maxQdepth);
+    }
+
+    public void setMaxQueueDepth(final ManagedObjectReference datastore, final long maxQdepth) throws NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("datastore", ManagedObjectReference.class, datastore),
+                Argument.fromBasicType("maxQdepth", maxQdepth));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("SetMaxQueueDepth", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
             }
             if (cause instanceof RuntimeFault) {
                 throw (RuntimeFault) cause;

@@ -72,6 +72,9 @@ public abstract class WSClient {
     protected static final String SOAP_ACTION_V701 = "urn:vim25/7.0.1.0";
     protected static final String SOAP_ACTION_V702 = "urn:vim25/7.0.2.0";
     protected static final String SOAP_ACTION_V703 = "urn:vim25/7.0.3.0";
+    protected static final String SOAP_ACTION_V800 = "urn:vim25/8.0.0.1";
+    protected static final String SOAP_ACTION_V801 = "urn:vim25/8.0.1.0";
+    protected static final String SOAP_ACTION_V802 = "urn:vim25/8.0.2.0";
 
     private final URL baseUrl;
     private final URI baseUri;
@@ -82,7 +85,7 @@ public abstract class WSClient {
     private int connectTimeout;
     private int readTimeout;
 
-    public WSClient(final URL serverUrl, final boolean ignoreCert) {
+    WSClient(final URL serverUrl) {
         this.baseUrl = serverUrl;
         URI uri;
         try {
@@ -111,7 +114,7 @@ public abstract class WSClient {
         return this.invoke(methodName, Arrays.asList(paras), returnType);
     }
 
-    public <T> T invoke(final String methodName, final List<Argument> paras, final Class<?> returnType) throws RemoteException {
+    public <T> T invoke(final String methodName, final List<Argument> paras, final Class<T> returnType) throws RemoteException {
         return (T) this.invoke(methodName, paras, returnType.getSimpleName());
     }
 
@@ -119,7 +122,7 @@ public abstract class WSClient {
         return (T) this.invoke(methodName, paras, (String) null);
     }
 
-    public <T> List<T> invokeWithListReturn(final String methodName, final List<Argument> paras, final Class<?> returnType) throws RemoteException {
+    public <T> List<T> invokeWithListReturn(final String methodName, final List<Argument> paras, final Class<T> returnType) throws RemoteException {
         return (List<T>) this.invoke(methodName, paras, "List." + returnType.getSimpleName());
     }
 
@@ -146,6 +149,9 @@ public abstract class WSClient {
       "7.0.1"     vSphere 7.0u1
       "7.0.2"     vSphere 7.0u2
       "7.0.3"     vSphere 7.0u3
+      "8.0.0"     vSphere 8.0
+      "8.0.1"     vSphere 8.0u1
+      "8.0.2"     vSphere 8.0u2
       ===============================================*/
     public void setSoapActionOnApiVersion(final String apiVersion) {
         switch (apiVersion) {
@@ -191,8 +197,17 @@ public abstract class WSClient {
             case "7.0.3.0":
                 soapAction = SOAP_ACTION_V703;
                 break;
+            case "8.0.0.0":
+                soapAction = SOAP_ACTION_V800;
+                break;
+//            case "8.0.1.0":
+//                soapAction = SOAP_ACTION_V801;
+//                break;
+//            case "8.0.2.0":
+//                soapAction = SOAP_ACTION_V802;
+//                break;
             default:
-                soapAction = SOAP_ACTION_V70;
+                soapAction = SOAP_ACTION_V800;
         }
     }
 

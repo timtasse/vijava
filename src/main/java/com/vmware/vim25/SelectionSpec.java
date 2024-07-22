@@ -30,19 +30,25 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
 public class SelectionSpec extends DynamicData {
-  public String name;
 
-  public String getName() {
-    return this.name;
-  }
+    private String name;
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public static SelectionSpec create(final String name) {
+        final var spec = new SelectionSpec();
+        spec.setName(name);
+        return spec;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
 }

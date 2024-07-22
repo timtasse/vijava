@@ -4,21 +4,23 @@ package com.vmware.vim25;
  * This data object describes the virtual software guard extension (vSGX) configuration of this virtual machine.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @since 7.0
+ * @since 8.0.0
  */
 public class VirtualMachineSgxInfo extends DynamicData {
 
     private long epcSize;
-    private String flcMode;
+    private VirtualMachineSgxInfoFlcModes flcMode;
     private String lePubKeyHash;
+    private Boolean requireAttestation;
 
     @Override
     public String toString() {
         return "VirtualMachineSgxInfo{" +
                 "epcSize=" + epcSize +
-                ", flcMode='" + flcMode + '\'' +
+                ", flcMode=" + flcMode +
                 ", lePubKeyHash='" + lePubKeyHash + '\'' +
-                "} " + super.toString();
+                ", requireAttestation=" + requireAttestation +
+                '}';
     }
 
     public long getEpcSize() {
@@ -29,11 +31,11 @@ public class VirtualMachineSgxInfo extends DynamicData {
         this.epcSize = epcSize;
     }
 
-    public String getFlcMode() {
+    public VirtualMachineSgxInfoFlcModes getFlcMode() {
         return flcMode;
     }
 
-    public void setFlcMode(final String flcMode) {
+    public void setFlcMode(final VirtualMachineSgxInfoFlcModes flcMode) {
         this.flcMode = flcMode;
     }
 
@@ -43,6 +45,14 @@ public class VirtualMachineSgxInfo extends DynamicData {
 
     public void setLePubKeyHash(final String lePubKeyHash) {
         this.lePubKeyHash = lePubKeyHash;
+    }
+
+    public Boolean getRequireAttestation() {
+        return requireAttestation;
+    }
+
+    public void setRequireAttestation(final Boolean requireAttestation) {
+        this.requireAttestation = requireAttestation;
     }
 
 }

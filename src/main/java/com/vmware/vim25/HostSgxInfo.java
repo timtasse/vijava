@@ -4,14 +4,17 @@ package com.vmware.vim25;
  * Data object describing the Software Guard Extension (SGX) configuration on the ESXi host.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
  * @since 7.0
  */
+@SuppressWarnings("unused")
 public class HostSgxInfo extends DynamicData {
 
     private String sgxState;
     private long totalEpcMemory;
     private String flcMode;
     private String lePubKeyHash;
+    private HostSgxRegistrationInfo registrationInfo;
 
     @Override
     public String toString() {
@@ -20,7 +23,16 @@ public class HostSgxInfo extends DynamicData {
                 ", totalEpcMemory=" + totalEpcMemory +
                 ", flcMode='" + flcMode + '\'' +
                 ", lePubKeyHash='" + lePubKeyHash + '\'' +
-                "} " + super.toString();
+                ", registrationInfo=" + registrationInfo +
+                '}';
+    }
+
+    public HostSgxRegistrationInfo getRegistrationInfo() {
+        return registrationInfo;
+    }
+
+    public void setRegistrationInfo(final HostSgxRegistrationInfo registrationInfo) {
+        this.registrationInfo = registrationInfo;
     }
 
     public String getSgxState() {

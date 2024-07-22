@@ -29,29 +29,38 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.Arrays;
+import java.util.List;
+
+import static org.doublecloud.ws.util.TypeUtil.asNullSafeList;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.1
+ */
 public class RetrieveResult extends DynamicData {
-  public String token;
-  public ObjectContent[] objects;
 
-  public String getToken() {
-    return this.token;
-  }
+    private String token;
+    private ObjectContent[] objects;
 
-  public ObjectContent[] getObjects() {
-    return this.objects;
-  }
+    public String getToken() {
+        return this.token;
+    }
 
-  public void setToken(String token) {
-    this.token=token;
-  }
+    public ObjectContent[] getObjects() {
+        return this.objects;
+    }
 
-  public void setObjects(ObjectContent[] objects) {
-    this.objects=objects;
-  }
+    public List<ObjectContent> getObjectList() {
+        return asNullSafeList(this.objects);
+    }
+
+    public void setToken(final String token) {
+        this.token = token;
+    }
+
+    public void setObjects(final ObjectContent[] objects) {
+        this.objects = objects;
+    }
 }

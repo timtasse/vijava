@@ -1,16 +1,23 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 01.04.2018
- *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.0
  */
 public class VirtualEthernetCardResourceAllocation extends DynamicData {
 
-    public Long reservation;
-    public SharesInfo share;
-    public Long limit;
+    private Long reservation;
+    private SharesInfo share;
+    private Long limit;
+
+    @Override
+    public String toString() {
+        return "VirtualEthernetCardResourceAllocation{" +
+                "reservation=" + reservation +
+                ", share=" + share +
+                ", limit=" + limit +
+                '}';
+    }
 
     public Long getLimit() {
         return limit;
@@ -35,4 +42,5 @@ public class VirtualEthernetCardResourceAllocation extends DynamicData {
     public void setShare(final SharesInfo share) {
         this.share = share;
     }
+
 }

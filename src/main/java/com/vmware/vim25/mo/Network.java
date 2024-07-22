@@ -35,32 +35,29 @@ import com.vmware.vim25.ResourceInUse;
 import com.vmware.vim25.RuntimeFault;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  * The managed object class corresponding to the one defined in VI SDK API reference.
  *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
-
 public class Network extends ManagedEntity {
 
-    public Network(ServerConnection serverConnection, ManagedObjectReference mor) {
+    public Network(final ServerConnection serverConnection, final ManagedObjectReference mor) {
         super(serverConnection, mor);
     }
 
-    public HostSystem[] getHosts() {
+    public List<HostSystem> getHosts() {
         return getHosts("host");
     }
 
-    public String getName() {
-        return (String) getCurrentProperty("name");
-    }
-
     public NetworkSummary getSummary() {
-        return (NetworkSummary) getCurrentProperty("summary");
+        return getCurrentProperty("summary", NetworkSummary.class);
     }
 
-    public VirtualMachine[] getVms() {
+    public List<VirtualMachine> getVms() {
         return getVms("vm");
     }
 

@@ -29,38 +29,63 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.List;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * Data object representing the status of the hardware components of the host.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
+ */
+@SuppressWarnings("unused")
 public class HostHardwareStatusInfo extends DynamicData {
-  public HostHardwareElementInfo[] memoryStatusInfo;
-  public HostHardwareElementInfo[] cpuStatusInfo;
-  public HostStorageElementInfo[] storageStatusInfo;
 
-  public HostHardwareElementInfo[] getMemoryStatusInfo() {
-    return this.memoryStatusInfo;
-  }
+    private List<HostHardwareElementInfo> memoryStatusInfo = List.of();
+    private List<HostHardwareElementInfo> cpuStatusInfo = List.of();
+    private List<HostStorageElementInfo> storageStatusInfo = List.of();
+    private List<DpuStatusInfo> dpuStatusInfo = List.of();
 
-  public HostHardwareElementInfo[] getCpuStatusInfo() {
-    return this.cpuStatusInfo;
-  }
+    @Override
+    public String toString() {
+        return "HostHardwareStatusInfo{" +
+                "memoryStatusInfo=" + memoryStatusInfo +
+                ", cpuStatusInfo=" + cpuStatusInfo +
+                ", storageStatusInfo=" + storageStatusInfo +
+                ", dpuStatusInfo=" + dpuStatusInfo +
+                '}';
+    }
 
-  public HostStorageElementInfo[] getStorageStatusInfo() {
-    return this.storageStatusInfo;
-  }
+    public List<HostHardwareElementInfo> getMemoryStatusInfo() {
+        return memoryStatusInfo;
+    }
 
-  public void setMemoryStatusInfo(HostHardwareElementInfo[] memoryStatusInfo) {
-    this.memoryStatusInfo=memoryStatusInfo;
-  }
+    public void setMemoryStatusInfo(final List<HostHardwareElementInfo> memoryStatusInfo) {
+        this.memoryStatusInfo = memoryStatusInfo;
+    }
 
-  public void setCpuStatusInfo(HostHardwareElementInfo[] cpuStatusInfo) {
-    this.cpuStatusInfo=cpuStatusInfo;
-  }
+    public List<HostHardwareElementInfo> getCpuStatusInfo() {
+        return cpuStatusInfo;
+    }
 
-  public void setStorageStatusInfo(HostStorageElementInfo[] storageStatusInfo) {
-    this.storageStatusInfo=storageStatusInfo;
-  }
+    public void setCpuStatusInfo(final List<HostHardwareElementInfo> cpuStatusInfo) {
+        this.cpuStatusInfo = cpuStatusInfo;
+    }
+
+    public List<HostStorageElementInfo> getStorageStatusInfo() {
+        return storageStatusInfo;
+    }
+
+    public void setStorageStatusInfo(final List<HostStorageElementInfo> storageStatusInfo) {
+        this.storageStatusInfo = storageStatusInfo;
+    }
+
+    public List<DpuStatusInfo> getDpuStatusInfo() {
+        return dpuStatusInfo;
+    }
+
+    public void setDpuStatusInfo(final List<DpuStatusInfo> dpuStatusInfo) {
+        this.dpuStatusInfo = dpuStatusInfo;
+    }
+
 }

@@ -34,7 +34,7 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.2
+ * @version 8.0.0
  */
 @SuppressWarnings("unused")
 public class VMwareDVSFeatureCapability extends DVSFeatureCapability {
@@ -47,6 +47,7 @@ public class VMwareDVSFeatureCapability extends DVSFeatureCapability {
     private Boolean multicastSnoopingSupported;
     private VMwareDVSVspanCapability vspanCapability;
     private VMwareDvsLacpCapability lacpCapability;
+    private VMwareDvsDpuCapability dpuCapability;
     private Boolean nsxSupported;
     private VMwareDvsMtuCapability mtuCapability;
 
@@ -60,9 +61,18 @@ public class VMwareDVSFeatureCapability extends DVSFeatureCapability {
                 ", multicastSnoopingSupported=" + multicastSnoopingSupported +
                 ", vspanCapability=" + vspanCapability +
                 ", lacpCapability=" + lacpCapability +
+                ", dpuCapability=" + dpuCapability +
                 ", nsxSupported=" + nsxSupported +
                 ", mtuCapability=" + mtuCapability +
-                '}';
+                "} " + super.toString();
+    }
+
+    public VMwareDvsDpuCapability getDpuCapability() {
+        return dpuCapability;
+    }
+
+    public void setDpuCapability(final VMwareDvsDpuCapability dpuCapability) {
+        this.dpuCapability = dpuCapability;
     }
 
     public Boolean getVspanSupported() {

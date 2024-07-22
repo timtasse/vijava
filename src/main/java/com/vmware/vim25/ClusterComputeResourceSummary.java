@@ -32,6 +32,8 @@ package com.vmware.vim25;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.doublecloud.ws.util.TypeUtil.asNullSafeList;
+
 /**
  * The ClusterComputeResourceSummary data object encapsulates runtime properties of a ClusterComputeResource.
  *
@@ -184,7 +186,7 @@ public class ClusterComputeResourceSummary extends ComputeResourceSummary {
     }
 
     public List<ClusterComputeResourceVcsSlots> getVcsSlots() {
-        return Arrays.asList(vcsSlots);
+        return asNullSafeList(vcsSlots);
     }
 
     public void setVcsSlots(final List<ClusterComputeResourceVcsSlots> vcsSlots) {

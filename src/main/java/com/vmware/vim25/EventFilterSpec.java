@@ -29,12 +29,14 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.List;
+
 /**
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
  * @version 6.5
  */
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class EventFilterSpec extends DynamicData {
 
     public EventFilterSpecByEntity entity;
@@ -44,18 +46,18 @@ public class EventFilterSpec extends DynamicData {
     public ManagedObjectReference alarm;
     public ManagedObjectReference scheduledTask;
     public Boolean disableFullMessage;
-    public String[] category;
+    public List<String> category;
     @Deprecated
-    public String[] type;
-    public String[] tag;
-    public String[] eventTypeId;
+    public List<String> type;
+    public List<String> tag;
+    public List<String> eventTypeId;
     public Integer maxCount;
 
     public EventFilterSpecByEntity getEntity() {
         return this.entity;
     }
 
-    public void setEntity(EventFilterSpecByEntity entity) {
+    public void setEntity(final EventFilterSpecByEntity entity) {
         this.entity = entity;
     }
 
@@ -63,7 +65,7 @@ public class EventFilterSpec extends DynamicData {
         return this.time;
     }
 
-    public void setTime(EventFilterSpecByTime time) {
+    public void setTime(final EventFilterSpecByTime time) {
         this.time = time;
     }
 
@@ -71,7 +73,7 @@ public class EventFilterSpec extends DynamicData {
         return this.userName;
     }
 
-    public void setUserName(EventFilterSpecByUsername userName) {
+    public void setUserName(final EventFilterSpecByUsername userName) {
         this.userName = userName;
     }
 
@@ -79,7 +81,7 @@ public class EventFilterSpec extends DynamicData {
         return this.eventChainId;
     }
 
-    public void setEventChainId(int eventChainId) {
+    public void setEventChainId(final int eventChainId) {
         this.eventChainId = eventChainId;
     }
 
@@ -87,7 +89,7 @@ public class EventFilterSpec extends DynamicData {
         return this.alarm;
     }
 
-    public void setAlarm(ManagedObjectReference alarm) {
+    public void setAlarm(final ManagedObjectReference alarm) {
         this.alarm = alarm;
     }
 
@@ -95,51 +97,51 @@ public class EventFilterSpec extends DynamicData {
         return this.scheduledTask;
     }
 
-    public void setScheduledTask(ManagedObjectReference scheduledTask) {
+    public void setScheduledTask(final ManagedObjectReference scheduledTask) {
         this.scheduledTask = scheduledTask;
     }
 
-    public String[] getCategory() {
+    public List<String> getCategory() {
         return this.category;
     }
 
-    public void setCategory(String[] category) {
+    public void setCategory(final List<String> category) {
         this.category = category;
     }
 
     @Deprecated
-    public String[] getType() {
+    public List<String> getType() {
         return this.type;
     }
 
     @Deprecated
-    public void setType(String[] type) {
+    public void setType(final List<String> type) {
         this.type = type;
     }
 
-    public String[] getTag() {
+    public List<String> getTag() {
         return this.tag;
     }
 
-    public void setTag(String[] tag) {
+    public void setTag(final List<String> tag) {
         this.tag = tag;
     }
 
-    public String[] getEventTypeId() {
+    public List<String> getEventTypeId() {
         return this.eventTypeId;
     }
 
-    public void setEventTypeId(String[] eventTypeId) {
+    public void setEventTypeId(final List<String> eventTypeId) {
         this.eventTypeId = eventTypeId;
     }
 
-//    public boolean isDisableFullMessage() {
-//        return disableFullMessage;
-//    }
-//
-//    public void setDisableFullMessage(boolean disableFullMessage) {
-//        this.disableFullMessage = disableFullMessage;
-//    }
+    public boolean isDisableFullMessage() {
+        return disableFullMessage;
+    }
+
+    public void setDisableFullMessage(final boolean disableFullMessage) {
+        this.disableFullMessage = disableFullMessage;
+    }
 
     public int getMaxCount() {
         return maxCount;
@@ -148,4 +150,5 @@ public class EventFilterSpec extends DynamicData {
     public void setMaxCount(final int maxCount) {
         this.maxCount = maxCount;
     }
+
 }

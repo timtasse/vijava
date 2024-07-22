@@ -34,24 +34,25 @@ import com.vmware.vim25.RuntimeFault;
 import com.vmware.vim25.mo.util.MorUtil;
 
 import java.rmi.RemoteException;
+import java.util.List;
 
 /**
  * The managed object class corresponding to the one defined in VI SDK API reference.
  *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
-
 public class ViewManager extends ManagedObject {
 
-    public ViewManager(ServerConnection sc, ManagedObjectReference mor) {
+    public ViewManager(final ServerConnection sc, final ManagedObjectReference mor) {
         super(sc, mor);
     }
 
-    public View[] getViewList() {
+    public List<View> getViewList() {
         return getViews("viewList");
     }
 
-    public ContainerView createContainerView(ManagedEntity container, String[] type, boolean recursive) throws RuntimeFault, RemoteException {
+    public ContainerView createContainerView(final ManagedEntity container, final String[] type, final boolean recursive) throws RuntimeFault, RemoteException {
         if (container == null) {
             throw new IllegalArgumentException("container must not be null.");
         }
@@ -64,16 +65,16 @@ public class ViewManager extends ManagedObject {
                 getVimService().createInventoryView(getMOR()));
     }
 
-    public ListView createListView(ManagedObject[] mos) throws RuntimeFault, RemoteException {
+    public ListView createListView(final ManagedObject[] mos) throws RuntimeFault, RemoteException {
         return new ListView(getServerConnection(),
                 getVimService().createListView(getMOR(), mos == null ? null : MorUtil.createMORs(mos)));
     }
 
-    public ListView createListViewFromView(View view) throws RuntimeFault, RemoteException {
+    public ListView createListViewFromView(final View view) throws RuntimeFault, RemoteException {
         if (view == null) {
             throw new IllegalArgumentException("view must not be null.");
         }
-        ManagedObjectReference mor = getVimService().createListViewFromView(getMOR(), view.getMOR());
+        final ManagedObjectReference mor = getVimService().createListViewFromView(getMOR(), view.getMOR());
         return new ListView(getServerConnection(), mor);
     }
 

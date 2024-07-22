@@ -76,7 +76,7 @@ public class ResourcePool extends ManagedEntity {
     }
 
     public List<ResourcePool> getResourcePools() {
-        return Arrays.asList(getResourcePools("resourcePool"));
+        return getResourcePools("resourcePool");
     }
 
     public ResourcePoolRuntimeInfo getRuntime() {
@@ -88,7 +88,7 @@ public class ResourcePool extends ManagedEntity {
     }
 
     public List<VirtualMachine> getVMs() {
-        return Arrays.asList(getVms("vm"));
+        return getVms("vm");
     }
 
     public Task createChildVM(final VirtualMachineConfigSpec config, final ManagedObjectReference host)

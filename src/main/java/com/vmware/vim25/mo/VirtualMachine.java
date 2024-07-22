@@ -67,7 +67,7 @@ public class VirtualMachine extends ManagedEntity {
     }
 
     public List<Datastore> getDatastores() {
-        return Arrays.asList(this.getDatastores("datastore"));
+        return this.getDatastores("datastore");
     }
 
     public EnvironmentBrowser getEnvironmentBrowser() {
@@ -92,7 +92,7 @@ public class VirtualMachine extends ManagedEntity {
     }
 
     public List<Network> getNetworks() {
-        return Arrays.asList(this.getNetworks("network"));
+        return this.getNetworks("network");
     }
 
     public ManagedEntity getParentVApp() {

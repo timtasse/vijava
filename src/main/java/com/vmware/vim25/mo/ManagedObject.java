@@ -29,7 +29,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25.mo;
 
-import com.vmware.vim25.*;
+import com.vmware.vim25.DynamicProperty;
+import com.vmware.vim25.ManagedObjectReference;
+import com.vmware.vim25.ObjectContent;
+import com.vmware.vim25.PropertyFilterSpec;
 import com.vmware.vim25.mo.util.MorUtil;
 import com.vmware.vim25.mo.util.PropertyCollectorUtil;
 import com.vmware.vim25.ws.Argument;
@@ -40,8 +43,10 @@ import org.slf4j.LoggerFactory;
 import java.lang.reflect.Array;
 import java.lang.reflect.Constructor;
 import java.rmi.RemoteException;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * This class is intended to provide a wrapper around a managed object class.
@@ -51,6 +56,7 @@ import java.util.List;
  * abstraction.
  *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
 public abstract class ManagedObject {
 
@@ -76,13 +82,12 @@ public abstract class ManagedObject {
      * Use this constructor when you can re-use existing web service connection.
      *
      * @param serverConnection the existing ServerConnection
-     * @param mor the ManagedObjectReference
+     * @param mor              the ManagedObjectReference
      */
-    public ManagedObject(final ServerConnection serverConnection, final ManagedObjectReference mor) {
+    protected ManagedObject(final ServerConnection serverConnection, final ManagedObjectReference mor) {
         this.serverConnection = serverConnection;
         this.mor = mor;
     }
-
 
     /**
      * Set the ManagedObjectReference object pointing to the managed object
@@ -136,7 +141,7 @@ public abstract class ManagedObject {
 
         final ObjectContent[] objs;
         try {
-            objs = pc.retrievePropertiesEx(new PropertyFilterSpec[]{pfSpec}, null).getObjects();
+            objs = pc.retrievePropertiesEx(List.of(pfSpec), null).getObjects();
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
@@ -217,81 +222,52 @@ public abstract class ManagedObject {
         return getManagedObjects(propName, false);
     }
 
-    protected Datastore[] getDatastores(final String propName) {
-        final Object[] objs = getManagedObjects(propName);
-        if (objs.length == 0) {
-            return new Datastore[]{};
-        }
-        return (Datastore[]) objs;
+    protected List<Datastore> getDatastores(final String propName) {
+        return Arrays.stream(this.getManagedObjects(propName))
+                .map(Datastore.class::cast)
+                .collect(Collectors.toList());
     }
 
-    protected Network[] getNetworks(final String propName) {
-        final Object[] objs = getManagedObjects(propName, true);
-        if (objs.length == 0) {
-            return new Network[]{};
-        }
-        final Network[] nets = new Network[objs.length];
-        for (int i = 0; i < objs.length; i++) {
-            nets[i] = (Network) objs[i];
-        }
-        return nets;
+    protected List<Network> getNetworks(final String propName) {
+        return Arrays.stream(getManagedObjects(propName, true))
+                .map(Network.class::cast)
+                .collect(Collectors.toList());
     }
 
-    protected VirtualMachine[] getVms(final String propName) {
-        final ManagedObject[] objs = getManagedObjects(propName);
-        if (objs.length == 0) {
-            return new VirtualMachine[]{};
-        }
-        return (VirtualMachine[]) objs;
+    protected List<VirtualMachine> getVms(final String propName) {
+        return Arrays.stream(this.getManagedObjects(propName))
+                .map(VirtualMachine.class::cast)
+                .collect(Collectors.toList());
     }
 
-    protected PropertyFilter[] getFilter(final String propName) {
-        final Object[] objs = getManagedObjects(propName);
-        if (objs.length == 0) {
-            return new PropertyFilter[]{};
-        }
-        return (PropertyFilter[]) objs;
+    protected List<ResourcePool> getResourcePools(final String propName) {
+        return Arrays.stream(this.getManagedObjects(propName, true))
+                .map(ResourcePool.class::cast)
+                .collect(Collectors.toList());
     }
 
-    protected ResourcePool[] getResourcePools(final String propName) {
-        final Object[] objs = getManagedObjects(propName, true);
-        final ResourcePool[] rps = new ResourcePool[objs.length];
-        for (int i = 0; i < rps.length; i++) {
-            rps[i] = (ResourcePool) objs[i];
-        }
-        return rps;
+    protected List<Task> getTasks(final String propName) {
+        return Arrays.stream(this.getManagedObjects(propName))
+                .map(Task.class::cast)
+                .collect(Collectors.toList());
     }
 
-    protected Task[] getTasks(final String propName) {
-        final Object[] objs = getManagedObjects(propName);
-        if (objs.length == 0) {
-            return new Task[]{};
-        }
-        return (Task[]) objs;
+    protected List<ScheduledTask> getScheduledTasks(final String propName) {
+        return Arrays.stream(this.getManagedObjects(propName))
+                .map(ScheduledTask.class::cast)
+                .collect(Collectors.toList());
     }
 
-    protected ScheduledTask[] getScheduledTasks(final String propName) {
-        final Object[] objs = getManagedObjects(propName);
-        if (objs.length == 0) {
-            return new ScheduledTask[]{};
-        }
-        return (ScheduledTask[]) objs;
+    protected List<View> getViews(final String propName) {
+        return Arrays.stream(this.getManagedObjects(propName))
+                .map(View.class::cast)
+                .collect(Collectors.toList());
     }
 
-    protected View[] getViews(final String propName) {
-        final Object[] objs = getManagedObjects(propName);
-        if (objs.length == 0) {
-            return new View[]{};
-        }
-        return (View[]) objs;
-    }
-
-    protected HostSystem[] getHosts(final String propName) {
-        final Object[] objs = getManagedObjects(propName);
-        if (objs.length == 0) {
-            return new HostSystem[]{};
-        }
-        return (HostSystem[]) objs;
+    protected List<HostSystem> getHosts(final String propName) {
+        return Arrays.stream(this.getManagedObjects(propName))
+                .map(HostSystem.class::cast)
+                .collect(Collectors.toList());
     }
 
     protected ManagedObject getManagedObject(final String propName) {

@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Steve Jin (http://www.doublecloud.org)
@@ -42,11 +43,11 @@ public class ObjectSpec extends DynamicData {
     private Boolean skip;
     private SelectionSpec[] selectSet;
 
-    public static ObjectSpec create(final ManagedObjectReference obj, final Boolean skip, final SelectionSpec[] selectSet) {
+    public static ObjectSpec create(final ManagedObjectReference obj, final Boolean skip, final List<TraversalSpec> selectSet) {
         final ObjectSpec spec = new ObjectSpec();
         spec.obj = obj;
         spec.skip = skip;
-        spec.selectSet = selectSet;
+        spec.selectSet = selectSet.toArray(new SelectionSpec[0]);
         return spec;
     }
 
@@ -56,7 +57,7 @@ public class ObjectSpec extends DynamicData {
                 "obj=" + obj +
                 ", skip=" + skip +
                 ", selectSet=" + Arrays.toString(selectSet) +
-                "} " + super.toString();
+                "} ";
     }
 
     public ManagedObjectReference getObj() {

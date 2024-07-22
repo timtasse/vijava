@@ -105,7 +105,7 @@ public class ReflectUtil {
         if ("String[]".equals(type) || "string[]".equals(type)) {
             final String[] vals = new String[values.size()];
             return values.toArray(vals);
-        } else if ("int[]".equalsIgnoreCase(type)) {
+        } else if ("int[]".equalsIgnoreCase(type) || "Integer[]".equals(type)) {
             return toIntArray(values);
         } else if ("short[]".equalsIgnoreCase(type)) {
             return toShortArray(values);

@@ -30,76 +30,97 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
+ * Base class for numeric sensor information.
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
  */
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class HostNumericSensorInfo extends DynamicData {
 
-    public String baseUnits;
-    public long currentReading;
-    public ElementDescription healthState;
-    public String id;
-    public String name;
-    public String rateUnits;
-    public String sensorType;
-    public String timeStamp;
-    public int unitModifier;
+    private String name;
+    private ElementDescription healthState;
+    private long currentReading;
+    private int unitModifier;
+    private String baseUnits;
+    private String rateUnits;
+    private HostNumericSensorType sensorType;
+    private String id;
+    private Long sensorNumber;
+    private String timeStamp;
+    private HostFru fru;
 
-    public String getName() {
-        return this.name;
+    @Override
+    public String toString() {
+        return "HostNumericSensorInfo{" +
+                "name='" + name + '\'' +
+                ", healthState=" + healthState +
+                ", currentReading=" + currentReading +
+                ", unitModifier=" + unitModifier +
+                ", baseUnits='" + baseUnits + '\'' +
+                ", rateUnits='" + rateUnits + '\'' +
+                ", sensorType=" + sensorType +
+                ", id='" + id + '\'' +
+                ", sensorNumber=" + sensorNumber +
+                ", timeStamp='" + timeStamp + '\'' +
+                ", fru=" + fru +
+                '}';
     }
 
-    public void setName(String name) {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(final String name) {
         this.name = name;
     }
 
     public ElementDescription getHealthState() {
-        return this.healthState;
+        return healthState;
     }
 
-    public void setHealthState(ElementDescription healthState) {
+    public void setHealthState(final ElementDescription healthState) {
         this.healthState = healthState;
     }
 
     public long getCurrentReading() {
-        return this.currentReading;
+        return currentReading;
     }
 
-    public void setCurrentReading(long currentReading) {
+    public void setCurrentReading(final long currentReading) {
         this.currentReading = currentReading;
     }
 
     public int getUnitModifier() {
-        return this.unitModifier;
+        return unitModifier;
     }
 
-    public void setUnitModifier(int unitModifier) {
+    public void setUnitModifier(final int unitModifier) {
         this.unitModifier = unitModifier;
     }
 
     public String getBaseUnits() {
-        return this.baseUnits;
+        return baseUnits;
     }
 
-    public void setBaseUnits(String baseUnits) {
+    public void setBaseUnits(final String baseUnits) {
         this.baseUnits = baseUnits;
     }
 
     public String getRateUnits() {
-        return this.rateUnits;
+        return rateUnits;
     }
 
-    public void setRateUnits(String rateUnits) {
+    public void setRateUnits(final String rateUnits) {
         this.rateUnits = rateUnits;
     }
 
-    public String getSensorType() {
-        return this.sensorType;
+    public HostNumericSensorType getSensorType() {
+        return sensorType;
     }
 
-    public void setSensorType(String sensorType) {
+    public void setSensorType(final HostNumericSensorType sensorType) {
         this.sensorType = sensorType;
     }
 
@@ -111,6 +132,14 @@ public class HostNumericSensorInfo extends DynamicData {
         this.id = id;
     }
 
+    public Long getSensorNumber() {
+        return sensorNumber;
+    }
+
+    public void setSensorNumber(final Long sensorNumber) {
+        this.sensorNumber = sensorNumber;
+    }
+
     public String getTimeStamp() {
         return timeStamp;
     }
@@ -118,4 +147,13 @@ public class HostNumericSensorInfo extends DynamicData {
     public void setTimeStamp(final String timeStamp) {
         this.timeStamp = timeStamp;
     }
+
+    public HostFru getFru() {
+        return fru;
+    }
+
+    public void setFru(final HostFru fru) {
+        this.fru = fru;
+    }
+
 }

@@ -1,17 +1,17 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * The VchaClusterConfigInfo class contains configuration information of the three nodes of a VCHA Cluster.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.5
  */
 public class VchaClusterConfigInfo extends DynamicData {
 
-    public FailoverNodeInfo failoverNodeInfo1;
-    public FailoverNodeInfo failoverNodeInfo2;
-    public String state;
-    public FailoverNodeInfo witnessNodeInfo;
+    private FailoverNodeInfo failoverNodeInfo1;
+    private FailoverNodeInfo failoverNodeInfo2;
+    private WitnessNodeInfo witnessNodeInfo;
+    private VchaState state;
 
     public FailoverNodeInfo getFailoverNodeInfo1() {
         return failoverNodeInfo1;
@@ -29,19 +29,19 @@ public class VchaClusterConfigInfo extends DynamicData {
         this.failoverNodeInfo2 = failoverNodeInfo2;
     }
 
-    public String getState() {
+    public VchaState getState() {
         return state;
     }
 
-    public void setState(final String state) {
+    public void setState(final VchaState state) {
         this.state = state;
     }
 
-    public FailoverNodeInfo getWitnessNodeInfo() {
+    public WitnessNodeInfo getWitnessNodeInfo() {
         return witnessNodeInfo;
     }
 
-    public void setWitnessNodeInfo(final FailoverNodeInfo witnessNodeInfo) {
+    public void setWitnessNodeInfo(final WitnessNodeInfo witnessNodeInfo) {
         this.witnessNodeInfo = witnessNodeInfo;
     }
 }

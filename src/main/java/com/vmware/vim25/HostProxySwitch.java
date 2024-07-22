@@ -29,15 +29,16 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * The HostProxySwitch is a software entity which represents the component of a DistributedVirtualSwitch on a particular host.
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 8.0.0
  */
+@SuppressWarnings("unused")
 public class HostProxySwitch extends DynamicData {
 
     private String dvsUuid;
@@ -46,19 +47,21 @@ public class HostProxySwitch extends DynamicData {
     private int numPorts;
     private Integer configNumPorts;
     private int numPortsAvailable;
-    private KeyValue[] uplinkPort;
+    private List<KeyValue> uplinkPort = List.of();
     private Integer mtu;
-    private String[] pnic;
+    private List<String> pnic = List.of();
     private HostProxySwitchSpec spec;
-    private HostProxySwitchHostLagConfig[] hostLag;
+    private List<HostProxySwitchHostLagConfig> hostLag = List.of();
     private Boolean networkReservationSupported;
     private Boolean nsxtEnabled;
     private Boolean ensEnabled;
     private Boolean ensInterruptEnabled;
-    private DistributedVirtualSwitchHostMemberTransportZoneInfo[] transportZones;
-    private String[] nsxUsedUplinkPort;
+    private List<DistributedVirtualSwitchHostMemberTransportZoneInfo> transportZones = List.of();
+    private List<String> nsxUsedUplinkPort = List.of();
     private String nsxtStatus;
     private String nsxtStatusDetail;
+    private HostProxySwitchEnsInfo ensInfo;
+    private Boolean networkOffloadingEnabled;
 
     @Override
     public String toString() {
@@ -69,115 +72,117 @@ public class HostProxySwitch extends DynamicData {
                 ", numPorts=" + numPorts +
                 ", configNumPorts=" + configNumPorts +
                 ", numPortsAvailable=" + numPortsAvailable +
-                ", uplinkPort=" + Arrays.toString(uplinkPort) +
+                ", uplinkPort=" + uplinkPort +
                 ", mtu=" + mtu +
-                ", pnic=" + Arrays.toString(pnic) +
+                ", pnic=" + pnic +
                 ", spec=" + spec +
-                ", hostLag=" + Arrays.toString(hostLag) +
+                ", hostLag=" + hostLag +
                 ", networkReservationSupported=" + networkReservationSupported +
                 ", nsxtEnabled=" + nsxtEnabled +
                 ", ensEnabled=" + ensEnabled +
                 ", ensInterruptEnabled=" + ensInterruptEnabled +
-                ", transportZones=" + Arrays.toString(transportZones) +
-                ", nsxUsedUplinkPort=" + Arrays.toString(nsxUsedUplinkPort) +
+                ", transportZones=" + transportZones +
+                ", nsxUsedUplinkPort=" + nsxUsedUplinkPort +
                 ", nsxtStatus='" + nsxtStatus + '\'' +
                 ", nsxtStatusDetail='" + nsxtStatusDetail + '\'' +
-                "} " + super.toString();
+                ", ensInfo=" + ensInfo +
+                ", networkOffloadingEnabled=" + networkOffloadingEnabled +
+                '}';
     }
 
     public String getDvsUuid() {
-        return this.dvsUuid;
+        return dvsUuid;
     }
 
-    public void setDvsUuid(String dvsUuid) {
+    public void setDvsUuid(final String dvsUuid) {
         this.dvsUuid = dvsUuid;
     }
 
     public String getDvsName() {
-        return this.dvsName;
+        return dvsName;
     }
 
-    public void setDvsName(String dvsName) {
+    public void setDvsName(final String dvsName) {
         this.dvsName = dvsName;
     }
 
     public String getKey() {
-        return this.key;
+        return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(final String key) {
         this.key = key;
     }
 
     public int getNumPorts() {
-        return this.numPorts;
+        return numPorts;
     }
 
-    public void setNumPorts(int numPorts) {
+    public void setNumPorts(final int numPorts) {
         this.numPorts = numPorts;
     }
 
     public Integer getConfigNumPorts() {
-        return this.configNumPorts;
+        return configNumPorts;
     }
 
-    public void setConfigNumPorts(Integer configNumPorts) {
+    public void setConfigNumPorts(final Integer configNumPorts) {
         this.configNumPorts = configNumPorts;
     }
 
     public int getNumPortsAvailable() {
-        return this.numPortsAvailable;
+        return numPortsAvailable;
     }
 
-    public void setNumPortsAvailable(int numPortsAvailable) {
+    public void setNumPortsAvailable(final int numPortsAvailable) {
         this.numPortsAvailable = numPortsAvailable;
     }
 
-    public KeyValue[] getUplinkPort() {
-        return this.uplinkPort;
+    public List<KeyValue> getUplinkPort() {
+        return uplinkPort;
     }
 
-    public void setUplinkPort(KeyValue[] uplinkPort) {
+    public void setUplinkPort(final List<KeyValue> uplinkPort) {
         this.uplinkPort = uplinkPort;
     }
 
     public Integer getMtu() {
-        return this.mtu;
+        return mtu;
     }
 
-    public void setMtu(Integer mtu) {
+    public void setMtu(final Integer mtu) {
         this.mtu = mtu;
     }
 
-    public String[] getPnic() {
-        return this.pnic;
+    public List<String> getPnic() {
+        return pnic;
     }
 
-    public void setPnic(String[] pnic) {
+    public void setPnic(final List<String> pnic) {
         this.pnic = pnic;
     }
 
     public HostProxySwitchSpec getSpec() {
-        return this.spec;
+        return spec;
     }
 
-    public void setSpec(HostProxySwitchSpec spec) {
+    public void setSpec(final HostProxySwitchSpec spec) {
         this.spec = spec;
     }
 
-    public HostProxySwitchHostLagConfig[] getHostLag() {
-        return this.hostLag;
+    public List<HostProxySwitchHostLagConfig> getHostLag() {
+        return hostLag;
     }
 
-    public void setHostLag(HostProxySwitchHostLagConfig[] hostLag) {
+    public void setHostLag(final List<HostProxySwitchHostLagConfig> hostLag) {
         this.hostLag = hostLag;
     }
 
     public Boolean getNetworkReservationSupported() {
-        return this.networkReservationSupported;
+        return networkReservationSupported;
     }
 
-    public void setNetworkReservationSupported(Boolean networkReservationSupported) {
+    public void setNetworkReservationSupported(final Boolean networkReservationSupported) {
         this.networkReservationSupported = networkReservationSupported;
     }
 
@@ -205,19 +210,19 @@ public class HostProxySwitch extends DynamicData {
         this.ensInterruptEnabled = ensInterruptEnabled;
     }
 
-    public DistributedVirtualSwitchHostMemberTransportZoneInfo[] getTransportZones() {
+    public List<DistributedVirtualSwitchHostMemberTransportZoneInfo> getTransportZones() {
         return transportZones;
     }
 
-    public void setTransportZones(final DistributedVirtualSwitchHostMemberTransportZoneInfo[] transportZones) {
+    public void setTransportZones(final List<DistributedVirtualSwitchHostMemberTransportZoneInfo> transportZones) {
         this.transportZones = transportZones;
     }
 
-    public String[] getNsxUsedUplinkPort() {
+    public List<String> getNsxUsedUplinkPort() {
         return nsxUsedUplinkPort;
     }
 
-    public void setNsxUsedUplinkPort(final String[] nsxUsedUplinkPort) {
+    public void setNsxUsedUplinkPort(final List<String> nsxUsedUplinkPort) {
         this.nsxUsedUplinkPort = nsxUsedUplinkPort;
     }
 
@@ -236,4 +241,21 @@ public class HostProxySwitch extends DynamicData {
     public void setNsxtStatusDetail(final String nsxtStatusDetail) {
         this.nsxtStatusDetail = nsxtStatusDetail;
     }
+
+    public HostProxySwitchEnsInfo getEnsInfo() {
+        return ensInfo;
+    }
+
+    public void setEnsInfo(final HostProxySwitchEnsInfo ensInfo) {
+        this.ensInfo = ensInfo;
+    }
+
+    public Boolean getNetworkOffloadingEnabled() {
+        return networkOffloadingEnabled;
+    }
+
+    public void setNetworkOffloadingEnabled(final Boolean networkOffloadingEnabled) {
+        this.networkOffloadingEnabled = networkOffloadingEnabled;
+    }
+
 }

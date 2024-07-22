@@ -30,10 +30,29 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The VirtualVmxnet3 data object type represents an instance of the Vmxnet3 virtual Ethernet adapter attached to a virtual machine
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.0
+ */
 public class VirtualVmxnet3 extends VirtualVmxnet {
+
+    private Boolean uptv2Enabled;
+
+    @Override
+    public String toString() {
+        return "VirtualVmxnet3{" +
+                "uptv2Enabled=" + uptv2Enabled +
+                "} " + super.toString();
+    }
+
+    public Boolean getUptv2Enabled() {
+        return uptv2Enabled;
+    }
+
+    public void setUptv2Enabled(final Boolean uptv2Enabled) {
+        this.uptv2Enabled = uptv2Enabled;
+    }
+
 }

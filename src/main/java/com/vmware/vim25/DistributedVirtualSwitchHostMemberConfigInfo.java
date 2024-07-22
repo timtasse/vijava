@@ -29,71 +29,74 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * The DistributedVirtualSwitchHostMemberConfigInfo data object contains membership configuration information for the ESXi host.
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 8.0.0
  */
 public class DistributedVirtualSwitchHostMemberConfigInfo extends DynamicData {
 
     private ManagedObjectReference host;
     private int maxProxySwitchPorts;
-    private DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig;
+    private List<DistributedVirtualSwitchKeyedOpaqueBlob> vendorSpecificConfig = Collections.emptyList();
     private DistributedVirtualSwitchHostMemberBacking backing;
     private Boolean nsxSwitch;
     private Boolean ensEnabled;
     private Boolean ensInterruptEnabled;
-    private DistributedVirtualSwitchHostMemberTransportZoneInfo[] transportZones;
-    private String[] nsxtUsedUplinkNames;
+    private List<DistributedVirtualSwitchHostMemberTransportZoneInfo> transportZones = Collections.emptyList();
+    private List<String> nsxtUsedUplinkNames = Collections.emptyList();
+    private Boolean networkOffloadingEnabled;
 
     @Override
     public String toString() {
         return "DistributedVirtualSwitchHostMemberConfigInfo{" +
                 "host=" + host +
                 ", maxProxySwitchPorts=" + maxProxySwitchPorts +
-                ", vendorSpecificConfig=" + Arrays.toString(vendorSpecificConfig) +
+                ", vendorSpecificConfig=" + vendorSpecificConfig +
                 ", backing=" + backing +
                 ", nsxSwitch=" + nsxSwitch +
                 ", ensEnabled=" + ensEnabled +
                 ", ensInterruptEnabled=" + ensInterruptEnabled +
-                ", transportZones=" + Arrays.toString(transportZones) +
-                ", nsxtUsedUplinkNames=" + Arrays.toString(nsxtUsedUplinkNames) +
-                "} " + super.toString();
+                ", transportZones=" + transportZones +
+                ", nsxtUsedUplinkNames=" + nsxtUsedUplinkNames +
+                ", networkOffloadingEnabled=" + networkOffloadingEnabled +
+                '}';
     }
 
     public ManagedObjectReference getHost() {
-        return this.host;
+        return host;
     }
 
-    public void setHost(ManagedObjectReference host) {
+    public void setHost(final ManagedObjectReference host) {
         this.host = host;
     }
 
     public int getMaxProxySwitchPorts() {
-        return this.maxProxySwitchPorts;
+        return maxProxySwitchPorts;
     }
 
-    public void setMaxProxySwitchPorts(int maxProxySwitchPorts) {
+    public void setMaxProxySwitchPorts(final int maxProxySwitchPorts) {
         this.maxProxySwitchPorts = maxProxySwitchPorts;
     }
 
-    public DistributedVirtualSwitchKeyedOpaqueBlob[] getVendorSpecificConfig() {
-        return this.vendorSpecificConfig;
+    public List<DistributedVirtualSwitchKeyedOpaqueBlob> getVendorSpecificConfig() {
+        return vendorSpecificConfig;
     }
 
-    public void setVendorSpecificConfig(DistributedVirtualSwitchKeyedOpaqueBlob[] vendorSpecificConfig) {
+    public void setVendorSpecificConfig(final List<DistributedVirtualSwitchKeyedOpaqueBlob> vendorSpecificConfig) {
         this.vendorSpecificConfig = vendorSpecificConfig;
     }
 
     public DistributedVirtualSwitchHostMemberBacking getBacking() {
-        return this.backing;
+        return backing;
     }
 
-    public void setBacking(DistributedVirtualSwitchHostMemberBacking backing) {
+    public void setBacking(final DistributedVirtualSwitchHostMemberBacking backing) {
         this.backing = backing;
     }
 
@@ -121,20 +124,28 @@ public class DistributedVirtualSwitchHostMemberConfigInfo extends DynamicData {
         this.ensInterruptEnabled = ensInterruptEnabled;
     }
 
-    public DistributedVirtualSwitchHostMemberTransportZoneInfo[] getTransportZones() {
+    public List<DistributedVirtualSwitchHostMemberTransportZoneInfo> getTransportZones() {
         return transportZones;
     }
 
-    public void setTransportZones(final DistributedVirtualSwitchHostMemberTransportZoneInfo[] transportZones) {
+    public void setTransportZones(final List<DistributedVirtualSwitchHostMemberTransportZoneInfo> transportZones) {
         this.transportZones = transportZones;
     }
 
-    public String[] getNsxtUsedUplinkNames() {
+    public List<String> getNsxtUsedUplinkNames() {
         return nsxtUsedUplinkNames;
     }
 
-    public void setNsxtUsedUplinkNames(final String[] nsxtUsedUplinkNames) {
+    public void setNsxtUsedUplinkNames(final List<String> nsxtUsedUplinkNames) {
         this.nsxtUsedUplinkNames = nsxtUsedUplinkNames;
+    }
+
+    public Boolean getNetworkOffloadingEnabled() {
+        return networkOffloadingEnabled;
+    }
+
+    public void setNetworkOffloadingEnabled(final Boolean networkOffloadingEnabled) {
+        this.networkOffloadingEnabled = networkOffloadingEnabled;
     }
 
 }

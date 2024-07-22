@@ -29,7 +29,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -38,7 +37,7 @@ import java.util.List;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk
- * @version 7.0.2.1
+ * @version 8.0.0
  */
 @SuppressWarnings("unused")
 public class VirtualDeviceConfigSpec extends DynamicData {
@@ -46,9 +45,10 @@ public class VirtualDeviceConfigSpec extends DynamicData {
     private VirtualDeviceConfigSpecOperation operation;
     private VirtualDeviceConfigSpecFileOperation fileOperation;
     private VirtualDevice device;
-    private VirtualMachineProfileSpec[] profile;
+    private List<VirtualMachineProfileSpec> profile;
     private VirtualDeviceConfigSpecBackingSpec backing;
-    private VirtualMachineBaseIndependentFilterSpec[] filterSpec;
+    private List<VirtualMachineBaseIndependentFilterSpec> filterSpec;
+    private String changeMode;
 
     @Override
     public String toString() {
@@ -56,10 +56,19 @@ public class VirtualDeviceConfigSpec extends DynamicData {
                 "operation=" + operation +
                 ", fileOperation=" + fileOperation +
                 ", device=" + device +
-                ", profile=" + Arrays.toString(profile) +
+                ", profile=" + profile +
                 ", backing=" + backing +
-                ", filterSpec=" + Arrays.toString(filterSpec) +
-                "} " + super.toString();
+                ", filterSpec=" + filterSpec +
+                ", changeMode='" + changeMode + '\'' +
+                '}';
+    }
+
+    public String getChangeMode() {
+        return changeMode;
+    }
+
+    public void setChangeMode(final String changeMode) {
+        this.changeMode = changeMode;
     }
 
     public VirtualDeviceConfigSpecOperation getOperation() {
@@ -86,11 +95,11 @@ public class VirtualDeviceConfigSpec extends DynamicData {
         this.device = device;
     }
 
-    public VirtualMachineProfileSpec[] getProfile() {
+    public List<VirtualMachineProfileSpec> getProfile() {
         return this.profile;
     }
 
-    public void setProfile(final VirtualMachineProfileSpec[] profile) {
+    public void setProfile(final List<VirtualMachineProfileSpec> profile) {
         this.profile = profile;
     }
 
@@ -103,11 +112,11 @@ public class VirtualDeviceConfigSpec extends DynamicData {
     }
 
     public List<VirtualMachineBaseIndependentFilterSpec> getFilterSpec() {
-        return Arrays.asList(filterSpec);
+        return filterSpec;
     }
 
     public void setFilterSpec(final List<VirtualMachineBaseIndependentFilterSpec> filterSpec) {
-        this.filterSpec = filterSpec.toArray(new VirtualMachineBaseIndependentFilterSpec[0]);
+        this.filterSpec = filterSpec;
     }
 
 }

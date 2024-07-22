@@ -44,19 +44,20 @@ public class HostHardwareInfo extends DynamicData {
     private HostSystemInfo systemInfo;
     private HostCpuPowerManagementInfo cpuPowerManagementInfo;
     private HostCpuInfo cpuInfo;
-    private List<HostCpuPackage> cpuPkg;
+    private List<HostCpuPackage> cpuPkg = List.of();
     private long memorySize;
     private HostNumaInfo numaInfo;
     private Boolean smcPresent;
-    private List<HostPciDevice> pciDevice;
-    private List<HostCpuIdInfo> cpuFeature;
+    private List<HostPciDevice> pciDevice = List.of();
+    private List<HostDvxClass> dvxClasses = List.of();
+    private List<HostCpuIdInfo> cpuFeature = List.of();
     private HostBIOSInfo biosInfo;
     private HostReliableMemoryInfo reliableMemoryInfo;
     private HostPersistentMemoryInfo persistentMemoryInfo;
     private HostSgxInfo sgxInfo;
     private HostSevInfo sevInfo;
     private HostMemoryTieringType memoryTieringType;
-    private List<HostMemoryTierInfo> memoryTierInfo;
+    private List<HostMemoryTierInfo> memoryTierInfo = List.of();
 
     @Override
     public String toString() {
@@ -69,6 +70,7 @@ public class HostHardwareInfo extends DynamicData {
                 ", numaInfo=" + numaInfo +
                 ", smcPresent=" + smcPresent +
                 ", pciDevice=" + pciDevice +
+                ", dvxClasses=" + dvxClasses +
                 ", cpuFeature=" + cpuFeature +
                 ", biosInfo=" + biosInfo +
                 ", reliableMemoryInfo=" + reliableMemoryInfo +
@@ -77,7 +79,15 @@ public class HostHardwareInfo extends DynamicData {
                 ", sevInfo=" + sevInfo +
                 ", memoryTieringType=" + memoryTieringType +
                 ", memoryTierInfo=" + memoryTierInfo +
-                "} " + super.toString();
+                '}';
+    }
+
+    public List<HostDvxClass> getDvxClasses() {
+        return dvxClasses;
+    }
+
+    public void setDvxClasses(final List<HostDvxClass> dvxClasses) {
+        this.dvxClasses = dvxClasses;
     }
 
     public HostSystemInfo getSystemInfo() {

@@ -64,7 +64,7 @@ public class Datacenter extends ManagedEntity {
     }
 
     public List<Datastore> getDatastores() {
-        return Arrays.asList(this.getDatastores("datastore"));
+        return this.getDatastores("datastore");
     }
 
     public Folder getDatastoreFolder() {
@@ -76,7 +76,7 @@ public class Datacenter extends ManagedEntity {
     }
 
     public List<Network> getNetworks() {
-        return Arrays.asList(this.getNetworks("network"));
+        return this.getNetworks("network");
     }
 
     public Folder getNetworkFolder() {

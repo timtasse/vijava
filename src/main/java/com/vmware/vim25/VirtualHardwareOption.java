@@ -29,22 +29,23 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * The VirtualHardwareOption data object contains the options available for all virtual devices.
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 8.0.0
  */
 public class VirtualHardwareOption extends DynamicData {
 
     private int hwVersion;
-    private VirtualDeviceOption[] virtualDeviceOption;
+    private List<VirtualDeviceOption> virtualDeviceOption;
     private boolean deviceListReadonly;
-    private int[] numCPU;
+    private List<Integer> numCPU;
     private IntOption numCoresPerSocket;
+    private BoolOption autoCoresPerSocket;
     private boolean numCpuReadonly;
     private LongOption memoryMB;
     private IntOption numPCIControllers;
@@ -53,7 +54,7 @@ public class VirtualHardwareOption extends DynamicData {
     private IntOption numUSBXHCIControllers;
     private IntOption numSIOControllers;
     private IntOption numPS2Controllers;
-    private String[] licensingLimit;
+    private List<String> licensingLimit = List.of();
     private IntOption numSupportedWwnPorts;
     private IntOption numSupportedWwnNodes;
     private ResourceConfigOption resourceConfigOption;
@@ -62,15 +63,21 @@ public class VirtualHardwareOption extends DynamicData {
     private IntOption numWDTDevices;
     private IntOption numPrecisionClockDevices;
     private LongOption epcMemoryMB;
+    private String acpiHostBridgesFirmware;
+    private IntOption numCpuSimultaneousThreads;
+    private IntOption numNumaNodes;
+    private IntOption numDeviceGroups;
+    private String deviceGroupTypes;
 
     @Override
     public String toString() {
         return "VirtualHardwareOption{" +
                 "hwVersion=" + hwVersion +
-                ", virtualDeviceOption=" + Arrays.toString(virtualDeviceOption) +
+                ", virtualDeviceOption=" + virtualDeviceOption +
                 ", deviceListReadonly=" + deviceListReadonly +
-                ", numCPU=" + Arrays.toString(numCPU) +
+                ", numCPU=" + numCPU +
                 ", numCoresPerSocket=" + numCoresPerSocket +
+                ", autoCoresPerSocket=" + autoCoresPerSocket +
                 ", numCpuReadonly=" + numCpuReadonly +
                 ", memoryMB=" + memoryMB +
                 ", numPCIControllers=" + numPCIControllers +
@@ -79,7 +86,7 @@ public class VirtualHardwareOption extends DynamicData {
                 ", numUSBXHCIControllers=" + numUSBXHCIControllers +
                 ", numSIOControllers=" + numSIOControllers +
                 ", numPS2Controllers=" + numPS2Controllers +
-                ", licensingLimit=" + Arrays.toString(licensingLimit) +
+                ", licensingLimit=" + licensingLimit +
                 ", numSupportedWwnPorts=" + numSupportedWwnPorts +
                 ", numSupportedWwnNodes=" + numSupportedWwnNodes +
                 ", resourceConfigOption=" + resourceConfigOption +
@@ -88,142 +95,155 @@ public class VirtualHardwareOption extends DynamicData {
                 ", numWDTDevices=" + numWDTDevices +
                 ", numPrecisionClockDevices=" + numPrecisionClockDevices +
                 ", epcMemoryMB=" + epcMemoryMB +
-                "} " + super.toString();
+                ", acpiHostBridgesFirmware='" + acpiHostBridgesFirmware + '\'' +
+                ", numCpuSimultaneousThreads=" + numCpuSimultaneousThreads +
+                ", numNumaNodes=" + numNumaNodes +
+                ", numDeviceGroups=" + numDeviceGroups +
+                ", deviceGroupTypes='" + deviceGroupTypes + '\'' +
+                '}';
     }
 
     public int getHwVersion() {
-        return this.hwVersion;
+        return hwVersion;
     }
 
-    public void setHwVersion(int hwVersion) {
+    public void setHwVersion(final int hwVersion) {
         this.hwVersion = hwVersion;
     }
 
-    public VirtualDeviceOption[] getVirtualDeviceOption() {
-        return this.virtualDeviceOption;
+    public List<VirtualDeviceOption> getVirtualDeviceOption() {
+        return virtualDeviceOption;
     }
 
-    public void setVirtualDeviceOption(VirtualDeviceOption[] virtualDeviceOption) {
+    public void setVirtualDeviceOption(final List<VirtualDeviceOption> virtualDeviceOption) {
         this.virtualDeviceOption = virtualDeviceOption;
     }
 
     public boolean isDeviceListReadonly() {
-        return this.deviceListReadonly;
+        return deviceListReadonly;
     }
 
-    public void setDeviceListReadonly(boolean deviceListReadonly) {
+    public void setDeviceListReadonly(final boolean deviceListReadonly) {
         this.deviceListReadonly = deviceListReadonly;
     }
 
-    public int[] getNumCPU() {
-        return this.numCPU;
+    public List<Integer> getNumCPU() {
+        return numCPU;
     }
 
-    public void setNumCPU(int[] numCPU) {
+    public void setNumCPU(final List<Integer> numCPU) {
         this.numCPU = numCPU;
     }
 
     public IntOption getNumCoresPerSocket() {
-        return this.numCoresPerSocket;
+        return numCoresPerSocket;
     }
 
-    public void setNumCoresPerSocket(IntOption numCoresPerSocket) {
+    public void setNumCoresPerSocket(final IntOption numCoresPerSocket) {
         this.numCoresPerSocket = numCoresPerSocket;
     }
 
-    public boolean isNumCpuReadonly() {
-        return this.numCpuReadonly;
+    public BoolOption getAutoCoresPerSocket() {
+        return autoCoresPerSocket;
     }
 
-    public void setNumCpuReadonly(boolean numCpuReadonly) {
+    public void setAutoCoresPerSocket(final BoolOption autoCoresPerSocket) {
+        this.autoCoresPerSocket = autoCoresPerSocket;
+    }
+
+    public boolean isNumCpuReadonly() {
+        return numCpuReadonly;
+    }
+
+    public void setNumCpuReadonly(final boolean numCpuReadonly) {
         this.numCpuReadonly = numCpuReadonly;
     }
 
     public LongOption getMemoryMB() {
-        return this.memoryMB;
+        return memoryMB;
     }
 
-    public void setMemoryMB(LongOption memoryMB) {
+    public void setMemoryMB(final LongOption memoryMB) {
         this.memoryMB = memoryMB;
     }
 
     public IntOption getNumPCIControllers() {
-        return this.numPCIControllers;
+        return numPCIControllers;
     }
 
-    public void setNumPCIControllers(IntOption numPCIControllers) {
+    public void setNumPCIControllers(final IntOption numPCIControllers) {
         this.numPCIControllers = numPCIControllers;
     }
 
     public IntOption getNumIDEControllers() {
-        return this.numIDEControllers;
+        return numIDEControllers;
     }
 
-    public void setNumIDEControllers(IntOption numIDEControllers) {
+    public void setNumIDEControllers(final IntOption numIDEControllers) {
         this.numIDEControllers = numIDEControllers;
     }
 
     public IntOption getNumUSBControllers() {
-        return this.numUSBControllers;
+        return numUSBControllers;
     }
 
-    public void setNumUSBControllers(IntOption numUSBControllers) {
+    public void setNumUSBControllers(final IntOption numUSBControllers) {
         this.numUSBControllers = numUSBControllers;
     }
 
     public IntOption getNumUSBXHCIControllers() {
-        return this.numUSBXHCIControllers;
+        return numUSBXHCIControllers;
     }
 
-    public void setNumUSBXHCIControllers(IntOption numUSBXHCIControllers) {
+    public void setNumUSBXHCIControllers(final IntOption numUSBXHCIControllers) {
         this.numUSBXHCIControllers = numUSBXHCIControllers;
     }
 
     public IntOption getNumSIOControllers() {
-        return this.numSIOControllers;
+        return numSIOControllers;
     }
 
-    public void setNumSIOControllers(IntOption numSIOControllers) {
+    public void setNumSIOControllers(final IntOption numSIOControllers) {
         this.numSIOControllers = numSIOControllers;
     }
 
     public IntOption getNumPS2Controllers() {
-        return this.numPS2Controllers;
+        return numPS2Controllers;
     }
 
-    public void setNumPS2Controllers(IntOption numPS2Controllers) {
+    public void setNumPS2Controllers(final IntOption numPS2Controllers) {
         this.numPS2Controllers = numPS2Controllers;
     }
 
-    public String[] getLicensingLimit() {
-        return this.licensingLimit;
+    public List<String> getLicensingLimit() {
+        return licensingLimit;
     }
 
-    public void setLicensingLimit(String[] licensingLimit) {
+    public void setLicensingLimit(final List<String> licensingLimit) {
         this.licensingLimit = licensingLimit;
     }
 
     public IntOption getNumSupportedWwnPorts() {
-        return this.numSupportedWwnPorts;
+        return numSupportedWwnPorts;
     }
 
-    public void setNumSupportedWwnPorts(IntOption numSupportedWwnPorts) {
+    public void setNumSupportedWwnPorts(final IntOption numSupportedWwnPorts) {
         this.numSupportedWwnPorts = numSupportedWwnPorts;
     }
 
     public IntOption getNumSupportedWwnNodes() {
-        return this.numSupportedWwnNodes;
+        return numSupportedWwnNodes;
     }
 
-    public void setNumSupportedWwnNodes(IntOption numSupportedWwnNodes) {
+    public void setNumSupportedWwnNodes(final IntOption numSupportedWwnNodes) {
         this.numSupportedWwnNodes = numSupportedWwnNodes;
     }
 
     public ResourceConfigOption getResourceConfigOption() {
-        return this.resourceConfigOption;
+        return resourceConfigOption;
     }
 
-    public void setResourceConfigOption(ResourceConfigOption resourceConfigOption) {
+    public void setResourceConfigOption(final ResourceConfigOption resourceConfigOption) {
         this.resourceConfigOption = resourceConfigOption;
     }
 
@@ -265,6 +285,46 @@ public class VirtualHardwareOption extends DynamicData {
 
     public void setEpcMemoryMB(final LongOption epcMemoryMB) {
         this.epcMemoryMB = epcMemoryMB;
+    }
+
+    public String getAcpiHostBridgesFirmware() {
+        return acpiHostBridgesFirmware;
+    }
+
+    public void setAcpiHostBridgesFirmware(final String acpiHostBridgesFirmware) {
+        this.acpiHostBridgesFirmware = acpiHostBridgesFirmware;
+    }
+
+    public IntOption getNumCpuSimultaneousThreads() {
+        return numCpuSimultaneousThreads;
+    }
+
+    public void setNumCpuSimultaneousThreads(final IntOption numCpuSimultaneousThreads) {
+        this.numCpuSimultaneousThreads = numCpuSimultaneousThreads;
+    }
+
+    public IntOption getNumNumaNodes() {
+        return numNumaNodes;
+    }
+
+    public void setNumNumaNodes(final IntOption numNumaNodes) {
+        this.numNumaNodes = numNumaNodes;
+    }
+
+    public IntOption getNumDeviceGroups() {
+        return numDeviceGroups;
+    }
+
+    public void setNumDeviceGroups(final IntOption numDeviceGroups) {
+        this.numDeviceGroups = numDeviceGroups;
+    }
+
+    public String getDeviceGroupTypes() {
+        return deviceGroupTypes;
+    }
+
+    public void setDeviceGroupTypes(final String deviceGroupTypes) {
+        this.deviceGroupTypes = deviceGroupTypes;
     }
 
 }

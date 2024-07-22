@@ -70,7 +70,7 @@ public final class Argument {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
@@ -78,7 +78,7 @@ public final class Argument {
         return value;
     }
 
-    public void setValue(Object value) {
+    public void setValue(final Object value) {
         this.value = value;
     }
 
@@ -86,7 +86,7 @@ public final class Argument {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(final String type) {
         this.type = type;
     }
 }

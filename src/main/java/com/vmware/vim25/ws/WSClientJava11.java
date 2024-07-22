@@ -23,7 +23,7 @@ public class WSClientJava11 extends WSClient {
     private HttpClient client;
 
     WSClientJava11(final URL serverUrl, final boolean ignoreCert, final int connectTimeout, final int socketTimeout) {
-        super(serverUrl, ignoreCert);
+        super(serverUrl);
         final HttpClient.Builder builder = HttpClient.newBuilder()
                 .cookieHandler(new CookieManager())
                 .connectTimeout(Duration.ofMillis(connectTimeout));

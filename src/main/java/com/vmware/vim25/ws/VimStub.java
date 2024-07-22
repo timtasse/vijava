@@ -37,6 +37,7 @@ import java.util.Calendar;
 
 /**
  * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @version 5.1
  */
 public class VimStub {
@@ -59,83 +60,6 @@ public class VimStub {
         final Argument[] paras = new Argument[1];
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
         wsc.invoke("DestroyPropertyFilter", paras, null);
-    }
-
-    public ManagedObjectReference createFilter(final ManagedObjectReference _this, final PropertyFilterSpec spec, final boolean partialUpdates) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("spec", "PropertyFilterSpec", spec);
-        paras[2] = new Argument("partialUpdates", "boolean", partialUpdates);
-        return (ManagedObjectReference) wsc.invoke("CreateFilter", paras, "ManagedObjectReference");
-    }
-
-    public ObjectContent[] retrieveProperties(final ManagedObjectReference _this, final PropertyFilterSpec[] specSet) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("specSet", "PropertyFilterSpec[]", specSet);
-        return (ObjectContent[]) wsc.invoke("RetrieveProperties", paras, "ObjectContent[]");
-    }
-
-    public UpdateSet checkForUpdates(final ManagedObjectReference _this, final String version) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("version", "String", version);
-        return (UpdateSet) wsc.invoke("CheckForUpdates", paras, "UpdateSet");
-    }
-
-    public UpdateSet waitForUpdates(final ManagedObjectReference _this, final String version) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("version", "String", version);
-        return (UpdateSet) wsc.invoke("WaitForUpdates", paras, "UpdateSet");
-    }
-
-    public void cancelWaitForUpdates(final ManagedObjectReference _this) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        wsc.invoke("CancelWaitForUpdates", paras, null);
-    }
-
-    public UpdateSet waitForUpdatesEx(final ManagedObjectReference _this, final String version, final WaitOptions options) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("version", "String", version);
-        paras[2] = new Argument("options", "WaitOptions", options);
-        return (UpdateSet) wsc.invoke("WaitForUpdatesEx", paras, "UpdateSet");
-    }
-
-    public RetrieveResult retrievePropertiesEx(final ManagedObjectReference _this, final PropertyFilterSpec[] specSet, final RetrieveOptions options) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("specSet", "PropertyFilterSpec[]", specSet);
-        paras[2] = new Argument("options", "RetrieveOptions", options);
-        return (RetrieveResult) wsc.invoke("RetrievePropertiesEx", paras, "RetrieveResult");
-    }
-
-    public RetrieveResult continueRetrievePropertiesEx(final ManagedObjectReference _this, final String token) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("token", "String", token);
-        return (RetrieveResult) wsc.invoke("ContinueRetrievePropertiesEx", paras, "RetrieveResult");
-    }
-
-    public void cancelRetrievePropertiesEx(final ManagedObjectReference _this, final String token) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("token", "String", token);
-        wsc.invoke("CancelRetrievePropertiesEx", paras, null);
-    }
-
-    public ManagedObjectReference createPropertyCollector(final ManagedObjectReference _this) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        return (ManagedObjectReference) wsc.invoke("CreatePropertyCollector", paras, "ManagedObjectReference");
-    }
-
-    public void destroyPropertyCollector(final ManagedObjectReference _this) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        wsc.invoke("DestroyPropertyCollector", paras, null);
     }
 
     public int addAuthorizationRole(final ManagedObjectReference _this, final String name, final String[] privIds) throws java.rmi.RemoteException {
@@ -750,23 +674,11 @@ public class VimStub {
         wsc.invoke("RemoveLicenseLabel", paras, null);
     }
 
-    public void reload(final ManagedObjectReference _this) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        wsc.invoke("Reload", paras, null);
-    }
-
     public ManagedObjectReference rename_Task(final ManagedObjectReference _this, final String newName) throws java.rmi.RemoteException {
         final Argument[] paras = new Argument[2];
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
         paras[1] = new Argument("newName", "String", newName);
         return (ManagedObjectReference) wsc.invoke("Rename_Task", paras, "ManagedObjectReference");
-    }
-
-    public ManagedObjectReference destroy_Task(final ManagedObjectReference _this) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        return (ManagedObjectReference) wsc.invoke("Destroy_Task", paras, "ManagedObjectReference");
     }
 
     public void destroyNetwork(final ManagedObjectReference _this) throws java.rmi.RemoteException {
@@ -1979,34 +1891,6 @@ public class VimStub {
         paras[1] = new Argument("nicType", "String", nicType);
         paras[2] = new Argument("device", "String", device);
         wsc.invoke("DeselectVnicForNicType", paras, null);
-    }
-
-    public String queryCmmds(final ManagedObjectReference _this, final HostVsanInternalSystemCmmdsQuery[] queries) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("queries", "HostVsanInternalSystemCmmdsQuery[]", queries);
-        return (String) wsc.invoke("QueryCmmds", paras, "String");
-    }
-
-    public String queryPhysicalVsanDisks(final ManagedObjectReference _this, final String[] props) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("props", "String[]", props);
-        return (String) wsc.invoke("QueryPhysicalVsanDisks", paras, "String");
-    }
-
-    public String queryVsanObjects(final ManagedObjectReference _this, final String[] uuids) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("uuids", "String[]", uuids);
-        return (String) wsc.invoke("QueryVsanObjects", paras, "String");
-    }
-
-    public String queryObjectsOnPhysicalVsanDisk(final ManagedObjectReference _this, final String[] disks) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("disks", "String[]", disks);
-        return (String) wsc.invoke("QueryObjectsOnPhysicalVsanDisk", paras, "String");
     }
 
     public VsanHostDiskResult[] queryDisksForVsan(final ManagedObjectReference _this, final String[] canonicalName) throws java.rmi.RemoteException {
