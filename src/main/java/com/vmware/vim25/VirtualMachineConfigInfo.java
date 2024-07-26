@@ -38,7 +38,7 @@ import java.util.List;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 8.0.0
+ * @version 8.0.1
  */
 @SuppressWarnings("unused")
 public class VirtualMachineConfigInfo extends DynamicData {
@@ -131,6 +131,7 @@ public class VirtualMachineConfigInfo extends DynamicData {
     private VirtualMachineVirtualDeviceSwap deviceSwap;
     private VirtualMachineVirtualPMem pmem;
     private VirtualMachineVirtualDeviceGroups deviceGroups;
+    private Boolean fixedPassthruHotPlugEnabled;
 
     @Override
     public String toString() {
@@ -215,7 +216,16 @@ public class VirtualMachineConfigInfo extends DynamicData {
                 ", deviceSwap=" + deviceSwap +
                 ", pmem=" + pmem +
                 ", deviceGroups=" + deviceGroups +
+                ", fixedPassthruHotPlugEnabled=" + fixedPassthruHotPlugEnabled +
                 '}';
+    }
+
+    public Boolean getFixedPassthruHotPlugEnabled() {
+        return fixedPassthruHotPlugEnabled;
+    }
+
+    public void setFixedPassthruHotPlugEnabled(final Boolean fixedPassthruHotPlugEnabled) {
+        this.fixedPassthruHotPlugEnabled = fixedPassthruHotPlugEnabled;
     }
 
     public String getChangeVersion() {

@@ -23,8 +23,6 @@ import java.util.stream.Collectors;
  */
 public class InventoryNavigator {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(InventoryNavigator.class);
-
     private final ManagedEntity rootEntity;
     private List<TraversalSpec> selectionSpecs = null;
 

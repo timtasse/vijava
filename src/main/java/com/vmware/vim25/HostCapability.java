@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 8.0.0
+ * @version 8.0.1
  */
 @SuppressWarnings("unused")
 public class HostCapability extends DynamicData {
@@ -74,6 +74,7 @@ public class HostCapability extends DynamicData {
     private Boolean vmotionWithStorageVMotionSupported;
     private Boolean vmotionAcrossNetworkSupported;
     private Integer maxNumDisksSVMotion;
+    private Integer maxVirtualDiskDescVersionSupported;
     private Boolean hbrNicSelectionSupported;
     private Boolean vrNfcNicSelectionSupported;
     @Deprecated
@@ -185,8 +186,11 @@ public class HostCapability extends DynamicData {
     private Boolean sgxRegistrationSupported;
     private Boolean pMemIndependentSnapshotSupported;
     private Boolean iommuSLDirtyCapable;
+    private Boolean vmknicBindingSupported;
     private Boolean ultralowFixedUnmapSupported;
     private Boolean nvmeVvolSupported;
+    private Boolean fptHotplugSupported;
+    private Boolean mconnectSupported;
 
     @Override
     public String toString() {

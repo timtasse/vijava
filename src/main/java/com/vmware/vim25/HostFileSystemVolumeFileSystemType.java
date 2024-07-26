@@ -1,7 +1,7 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 01.04.2018
+ * Type of file system volume
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.0
@@ -17,6 +17,7 @@ public enum HostFileSystemVolumeFileSystemType {
     VFFS,
     VMFS,
     vsan,
+    vsanD,
     VVOL
 
 }

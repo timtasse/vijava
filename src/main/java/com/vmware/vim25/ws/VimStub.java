@@ -62,103 +62,6 @@ public class VimStub {
         wsc.invoke("DestroyPropertyFilter", paras, null);
     }
 
-    public int addAuthorizationRole(final ManagedObjectReference _this, final String name, final String[] privIds) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("name", "String", name);
-        paras[2] = new Argument("privIds", "String[]", privIds);
-        return (Integer) wsc.invoke("AddAuthorizationRole", paras, "int");
-    }
-
-    public void removeAuthorizationRole(final ManagedObjectReference _this, final int roleId, final boolean failIfUsed) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("roleId", "int", roleId);
-        paras[2] = new Argument("failIfUsed", "boolean", failIfUsed);
-        wsc.invoke("RemoveAuthorizationRole", paras, null);
-    }
-
-    public void updateAuthorizationRole(final ManagedObjectReference _this, final int roleId, final String newName, final String[] privIds) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[4];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("roleId", "int", roleId);
-        paras[2] = new Argument("newName", "String", newName);
-        paras[3] = new Argument("privIds", "String[]", privIds);
-        wsc.invoke("UpdateAuthorizationRole", paras, null);
-    }
-
-    public void mergePermissions(final ManagedObjectReference _this, final int srcRoleId, final int dstRoleId) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("srcRoleId", "int", srcRoleId);
-        paras[2] = new Argument("dstRoleId", "int", dstRoleId);
-        wsc.invoke("MergePermissions", paras, null);
-    }
-
-    public Permission[] retrieveRolePermissions(final ManagedObjectReference _this, final int roleId) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("roleId", "int", roleId);
-        return (Permission[]) wsc.invoke("RetrieveRolePermissions", paras, "Permission[]");
-    }
-
-    public Permission[] retrieveEntityPermissions(final ManagedObjectReference _this, final ManagedObjectReference entity, final boolean inherited) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("entity", "ManagedObjectReference", entity);
-        paras[2] = new Argument("inherited", "boolean", inherited);
-        return (Permission[]) wsc.invoke("RetrieveEntityPermissions", paras, "Permission[]");
-    }
-
-    public Permission[] retrieveAllPermissions(final ManagedObjectReference _this) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        return (Permission[]) wsc.invoke("RetrieveAllPermissions", paras, "Permission[]");
-    }
-
-    public void setEntityPermissions(final ManagedObjectReference _this, final ManagedObjectReference entity, final Permission[] permission) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("entity", "ManagedObjectReference", entity);
-        paras[2] = new Argument("permission", "Permission[]", permission);
-        wsc.invoke("SetEntityPermissions", paras, null);
-    }
-
-    public void resetEntityPermissions(final ManagedObjectReference _this, final ManagedObjectReference entity, final Permission[] permission) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("entity", "ManagedObjectReference", entity);
-        paras[2] = new Argument("permission", "Permission[]", permission);
-        wsc.invoke("ResetEntityPermissions", paras, null);
-    }
-
-    public void removeEntityPermission(final ManagedObjectReference _this, final ManagedObjectReference entity, final String user, final boolean isGroup) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[4];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("entity", "ManagedObjectReference", entity);
-        paras[2] = new Argument("user", "String", user);
-        paras[3] = new Argument("isGroup", "boolean", isGroup);
-        wsc.invoke("RemoveEntityPermission", paras, null);
-    }
-
-    public boolean[] hasPrivilegeOnEntity(final ManagedObjectReference _this, final ManagedObjectReference entity, final String sessionId, final String[] privId) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[4];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("entity", "ManagedObjectReference", entity);
-        paras[2] = new Argument("sessionId", "String", sessionId);
-        paras[3] = new Argument("privId", "String[]", privId);
-        return (boolean[]) wsc.invoke("HasPrivilegeOnEntity", paras, "boolean[]");
-    }
-
-    public EntityPrivilege[] hasPrivilegeOnEntities(final ManagedObjectReference _this, final ManagedObjectReference[] entity, final String sessionId, final String[] privId) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[4];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("entity", "ManagedObjectReference[]", entity);
-        paras[2] = new Argument("sessionId", "String", sessionId);
-        paras[3] = new Argument("privId", "String[]", privId);
-        return (EntityPrivilege[]) wsc.invoke("HasPrivilegeOnEntities", paras, "EntityPrivilege[]");
-    }
-
     public CustomFieldDef addCustomFieldDef(final ManagedObjectReference _this, final String name, final String moType, final PrivilegePolicyDef fieldDefPolicy, final PrivilegePolicyDef fieldPolicy) throws java.rmi.RemoteException {
         final Argument[] paras = new Argument[5];
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
@@ -265,23 +168,6 @@ public class VimStub {
         wsc.invoke("CheckCustomizationResources", paras, null);
     }
 
-    public String createDirectory(final ManagedObjectReference _this, final ManagedObjectReference datastore, final String displayName, final String policy) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[4];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("datastore", "ManagedObjectReference", datastore);
-        paras[2] = new Argument("displayName", "String", displayName);
-        paras[3] = new Argument("policy", "String", policy);
-        return (String) wsc.invoke("CreateDirectory", paras, "String");
-    }
-
-    public void deleteDirectory(final ManagedObjectReference _this, final ManagedObjectReference datacenter, final String datastorePath) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("datacenter", "ManagedObjectReference", datacenter);
-        paras[2] = new Argument("datastorePath", "String", datastorePath);
-        wsc.invoke("DeleteDirectory", paras, null);
-    }
-
     public VirtualMachineConfigOptionDescriptor[] queryConfigOptionDescriptor(final ManagedObjectReference _this) throws java.rmi.RemoteException {
         final Argument[] paras = new Argument[1];
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
@@ -308,14 +194,6 @@ public class VimStub {
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
         paras[1] = new Argument("host", "ManagedObjectReference", host);
         return (HostCapability) wsc.invoke("QueryTargetCapabilities", paras, "HostCapability");
-    }
-
-    public void setCustomValue(final ManagedObjectReference _this, final String key, final String value) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[3];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("key", "String", key);
-        paras[2] = new Argument("value", "String", value);
-        wsc.invoke("setCustomValue", paras, null);
     }
 
     public void unregisterExtension(final ManagedObjectReference _this, final String extensionKey) throws java.rmi.RemoteException {
@@ -672,13 +550,6 @@ public class VimStub {
         paras[1] = new Argument("licenseKey", "String", licenseKey);
         paras[2] = new Argument("labelKey", "String", labelKey);
         wsc.invoke("RemoveLicenseLabel", paras, null);
-    }
-
-    public ManagedObjectReference rename_Task(final ManagedObjectReference _this, final String newName) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("newName", "String", newName);
-        return (ManagedObjectReference) wsc.invoke("Rename_Task", paras, "ManagedObjectReference");
     }
 
     public void destroyNetwork(final ManagedObjectReference _this) throws java.rmi.RemoteException {
@@ -1087,35 +958,6 @@ public class VimStub {
         paras[0] = new Argument("_this", "ManagedObjectReference", _this);
         paras[1] = new Argument("storageSpec", "StoragePlacementSpec", storageSpec);
         return (StoragePlacementResult) wsc.invoke("RecommendDatastores", paras, "StoragePlacementResult");
-    }
-
-    public void cancelTask(final ManagedObjectReference _this) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[1];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        wsc.invoke("CancelTask", paras, null);
-    }
-
-    public void updateProgress(final ManagedObjectReference _this, final int percentDone) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("percentDone", "int", percentDone);
-        wsc.invoke("UpdateProgress", paras, null);
-    }
-
-    public void setTaskState(final ManagedObjectReference _this, final TaskInfoState state, final Object result, final LocalizedMethodFault fault) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[4];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("state", "TaskInfoState", state);
-        paras[2] = new Argument("result", "Object", result);
-        paras[3] = new Argument("fault", "LocalizedMethodFault", fault);
-        wsc.invoke("SetTaskState", paras, null);
-    }
-
-    public void setTaskDescription(final ManagedObjectReference _this, final LocalizableMessage description) throws java.rmi.RemoteException {
-        final Argument[] paras = new Argument[2];
-        paras[0] = new Argument("_this", "ManagedObjectReference", _this);
-        paras[1] = new Argument("description", "LocalizableMessage", description);
-        wsc.invoke("SetTaskDescription", paras, null);
     }
 
     public TaskInfo[] readNextTasks(final ManagedObjectReference _this, final int maxCount) throws java.rmi.RemoteException {

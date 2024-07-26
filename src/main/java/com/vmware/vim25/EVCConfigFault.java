@@ -11,7 +11,7 @@ import java.util.List;
 @SuppressWarnings("unused")
 public class EVCConfigFault extends VimFault {
 
-    private List<LocalizedMethodFault> faults = List.of();
+    private transient List<LocalizedMethodFault> faults = List.of();
 
     public List<LocalizedMethodFault> getFaults() {
         return faults;

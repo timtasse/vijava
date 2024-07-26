@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @SuppressWarnings("unchecked")
 public class StorageQueryManager extends ManagedObject {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(StorageQueryManager.class);
     /**
      * Constructor that reuse exiting web service connection
      * Use this contructor when you can re-use existing web service connection.

@@ -29,94 +29,146 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-/**
- * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
- */
+import java.util.List;
 
-@SuppressWarnings("all")
+/**
+ * Specification for creating NAS volume. When mounting a NAS volume on multiple hosts,
+ * the same remoteHost and remotePath values should be used on every host, otherwise it will be treated as different datastores.
+ * For example, if one host references the remotePath of a NAS volume as "/mnt/mount1" and another references it as "/mnt/mount1/",
+ * it will not be recognized as the same datastore.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.1
+ */
+@SuppressWarnings("unused")
 public class HostNasVolumeSpec extends DynamicData {
 
-    public String remoteHost;
-    public String remotePath;
-    public String localPath;
-    public String accessMode;
-    public String type;
-    public String userName;
-    public String password;
-    public String[] remoteHostNames;
-    public String securityType;
+    private String remoteHost;
+    private String remotePath;
+    private String localPath;
+    private HostMountMode accessMode;
+    private HostFileSystemVolumeFileSystemType type;
+    private String userName;
+    private String password;
+    private List<String> remoteHostNames = List.of();
+    private HostNasVolumeSecurityType securityType;
+    private String vmknicToBind;
+    private Boolean vmknicBound;
+    private Integer connections;
 
-    public String getRemoteHost() {
-        return this.remoteHost;
+    @Override
+    public String toString() {
+        return "HostNasVolumeSpec{" +
+                "remoteHost='" + remoteHost + '\'' +
+                ", remotePath='" + remotePath + '\'' +
+                ", localPath='" + localPath + '\'' +
+                ", accessMode=" + accessMode +
+                ", type=" + type +
+                ", userName='" + userName + '\'' +
+                ", password='" + password + '\'' +
+                ", remoteHostNames=" + remoteHostNames +
+                ", securityType=" + securityType +
+                ", vmknicToBind='" + vmknicToBind + '\'' +
+                ", vmknicBound=" + vmknicBound +
+                ", connections=" + connections +
+                '}';
     }
 
-    public void setRemoteHost(String remoteHost) {
+    public String getRemoteHost() {
+        return remoteHost;
+    }
+
+    public void setRemoteHost(final String remoteHost) {
         this.remoteHost = remoteHost;
     }
 
     public String getRemotePath() {
-        return this.remotePath;
+        return remotePath;
     }
 
-    public void setRemotePath(String remotePath) {
+    public void setRemotePath(final String remotePath) {
         this.remotePath = remotePath;
     }
 
     public String getLocalPath() {
-        return this.localPath;
+        return localPath;
     }
 
-    public void setLocalPath(String localPath) {
+    public void setLocalPath(final String localPath) {
         this.localPath = localPath;
     }
 
-    public String getAccessMode() {
-        return this.accessMode;
+    public HostMountMode getAccessMode() {
+        return accessMode;
     }
 
-    public void setAccessMode(String accessMode) {
+    public void setAccessMode(final HostMountMode accessMode) {
         this.accessMode = accessMode;
     }
 
-    public String getType() {
-        return this.type;
+    public HostFileSystemVolumeFileSystemType getType() {
+        return type;
     }
 
-    public void setType(String type) {
+    public void setType(final HostFileSystemVolumeFileSystemType type) {
         this.type = type;
     }
 
     public String getUserName() {
-        return this.userName;
+        return userName;
     }
 
-    public void setUserName(String userName) {
+    public void setUserName(final String userName) {
         this.userName = userName;
     }
 
     public String getPassword() {
-        return this.password;
+        return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(final String password) {
         this.password = password;
     }
 
-    public String[] getRemoteHostNames() {
+    public List<String> getRemoteHostNames() {
         return remoteHostNames;
     }
 
-    public void setRemoteHostNames(final String[] remoteHostNames) {
+    public void setRemoteHostNames(final List<String> remoteHostNames) {
         this.remoteHostNames = remoteHostNames;
     }
 
-    public String getSecurityType() {
+    public HostNasVolumeSecurityType getSecurityType() {
         return securityType;
     }
 
-    public void setSecurityType(final String securityType) {
+    public void setSecurityType(final HostNasVolumeSecurityType securityType) {
         this.securityType = securityType;
     }
+
+    public String getVmknicToBind() {
+        return vmknicToBind;
+    }
+
+    public void setVmknicToBind(final String vmknicToBind) {
+        this.vmknicToBind = vmknicToBind;
+    }
+
+    public Boolean getVmknicBound() {
+        return vmknicBound;
+    }
+
+    public void setVmknicBound(final Boolean vmknicBound) {
+        this.vmknicBound = vmknicBound;
+    }
+
+    public Integer getConnections() {
+        return connections;
+    }
+
+    public void setConnections(final Integer connections) {
+        this.connections = connections;
+    }
+
 }

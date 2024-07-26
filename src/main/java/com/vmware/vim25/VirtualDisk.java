@@ -29,7 +29,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.doublecloud.ws.util.TypeUtil.asNullSafeList;
@@ -37,7 +36,7 @@ import static org.doublecloud.ws.util.TypeUtil.asNullSafeList;
 /**
  * This data object type contains information about a disk in a virtual machine.
  * The virtual disk backing object types describe the different virtual disk backings available. The disk format version in each case describes the version of the format that is used.
- *
+ * <p>
  * Supported virtual disk backings:
  * Sparse disk format, version 1 and 2
  * The virtual disk backing grows when needed. Supported only for VMware Server.
@@ -54,7 +53,7 @@ import static org.doublecloud.ws.util.TypeUtil.asNullSafeList;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0.2.1
+ * @version 8.0.1
  */
 @SuppressWarnings("unused")
 public class VirtualDisk extends VirtualDevice {
@@ -69,10 +68,11 @@ public class VirtualDisk extends VirtualDevice {
     @Deprecated(since = "6.5")
     private String diskObjectId;
     private VirtualDiskVFlashCacheConfigInfo vFlashCacheConfigInfo;
-    private String[] iofilter;
+    private List<String> iofilter;
     private ID vDiskId;
+    private Integer vDiskVersion;
     private Boolean nativeUnmanagedLinkedClone;
-    private VirtualMachineBaseIndependentFilterSpec[] independentFilters;
+    private List<VirtualMachineBaseIndependentFilterSpec> independentFilters;
 
     @Override
     public String toString() {
@@ -83,10 +83,11 @@ public class VirtualDisk extends VirtualDevice {
                 ", storageIOAllocation=" + storageIOAllocation +
                 ", diskObjectId='" + diskObjectId + '\'' +
                 ", vFlashCacheConfigInfo=" + vFlashCacheConfigInfo +
-                ", iofilter=" + Arrays.toString(iofilter) +
+                ", iofilter=" + iofilter +
                 ", vDiskId=" + vDiskId +
+                ", vDiskVersion=" + vDiskVersion +
                 ", nativeUnmanagedLinkedClone=" + nativeUnmanagedLinkedClone +
-                ", independentFilters=" + Arrays.toString(independentFilters) +
+                ", independentFilters=" + independentFilters +
                 "} " + super.toString();
     }
 
@@ -96,7 +97,7 @@ public class VirtualDisk extends VirtualDevice {
 
     public void setCapacityInBytes(final Long capacityInBytes) {
         this.capacityInBytes = capacityInBytes;
-        this.capacityInKB = (capacityInBytes/1024);
+        this.capacityInKB = (capacityInBytes / 1024);
     }
 
     public String getDiskObjectId() {
@@ -105,14 +106,6 @@ public class VirtualDisk extends VirtualDevice {
 
     public void setDiskObjectId(final String diskObjectId) {
         this.diskObjectId = diskObjectId;
-    }
-
-    public String[] getIofilter() {
-        return iofilter;
-    }
-
-    public void setIofilter(final String[] iofilter) {
-        this.iofilter = iofilter;
     }
 
     public Boolean getNativeUnmanagedLinkedClone() {
@@ -155,12 +148,28 @@ public class VirtualDisk extends VirtualDevice {
         this.vFlashCacheConfigInfo = vFlashCacheConfigInfo;
     }
 
+    public List<String> getIofilter() {
+        return iofilter;
+    }
+
+    public void setIofilter(final List<String> iofilter) {
+        this.iofilter = iofilter;
+    }
+
+    public Integer getvDiskVersion() {
+        return vDiskVersion;
+    }
+
+    public void setvDiskVersion(final Integer vDiskVersion) {
+        this.vDiskVersion = vDiskVersion;
+    }
+
     public List<VirtualMachineBaseIndependentFilterSpec> getIndependentFilters() {
-        return asNullSafeList(independentFilters);
+        return independentFilters;
     }
 
     public void setIndependentFilters(final List<VirtualMachineBaseIndependentFilterSpec> independentFilters) {
-        this.independentFilters = independentFilters.toArray(new VirtualMachineBaseIndependentFilterSpec[0]);
+        this.independentFilters = independentFilters;
     }
 
 }

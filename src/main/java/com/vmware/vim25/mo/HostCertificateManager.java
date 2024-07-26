@@ -14,7 +14,7 @@ import java.util.List;
  * CertificateManager provides an interface for managing the SSL certificates used by the server.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.0.0
+ * @version 8.0.1
  */
 @SuppressWarnings("unused")
 public class HostCertificateManager extends ManagedObject {
@@ -23,7 +23,7 @@ public class HostCertificateManager extends ManagedObject {
         super(serverConnection, mor);
     }
 
-    public Object getCertificateInfo() {
+    public HostCertificateManagerCertificateInfo getCertificateInfo() {
         return this.getCurrentProperty("certificateInfo", HostCertificateManagerCertificateInfo.class);
     }
 
@@ -121,6 +121,20 @@ public class HostCertificateManager extends ManagedObject {
             if (cause instanceof HostConfigFault) {
                 throw (HostConfigFault) cause;
             }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public List<HostCertificateManagerCertificateInfo> retrieveCertificateInfoList() throws RuntimeFault {
+        try {
+            return this.getVimService().getWsc()
+                    .invokeWithListReturn("RetrieveCertificateInfoList", this.getSingleSelfArgumentList(),
+                            HostCertificateManagerCertificateInfo.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {
                 throw (RuntimeFault) cause;
             }

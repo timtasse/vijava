@@ -1,22 +1,15 @@
 package com.vmware.vim25;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 05.04.2018
+ * Consumption type constants.
+ *
+ * Consumption type describes how the virtual storage object is connected and consumed for data by the clients.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.5
  */
 public enum VStorageObjectConsumptionType {
 
-    disk("disk");
+    disk
 
-    private final String val;
-
-    VStorageObjectConsumptionType(final String val) {
-        this.val = val;
-    }
-
-    public String getVal() {
-        return this.val;
-    }
 }

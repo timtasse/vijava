@@ -30,213 +30,254 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 import java.util.Calendar;
+import java.util.List;
 
 /**
+ * This data object type contains all information about a task. A task represents an operation performed by VirtualCenter or ESX
+ *
  * @author Steve Jin (http://www.doublecloud.org)
- * @author Stefan Dilk
- * @version 6.5
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 8.0.1
  */
-
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class TaskInfo extends DynamicData {
 
-    public String key;
-    public ManagedObjectReference task;
-    public LocalizableMessage description;
-    public String name;
-    public String descriptionId;
-    public ManagedObjectReference entity;
-    public String entityName;
-    public ManagedObjectReference[] locked;
-    public TaskInfoState state;
-    public boolean cancelled;
-    public boolean cancelable;
-    public LocalizedMethodFault error;
-    public Object result;
-    public Integer progress;
-    public TaskReason reason;
-    public Calendar queueTime;
-    public Calendar startTime;
-    public Calendar completeTime;
-    public int eventChainId;
-    public String changeTag;
-    public String parentTaskKey;
-    public String rootTaskKey;
-    public String activationId;
+    private String key;
+    private ManagedObjectReference task;
+    private LocalizableMessage description;
+    private String name;
+    private String descriptionId;
+    private ManagedObjectReference entity;
+    private String entityName;
+    private List<ManagedObjectReference> locked;
+    private TaskInfoState state;
+    private boolean cancelled;
+    private boolean cancelable;
+    private LocalizedMethodFault error;
+    private Object result;
+    private Integer progress;
+    private List<KeyAnyValue> progressDetails;
+    private TaskReason reason;
+    private Calendar queueTime;
+    private Calendar startTime;
+    private Calendar completeTime;
+    private int eventChainId;
+    private String changeTag;
+    private String parentTaskKey;
+    private String rootTaskKey;
+    private String activationId;
 
-    public String getKey() {
-        return this.key;
+    @Override
+    public String toString() {
+        return "TaskInfo{" +
+                "key='" + key + '\'' +
+                ", task=" + task +
+                ", description=" + description +
+                ", name='" + name + '\'' +
+                ", descriptionId='" + descriptionId + '\'' +
+                ", entity=" + entity +
+                ", entityName='" + entityName + '\'' +
+                ", locked=" + locked +
+                ", state=" + state +
+                ", cancelled=" + cancelled +
+                ", cancelable=" + cancelable +
+                ", error=" + error +
+                ", result=" + result +
+                ", progress=" + progress +
+                ", progressDetails=" + progressDetails +
+                ", reason=" + reason +
+                ", queueTime=" + queueTime +
+                ", startTime=" + startTime +
+                ", completeTime=" + completeTime +
+                ", eventChainId=" + eventChainId +
+                ", changeTag='" + changeTag + '\'' +
+                ", parentTaskKey='" + parentTaskKey + '\'' +
+                ", rootTaskKey='" + rootTaskKey + '\'' +
+                ", activationId='" + activationId + '\'' +
+                '}';
     }
 
-    public void setKey(String key) {
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(final String key) {
         this.key = key;
     }
 
     public ManagedObjectReference getTask() {
-        return this.task;
+        return task;
     }
 
-    public void setTask(ManagedObjectReference task) {
+    public void setTask(final ManagedObjectReference task) {
         this.task = task;
     }
 
     public LocalizableMessage getDescription() {
-        return this.description;
+        return description;
     }
 
-    public void setDescription(LocalizableMessage description) {
+    public void setDescription(final LocalizableMessage description) {
         this.description = description;
     }
 
     public String getName() {
-        return this.name;
+        return name;
     }
 
-    public void setName(String name) {
+    public void setName(final String name) {
         this.name = name;
     }
 
     public String getDescriptionId() {
-        return this.descriptionId;
+        return descriptionId;
     }
 
-    public void setDescriptionId(String descriptionId) {
+    public void setDescriptionId(final String descriptionId) {
         this.descriptionId = descriptionId;
     }
 
     public ManagedObjectReference getEntity() {
-        return this.entity;
+        return entity;
     }
 
-    public void setEntity(ManagedObjectReference entity) {
+    public void setEntity(final ManagedObjectReference entity) {
         this.entity = entity;
     }
 
     public String getEntityName() {
-        return this.entityName;
+        return entityName;
     }
 
-    public void setEntityName(String entityName) {
+    public void setEntityName(final String entityName) {
         this.entityName = entityName;
     }
 
-    public ManagedObjectReference[] getLocked() {
-        return this.locked;
+    public List<ManagedObjectReference> getLocked() {
+        return locked;
     }
 
-    public void setLocked(ManagedObjectReference[] locked) {
+    public void setLocked(final List<ManagedObjectReference> locked) {
         this.locked = locked;
     }
 
     public TaskInfoState getState() {
-        return this.state;
+        return state;
     }
 
-    public void setState(TaskInfoState state) {
+    public void setState(final TaskInfoState state) {
         this.state = state;
     }
 
     public boolean isCancelled() {
-        return this.cancelled;
+        return cancelled;
     }
 
-    public void setCancelled(boolean cancelled) {
+    public void setCancelled(final boolean cancelled) {
         this.cancelled = cancelled;
     }
 
     public boolean isCancelable() {
-        return this.cancelable;
+        return cancelable;
     }
 
-    public void setCancelable(boolean cancelable) {
+    public void setCancelable(final boolean cancelable) {
         this.cancelable = cancelable;
     }
 
     public LocalizedMethodFault getError() {
-        return this.error;
+        return error;
     }
 
-    public void setError(LocalizedMethodFault error) {
+    public void setError(final LocalizedMethodFault error) {
         this.error = error;
     }
 
     public Object getResult() {
-        return this.result;
+        return result;
     }
 
-    public void setResult(Object result) {
+    public void setResult(final Object result) {
         this.result = result;
     }
 
-    public int getProgress() {
-        return this.progress;
+    public Integer getProgress() {
+        return progress;
     }
 
-    public void setProgress(int progress) {
+    public void setProgress(final Integer progress) {
         this.progress = progress;
     }
 
-    public TaskReason getReason() {
-        return this.reason;
+    public List<KeyAnyValue> getProgressDetails() {
+        return progressDetails;
     }
 
-    public void setReason(TaskReason reason) {
+    public void setProgressDetails(final List<KeyAnyValue> progressDetails) {
+        this.progressDetails = progressDetails;
+    }
+
+    public TaskReason getReason() {
+        return reason;
+    }
+
+    public void setReason(final TaskReason reason) {
         this.reason = reason;
     }
 
     public Calendar getQueueTime() {
-        return this.queueTime;
+        return queueTime;
     }
 
-    public void setQueueTime(Calendar queueTime) {
+    public void setQueueTime(final Calendar queueTime) {
         this.queueTime = queueTime;
     }
 
     public Calendar getStartTime() {
-        return this.startTime;
+        return startTime;
     }
 
-    public void setStartTime(Calendar startTime) {
+    public void setStartTime(final Calendar startTime) {
         this.startTime = startTime;
     }
 
     public Calendar getCompleteTime() {
-        return this.completeTime;
+        return completeTime;
     }
 
-    public void setCompleteTime(Calendar completeTime) {
+    public void setCompleteTime(final Calendar completeTime) {
         this.completeTime = completeTime;
     }
 
     public int getEventChainId() {
-        return this.eventChainId;
+        return eventChainId;
     }
 
-    public void setEventChainId(int eventChainId) {
+    public void setEventChainId(final int eventChainId) {
         this.eventChainId = eventChainId;
     }
 
     public String getChangeTag() {
-        return this.changeTag;
+        return changeTag;
     }
 
-    public void setChangeTag(String changeTag) {
+    public void setChangeTag(final String changeTag) {
         this.changeTag = changeTag;
     }
 
     public String getParentTaskKey() {
-        return this.parentTaskKey;
+        return parentTaskKey;
     }
 
-    public void setParentTaskKey(String parentTaskKey) {
+    public void setParentTaskKey(final String parentTaskKey) {
         this.parentTaskKey = parentTaskKey;
     }
 
     public String getRootTaskKey() {
-        return this.rootTaskKey;
+        return rootTaskKey;
     }
 
-    public void setRootTaskKey(String rootTaskKey) {
+    public void setRootTaskKey(final String rootTaskKey) {
         this.rootTaskKey = rootTaskKey;
     }
 
@@ -247,4 +288,5 @@ public class TaskInfo extends DynamicData {
     public void setActivationId(final String activationId) {
         this.activationId = activationId;
     }
+
 }

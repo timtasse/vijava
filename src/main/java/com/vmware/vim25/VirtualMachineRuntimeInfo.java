@@ -37,7 +37,7 @@ import java.util.List;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 8.0.0
+ * @version 8.0.1
  */
 @SuppressWarnings("unused")
 public class VirtualMachineRuntimeInfo extends DynamicData {
@@ -87,6 +87,7 @@ public class VirtualMachineRuntimeInfo extends DynamicData {
     private VirtualMachineCryptoState cryptoState;
     private Boolean suspendedToMemory;
     private Long opNotificationTimeout;
+    private Boolean iommuActive;
 
     @Override
     public String toString() {
@@ -124,7 +125,16 @@ public class VirtualMachineRuntimeInfo extends DynamicData {
                 ", cryptoState=" + cryptoState +
                 ", suspendedToMemory=" + suspendedToMemory +
                 ", opNotificationTimeout=" + opNotificationTimeout +
+                ", iommuActive=" + iommuActive +
                 '}';
+    }
+
+    public Boolean getIommuActive() {
+        return iommuActive;
+    }
+
+    public void setIommuActive(final Boolean iommuActive) {
+        this.iommuActive = iommuActive;
     }
 
     public List<VirtualMachineDeviceRuntimeInfo> getDevice() {

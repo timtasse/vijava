@@ -12,7 +12,7 @@ import java.util.Optional;
  * Singleton Managed Object used to manage cryptographic keys.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 7.0
+ * @version 8.0.1
  * @since 6.5
  */
 @SuppressWarnings("unused")
@@ -381,6 +381,22 @@ public class CryptoManagerKmip extends CryptoManager {
                 new Argument("certificate", String.class, certificate));
         try {
             this.getVimService().getWsc().invokeWithoutReturn("UploadKmipServerCert", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public CryptoKeyResult setKeyCustomAttributes(final CryptoKeyId keyId, final CryptoManagerKmipCustomAttributeSpec spec)
+            throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("keyId", CryptoKeyId.class, keyId),
+                new Argument("spec", CryptoManagerKmipCustomAttributeSpec.class, spec));
+        try {
+            return this.getVimService().getWsc().invoke("SetKeyCustomAttributes", params, CryptoKeyResult.class);
         } catch (final RemoteException e) {
             final Throwable cause = e.getCause();
             if (cause instanceof RuntimeFault) {

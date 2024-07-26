@@ -200,14 +200,17 @@ public abstract class WSClient {
             case "8.0.0.0":
                 soapAction = SOAP_ACTION_V800;
                 break;
-//            case "8.0.1.0":
-//                soapAction = SOAP_ACTION_V801;
-//                break;
-//            case "8.0.2.0":
-//                soapAction = SOAP_ACTION_V802;
-//                break;
+            case "8.0.1.0":
+                soapAction = SOAP_ACTION_V801;
+                break;
+            case "8.0.2.0":
+                soapAction = SOAP_ACTION_V801;
+                break;
+            case "8.0.3.0":
+                soapAction = SOAP_ACTION_V801;
+                break;
             default:
-                soapAction = SOAP_ACTION_V800;
+                soapAction = SOAP_ACTION_V703;
         }
     }
 

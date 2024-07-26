@@ -30,37 +30,58 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * Detailed information about a file system.
+ * This is a base type for derived types that have more specific details about specific filesystem types.
+ *
+ * Typically a FileSystem is exposed as a datatore
+ * @see DatastoreInfo
+ * @see HostVmfsVolume
+ * @see HostNasVolume
+ * @see HostVffsVolume
+ * @see HostLocalFileSystemVolume
+ * @see HostVfatVolume
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
+ * @version 5.1
+ */
 public class HostFileSystemVolume extends DynamicData {
-  public String type;
-  public String name;
-  public long capacity;
 
-  public String getType() {
-    return this.type;
-  }
+    private HostFileSystemVolumeFileSystemType type;
+    private String name;
+    private long capacity;
 
-  public String getName() {
-    return this.name;
-  }
+    @Override
+    public String toString() {
+        return "HostFileSystemVolume{" +
+                "type=" + type +
+                ", name='" + name + '\'' +
+                ", capacity=" + capacity +
+                '}';
+    }
 
-  public long getCapacity() {
-    return this.capacity;
-  }
+    public HostFileSystemVolumeFileSystemType getType() {
+        return type;
+    }
 
-  public void setType(String type) {
-    this.type=type;
-  }
+    public void setType(final HostFileSystemVolumeFileSystemType type) {
+        this.type = type;
+    }
 
-  public void setName(String name) {
-    this.name=name;
-  }
+    public String getName() {
+        return name;
+    }
 
-  public void setCapacity(long capacity) {
-    this.capacity=capacity;
-  }
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public long getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(final long capacity) {
+        this.capacity = capacity;
+    }
+
 }

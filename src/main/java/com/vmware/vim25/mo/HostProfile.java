@@ -37,16 +37,21 @@ import java.util.Calendar;
 import java.util.List;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * A host profile describes ESX Server configuration. The HostProfile managed object provides access to profile data,
+ * and it defines methods to manipulate the profile.
+ * A host profile is a combination of subprofiles, each of which contains configuration data for a specific capability.
+ * Some examples of host capabilities are authentication, memory, networking, and security.
+ * For access to individual subprofiles, see the HostApplyProfile data object (HostProfile.Config.applyProfile).
  *
  * @author Steve JIN (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 8.0.1
  * @since 4.0
  */
+@SuppressWarnings("unused")
 public class HostProfile extends Profile {
 
-    public HostProfile(ServerConnection sc, ManagedObjectReference mor) {
+    public HostProfile(final ServerConnection sc, final ManagedObjectReference mor) {
         super(sc, mor);
     }
 
@@ -55,38 +60,82 @@ public class HostProfile extends Profile {
     }
 
     public HostProfileValidationFailureInfo validationFailureInfo() {
-        return (HostProfileValidationFailureInfo) this.getCurrentProperty("validationFailureInfo");
+        return this.getCurrentProperty("validationFailureInfo", HostProfileValidationFailureInfo.class);
     }
 
     public String validationState() {
-        return (String) this.getCurrentProperty("validationState");
+        return this.getCurrentProperty("validationState", String.class);
     }
 
     public Calendar validationStateUpdateTime() {
-        return (Calendar) this.getCurrentProperty("validationStateUpdateTime");
+        return this.getCurrentProperty("validationStateUpdateTime", Calendar.class);
     }
 
-    public ProfileExecuteResult executeHostProfile(HostSystem host, ProfileDeferredPolicyOptionParameter[] deferredParam) throws RuntimeFault, RemoteException {
+    public Calendar complianceCheckTime() {
+        return this.getCurrentProperty("complianceCheckTime", Calendar.class);
+    }
+
+    public ProfileExecuteResult executeHostProfile(final HostSystem host, final List<ProfileDeferredPolicyOptionParameter> deferredParam)
+            throws RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("host", "ManagedObjectReference", host.getMOR()),
-                new Argument("deferredParam", "ProfileDeferredPolicyOptionParameter[]", deferredParam));
-        return (ProfileExecuteResult) this.getVimService().getWsc().invoke("ExecuteHostProfile", params, "ProfileExecuteResult");
+                new Argument("deferredParam", ProfileDeferredPolicyOptionParameter[].class, deferredParam));
+        try {
+            return this.getVimService().getWsc().invoke("ExecuteHostProfile", params, ProfileExecuteResult.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void updateHostProfile(HostProfileConfigSpec config) throws DuplicateName, ProfileUpdateFailed, RuntimeFault, RemoteException {
+    public void hostProfileResetValidationState() throws RuntimeFault {
+        try {
+            this.getVimService().getWsc()
+                    .invokeWithoutReturn("HostProfileResetValidationState", this.getSingleSelfArgumentList());
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+
+    public void updateHostProfile(final HostProfileConfigSpec config) throws DuplicateName, ProfileUpdateFailed, RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
-                new Argument("config", "HostProfileConfigSpec", config));
-        this.getVimService().getWsc().invokeWithoutReturn("UpdateHostProfile", params);
+                new Argument("config", HostProfileConfigSpec.class, config));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateHostProfile", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof DuplicateName) {
+                throw (DuplicateName) cause;
+            }
+            if (cause instanceof ProfileUpdateFailed) {
+                throw (ProfileUpdateFailed) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void updateReferenceHost(HostSystem host) throws RuntimeFault, RemoteException {
+    public void updateReferenceHost(final HostSystem host) throws RuntimeFault {
         final List<Argument> params = Arrays.asList(this.getSelfArgument(),
                 new Argument("host", "ManagedObjectReference", host == null ? null : host.getMOR()));
-        this.getVimService().getWsc().invokeWithoutReturn("UpdateReferenceHost", params);
-    }
-
-    public void hostProfileResetValidationState() throws RuntimeFault, RemoteException {
-        this.getVimService().getWsc().invokeWithoutReturn("HostProfileResetValidationState", this.getSingleSelfArgumentList());
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateReferenceHost", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
 }

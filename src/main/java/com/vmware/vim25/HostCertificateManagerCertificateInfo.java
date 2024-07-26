@@ -3,18 +3,40 @@ package com.vmware.vim25;
 import java.util.Calendar;
 
 /**
- * Created by Stefan Dilk {@literal <stefan.dilk@freenet.ag>} on 31.03.2018
+ * This data object is used to encapsulate the X509 certificate metadata
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @since 6.0
+ * @version 8.0.1
  */
 public class HostCertificateManagerCertificateInfo extends DynamicData {
 
-    public String issuer;
-    public Calendar notAfter;
-    public Calendar notBefore;
-    public String status;
-    public String subject;
+    private HostCertificateManagerCertificateKind kind;
+    private String issuer;
+    private Calendar notBefore;
+    private Calendar notAfter;
+    private String subject;
+    private HostCertificateManagerCertificateInfoCertificateStatus status;
+
+    @Override
+    public String toString() {
+        return "HostCertificateManagerCertificateInfo{" +
+                "kind=" + kind +
+                ", issuer='" + issuer + '\'' +
+                ", notBefore=" + notBefore +
+                ", notAfter=" + notAfter +
+                ", subject='" + subject + '\'' +
+                ", status=" + status +
+                '}';
+    }
+
+    public HostCertificateManagerCertificateKind getKind() {
+        return kind;
+    }
+
+    public void setKind(final HostCertificateManagerCertificateKind kind) {
+        this.kind = kind;
+    }
 
     public String getIssuer() {
         return issuer;
@@ -40,11 +62,11 @@ public class HostCertificateManagerCertificateInfo extends DynamicData {
         this.notBefore = notBefore;
     }
 
-    public String getStatus() {
+    public HostCertificateManagerCertificateInfoCertificateStatus getStatus() {
         return status;
     }
 
-    public void setStatus(final String status) {
+    public void setStatus(final HostCertificateManagerCertificateInfoCertificateStatus status) {
         this.status = status;
     }
 
@@ -55,4 +77,5 @@ public class HostCertificateManagerCertificateInfo extends DynamicData {
     public void setSubject(final String subject) {
         this.subject = subject;
     }
+
 }

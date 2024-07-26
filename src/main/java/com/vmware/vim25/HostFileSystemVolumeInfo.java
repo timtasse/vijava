@@ -29,29 +29,49 @@ POSSIBILITY OF SUCH DAMAGE.
 
 package com.vmware.vim25;
 
+import java.util.List;
+
 /**
-* @author Steve Jin (http://www.doublecloud.org)
-* @version 5.1
-*/
-
-@SuppressWarnings("all")
+ * The HostFileSystemVolumeInfo data object describes the file system volume information for the host.
+ * A file system volume refers to a storage abstraction that allows files to be created and organized.
+ * A host can have multiple file system volumes.
+ * File system volumes are typically mounted into a file namespace that allows all files in mounted file systems to be addressable from the host.
+ *
+ * A file system volume is backed by disk storage. It could span one or more disks but need not use an entire disk.
+ *
+ * A file system volume by definition must be mounted on the file system in order to exist.
+ *
+ * @author Steve Jin (http://www.doublecloud.org)
+ * @version 5.1
+ */
+@SuppressWarnings("unused")
 public class HostFileSystemVolumeInfo extends DynamicData {
-  public String[] volumeTypeList;
-  public HostFileSystemMountInfo[] mountInfo;
 
-  public String[] getVolumeTypeList() {
-    return this.volumeTypeList;
-  }
+    private List<String> volumeTypeList;
+    private List<HostFileSystemMountInfo> mountInfo;
 
-  public HostFileSystemMountInfo[] getMountInfo() {
-    return this.mountInfo;
-  }
+    @Override
+    public String toString() {
+        return "HostFileSystemVolumeInfo{" +
+                "volumeTypeList=" + volumeTypeList +
+                ", mountInfo=" + mountInfo +
+                '}';
+    }
 
-  public void setVolumeTypeList(String[] volumeTypeList) {
-    this.volumeTypeList=volumeTypeList;
-  }
+    public List<String> getVolumeTypeList() {
+        return volumeTypeList;
+    }
 
-  public void setMountInfo(HostFileSystemMountInfo[] mountInfo) {
-    this.mountInfo=mountInfo;
-  }
+    public void setVolumeTypeList(final List<String> volumeTypeList) {
+        this.volumeTypeList = volumeTypeList;
+    }
+
+    public List<HostFileSystemMountInfo> getMountInfo() {
+        return mountInfo;
+    }
+
+    public void setMountInfo(final List<HostFileSystemMountInfo> mountInfo) {
+        this.mountInfo = mountInfo;
+    }
+
 }

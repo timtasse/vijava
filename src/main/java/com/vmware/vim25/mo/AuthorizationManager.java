@@ -32,13 +32,29 @@ package com.vmware.vim25.mo;
 
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.util.MorUtil;
+import com.vmware.vim25.ws.Argument;
 
 import java.rmi.RemoteException;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
- * The managed object class corresponding to the one defined in VI SDK API reference.
+ * This managed object provides operations to query and update roles and permissions.
+ * Privileges are the basic individual rights required to perform operations.
+ * They are statically defined and never change for a single version of a product.
+ * Examples of privileges are "Power on a virtual machine" or "Configure a host."
+ *
+ * Roles are aggregations of privileges, used for convenience.
+ * For user-defined roles, the system-defined privileges, "System.Anonymous", "System.View", and "System.Read" are always present.
+ *
+ * Permissions are the actual access-control rules.
+ * A permission is defined on a ManagedEntity and specifies the user or group ("principal") to which the rule applies.
+ * The role specifies the privileges to apply,
+ * and the propagate flag specifies whether or not the rule applies to sub-objects of the managed entity.
  *
  * @author Steve JIN (http://www.doublecloud.org)
+ * @author Stefan Dilk <stefan.dilk@freenet.ag>
  */
 @SuppressWarnings("unused")
 public class AuthorizationManager extends ManagedObject {
@@ -52,88 +68,308 @@ public class AuthorizationManager extends ManagedObject {
 
     }
 
-    public AuthorizationPrivilege[] getPrivilegeList() {
-        return getCurrentProperty("privilegeList", AuthorizationPrivilege[].class);
+    public List<AuthorizationPrivilege> getPrivilegeList() {
+        return Arrays.asList(getCurrentProperty("privilegeList", AuthorizationPrivilege[].class));
 
     }
 
-    public AuthorizationRole[] getRoleList() {
-        return getCurrentProperty("roleList", AuthorizationRole[].class);
+    public List<AuthorizationRole> getRoleList() {
+        return Arrays.asList(getCurrentProperty("roleList", AuthorizationRole[].class));
 
     }
 
-    public int addAuthorizationRole(final String name, final String[] privIds) throws InvalidName, AlreadyExists, RuntimeFault, RemoteException {
-        return getVimService().addAuthorizationRole(getMOR(), name, privIds);
+    public int addAuthorizationRole(final String name, final List<String> privIds) throws InvalidName, AlreadyExists, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("name", String.class, name),
+                new Argument("privIds", String[].class, privIds));
+        try {
+            return this.getVimService().getWsc().invoke("AddAuthorizationRole", params, Integer.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    /**
-     * @deprecated as of SDK5.5, use hasPrivilegeOnEntity instead, which fixed upper-case H typo in method name in 5.5
-     */
-    @Deprecated(since = "5.5")
-    public boolean[] HasPrivilegeOnEntity(final ManagedEntity entity, final String sessionId, final String[] privId) throws RuntimeFault, RemoteException {
-        return getVimService().hasPrivilegeOnEntity(getMOR(), entity.getMOR(), sessionId, privId);
+    public List<UserPrivilegeResult> fetchUserPrivilegeOnEntities(final List<ManagedObjectReference> entities, final String userName)
+            throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entities", ManagedObjectReference[].class, entities),
+                new Argument("userName", String.class, userName));
+        try {
+            return this.getVimService().getWsc()
+                    .invokeWithListReturn("FetchUserPrivilegeOnEntities", params, UserPrivilegeResult.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
+    }
+    public List<Boolean> hasPrivilegeOnEntity(final ManagedEntity entity, final String sessionId, final List<String> privId)
+            throws RuntimeFault {
+        if (entity == null) {
+            throw new IllegalArgumentException("entity cannot be null");
+        }
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entity", ManagedObjectReference.class, entity.getMOR()),
+                new Argument("sessionId", String.class, sessionId),
+                new Argument("privIds", String[].class, privId));
+        try {
+            return this.getVimService().getWsc().invokeWithListReturn("HasPrivilegeOnEntity", params, Boolean.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    /**
-     * @since SDK5.0
-     */
-    public boolean[] hasPrivilegeOnEntity(final ManagedEntity entity, final String sessionId, final String[] privId) throws RuntimeFault, RemoteException {
-        return getVimService().hasPrivilegeOnEntity(getMOR(), entity.getMOR(), sessionId, privId);
+    public List<EntityPrivilege> hasPrivilegeOnEntities(final List<ManagedEntity> entity, final String sessionId, final List<String> privId)
+            throws RuntimeFault {
+        if (entity == null) {
+            throw new IllegalArgumentException("entity cannot be null");
+        }
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entities", ManagedObjectReference[].class, entity.stream().map(ManagedEntity::getMOR).collect(Collectors.toList())),
+                new Argument("sessionId", String.class, sessionId),
+                new Argument("privIds", String[].class, privId));
+        try {
+            return this.getVimService().getWsc().invokeWithListReturn("HasPrivilegeOnEntities", params, EntityPrivilege.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    /**
-     * @since SDK5.5
-     */
-    public EntityPrivilege[] hasPrivilegeOnEntities(final ManagedEntity[] entity, final String sessionId, final String[] privId) throws RuntimeFault, RemoteException {
-        final ManagedObjectReference[] mors = MorUtil.createMORs(entity);
-        return getVimService().hasPrivilegeOnEntities(getMOR(), mors, sessionId, privId);
+    public List<EntityPrivilege> hasUserPrivilegeOnEntities(final List<ManagedObjectReference> entities,
+                                                            final String userName,
+                                                            final List<String> privId)
+            throws RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entities", ManagedObjectReference[].class, entities),
+                new Argument("userName", String.class, userName),
+                new Argument("privIds", String[].class, privId));
+        try {
+            return this.getVimService().getWsc().invokeWithListReturn("HasUserPrivilegeOnEntities", params, EntityPrivilege.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void mergePermissions(final int srcRoleId, final int dstRoleId) throws AuthMinimumAdminPermission, NotFound, RuntimeFault, RemoteException {
-        getVimService().mergePermissions(getMOR(), srcRoleId, dstRoleId);
+    public void mergePermissions(final int srcRoleId, final int dstRoleId) throws AuthMinimumAdminPermission, NotFound, RuntimeFault {
+        final List<Argument> parmas = Arrays.asList(this.getSelfArgument(),
+                Argument.fromBasicType("srcRoleId", srcRoleId),
+                Argument.fromBasicType("dstRoleId", dstRoleId));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("MergePermissions", parmas);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof AuthMinimumAdminPermission) {
+                throw (AuthMinimumAdminPermission) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void removeAuthorizationRole(final int roleId, final boolean failIfUsed) throws RemoveFailed, NotFound, RuntimeFault, RemoteException {
-        getVimService().removeAuthorizationRole(getMOR(), roleId, failIfUsed);
+    public void removeAuthorizationRole(final int roleId, final boolean failIfUsed) throws RemoveFailed, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                Argument.fromBasicType("roleId", roleId),
+                Argument.fromBasicType("failIfUsed", failIfUsed));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RemoveAuthorizationRole", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RemoveFailed) {
+                throw (RemoveFailed) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void removeEntityPermission(final ManagedEntity entity, final String user, final boolean isGroup) throws AuthMinimumAdminPermission, NotFound, RuntimeFault, RemoteException {
+    public void removeEntityPermission(final ManagedEntity entity, final String user, final boolean isGroup)
+            throws AuthMinimumAdminPermission, NotFound, RuntimeFault {
         if (entity == null) {
             throw new IllegalArgumentException("entity must not be null.");
         }
-        getVimService().removeEntityPermission(getMOR(), entity.getMOR(), user, isGroup);
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entity", ManagedObjectReference.class, entity.getMOR()),
+                new Argument("user", String.class, user),
+                Argument.fromBasicType("isGroup", isGroup));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("RemoveEntityPermission", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof AuthMinimumAdminPermission) {
+                throw (AuthMinimumAdminPermission) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void resetEntityPermissions(final ManagedEntity entity, final Permission[] permission) throws AuthMinimumAdminPermission, NotFound, UserNotFound, RuntimeFault, RemoteException {
+    public void resetEntityPermissions(final ManagedEntity entity, final List<Permission> permission)
+            throws AuthMinimumAdminPermission, NotFound, UserNotFound, RuntimeFault {
         if (entity == null) {
             throw new IllegalArgumentException("entity must not be null.");
         }
-        getVimService().resetEntityPermissions(getMOR(), entity.getMOR(), permission);
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entity", ManagedObjectReference.class, entity.getMOR()),
+                new Argument("permissions", Permission[].class, permission));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("ResetEntityPermissions", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof UserNotFound) {
+                throw (UserNotFound) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof AuthMinimumAdminPermission) {
+                throw (AuthMinimumAdminPermission) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Permission[] retrieveEntityPermissions(final ManagedEntity entity, final boolean inherited) throws RuntimeFault, RemoteException {
+    public List<Permission> retrieveEntityPermissions(final ManagedEntity entity, final boolean inherited) throws RuntimeFault {
         if (entity == null) {
             throw new IllegalArgumentException("entity must not be null.");
         }
-        return getVimService().retrieveEntityPermissions(getMOR(), entity.getMOR(), inherited);
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entity", ManagedObjectReference.class, entity.getMOR()),
+                Argument.fromBasicType("inherited", inherited));
+        try {
+            return this.getVimService().getWsc().invokeWithListReturn("RetrieveEntityPermissions", params, Permission.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Permission[] retrieveAllPermissions() throws RuntimeFault, RemoteException {
-        return getVimService().retrieveAllPermissions(getMOR());
+    public List<Permission> retrieveAllPermissions() throws RuntimeFault {
+        try {
+            return this.getVimService().getWsc()
+                    .invokeWithListReturn("RetrieveAllPermissions", this.getSingleSelfArgumentList(), Permission.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public Permission[] retrieveRolePermissions(final int roleId) throws NotFound, RuntimeFault, RemoteException {
-        return getVimService().retrieveRolePermissions(getMOR(), roleId);
+    public List<Permission> retrieveRolePermissions(final int roleId) throws NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                Argument.fromBasicType("roleId", roleId));
+        try {
+            return this.getVimService().getWsc().invokeWithListReturn("RetrieveRolePermissions", params, Permission.class);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void setEntityPermissions(final ManagedEntity entity, final Permission[] permission) throws AuthMinimumAdminPermission, NotFound, UserNotFound, RuntimeFault, RemoteException {
+    public void setEntityPermissions(final ManagedEntity entity, final List<Permission> permission)
+            throws AuthMinimumAdminPermission, NotFound, UserNotFound, RuntimeFault {
         if (entity == null) {
             throw new IllegalArgumentException("entity must not be null.");
         }
-        getVimService().setEntityPermissions(getMOR(), entity.getMOR(), permission);
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                new Argument("entity", ManagedObjectReference.class, entity.getMOR()),
+                new Argument("permissions", Permission[].class, permission));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("SetEntityPermissions", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof UserNotFound) {
+                throw (UserNotFound) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof AuthMinimumAdminPermission) {
+                throw (AuthMinimumAdminPermission) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
 
-    public void updateAuthorizationRole(final int roleId, final String newName, final String[] privIds) throws InvalidName, AlreadyExists, NotFound, RuntimeFault, RemoteException {
-        getVimService().updateAuthorizationRole(getMOR(), roleId, newName, privIds);
+    public void updateAuthorizationRole(final int roleId, final String newName, final List<String> privIds)
+            throws InvalidName, AlreadyExists, NotFound, RuntimeFault {
+        final List<Argument> params = Arrays.asList(this.getSelfArgument(),
+                Argument.fromBasicType("roleId", roleId),
+                new Argument("newName", String.class, newName),
+                new Argument("privIds", String[].class, privIds));
+        try {
+            this.getVimService().getWsc().invokeWithoutReturn("UpdateAuthorizationRole", params);
+        } catch (final RemoteException e) {
+            final Throwable cause = e.getCause();
+            if (cause instanceof AlreadyExists) {
+                throw (AlreadyExists) cause;
+            }
+            if (cause instanceof NotFound) {
+                throw (NotFound) cause;
+            }
+            if (cause instanceof InvalidName) {
+                throw (InvalidName) cause;
+            }
+            if (cause instanceof RuntimeFault) {
+                throw (RuntimeFault) cause;
+            }
+            throw new IllegalStateException(EXCEPTION_NOT_KNOWN, e);
+        }
     }
+
 }

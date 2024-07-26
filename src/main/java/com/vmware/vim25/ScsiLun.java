@@ -30,6 +30,7 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * The ScsiLun data object describes a SCSI logical unit. A SCSI logical unit is a host device that an ESX Server or virtual machine can use for I/O operations.
@@ -57,105 +58,60 @@ import java.util.Arrays;
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
  * @version 7.0
  */
-
-@SuppressWarnings("all")
+@SuppressWarnings("unused")
 public class ScsiLun extends HostDevice {
 
     private String key;
     private String uuid;
-    private ScsiLunDescriptor[] descriptor;
+    private List<ScsiLunDescriptor> descriptor;
     private String canonicalName;
     private String displayName;
-    private String lunType;
+    private ScsiLunType lunType;
     private String vendor;
     private String model;
     private String revision;
     private Integer scsiLevel;
     private String serialNumber;
     private ScsiLunDurableName durableName;
-    private ScsiLunDurableName[] alternateName;
+    private List<ScsiLunDurableName> alternateName;
     private byte[] standardInquiry;
     private Integer queueDepth;
-    private String[] operationalState;
+    private List<ScsiLunState> operationalState;
     private ScsiLunCapabilities capabilities;
-    private String vStorageSupport;
+    private ScsiLunVStorageSupportStatus vStorageSupport;
     private Boolean protocolEndpoint;
     private Boolean perenniallyReserved;
     private Boolean clusteredVmdkSupported;
+    private DeviceProtocol applicationProtocol;
+    private Boolean dispersedNs;
 
     @Override
     public String toString() {
         return "ScsiLun{" +
                 "key='" + key + '\'' +
                 ", uuid='" + uuid + '\'' +
-                ", descriptor=" + Arrays.toString(descriptor) +
+                ", descriptor=" + descriptor +
                 ", canonicalName='" + canonicalName + '\'' +
                 ", displayName='" + displayName + '\'' +
-                ", lunType='" + lunType + '\'' +
+                ", lunType=" + lunType +
                 ", vendor='" + vendor + '\'' +
                 ", model='" + model + '\'' +
                 ", revision='" + revision + '\'' +
                 ", scsiLevel=" + scsiLevel +
                 ", serialNumber='" + serialNumber + '\'' +
                 ", durableName=" + durableName +
-                ", alternateName=" + Arrays.toString(alternateName) +
+                ", alternateName=" + alternateName +
                 ", standardInquiry=" + Arrays.toString(standardInquiry) +
                 ", queueDepth=" + queueDepth +
-                ", operationalState=" + Arrays.toString(operationalState) +
+                ", operationalState=" + operationalState +
                 ", capabilities=" + capabilities +
-                ", vStorageSupport='" + vStorageSupport + '\'' +
+                ", vStorageSupport=" + vStorageSupport +
                 ", protocolEndpoint=" + protocolEndpoint +
                 ", perenniallyReserved=" + perenniallyReserved +
                 ", clusteredVmdkSupported=" + clusteredVmdkSupported +
-                "} " + super.toString();
-    }
-
-    public ScsiLunDurableName[] getAlternateName() {
-        return alternateName;
-    }
-
-    public void setAlternateName(final ScsiLunDurableName[] alternateName) {
-        this.alternateName = alternateName;
-    }
-
-    public String getCanonicalName() {
-        return canonicalName;
-    }
-
-    public void setCanonicalName(final String canonicalName) {
-        this.canonicalName = canonicalName;
-    }
-
-    public ScsiLunCapabilities getCapabilities() {
-        return capabilities;
-    }
-
-    public void setCapabilities(final ScsiLunCapabilities capabilities) {
-        this.capabilities = capabilities;
-    }
-
-    public ScsiLunDescriptor[] getDescriptor() {
-        return descriptor;
-    }
-
-    public void setDescriptor(final ScsiLunDescriptor[] descriptor) {
-        this.descriptor = descriptor;
-    }
-
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(final String displayName) {
-        this.displayName = displayName;
-    }
-
-    public ScsiLunDurableName getDurableName() {
-        return durableName;
-    }
-
-    public void setDurableName(final ScsiLunDurableName durableName) {
-        this.durableName = durableName;
+                ", applicationProtocol=" + applicationProtocol +
+                ", dispersedNs=" + dispersedNs +
+                '}';
     }
 
     public String getKey() {
@@ -166,12 +122,52 @@ public class ScsiLun extends HostDevice {
         this.key = key;
     }
 
-    public String getLunType() {
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(final String uuid) {
+        this.uuid = uuid;
+    }
+
+    public List<ScsiLunDescriptor> getDescriptor() {
+        return descriptor;
+    }
+
+    public void setDescriptor(final List<ScsiLunDescriptor> descriptor) {
+        this.descriptor = descriptor;
+    }
+
+    public String getCanonicalName() {
+        return canonicalName;
+    }
+
+    public void setCanonicalName(final String canonicalName) {
+        this.canonicalName = canonicalName;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(final String displayName) {
+        this.displayName = displayName;
+    }
+
+    public ScsiLunType getLunType() {
         return lunType;
     }
 
-    public void setLunType(final String lunType) {
+    public void setLunType(final ScsiLunType lunType) {
         this.lunType = lunType;
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(final String vendor) {
+        this.vendor = vendor;
     }
 
     public String getModel() {
@@ -180,38 +176,6 @@ public class ScsiLun extends HostDevice {
 
     public void setModel(final String model) {
         this.model = model;
-    }
-
-    public String[] getOperationalState() {
-        return operationalState;
-    }
-
-    public void setOperationalState(final String[] operationalState) {
-        this.operationalState = operationalState;
-    }
-
-    public Boolean getPerenniallyReserved() {
-        return perenniallyReserved;
-    }
-
-    public void setPerenniallyReserved(final Boolean perenniallyReserved) {
-        this.perenniallyReserved = perenniallyReserved;
-    }
-
-    public Boolean getProtocolEndpoint() {
-        return protocolEndpoint;
-    }
-
-    public void setProtocolEndpoint(final Boolean protocolEndpoint) {
-        this.protocolEndpoint = protocolEndpoint;
-    }
-
-    public Integer getQueueDepth() {
-        return queueDepth;
-    }
-
-    public void setQueueDepth(final Integer queueDepth) {
-        this.queueDepth = queueDepth;
     }
 
     public String getRevision() {
@@ -238,6 +202,22 @@ public class ScsiLun extends HostDevice {
         this.serialNumber = serialNumber;
     }
 
+    public ScsiLunDurableName getDurableName() {
+        return durableName;
+    }
+
+    public void setDurableName(final ScsiLunDurableName durableName) {
+        this.durableName = durableName;
+    }
+
+    public List<ScsiLunDurableName> getAlternateName() {
+        return alternateName;
+    }
+
+    public void setAlternateName(final List<ScsiLunDurableName> alternateName) {
+        this.alternateName = alternateName;
+    }
+
     public byte[] getStandardInquiry() {
         return standardInquiry;
     }
@@ -246,28 +226,52 @@ public class ScsiLun extends HostDevice {
         this.standardInquiry = standardInquiry;
     }
 
-    public String getUuid() {
-        return uuid;
+    public Integer getQueueDepth() {
+        return queueDepth;
     }
 
-    public void setUuid(final String uuid) {
-        this.uuid = uuid;
+    public void setQueueDepth(final Integer queueDepth) {
+        this.queueDepth = queueDepth;
     }
 
-    public String getVendor() {
-        return vendor;
+    public List<ScsiLunState> getOperationalState() {
+        return operationalState;
     }
 
-    public void setVendor(final String vendor) {
-        this.vendor = vendor;
+    public void setOperationalState(final List<ScsiLunState> operationalState) {
+        this.operationalState = operationalState;
     }
 
-    public String getvStorageSupport() {
+    public ScsiLunCapabilities getCapabilities() {
+        return capabilities;
+    }
+
+    public void setCapabilities(final ScsiLunCapabilities capabilities) {
+        this.capabilities = capabilities;
+    }
+
+    public ScsiLunVStorageSupportStatus getvStorageSupport() {
         return vStorageSupport;
     }
 
-    public void setvStorageSupport(final String vStorageSupport) {
+    public void setvStorageSupport(final ScsiLunVStorageSupportStatus vStorageSupport) {
         this.vStorageSupport = vStorageSupport;
+    }
+
+    public Boolean getProtocolEndpoint() {
+        return protocolEndpoint;
+    }
+
+    public void setProtocolEndpoint(final Boolean protocolEndpoint) {
+        this.protocolEndpoint = protocolEndpoint;
+    }
+
+    public Boolean getPerenniallyReserved() {
+        return perenniallyReserved;
+    }
+
+    public void setPerenniallyReserved(final Boolean perenniallyReserved) {
+        this.perenniallyReserved = perenniallyReserved;
     }
 
     public Boolean getClusteredVmdkSupported() {
@@ -276,6 +280,22 @@ public class ScsiLun extends HostDevice {
 
     public void setClusteredVmdkSupported(final Boolean clusteredVmdkSupported) {
         this.clusteredVmdkSupported = clusteredVmdkSupported;
+    }
+
+    public DeviceProtocol getApplicationProtocol() {
+        return applicationProtocol;
+    }
+
+    public void setApplicationProtocol(final DeviceProtocol applicationProtocol) {
+        this.applicationProtocol = applicationProtocol;
+    }
+
+    public Boolean getDispersedNs() {
+        return dispersedNs;
+    }
+
+    public void setDispersedNs(final Boolean dispersedNs) {
+        this.dispersedNs = dispersedNs;
     }
 
 }

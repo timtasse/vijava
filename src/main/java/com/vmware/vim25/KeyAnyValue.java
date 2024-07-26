@@ -36,7 +36,7 @@ import java.io.Serializable;
  * @version 5.1
  */
 @SuppressWarnings("unused")
-public class KeyAnyValue extends DynamicData implements Serializable {
+public class KeyAnyValue extends DynamicData {
 
     private String key;
     private Object value;

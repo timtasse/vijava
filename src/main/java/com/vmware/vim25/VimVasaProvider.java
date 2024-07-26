@@ -4,7 +4,7 @@ package com.vmware.vim25;
  * Data object representing VASA Provider.
  *
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 6.7
+ * @version 8.0.1
  * @since 6.0
  */
 public class VimVasaProvider extends DynamicData {
@@ -13,15 +13,35 @@ public class VimVasaProvider extends DynamicData {
     private String url;
     private String name;
     private String selfSignedCertificate;
+    private VimVasaProviderVirtualHostConfig vhostConfig;
+    private Integer versionId;
 
     @Override
     public String toString() {
         return "VimVasaProvider{" +
-                "name='" + name + '\'' +
-                ", selfSignedCertificate='" + selfSignedCertificate + '\'' +
-                ", uid='" + uid + '\'' +
+                "uid='" + uid + '\'' +
                 ", url='" + url + '\'' +
-                "} " + super.toString();
+                ", name='" + name + '\'' +
+                ", selfSignedCertificate='" + selfSignedCertificate + '\'' +
+                ", vhostConfig=" + vhostConfig +
+                ", versionId=" + versionId +
+                '}';
+    }
+
+    public VimVasaProviderVirtualHostConfig getVhostConfig() {
+        return vhostConfig;
+    }
+
+    public void setVhostConfig(final VimVasaProviderVirtualHostConfig vhostConfig) {
+        this.vhostConfig = vhostConfig;
+    }
+
+    public Integer getVersionId() {
+        return versionId;
+    }
+
+    public void setVersionId(final Integer versionId) {
+        this.versionId = versionId;
     }
 
     public String getName() {

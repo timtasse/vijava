@@ -34,7 +34,7 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 8.0.0
+ * @version 8.0.1
  */
 @SuppressWarnings("unused")
 public class VirtualMachineCapability extends DynamicData {
@@ -89,6 +89,7 @@ public class VirtualMachineCapability extends DynamicData {
     private Boolean pmemFailoverSupported;
     private Boolean requireSgxAttestationSupported;
     private Boolean changeModeDisksSupported;
+    private Boolean vendorDeviceGroupSupported;
 
     @Override
     public String toString() {
@@ -141,7 +142,8 @@ public class VirtualMachineCapability extends DynamicData {
                 ", pmemFailoverSupported=" + pmemFailoverSupported +
                 ", requireSgxAttestationSupported=" + requireSgxAttestationSupported +
                 ", changeModeDisksSupported=" + changeModeDisksSupported +
-                '}';
+                ", vendorDeviceGroupSupported=" + vendorDeviceGroupSupported +
+                "} " + super.toString();
     }
 
     public boolean isSnapshotOperationsSupported() {
@@ -526,6 +528,14 @@ public class VirtualMachineCapability extends DynamicData {
 
     public void setChangeModeDisksSupported(final Boolean changeModeDisksSupported) {
         this.changeModeDisksSupported = changeModeDisksSupported;
+    }
+
+    public Boolean getVendorDeviceGroupSupported() {
+        return vendorDeviceGroupSupported;
+    }
+
+    public void setVendorDeviceGroupSupported(final Boolean vendorDeviceGroupSupported) {
+        this.vendorDeviceGroupSupported = vendorDeviceGroupSupported;
     }
 
 }

@@ -19,6 +19,11 @@ Here an example:</br>
 
 ## Changelog
 
+#### 8.0.1-3.0.0
+
+* API Version 8.0.1.0 (in vSphere 8.0.1) is fully implemented
+* some rework of old Classes
+
 #### 8.0.0-3.0.0
 
 * API Version 8.0.0.1 (in vSphere 8.0.0) is fully implemented

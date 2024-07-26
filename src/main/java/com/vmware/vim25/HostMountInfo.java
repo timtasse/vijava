@@ -35,7 +35,7 @@ package com.vmware.vim25;
  *
  * @author Steve Jin (http://www.doublecloud.org)
  * @author Stefan Dilk <stefan.dilk@freenet.ag>
- * @version 8.0.0
+ * @version 8.0.1
  */
 @SuppressWarnings("unused")
 public class HostMountInfo extends DynamicData {
@@ -45,7 +45,10 @@ public class HostMountInfo extends DynamicData {
     private Boolean mounted;
     private Boolean accessible;
     private HostMountInfoInaccessibleReason inaccessibleReason;
+    private String vmknicName;
+    private Boolean vmknicActive;
     private HostMountInfoMountFailedReason mountFailedReason;
+    private Integer numTcpConnections;
 
     @Override
     public String toString() {
@@ -55,8 +58,35 @@ public class HostMountInfo extends DynamicData {
                 ", mounted=" + mounted +
                 ", accessible=" + accessible +
                 ", inaccessibleReason=" + inaccessibleReason +
+                ", vmknicName='" + vmknicName + '\'' +
+                ", vmknicActive=" + vmknicActive +
                 ", mountFailedReason=" + mountFailedReason +
+                ", numTcpConnections=" + numTcpConnections +
                 '}';
+    }
+
+    public String getVmknicName() {
+        return vmknicName;
+    }
+
+    public void setVmknicName(final String vmknicName) {
+        this.vmknicName = vmknicName;
+    }
+
+    public Boolean getVmknicActive() {
+        return vmknicActive;
+    }
+
+    public void setVmknicActive(final Boolean vmknicActive) {
+        this.vmknicActive = vmknicActive;
+    }
+
+    public Integer getNumTcpConnections() {
+        return numTcpConnections;
+    }
+
+    public void setNumTcpConnections(final Integer numTcpConnections) {
+        this.numTcpConnections = numTcpConnections;
     }
 
     public String getPath() {
