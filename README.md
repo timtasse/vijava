@@ -19,71 +19,93 @@ Here an example:</br>
 
 ## Changelog
 
+#### 8.0.0-3.0.0
+
+* API Version 8.0.0.1 (in vSphere 8.0.0) is fully implemented
+* some rework of old Classes
+* some dependency updates
+
 #### 7.0.3-2.7.2
-  * some rework of old Classes
-  * some dependency updates
+
+* some rework of old Classes
+* some dependency updates
 
 #### 7.0.3-2.7.1
-  * logback updated to new version
-  * some rework of old classes
+
+* logback updated to new version
+* some rework of old classes
 
 #### 7.0.3-2.7.0
-  * API Version 7.0.3 first implementation
-  * minor changes in XML deserialization
+
+* API Version 7.0.3 first implementation
+* minor changes in XML deserialization
 
 #### 7.0.2-2.6.0
-  * API Version 7.0.2 fully implemented
-  * some dependency updates
+
+* API Version 7.0.2 fully implemented
+* some dependency updates
 
 #### 7.0.1-2.6.0
-  * socket and connect timeouts implemented
+
+* socket and connect timeouts implemented
 
 #### 7.0.1-2.5.4
-  * changed the Version for the SoapAction Header in SOAP Calls (it has 4 digits from 7.0 and above)
+
+* changed the Version for the SoapAction Header in SOAP Calls (it has 4 digits from 7.0 and above)
 
 #### 7.0.1-2.5.3
-  * GuestInfo.hwVersion is now implemented
-  * VirtualMachineGuestSummary.hwVersion is now implemented
+
+* GuestInfo.hwVersion is now implemented
+* VirtualMachineGuestSummary.hwVersion is now implemented
 
 #### 7.0.1-2.5.2
-  * Error in HostNetworkSystem.queryNetworkHint fixed
-  * XML generation can now handle Lists
+
+* Error in HostNetworkSystem.queryNetworkHint fixed
+* XML generation can now handle Lists
 
 #### 7.0.1-2.5.1
-  * VirtualMachineConfigSummary.hwVersion is now implemented
-  * DateFormatter is now thread-safe handled
-  * a non-existing field is now only logged as Error Level Message and not throws a NoSuchFieldException
+
+* VirtualMachineConfigSummary.hwVersion is now implemented
+* DateFormatter is now thread-safe handled
+* a non-existing field is now only logged as Error Level Message and not throws a NoSuchFieldException
 
 #### 7.0.1-2.5
-  * API Version up to 7.0.1 is fully implemented, but not fully tested (i do not have enough features in test environment)
-  * migrating methods from the large VimStub class into the ManagedObjects  itself, so handling is more intuitive and not much indirect
-  * the heavily used classes have now correct exception handling, no more throwing of only RemoteException
-  * renaming some methods with an illegal naming e.g. _Task suffix
-  * **BREAKING_CHANGE**: because of renaming and exception handling it is important to change the code that uses this library
+
+* API Version up to 7.0.1 is fully implemented, but not fully tested (i do not have enough features in test environment)
+* migrating methods from the large VimStub class into the ManagedObjects itself, so handling is more intuitive and not much indirect
+* the heavily used classes have now correct exception handling, no more throwing of only RemoteException
+* renaming some methods with an illegal naming e.g. _Task suffix
+* **BREAKING_CHANGE**: because of renaming and exception handling it is important to change the code that uses this library
 
 #### 2.0.1
-  * wrong ordering of the fields in the classes, the ordering is important on some DataObjects
+
+* wrong ordering of the fields in the classes, the ordering is important on some DataObjects
 
 #### 2.0.0
-  * improved some methods and try to generify some of them
-  * use more than one HTTP library, automatically decide the fastest version (Apache HttpClient, Java11 HttpClient and the old Java HttpUrlConnection)
+
+* improved some methods and try to generify some of them
+* use more than one HTTP library, automatically decide the fastest version (Apache HttpClient, Java11 HttpClient and the old Java
+  HttpUrlConnection)
 
 ## Usage
 
 You can use this library for connecting to a ESX or vCenter Server.
 The entrypoint is the ServiceInstance class, there you find all other methods and classes.
-To use the library it is very helpful to look in the official API documentation, currently it is found under [latest vSphere Web Services API](https://developer.broadcom.com/xapis/vsphere-web-services-api/latest/)
+To use the library it is very helpful to look in the official API documentation, currently it is found
+under [latest vSphere Web Services API](https://developer.broadcom.com/xapis/vsphere-web-services-api/latest/)
 
 Here is a short code snippet
+
 ```java
 public class Test {
+
     public void test() throws Exception {
         final URL url = new URL("https://" + HOSTNAME + "/sdk");
         instance = new ServiceInstance(url, USERNAME, PASSWORD, true);
 
         final Capability capability = instance.getCapability();
         LOGGER.debug(capability.toString());
-        
+
         instance.getServerConnection().logout();
     }
 }
