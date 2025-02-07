@@ -31,12 +31,14 @@ package com.vmware.vim;
 
 import com.vmware.vim25.*;
 import com.vmware.vim25.mo.*;
+import static org.doublecloud.ws.util.TypeUtil.asNullSafeList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.InvocationTargetException;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -303,7 +305,7 @@ public class VirtualMachineDeviceManager {
     }
 
     public VirtualDisk findHardDisk(String diskName) {
-        VirtualDevice[] devices = getAllVirtualDevices();
+        List<VirtualDevice> devices = getAllVirtualDevices();
 
         for (final VirtualDevice device : devices) {
             if (device instanceof VirtualDisk) {
@@ -327,7 +329,7 @@ public class VirtualMachineDeviceManager {
 
         if (controller.device.length < maxNodes) {
             List<Integer> usedNodeList = new ArrayList<Integer>();
-            VirtualDevice[] devices = getAllVirtualDevices();
+            List<VirtualDevice> devices = getAllVirtualDevices();
 
             // If this is SCSI controller then its controller also occupies one node.
             if (controller instanceof VirtualSCSIController) {
@@ -666,16 +668,16 @@ public class VirtualMachineDeviceManager {
      *
      * @return VirtualDevice[]
      */
-    public VirtualDevice[] getAllVirtualDevices() {
+    public List<VirtualDevice> getAllVirtualDevices() {
         VirtualDevice[] devices = (VirtualDevice[]) vm.getPropertyByPath("config.hardware.device");
-        return devices;
+        return asNullSafeList(devices);
     }
 
     @SuppressWarnings("unchecked")
     public <T extends VirtualDevice> List<T> getVirtualDevicesOfType(Class<T> clazz) {
         List<T> result = new ArrayList<T>();
 
-        VirtualDevice[] devices = getAllVirtualDevices();
+        List<VirtualDevice> devices = getAllVirtualDevices();
 
         for (VirtualDevice dev : devices) {
             if (clazz.isInstance(dev)) // dynamic equivalent of instanceof operator
@@ -691,7 +693,7 @@ public class VirtualMachineDeviceManager {
             throw new IllegalArgumentException("name must not be null!");
         }
 
-        VirtualDevice[] devices = this.getAllVirtualDevices();
+        List<VirtualDevice> devices = this.getAllVirtualDevices();
 
         for (VirtualDevice device : devices) {
             VirtualDeviceBackingInfo bi = device.getBacking();

@@ -101,10 +101,12 @@ public class InventoryNavigator {
 
         final List<ObjectContent> allObjects = new ArrayList<>(5000);
         RetrieveResult result = pc.retrievePropertiesEx(List.of(spec), retrieveOptions);
-        allObjects.addAll(result.getObjectList());
-        while (result.getToken() != null) {
-            result = pc.continueRetrievePropertiesEx(result.getToken());
+        if (result != null) {
             allObjects.addAll(result.getObjectList());
+            while (result.getToken() != null) {
+                result = pc.continueRetrievePropertiesEx(result.getToken());
+                allObjects.addAll(result.getObjectList());
+            }
         }
         return allObjects;
     }
