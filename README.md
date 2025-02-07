@@ -76,7 +76,7 @@ Here an example:</br>
 
 #### 7.0.1-2.5
 
-* API Version up to 7.0.1 is fully implemented, but not fully tested (i do not have enough features in test environment)
+* API Version up to 7.0.1 is fully implemented, but not fully tested (I do not have enough features in test environment)
 * migrating methods from the large VimStub class into the ManagedObjects itself, so handling is more intuitive and not much indirect
 * the heavily used classes have now correct exception handling, no more throwing of only RemoteException
 * renaming some methods with an illegal naming e.g. _Task suffix

@@ -21,6 +21,7 @@ import java.rmi.RemoteException;
 import java.security.KeyManagementException;
 import java.security.KeyStoreException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -66,8 +67,10 @@ public final class WSClientApacheHttp extends WSClient {
                     .build();
             httpPost.setConfig(requestConfig);
         }
-        //LOGGER.debug("Request-Header: {}", Arrays.toString(httpPost.getAllHeaders()));
-        //LOGGER.debug(soapMsg);
+        if (LOGGER.isTraceEnabled()) {
+            LOGGER.trace("Request-Header: {}", Arrays.toString(httpPost.getAllHeaders()));
+            LOGGER.trace(soapMsg);
+        }
         try (final CloseableHttpResponse response = this.httpClient.execute(httpPost);
              final InputStream is = response.getEntity().getContent()) {
             //LOGGER.debug("Response-Header: {}", Arrays.toString(response.getAllHeaders()));
