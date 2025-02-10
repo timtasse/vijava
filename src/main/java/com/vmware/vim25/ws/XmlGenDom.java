@@ -31,6 +31,8 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.ws;
 
 import com.vmware.vim25.ManagedObjectReference;
+import com.vmware.vim25.RetrieveResult;
+
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -137,6 +139,12 @@ public final class XmlGenDom extends XmlGen {
         if (subNodes.isEmpty()) {
             if (type.startsWith("List.")) {
                 return Collections.emptyList();
+            }
+            
+            // RetrieveResult is just a holder class so ensure its returned properly 
+            // but "empty" in this case to avoid NullPointerExceptions further up the stack
+            if (type.equals("RetrieveResult")) {
+                return new RetrieveResult();
             }
             return null;
         }
