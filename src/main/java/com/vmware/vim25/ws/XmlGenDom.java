@@ -31,6 +31,8 @@ POSSIBILITY OF SUCH DAMAGE.
 package com.vmware.vim25.ws;
 
 import com.vmware.vim25.ManagedObjectReference;
+import com.vmware.vim25.RetrieveResult;
+
 import org.dom4j.DocumentException;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
@@ -137,6 +139,12 @@ public final class XmlGenDom extends XmlGen {
         if (subNodes.isEmpty()) {
             if (type.startsWith("List.")) {
                 return Collections.emptyList();
+            }
+            
+            // RetrieveResult is just a holder class so ensure its returned properly 
+            // but "empty" in this case to avoid NullPointerExceptions further up the stack
+            if (type.equals("RetrieveResult")) {
+                return new RetrieveResult();
             }
             return null;
         }
@@ -252,14 +260,14 @@ public final class XmlGenDom extends XmlGen {
                     }
                 } else if (fRealType.isEnum()) { // Enum type
                     if (!isFieldArray && !isList) {
-                        final Object fo = Enum.valueOf(fRealType, e.getText());
+                        final Object fo = e.getText() == null || e.getText().isEmpty() ? null : Enum.valueOf(fRealType, e.getText());
                         field.set(obj, fo);
                     } else {
                         final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
                         final List<Object> objectList = new ArrayList<>(sizeOfFieldArray);
                         for (int j = 0; j < sizeOfFieldArray; j++) {
                             final String enumStr = (subNodes.get(j + i)).getText();
-                            objectList.add(Enum.valueOf(fRealType, enumStr));
+                            if (enumStr != null && !enumStr.isEmpty()) objectList.add(Enum.valueOf(fRealType, enumStr));
                         }
                         if (isFieldArray) {
                             final Object outputArray = Array.newInstance(fType, sizeOfFieldArray);
