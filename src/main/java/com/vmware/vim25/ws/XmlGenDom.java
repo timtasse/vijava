@@ -260,14 +260,14 @@ public final class XmlGenDom extends XmlGen {
                     }
                 } else if (fRealType.isEnum()) { // Enum type
                     if (!isFieldArray && !isList) {
-                        final Object fo = Enum.valueOf(fRealType, e.getText());
+                        final Object fo = e.getText() == null || e.getText().isEmpty() ? null : Enum.valueOf(fRealType, e.getText());
                         field.set(obj, fo);
                     } else {
                         final int sizeOfFieldArray = getNumberOfSameTags(subNodes, sizeOfSubNodes, i, tagName);
                         final List<Object> objectList = new ArrayList<>(sizeOfFieldArray);
                         for (int j = 0; j < sizeOfFieldArray; j++) {
                             final String enumStr = (subNodes.get(j + i)).getText();
-                            objectList.add(Enum.valueOf(fRealType, enumStr));
+                            if (enumStr != null && !enumStr.isEmpty()) objectList.add(Enum.valueOf(fRealType, enumStr));
                         }
                         if (isFieldArray) {
                             final Object outputArray = Array.newInstance(fType, sizeOfFieldArray);
